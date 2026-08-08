@@ -56,4 +56,24 @@ final class NotchWindow: NSPanel {
 
     override var canBecomeKey: Bool { wantsKeyboard }
     override var canBecomeMain: Bool { false }
+
+    /// Editing shortcuts normally reach a text field through the Edit menu, and Perch has
+    /// no menu bar for them to route through — without this, ⌘C in the plan feedback field
+    /// is a dead key. So the panel dispatches the standard editing actions itself, straight
+    /// down the responder chain to whichever field editor has focus.
+    override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+        let action: Selector?
+        switch (flags, event.charactersIgnoringModifiers) {
+        case (.command, "x"): action = #selector(NSText.cut(_:))
+        case (.command, "c"): action = #selector(NSText.copy(_:))
+        case (.command, "v"): action = #selector(NSText.paste(_:))
+        case (.command, "a"): action = #selector(NSStandardKeyBindingResponding.selectAll(_:))
+        case (.command, "z"): action = Selector(("undo:"))
+        case ([.command, .shift], "Z"): action = Selector(("redo:"))
+        default: action = nil
+        }
+        if let action, NSApp.sendAction(action, to: nil, from: self) { return true }
+        return super.performKeyEquivalent(with: event)
+    }
 }
