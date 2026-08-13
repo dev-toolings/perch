@@ -89,6 +89,17 @@ enum TerminalJumper {
             process.standardError = FileHandle.nullDevice
             // Homebrew's paths are not in a GUI app's inherited PATH.
             var environment = ProcessInfo.processInfo.environment
+            // Perch is not a cmux shell, but it can have been launched from one — `open`
+            // propagates the caller's environment, and an app relaunched from a terminal
+            // inherits that terminal's whole identity. cmux's CLI reads it: with a stale
+            // `CMUX_WORKSPACE_ID` in the environment, `focus-panel` resolves only inside
+            // that one workspace and answers "Surface not found" for every other tab —
+            // which is a jump that fails precisely when it matters. The socket path stays:
+            // it says where the server is, not which window we pretend to be.
+            for key in environment.keys
+            where key.hasPrefix("CMUX_") && key != "CMUX_SOCKET_PATH" {
+                environment.removeValue(forKey: key)
+            }
             let extra = "/opt/homebrew/bin:/usr/local/bin"
                 + ":/Applications/kitty.app/Contents/MacOS"
                 // cmux ships its CLI inside the bundle and only puts it on the PATH of the
