@@ -2,24 +2,27 @@ import Foundation
 
 /// Which sound plays for which event.
 ///
-/// Perch ships no audio of its own. macOS already has a set that matches the OS, and a
-/// file you chose yourself beats anything shipped — so a source is either off, a system
-/// sound by name, or a path.
+/// A source is off, a macOS system sound by name, a path to a file you picked, or one of
+/// the built-in chiptune jingles (`ChipTune`) — synthesised on the spot, so Perch still
+/// ships no recorded audio.
 public enum SoundSource: Codable, Sendable, Hashable {
     case off
     case system(String)
     case file(String)
+    case synth(String)
 
     public var label: String {
         switch self {
         case .off: return "Off"
         case .system(let name): return name
         case .file(let path): return URL(fileURLWithPath: path).lastPathComponent
+        case .synth(let name): return name
         }
     }
 
     // Encoded as a tagged string rather than a keyed object, so the settings file stays
-    // readable and hand-editable: `"system:Glass"`, `"file:/Users/…/ping.aiff"`, `"off"`.
+    // readable and hand-editable: `"system:Glass"`, `"file:/Users/…/ping.aiff"`,
+    // `"synth:coin"`, `"off"`.
     public init(from decoder: any Decoder) throws {
         let raw = try decoder.singleValueContainer().decode(String.self)
         if raw == "off" {
@@ -28,6 +31,8 @@ public enum SoundSource: Codable, Sendable, Hashable {
             self = .system(String(raw.dropFirst("system:".count)))
         } else if raw.hasPrefix("file:") {
             self = .file(String(raw.dropFirst("file:".count)))
+        } else if raw.hasPrefix("synth:") {
+            self = .synth(String(raw.dropFirst("synth:".count)))
         } else {
             self = .off
         }
@@ -39,6 +44,7 @@ public enum SoundSource: Codable, Sendable, Hashable {
         case .off: try container.encode("off")
         case .system(let name): try container.encode("system:\(name)")
         case .file(let path): try container.encode("file:\(path)")
+        case .synth(let name): try container.encode("synth:\(name)")
         }
     }
 }
@@ -69,12 +75,17 @@ public struct SoundSettings: Codable, Sendable, Equatable {
     /// Restrained on purpose: three that mean "you are needed", one that means "something
     /// broke", silence elsewhere. A chime per finished turn is how an app gets muted for
     /// good, so the noisy events start at `off` rather than at a tasteful default.
+    ///
+    /// Fresh installs get the chiptune voices: they belong to the same instrument as the
+    /// pixel face, where a system sound reads as somebody else's app. Existing
+    /// `sounds.json` files are untouched — the loader only fills in events a file does
+    /// not name.
     public static let defaults: [String: SoundSource] = [
-        InterruptionKind.approvalNeeded.rawValue: .system("Submarine"),
-        InterruptionKind.questionAsked.rawValue: .system("Submarine"),
-        InterruptionKind.taskError.rawValue: .system("Basso"),
-        InterruptionKind.contextLimit.rawValue: .system("Funk"),
-        InterruptionKind.usageWarning.rawValue: .system("Funk"),
+        InterruptionKind.approvalNeeded.rawValue: .synth("alert"),
+        InterruptionKind.questionAsked.rawValue: .synth("query"),
+        InterruptionKind.taskError.rawValue: .synth("fault"),
+        InterruptionKind.contextLimit.rawValue: .synth("warn"),
+        InterruptionKind.usageWarning.rawValue: .synth("warn"),
         InterruptionKind.taskComplete.rawValue: .off,
         InterruptionKind.sessionStart.rawValue: .off,
         InterruptionKind.taskAcknowledge.rawValue: .off,

@@ -4,9 +4,8 @@ import PerchKit
 
 /// Plays the sound configured for an event.
 ///
-/// Perch ships no audio: macOS already has a set that matches the OS, and a file you chose
-/// yourself beats anything shipped. So the settings name a system sound or a path, and
-/// this resolves it.
+/// A source is a system sound, a file, or a chiptune jingle — the last synthesised to a
+/// WAV in memory, so all three resolve to an `NSSound` and share the cache below.
 @MainActor
 enum SoundPlayer {
     /// `NSSound` instances are cached: constructing one per tool call reads the file from
@@ -51,6 +50,15 @@ enum SoundPlayer {
                 let sound = NSSound(contentsOfFile: path, byReference: false)
             else { return nil }
             cache["file:\(path)"] = sound
+            return sound
+        case .synth(let name):
+            if let cached = cache["synth:\(name)"] { return cached }
+            // An unknown jingle name (a hand-edited sounds.json) renders as nothing rather
+            // than throwing — sound is the least important thing happening at that moment.
+            guard let data = ChipTune.wavData(named: name),
+                let sound = NSSound(data: data)
+            else { return nil }
+            cache["synth:\(name)"] = sound
             return sound
         }
     }

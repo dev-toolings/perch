@@ -130,6 +130,23 @@ held, a dot marks it. Completions are silent unless you ask for them.
 Everything is in **Settings** (panel gear, or `Perch --settings`), backed by readable files:
 `~/.perch/quiet.json`, `admission.json`, `preferences.json`, `sounds.json`.
 
+### Sound
+
+Every event picks its own source, written in `sounds.json` as a tagged string:
+
+| Source | Meaning |
+| --- | --- |
+| `synth:alert` | One of ten built-in chiptune jingles, synthesised at play time |
+| `system:Glass` | A macOS system sound |
+| `file:/Users/you/ping.aiff` | A file you picked |
+| `off` | Nothing |
+
+The jingles — `alert`, `query`, `clear`, `fault`, `warn`, `boot`, `coin`, `nudge`, `reset`,
+`welcome` — are not audio files. They are note data, played through a small NES-shaped synth
+(two pulse channels, a triangle, a noise channel) rendered to a WAV in memory. Nothing was
+sampled and nothing was extracted: the pixels and the notes in this app are its own. A fresh
+install starts on them; the noisy events still start at `off`.
+
 ## Failing open
 
 If Perch is not running, is killed mid-request, or takes too long, the hook exits 0 with no

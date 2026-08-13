@@ -245,10 +245,23 @@
 "by model, today" = "par modèle, aujourd'hui";
 
 /* Onboarding */
+"Approve Claude Code from the notch" = "Approuve Claude Code depuis l'encoche";
 "Here is what Perch found on this Mac. Nothing below is a choice — one button sets up everything listed." = "Voici ce que Perch a trouvé sur ce Mac. Rien ci-dessous n'est un choix — un seul bouton configure tout ce qui est listé.";
+"No agent CLI found. Install Claude Code, then reopen Perch." = "Aucun agent en ligne de commande trouvé. Installe Claude Code, puis rouvre Perch.";
+"Agents" = "Agents";
+"Terminals" = "Terminaux";
+"Editors" = "Éditeurs";
 "ready" = "prêt";
 "will be set up" = "sera configuré";
 "nothing to do" = "rien à faire";
+"Set up this Mac" = "Configurer ce Mac";
+"Not now" = "Pas maintenant";
+"Nothing could be set up automatically — see the README." = "Rien n'a pu être configuré automatiquement — voir le README.";
+"Set up: %@.\n\nRestart any Claude Code session you already have open — hooks are read once, when a session starts, so a running one ignores them and the notch stays empty." = "Configuré : %@.\n\nRedémarre les sessions Claude Code déjà ouvertes — les hooks sont lus une seule fois, au démarrage d'une session, donc une session en cours les ignore et l'encoche reste vide.";
+
+/* Onboarding — la cérémonie, une fois le Mac configuré */
+"This Mac is a Perch" = "Ce Mac est un perchoir";
+"Done" = "Terminé";
 
 /* AskUserQuestion — the free-text answer */
 "Other — write your answer" = "Autre — écris ta réponse";

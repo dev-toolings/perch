@@ -158,5 +158,6 @@ private func pack(_ manifest: String, files: [String]) -> URL {
 @Test func aMissingFileGivesTheDefaults() {
     let settings = SoundSettings.load(from: URL(fileURLWithPath: "/nonexistent/sounds.json"))
     #expect(settings.enabled)
-    #expect(settings.source(for: .approvalNeeded) == .system("Submarine"))
+    // A fresh install is chiptune, not a system alert.
+    #expect(settings.source(for: .approvalNeeded) == .synth("alert"))
 }

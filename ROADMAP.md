@@ -301,15 +301,22 @@ switching to the terminal. This is that gap, closed.
 
 ### M9 — sound, in full
 
-- [x] **A source per event**: off, a macOS system sound, or a file you picked. Perch ships
-      no audio — the OS already has a set that matches it, and a file you chose beats
-      anything shipped.
+- [x] **A source per event**: off, a chiptune jingle, a macOS system sound, or a file you
+      picked. A file you chose still beats anything shipped.
+- [x] **The chiptune engine** (`ChipTune.swift`) — a NES-shaped synth in ~200 lines: two
+      pulse channels with selectable duty, a triangle, a noise channel on a 15-bit LFSR,
+      rendered offline to PCM and wrapped in a WAV in memory, so a jingle is an `NSSound`
+      like any other source and shares its cache. Perch still ships no *audio file*: the
+      ten jingles are ~40 lines of note data each, written here, and a fresh install now
+      defaults to them (`synth:alert`, `synth:query`, …) rather than to `Submarine`. It is
+      the one part of the product that had no reason to sound like the system.
 - [x] Volume, and a preview on every row. Picking a sound also plays it: choosing one you
       cannot hear is guesswork.
 - [x] The noisy events start at **off**, not at a tasteful default — a chime for every
       finished turn is how an app gets muted for good
 - [x] `~/.perch/sounds.json` stays hand-editable: sources are tagged strings
-      (`system:Glass`, `file:/Users/you/ping.aiff`) and the encoder is configured not to
+      (`synth:coin`, `system:Glass`, `file:/Users/you/ping.aiff`) and the encoder is
+      configured not to
       escape slashes, which a default `JSONEncoder` does
 - [x] **Sound packs** — a plain folder of audio files with a `pack.json`, deliberately not
       an archive format: you can look inside one, swap a file, and hear the result, and

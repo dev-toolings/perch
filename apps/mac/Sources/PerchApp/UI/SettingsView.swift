@@ -490,8 +490,8 @@ private struct SoundPane: View {
             Section(
                 t("Sound"),
                 note: t(
-                    "Perch ships no audio of its own. A source is a macOS system sound, a "
-                        + "file you picked, or nothing at all.")
+                    "A source is a chiptune jingle synthesised on the spot, a macOS system "
+                        + "sound, a file you picked, or nothing at all.")
             ) {
                 Toggle(t("Play sounds"), isOn: enabled)
                 HStack {
@@ -553,6 +553,11 @@ private struct SoundPane: View {
 
                         Picker("", selection: source(for: kind)) {
                             Text(t("Off")).tag(SoundSource.off)
+                            // The 8-bit voices first: they are the ones that belong to the
+                            // instrument, and the ones a fresh install already uses.
+                            ForEach(ChipTune.names, id: \.self) { name in
+                                Text("\(name) · 8-bit").tag(SoundSource.synth(name))
+                            }
                             ForEach(SoundSettings.systemNames, id: \.self) { name in
                                 Text(name).tag(SoundSource.system(name))
                             }

@@ -6,6 +6,7 @@ import { useLocation } from "react-router"
 import { GuildTable } from "@/components/guild-table"
 import { LeaderboardTable } from "@/components/leaderboard-table"
 import { ModeNotice } from "@/components/mode-notice"
+import { NotchDemo } from "@/components/notch-demo"
 import { Skeleton } from "@/components/ui/skeleton"
 import { fetchLeaderboard, type Board } from "@/lib/api"
 import { count, dollars, tokens } from "@/lib/format"
@@ -33,7 +34,24 @@ export function LeaderboardPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-14">
-      <h1 className="display-title">Classement.</h1>
+      {/* The board is the reason the page is fetched, but it is not the reason the site
+          exists — most people arrive without knowing what a notch panel is, and a ranking of
+          strangers' token counts does not tell them. The demo does, in six seconds, above
+          everything else. */}
+      <header className="text-center">
+        <h1 className="display-title">Approuve depuis l'encoche.</h1>
+        <p className="mx-auto mt-4 max-w-xl text-sm text-ink-2">
+          Perch met tes agents de code dans l'encoche de ton MacBook : ce qu'ils font, ce
+          qu'ils demandent, et le diff qu'ils veulent écrire — approuvé au clavier, sans
+          quitter ce que tu es en train de faire.
+        </p>
+      </header>
+
+      <div className="mt-12">
+        <NotchDemo />
+      </div>
+
+      <h2 className="display-title mt-24">Classement.</h2>
 
       <div className="mt-9 flex flex-wrap items-center gap-3">
         <nav className="flex flex-wrap items-center gap-1">

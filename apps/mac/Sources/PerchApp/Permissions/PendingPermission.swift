@@ -47,6 +47,12 @@ final class PendingPermission: Identifiable {
     /// What the tool is about to do, in one line.
     var detail: String { ActivityEvent.summarize(request) }
 
+    /// What the tool is about to *change*, when the payload says so — an Edit's old and
+    /// new, a Write's content. Nil for everything else, and the card keeps the summary.
+    var diff: ToolDiff? {
+        ToolDiff.build(toolName: request.payload.toolName, toolInput: request.payload.toolInput)
+    }
+
     /// Resolves every hook waiting on this decision. Safe to call twice — the second call
     /// is ignored, which matters because a timeout and a click can race.
     func resolve(
