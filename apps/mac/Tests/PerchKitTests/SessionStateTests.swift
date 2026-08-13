@@ -661,3 +661,27 @@ struct WatchedSessionTests {
         #expect(tracker.sessions["codex-1"] == nil)
     }
 }
+
+/// A hook says what a session is doing; only the rollout knows what it is called and which
+/// application it runs in. Naming a card must not make it look alive.
+@Test func namingASessionSaysNothingAboutWhetherItIsWorking() {
+    var tracker = SessionTracker()
+    tracker.observe(id: "s1", status: .idle, cwd: "/lab/kit-cgp", detail: "exec", at: epoch)
+
+    tracker.identify(
+        id: "s1", aiTitle: "Refondre la modal configuration",
+        client: ClientInfo(terminal: "Codex Desktop", session: "019ff878"))
+
+    let session = tracker.sessions["s1"]
+    #expect(session?.aiTitle == "Refondre la modal configuration")
+    #expect(session?.client?.session == "019ff878")
+    #expect(session?.status == .idle)
+    #expect(session?.lastEvent == epoch)
+}
+
+/// It names what is on screen; it does not resurrect what has aged out.
+@Test func namingAnUnknownSessionCreatesNothing() {
+    var tracker = SessionTracker()
+    tracker.identify(id: "ghost", aiTitle: "x")
+    #expect(tracker.sessions["ghost"] == nil)
+}

@@ -279,6 +279,24 @@ public struct SessionTracker: Sendable {
         prune(now: date)
     }
 
+    /// Says what a session *is*, without claiming anything about what it is doing.
+    ///
+    /// Identity and liveness come from different places for Codex: the hook reports the
+    /// work, and only the rollout knows the thread's name and the application it runs in.
+    /// So this touches neither `status` nor `lastEvent` — a card must not look alive
+    /// because something read its name off disk.
+    ///
+    /// Unknown sessions are ignored: this names what is already on screen, it does not
+    /// bring anything back.
+    public mutating func identify(
+        id: String, aiTitle: String? = nil, client: ClientInfo? = nil
+    ) {
+        guard var session = sessions[id] else { return }
+        if let aiTitle, !aiTitle.isEmpty { session.aiTitle = aiTitle }
+        if let client { session.client = client }
+        sessions[id] = session
+    }
+
     /// The request this session was blocked on has been resolved.
     ///
     /// A session enters `needsApproval` or `waitingForAnswer` on a `PermissionRequest` and

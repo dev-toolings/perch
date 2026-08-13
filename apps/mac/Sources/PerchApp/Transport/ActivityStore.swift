@@ -82,8 +82,23 @@ final class ActivityStore {
     /// writers on one card — the hook, which knows the moment a tool starts, and the
     /// rollout, which knows a second later. The hook wins on the sessions it covers.
     func applyCodex(_ sessions: [CodexSessions.Live], now: Date = .now) {
-        for session in sessions where !hookFed.contains(session.id) {
+        for session in sessions {
             guard !isSilenced(directory: session.cwd) else { continue }
+            // The hook wins on everything that *moves*, and on nothing else.
+            //
+            // It knows the moment a tool starts, which the rollout only learns a second
+            // later — that is why it owns status and the activity line. But it does not
+            // know what the thread is called: that lives in `session_index.jsonl`, which
+            // is the desktop app's own sidebar. Nor does it know it is the desktop app —
+            // an Electron process sets no TERM_PROGRAM, so the hook's environment says
+            // nothing at all. Withholding both from a hook-fed card is what turned a
+            // Codex Desktop session into a nameless row with nowhere to click, and it did
+            // so exactly when Perch restarted under a session that was already running.
+            if hookFed.contains(session.id) {
+                tracker.identify(
+                    id: session.id, aiTitle: session.title, client: session.client)
+                continue
+            }
             // Silence is the only end-of-turn signal a rollout has, so a session that has
             // stopped writing is one that has stopped working.
             let status: SessionStatus =
