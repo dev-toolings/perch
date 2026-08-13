@@ -967,7 +967,18 @@ private struct EventRow: View {
                 .foregroundStyle(Theme.primary.opacity(0.9))
                 .frame(width: 68, alignment: .leading)
 
-            Text(event.detail)
+            // Which project this happened in, before what happened. A feed of bare paths
+            // and commands is unreadable the moment two agents are running: every line
+            // needs to say whose work it is.
+            if let project = event.projectName {
+                Text(project)
+                    .font(Theme.mono(10))
+                    .foregroundStyle(Theme.tertiary)
+                    .lineLimit(1)
+                    .layoutPriority(1)
+            }
+
+            Text(event.location)
                 .font(Theme.mono(10))
                 .foregroundStyle(Theme.secondary)
                 .lineLimit(1)

@@ -194,14 +194,23 @@ struct SessionCardView: View {
             // Project first, then what it is doing. Three cards deep, the eye is looking
             // for *which repo* before it reads the task — and the project is the short,
             // stable half, so putting it first gives every row the same left edge to scan.
-            if session.aiTitle != nil, let project = session.projectName {
+            //
+            // On every card that has one, not only the ones Claude Code named: a card
+            // titled by its prompt is exactly the card where "which repo is this" is
+            // unanswerable, and those are most of them. Skipped only when the title is
+            // already the project, which is what an untitled session falls back to.
+            if let project = session.projectName, project != session.title {
                 Text(project)
                     .font(Theme.mono(11))
                     .foregroundStyle(Theme.tertiary)
                     .lineLimit(1)
+                    // The prompt is long and the project is short: without this the row
+                    // truncates the half that identifies it.
+                    .layoutPriority(1)
                 Text("·")
                     .font(Theme.mono(11))
                     .foregroundStyle(Theme.tertiary)
+                    .layoutPriority(1)
             }
 
             Text(session.title)

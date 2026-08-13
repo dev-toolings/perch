@@ -97,6 +97,10 @@ final class ActivityStore {
                 detail: session.detail,
                 agent: .codex,
                 aiTitle: session.title,
+                // The desktop app runs no hook, so nothing else will ever say where this
+                // session lives — but the rollout names its own writer, and that is enough
+                // to send a click back to the thread it came from.
+                client: session.client,
                 at: session.updatedAt)
         }
     }

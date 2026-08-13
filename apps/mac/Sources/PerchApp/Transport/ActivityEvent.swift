@@ -70,6 +70,19 @@ struct ActivityEvent: Identifiable, Sendable {
     }
 
     var projectName: String? {
-        cwd.map { URL(fileURLWithPath: $0).lastPathComponent }
+        cwd.map(ProjectRoot.name(for:))
+    }
+
+    /// The detail with its own project's path taken off the front.
+    ///
+    /// `~/Documents/lab/sandbox/openbotsmile/apps/web/src/engine/face.ts` truncated to the
+    /// width of the notch shows the two ends and eats the middle, which is the only part
+    /// that says which file it is. The project is on the row already, so repeating its
+    /// path is spending the whole line on the half nobody reads.
+    var location: String {
+        guard let root = cwd.flatMap(ProjectRoot.path(for:)) else { return detail }
+        let prefix = Self.abbreviate(root) + "/"
+        guard detail.hasPrefix(prefix) else { return detail }
+        return String(detail.dropFirst(prefix.count))
     }
 }

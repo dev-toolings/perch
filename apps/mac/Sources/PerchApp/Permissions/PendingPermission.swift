@@ -41,7 +41,7 @@ final class PendingPermission: Identifiable {
     var agent: Agent { request.agent ?? .claude }
 
     var projectName: String? {
-        cwd.map { URL(fileURLWithPath: $0).lastPathComponent }
+        cwd.map(ProjectRoot.name(for:))
     }
 
     /// What the tool is about to do, in one line.

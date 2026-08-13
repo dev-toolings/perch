@@ -463,7 +463,7 @@ final class AppModel {
 
     /// Which project a hook came from, as the flash names it.
     private func projectName(of request: PerchRequest) -> String? {
-        request.payload.cwd.map { URL(fileURLWithPath: $0).lastPathComponent }
+        request.payload.cwd.map(ProjectRoot.name(for:))
     }
 
     /// What that session was doing, so a finished turn says which one rather than that

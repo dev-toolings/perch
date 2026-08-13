@@ -53,6 +53,17 @@ public enum CodexSessions {
             self.updatedAt = updatedAt
         }
 
+        /// Where a click on this card should land, when there is somewhere to land.
+        ///
+        /// Only the desktop app, and only because it is an application with an address for
+        /// every thread. The CLI originators run inside a terminal that a rollout cannot
+        /// see — that one is the hook's to report, and a session whose hooks fire never
+        /// reaches this code at all.
+        public var client: ClientInfo? {
+            guard originator == "Codex Desktop" else { return nil }
+            return ClientInfo(terminal: originator, session: id)
+        }
+
         /// Whether the model is mid-turn, as opposed to waiting for the next prompt.
         ///
         /// Codex writes no "the turn is over" line, so there is nothing to read for it. What

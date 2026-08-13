@@ -14,6 +14,10 @@ public enum JumpTarget: Equatable, Sendable {
     /// VS Code and its forks answer a URI, which is how an outside app reaches one tab
     /// among a dozen. Needs the Perch extension installed in that editor.
     case editorURI(bundleId: String, scheme: String, tty: String)
+    /// An app that answers a URL of its own. Codex Desktop is the case this exists for:
+    /// it is not a terminal at all, so there is no tty and no pane — but every thread has
+    /// an address, and that is a more precise landing than any terminal gives.
+    case deepLink(bundleId: String, url: String)
     /// kitty and WezTerm ship their own remote control. Running their CLI is both more
     /// precise and less fragile than driving them through AppleScript they do not support.
     case remoteControl(bundleId: String, executable: String, arguments: [String])
@@ -37,7 +41,8 @@ public struct JumpPlan: Equatable, Sendable {
         switch target {
         case .iTerm: return "Jump to iTerm"
         case .appleTerminal: return "Jump to Terminal"
-        case .editorURI(let bundleId, _, _), .remoteControl(let bundleId, _, _):
+        case .editorURI(let bundleId, _, _), .remoteControl(let bundleId, _, _),
+            .deepLink(let bundleId, _):
             return "Jump to \(TerminalJump.name(forBundle: bundleId))"
         case .activate(let bundleId): return "Open \(TerminalJump.name(forBundle: bundleId))"
         case .unavailable: return "No terminal recorded"
@@ -52,6 +57,10 @@ public enum TerminalJump {
         "Apple_Terminal": "com.apple.Terminal",
         "ghostty": "com.mitchellh.ghostty",
         "Ghostty": "com.mitchellh.ghostty",
+        "cmux": "com.cmuxterm.app",
+        // Not a terminal, and it never sets `TERM_PROGRAM` — Perch labels its sessions
+        // itself, off the `originator` its rollouts carry.
+        "Codex Desktop": "com.openai.codex",
         "WarpTerminal": "dev.warp.Warp-Stable",
         "WezTerm": "com.github.wez.wezterm",
         "kitty": "net.kovidgoyal.kitty",
@@ -71,6 +80,10 @@ public enum TerminalJump {
         "com.googlecode.iterm2": "iTerm",
         "com.apple.Terminal": "Terminal",
         "com.mitchellh.ghostty": "Ghostty",
+        "com.cmuxterm.app": "cmux",
+        // "Codex app", not "Codex": the card already wears a Codex badge for the agent,
+        // and two chips reading the same word say nothing about where the click lands.
+        "com.openai.codex": "Codex app",
         "dev.warp.Warp-Stable": "Warp",
         "com.github.wez.wezterm": "WezTerm",
         "net.kovidgoyal.kitty": "kitty",
@@ -139,6 +152,26 @@ public enum TerminalJump {
                         arguments: ["@", "focus-window", "--match", "id:\(id)"]),
                     tmuxPane: client.tmuxPane)
             }
+        case "com.openai.codex":
+            // Every Codex thread has an address the app itself uses — `{{ thread_url }}`
+            // in its own share templates — and Perch already keys its Codex cards on the
+            // root thread id, which is the one a subagent's rollout points back to. So the
+            // click lands on the conversation, not merely on the application.
+            if let thread = client.session, !thread.isEmpty {
+                return JumpPlan(
+                    target: .deepLink(bundleId: bundleId, url: "codex://threads/\(thread)"),
+                    tmuxPane: nil)
+            }
+        case "com.cmuxterm.app":
+            // `focus-panel` selects the workspace on its way to the panel, so one call
+            // lands on the exact tab even when it is in another workspace entirely.
+            if let panel = client.session, !panel.isEmpty {
+                return JumpPlan(
+                    target: .remoteControl(
+                        bundleId: bundleId, executable: "cmux",
+                        arguments: ["focus-panel", "--panel", panel]),
+                    tmuxPane: client.tmuxPane)
+            }
         case "com.github.wez.wezterm":
             // WezTerm needs no configuration for this — `wezterm cli` talks to the running
             // instance out of the box.
@@ -203,7 +236,7 @@ public enum TerminalJump {
                   activate
                 end tell
                 """
-        case .editorURI, .remoteControl, .activate, .unavailable:
+        case .editorURI, .remoteControl, .deepLink, .activate, .unavailable:
             return nil
         }
     }

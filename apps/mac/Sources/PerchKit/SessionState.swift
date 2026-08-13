@@ -182,8 +182,10 @@ public struct SessionSnapshot: Sendable, Equatable {
         }
     }
 
+    /// The repository, not the subdirectory: a session in `openbotsmile/apps/web` is the
+    /// `openbotsmile` project to everyone who works on it.
     public var projectName: String? {
-        cwd.map { URL(fileURLWithPath: $0).lastPathComponent }
+        cwd.map(ProjectRoot.name(for:))
     }
 
     /// Everything that proceeds without you. Compaction counts — it is unattended work —
@@ -253,6 +255,7 @@ public struct SessionTracker: Sendable {
         detail: String = "",
         agent: Agent? = nil,
         aiTitle: String? = nil,
+        client: ClientInfo? = nil,
         at date: Date = .now
     ) {
         var session =
@@ -266,6 +269,9 @@ public struct SessionTracker: Sendable {
         if !detail.isEmpty { session.lastDetail = detail }
         if let agent { session.agent = agent }
         if let aiTitle, !aiTitle.isEmpty { session.aiTitle = aiTitle }
+        // Never cleared by a later observation: where a session runs is fixed for its
+        // lifetime, and a read that happens not to carry it must not take the chip away.
+        if let client { session.client = client }
         session.status = status
 
         sessions[id] = session

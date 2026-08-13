@@ -199,7 +199,22 @@ public struct ClientInfo: Codable, Sendable, Equatable {
         _ environment: [String: String] = ProcessInfo.processInfo.environment,
         tty: String? = nil
     ) -> ClientInfo {
-        ClientInfo(
+        // cmux embeds libghostty, so it reports `TERM_PROGRAM=ghostty` — which sent every
+        // jump to Ghostty.app, an application that is not the one the session is in and on
+        // most machines is not installed at all. Its own variables are the truth, and they
+        // are checked first for exactly that reason.
+        if let panel = environment["CMUX_PANEL_ID"] ?? environment["CMUX_SURFACE_ID"] {
+            return ClientInfo(
+                terminal: "cmux",
+                session: panel,
+                tmuxPane: environment["TMUX_PANE"],
+                tty: tty ?? environment["TTY"],
+                launcher: environment["CMUX_BUNDLE_ID"]
+                    ?? environment["__CFBundleIdentifier"]
+            )
+        }
+
+        return ClientInfo(
             terminal: environment["TERM_PROGRAM"],
             session: environment["ITERM_SESSION_ID"]
                 ?? environment["TERM_SESSION_ID"]
@@ -220,6 +235,9 @@ public struct ClientInfo: Codable, Sendable, Equatable {
         case "WarpTerminal": return "Warp"
         case "vscode": return "VS Code"
         case "ghostty": return "Ghostty"
+        // Lowercase, the way it writes its own name.
+        case "cmux": return "cmux"
+        case "Codex Desktop": return "Codex app"
         default: return terminal.replacingOccurrences(of: ".app", with: "").capitalized
         }
     }

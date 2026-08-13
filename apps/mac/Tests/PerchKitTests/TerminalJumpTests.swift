@@ -118,3 +118,73 @@ import Testing
     #expect(TerminalJump.plan(for: ClientInfo(terminal: "ghostty")).summary == "Open Ghostty")
     #expect(TerminalJump.plan(for: nil).summary == "No terminal recorded")
 }
+
+/// cmux embeds libghostty and says so: `TERM_PROGRAM=ghostty` inside it sent every jump to
+/// Ghostty.app, which is a different application and usually not even installed. Its own
+/// panel id is the handle, and `focus-panel` selects the workspace on the way there.
+@Test func cmuxIsRecognisedThroughGhosttyAndJumpsToItsPanel() {
+    let client = ClientInfo.fromEnvironment([
+        "TERM_PROGRAM": "ghostty",
+        "CMUX_PANEL_ID": "E0F14FC6-2455",
+        "CMUX_WORKSPACE_ID": "30A257B6-DFBA",
+        "CMUX_BUNDLE_ID": "com.cmuxterm.app",
+        "__CFBundleIdentifier": "com.cmuxterm.app",
+    ])
+
+    #expect(client.terminal == "cmux")
+    #expect(client.displayName == "cmux")
+    #expect(client.session == "E0F14FC6-2455")
+
+    let plan = TerminalJump.plan(for: client)
+    #expect(
+        plan.target
+            == .remoteControl(
+                bundleId: "com.cmuxterm.app", executable: "cmux",
+                arguments: ["focus-panel", "--panel", "E0F14FC6-2455"]))
+    #expect(plan.summary == "Jump to cmux")
+}
+
+/// A cmux old enough to export only the surface id still jumps: it is the same handle
+/// under the name it had first.
+@Test func cmuxFallsBackToTheSurfaceId() {
+    let client = ClientInfo.fromEnvironment([
+        "TERM_PROGRAM": "ghostty", "CMUX_SURFACE_ID": "AAA-111",
+    ])
+    #expect(client.session == "AAA-111")
+    #expect(TerminalJump.plan(for: client).isPossible)
+}
+
+/// Ghostty on its own is still Ghostty. The cmux branch must not swallow it.
+@Test func plainGhosttyIsUntouched() {
+    let client = ClientInfo.fromEnvironment(["TERM_PROGRAM": "ghostty"])
+    #expect(client.terminal == "ghostty")
+    #expect(
+        TerminalJump.plan(for: client).target == .activate(bundleId: "com.mitchellh.ghostty"))
+}
+
+/// Codex Desktop is not a terminal — there is no tty and no pane to aim at. What there is
+/// is a thread id, which the app addresses directly, so the click lands on the
+/// conversation rather than on the application.
+@Test func codexDesktopJumpsToItsThread() {
+    let live = CodexSessions.Live(
+        id: "019ff83d-ed8e-7df0-baaa-7b28491263d4",
+        cwd: "/Users/kevin/lab/kit-cgp", originator: "Codex Desktop")
+    let client = try! #require(live.client)
+
+    #expect(client.displayName == "Codex app")
+    let plan = TerminalJump.plan(for: client)
+    #expect(
+        plan.target
+            == .deepLink(
+                bundleId: "com.openai.codex",
+                url: "codex://threads/019ff83d-ed8e-7df0-baaa-7b28491263d4"))
+    #expect(plan.summary == "Jump to Codex app")
+}
+
+/// A Codex running in a terminal has no app to open, and guessing one would send the
+/// click to a window that is not the session. The terminal's own hook reports that case.
+@Test func theCodexCLIIsNotTheDesktopApp() {
+    let cli = CodexSessions.Live(id: "abc", originator: "codex_cli_rs")
+    #expect(cli.client == nil)
+    #expect(CodexSessions.Live(id: "abc", originator: nil).client == nil)
+}

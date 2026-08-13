@@ -28,6 +28,11 @@ enum TerminalJumper {
             if let url = TerminalJump.editorURL(for: plan.target) {
                 NSWorkspace.shared.open(url)
             }
+        case .deepLink(let bundleId, let url):
+            // Forward first, then the URL: an app that is not running answers the link on
+            // launch, and one that is running answers it in a window you can see.
+            activate(bundleId)
+            if let url = URL(string: url) { NSWorkspace.shared.open(url) }
         case .remoteControl(let bundleId, let executable, let arguments):
             activate(bundleId)
             runTool(executable, arguments)
@@ -80,7 +85,11 @@ enum TerminalJumper {
             process.standardError = FileHandle.nullDevice
             // Homebrew's paths are not in a GUI app's inherited PATH.
             var environment = ProcessInfo.processInfo.environment
-            let extra = "/opt/homebrew/bin:/usr/local/bin:/Applications/kitty.app/Contents/MacOS"
+            let extra = "/opt/homebrew/bin:/usr/local/bin"
+                + ":/Applications/kitty.app/Contents/MacOS"
+                // cmux ships its CLI inside the bundle and only puts it on the PATH of the
+                // shells it starts, which is every shell except this one.
+                + ":/Applications/cmux.app/Contents/Resources/bin"
             environment["PATH"] = (environment["PATH"] ?? "") + ":" + extra
             process.environment = environment
             do {
