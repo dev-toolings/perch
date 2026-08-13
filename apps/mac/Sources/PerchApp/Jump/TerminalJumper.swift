@@ -11,6 +11,10 @@ import PerchKit
 enum TerminalJumper {
     static func jump(to client: ClientInfo?) {
         let plan = TerminalJump.plan(for: client)
+        // Every click leaves a line. The whole path below is deliberately silent on
+        // failure, which is right for the person clicking and useless for whoever has to
+        // find out why nothing happened — this line is for the second reader.
+        PerchLog.info("jump: \(plan.summary) target=\(plan.target)")
         guard plan.isPossible else { return }
 
         // tmux first: the pane has to be current before the terminal is asked to show
@@ -95,6 +99,12 @@ enum TerminalJumper {
             do {
                 try process.run()
                 process.waitUntilExit()
+                // A remote-control CLI that runs and still fails (bad pane id, dead
+                // socket, auth) is invisible without this: stdout and stderr are nulled.
+                if process.terminationStatus != 0 {
+                    PerchLog.error(
+                        "\(executable) exited \(process.terminationStatus) — jumped to the window only")
+                }
             } catch {
                 PerchLog.error("\(executable) is not on PATH — jumped to the window only")
             }

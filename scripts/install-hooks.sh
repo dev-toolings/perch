@@ -9,6 +9,9 @@
 #
 # Codex speaks the same hook vocabulary as Claude Code — same event names, same payload —
 # so it needs a different file and a `--source codex` flag, not a second event model.
+# Any tool that speaks that same vocabulary is one row in the TOOL_SPECS table below.
+# gemini-cli does not (different event names, different timeout units) so it is not wired
+# up — see the comment above TOOL_SPECS.
 #
 # opencode has no hooks file to merge into: it loads a JS plugin instead, which is copied
 # into place rather than jq-merged. See scripts/opencode-plugin/perch.js.
@@ -100,18 +103,37 @@ fi
 
 command -v jq >/dev/null 2>&1 || fail "jq is required"
 
-# Both files put their hooks under the same `.hooks` key, with the same event names, so
-# one jq program serves both.
-SOURCE="claude"
+# An agent is a config, not a module: every tool that speaks Claude Code's hook shape
+# (same `.hooks` key, same event names, same command-hook fields) is one row here —
+# flag|source-label|settings-path. Adding a tool means adding a row, not a branch.
+# (Plain indexed array, not `declare -A`: the macOS system bash (3.2) this ships against
+# has no associative arrays.)
 GLOBAL_SETTINGS="$HOME/.claude/settings.json"
+TOOL_SPECS=(
+  "--global|claude|$GLOBAL_SETTINGS"
+  "--codex|codex|${CODEX_HOME:-$HOME/.codex}/hooks.json"
+  # gemini-cli reads ~/.gemini/settings.json but its hook schema is NOT claude-compatible:
+  # event names differ (BeforeTool/AfterTool, not PreToolUse/PostToolUse; no equivalent for
+  # PermissionRequest, PermissionDenied, UserPromptSubmit, Stop, SubagentStart/Stop) and
+  # timeout is milliseconds, not seconds. Wiring this row in would silently write hooks
+  # gemini-cli never fires. Left commented until gemini-cli's schema actually matches.
+  # "--gemini|gemini|$HOME/.gemini/settings.json"
+)
 
-if [ "$TARGET" = "--global" ]; then
-  SETTINGS="$GLOBAL_SETTINGS"
-elif [ "$TARGET" = "--codex" ]; then
-  SETTINGS="${CODEX_HOME:-$HOME/.codex}/hooks.json"
-  SOURCE="codex"
-else
+SOURCE=""
+SETTINGS=""
+for spec in "${TOOL_SPECS[@]}"; do
+  flag="${spec%%|*}"
+  rest="${spec#*|}"
+  [ "$flag" = "$TARGET" ] || continue
+  SOURCE="${rest%%|*}"
+  SETTINGS="${rest#*|}"
+  break
+done
+
+if [ -z "$SETTINGS" ]; then
   [ -d "$TARGET" ] || fail "not a directory: $TARGET"
+  SOURCE="claude"
   SETTINGS="$(cd "$TARGET" && pwd)/.claude/settings.json"
 fi
 
