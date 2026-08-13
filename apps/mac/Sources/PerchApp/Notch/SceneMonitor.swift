@@ -14,6 +14,7 @@ final class SceneMonitor {
     private(set) var scene = Scene()
 
     private var observers: [NSObjectProtocol] = []
+    private var workspaceObservers: [NSObjectProtocol] = []
 
     func start() {
         let center = DistributedNotificationCenter.default()
@@ -32,6 +33,29 @@ final class SceneMonitor {
                 })
         }
 
+        // Display and system sleep are not lock events, but they mean the same thing to
+        // Perch: nobody is watching the screen. These live on the workspace centre, not the
+        // distributed one, and drive the same field the lock observers do.
+        let workspace = NSWorkspace.shared.notificationCenter
+        for name in [
+            NSWorkspace.screensDidSleepNotification, NSWorkspace.willSleepNotification,
+        ] {
+            workspaceObservers.append(
+                workspace.addObserver(forName: name, object: nil, queue: .main) {
+                    [weak self] _ in
+                    Task { @MainActor in self?.scene.isScreenObscured = true }
+                })
+        }
+        for name in [
+            NSWorkspace.screensDidWakeNotification, NSWorkspace.didWakeNotification,
+        ] {
+            workspaceObservers.append(
+                workspace.addObserver(forName: name, object: nil, queue: .main) {
+                    [weak self] _ in
+                    Task { @MainActor in self?.scene.isScreenObscured = false }
+                })
+        }
+
         refresh()
     }
 
@@ -40,6 +64,10 @@ final class SceneMonitor {
             DistributedNotificationCenter.default().removeObserver(observer)
         }
         observers.removeAll()
+        for observer in workspaceObservers {
+            NSWorkspace.shared.notificationCenter.removeObserver(observer)
+        }
+        workspaceObservers.removeAll()
     }
 
     /// Called before anything that would take the screen.

@@ -74,6 +74,40 @@ func commandPrefixStopsAtShellSeparators(command: String) {
     #expect(PermissionRule.rule(for: noCommand) == nil)
 }
 
+/// The scope the card offers has to reach the wire. "This chat" is a `.session` rule,
+/// "Always" a `.localSettings` one, and the default stays `.localSettings` so every old
+/// caller keeps its behaviour.
+@Test func rememberedStampsTheChosenScope() throws {
+    var payload = ClaudeHookPayload()
+    payload.toolName = "Bash"
+    payload.toolInput = .object(["command": .string("npm run build")])
+    let request = PerchRequest(
+        token: "t", event: "PermissionRequest", wantsDecision: true, payload: payload)
+
+    #expect(PermissionRule.remembered(for: request)?.destination == .localSettings)
+    #expect(
+        PermissionRule.remembered(for: request, destination: .session)?.destination == .session)
+    #expect(
+        PermissionRule.remembered(for: request, destination: .session)?.display == "Bash(npm run:*)")
+}
+
+/// A `.session`-scoped grant must encode as an `addRules` update with `destination:
+/// "session"` — the same contract as "Always", only living as long as the conversation.
+@Test func aSessionScopedGrantEncodesAsASessionAddRule() throws {
+    let rule = RememberedRule(toolName: "Bash", content: "npm run:*", destination: .session)
+    let output = HookOutput(event: "PermissionRequest", decision: .allow, reason: nil, rule: rule)
+
+    let data = try JSONEncoder().encode(output)
+    let json = try #require(try JSONSerialization.jsonObject(with: data) as? [String: Any])
+    let specific = try #require(json["hookSpecificOutput"] as? [String: Any])
+    let decision = try #require(specific["decision"] as? [String: Any])
+    let updates = try #require(decision["updatedPermissions"] as? [[String: Any]])
+    let addRule = try #require(updates.first { $0["type"] as? String == "addRules" })
+
+    #expect(addRule["destination"] as? String == "session")
+    #expect(addRule["behavior"] as? String == "allow")
+}
+
 @Test func persistIsIdempotentAndPreservesExistingSettings() throws {
     let directory = URL(fileURLWithPath: NSTemporaryDirectory())
         .appendingPathComponent("perch-rule-\(UUID().uuidString)")

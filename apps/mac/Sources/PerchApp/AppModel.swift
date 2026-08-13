@@ -578,7 +578,16 @@ final class AppModel {
     }
 
     /// Approves the current request and, when asked, remembers the rule for this project.
+    /// `remember` is the old binary "Always" (persists to `.localSettings`); the scoped
+    /// entry point below is what the card now drives.
     func decide(_ decision: PermissionDecision, remember: Bool = false) {
+        decide(decision, rememberAt: remember && decision == .allow ? .localSettings : nil)
+    }
+
+    /// Approves the current request, optionally remembering the rule at a chosen scope:
+    /// `.session` for "just this conversation", `.localSettings` for "always". `nil` grants
+    /// only this turn. Deny/ask never carry a rule.
+    func decide(_ decision: PermissionDecision, rememberAt destination: RememberedRule.Destination?) {
         guard let pending = permissions.current else { return }
 
         // A plan cannot be allowed the plain way — see `approvePlan`. `Perch --decide
@@ -592,8 +601,8 @@ final class AppModel {
         // Claude Code persists the rule itself, through the decision it is already waiting
         // on. Perch writing `settings.local.json` in parallel would race the very process
         // about to rewrite it.
-        let rule = remember && decision == .allow
-            ? PermissionRule.remembered(for: pending.request)
+        let rule = decision == .allow
+            ? destination.flatMap { PermissionRule.remembered(for: pending.request, destination: $0) }
             : nil
 
         permissions.resolve(pending, with: decision, rule: rule)

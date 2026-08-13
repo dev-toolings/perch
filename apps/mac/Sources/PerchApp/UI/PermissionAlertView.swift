@@ -8,7 +8,9 @@ import SwiftUI
 struct PermissionAlertView: View {
     let pending: PendingPermission
     let waitingCount: Int
-    let decide: (PermissionDecision, Bool) -> Void
+    /// The destination names how far a grant reaches: `nil` this turn, `.session` this
+    /// conversation, `.localSettings` always. Deny/ask always pass `nil`.
+    let decide: (PermissionDecision, RememberedRule.Destination?) -> Void
     var decideAll: ((PermissionDecision) -> Void)?
 
     var body: some View {
@@ -50,19 +52,26 @@ struct PermissionAlertView: View {
     private var buttons: some View {
         HStack(spacing: 6) {
             AlertButton(title: "Allow", tint: .green, shortcut: "⌥↵") {
-                decide(.allow, false)
+                decide(.allow, nil)
             }
 
-            // Only offered when we can express a rule the user can read and audit.
+            // Only offered when we can express a rule the user can read and audit. Two
+            // scopes: the grant that lasts as long as this chat, and the one written down
+            // for good. Both show the exact rule so nobody grants more than they meant to.
             if let rule = PermissionRule.rule(for: pending.request) {
+                AlertButton(title: "This chat", tint: .green.opacity(0.6), shortcut: nil) {
+                    decide(.allow, .session)
+                }
+                .help("Allows \(rule) for the rest of this conversation")
+
                 AlertButton(title: "Always", tint: .green.opacity(0.6), shortcut: nil) {
-                    decide(.allow, true)
+                    decide(.allow, .localSettings)
                 }
                 .help("Adds \(rule) to this project's .claude/settings.local.json")
             }
 
             AlertButton(title: "Deny", tint: .red, shortcut: "⌥⌫") {
-                decide(.deny, false)
+                decide(.deny, nil)
             }
 
             Spacer(minLength: 0)
@@ -81,7 +90,7 @@ struct PermissionAlertView: View {
                     .foregroundStyle(Theme.danger.opacity(0.8))
             }
 
-            Button(t("Ask in terminal")) { decide(.ask, false) }
+            Button(t("Ask in terminal")) { decide(.ask, nil) }
                 .buttonStyle(.plain)
                 .font(.system(size: 10))
                 .foregroundStyle(.white.opacity(0.45))

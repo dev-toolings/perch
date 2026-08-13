@@ -250,8 +250,8 @@ struct NotchRootView: View {
         PermissionAlertView(
             pending: pending,
             waitingCount: model.permissions.waitingCount,
-            decide: { decision, remember in
-                model.decide(decision, remember: remember)
+            decide: { decision, destination in
+                model.decide(decision, rememberAt: destination)
             },
             decideAll: { model.decideAll($0) }
         )

@@ -9,8 +9,13 @@ import Foundation
 /// `persist` remains for the paths where no decision is being returned.
 public enum PermissionRule {
     /// The rule a "don't ask again" click would add, or nil when we cannot express one
-    /// safely.
-    public static func remembered(for request: PerchRequest) -> RememberedRule? {
+    /// safely. The destination is where Claude Code persists it: `.localSettings` for an
+    /// "Always" that outlives the session, `.session` for a "just this conversation" grant
+    /// — both ride the same `addRules` contract, only the destination string differs.
+    public static func remembered(
+        for request: PerchRequest,
+        destination: RememberedRule.Destination = .localSettings
+    ) -> RememberedRule? {
         guard let tool = request.payload.toolName else { return nil }
 
         switch tool {
@@ -19,10 +24,10 @@ public enum PermissionRule {
                 return nil
             }
             guard let prefix = commandPrefix(command) else { return nil }
-            return RememberedRule(toolName: "Bash", content: "\(prefix):*")
+            return RememberedRule(toolName: "Bash", content: "\(prefix):*", destination: destination)
         default:
             // Broad but predictable: this tool, anywhere in this project.
-            return RememberedRule(toolName: tool, content: nil)
+            return RememberedRule(toolName: tool, content: nil, destination: destination)
         }
     }
 
