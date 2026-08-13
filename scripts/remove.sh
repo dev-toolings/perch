@@ -102,14 +102,20 @@ command -v jq >/dev/null 2>&1 || fail "jq is required to clean hook entries"
 FOUND_HOOKS=0
 while IFS= read -r settings; do
   [ -f "$settings" ] || continue
+  # hook-sites.json can also hold the opencode plugin file (a .js, not a settings.json) —
+  # this loop's jq program only knows how to strip hook entries from JSON, so a non-JSON
+  # site must never reach it. That branch is handled on its own, in section 2e below.
+  case "$settings" in *.json) ;; *) continue ;; esac
   grep -q 'perch-hook' "$settings" 2>/dev/null || continue
   FOUND_HOOKS=1
   if act "remove Perch hooks from $settings (backup: $settings.perch-backup)"; then
     cp "$settings" "$settings.perch-backup"
     tmp="$(mktemp)"
     jq "$STRIP_HOOKS" "$settings" >"$tmp"
-    # Never leave a truncated settings file behind.
-    if jq empty "$tmp" 2>/dev/null; then
+    # Never leave a truncated settings file behind. `jq empty` alone is not enough: it
+    # returns 0 on a zero-byte file too, so a jq failure that left `$tmp` empty would
+    # pass this guard and `mv` an empty file over the original.
+    if [ -s "$tmp" ] && jq empty "$tmp" 2>/dev/null; then
       mv "$tmp" "$settings"
       ok "cleaned $settings"
     else
@@ -162,6 +168,16 @@ if grep -q '>>> perch >>>' "$KITTY_CONF" 2>/dev/null; then
   fi
 else
   ok "no Perch block in kitty.conf"
+fi
+
+# --- 2e. opencode plugin ----------------------------------------------------------
+
+if [ -f "$HOME/.config/opencode/plugins/perch.js" ]; then
+  if act "remove the Perch opencode plugin"; then
+    "$(dirname "${BASH_SOURCE[0]}")/install-hooks.sh" --uninstall --opencode || true
+  fi
+else
+  ok "no Perch opencode plugin installed"
 fi
 
 # --- 3. Local data ---------------------------------------------------------------

@@ -58,6 +58,9 @@ struct SessionCardView: View {
         case .claude: return Theme.claude
         case .codex: return Theme.info
         case .gemini: return Theme.warning
+        // No brand colour of its own here, so it borrows the "working / succeeded" green —
+        // distinct from the other three and already the tone the glyph draws it in.
+        case .opencode: return Theme.active
         case .unknown: return Theme.secondary
         }
     }

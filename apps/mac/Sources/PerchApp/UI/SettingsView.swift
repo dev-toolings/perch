@@ -806,8 +806,23 @@ private struct FiltersPane: View {
 
 // MARK: - Integrations
 
+/// Which push text field last had focus, so losing it can commit a draft — the same
+/// "commit on blur" the two other free-text fields in this file get from a button instead.
+private enum PushFocusField: Hashable {
+    case topic, server
+}
+
 private struct IntegrationsPane: View {
     let model: AppModel
+
+    /// Local drafts for the two push text fields. Typing writes here, not into
+    /// `model.push` — the field used to call `updatePush` (and therefore `sanitised`) on
+    /// every keystroke, which made a server URL impossible to type: stripping a trailing
+    /// `/` on each character is what turns `https://` into `https:` the moment you type
+    /// the second slash. Sanitising now only ever runs at commit.
+    @State private var pushTopicDraft = ""
+    @State private var pushServerDraft = ""
+    @FocusState private var pushFocus: PushFocusField?
 
     /// Projects that install Perch on top of the global hooks. Read here rather than
     /// remembered, so the warning goes away the moment the extra install does.
@@ -977,7 +992,99 @@ private struct IntegrationsPane: View {
                     }
                 }
             }
+
+            Section(
+                t("Push notifications"),
+                note: t(
+                    "A phone buzz through ntfy for the one case a notch on an empty desk "
+                        + "cannot help with: an approval or a question waiting on you while "
+                        + "you are away from the machine. Never sent while you are at it. "
+                        + "Sends the question text — or the start of a plan — and the "
+                        + "project name to your ntfy topic. ntfy topics are public by "
+                        + "convention: anyone who knows the topic name can read what was "
+                        + "sent. Pick a long, hard-to-guess topic, or point Server at your "
+                        + "own instance to keep it off the public one.")
+            ) {
+                Toggle(t("Push me when I'm away"), isOn: pushEnabled)
+                HStack {
+                    Text(t("Topic")).foregroundStyle(.secondary)
+                    TextField(t("your-private-topic"), text: $pushTopicDraft)
+                        .textFieldStyle(.roundedBorder)
+                        .focused($pushFocus, equals: .topic)
+                        .onSubmit { commitPushTopic() }
+                }
+                .disabled(!model.push.enabled)
+                DisclosureGroup(t("Advanced")) {
+                    HStack {
+                        Text(t("Server")).foregroundStyle(.secondary)
+                        TextField("https://ntfy.sh", text: $pushServerDraft)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($pushFocus, equals: .server)
+                            .onSubmit { commitPushServer() }
+                    }
+                    Stepper(
+                        value: pushThreshold, in: 1...60,
+                        label: {
+                            Text(
+                                t(
+                                    "Away after %lld min idle",
+                                    model.push.idleThresholdMinutes))
+                        })
+                }
+                .disabled(!model.push.enabled)
+            }
         }
+        .onAppear {
+            pushTopicDraft = model.push.topic
+            pushServerDraft = model.push.server
+        }
+        // Losing focus is the other way a draft is meant to commit — someone who clicks
+        // out of the field, or tabs to the next one, should not lose what they typed.
+        .onChange(of: pushFocus) { previous, _ in
+            switch previous {
+            case .topic: commitPushTopic()
+            case .server: commitPushServer()
+            case nil: break
+            }
+        }
+    }
+
+    private func commitPushTopic() {
+        guard pushTopicDraft != model.push.topic else { return }
+        var next = model.push
+        next.topic = pushTopicDraft
+        model.updatePush(next)
+        // Reflects the sanitised result back — a topic with a stray space is shown
+        // trimmed, not left on screen looking unchanged while a different one is saved.
+        pushTopicDraft = model.push.topic
+    }
+
+    private func commitPushServer() {
+        guard pushServerDraft != model.push.server else { return }
+        var next = model.push
+        next.server = pushServerDraft
+        model.updatePush(next)
+        pushServerDraft = model.push.server
+    }
+
+    private var pushEnabled: Binding<Bool> {
+        Binding(
+            get: { model.push.enabled },
+            set: { value in
+                var next = model.push
+                next.enabled = value
+                model.updatePush(next)
+            })
+    }
+
+    private var pushThreshold: Binding<Int> {
+        Binding(
+            get: { model.push.idleThresholdMinutes },
+            set: { value in
+                var next = model.push
+                next.idleThresholdMinutes = value
+                model.updatePush(next)
+            })
     }
 }
 

@@ -88,6 +88,24 @@ struct AgentGlyph: View {
                     "..........",
                 ], Theme.active, Theme.warning
             )
+        // Electric: pointed ears, a compact tapering body, and a spark trailing off the
+        // back-right instead of a tail — nothing shelled or winged about it, which is what
+        // keeps it apart from the other three at a glance.
+        case .opencode:
+            return (
+                [
+                    "...xx.xx..",
+                    "..xxxxxxx.",
+                    ".xxxxxxxxo",
+                    ".xxxxxxxoo",
+                    ".xx.xx.xoo",
+                    ".xxxxxxx.o",
+                    "..xxxxxx..",
+                    "..xx..xx..",
+                    "..........",
+                    "..........",
+                ], Theme.active, Theme.primary.opacity(0.85)
+            )
         // Anything Perch has not met. Deliberately not a creature: an unrecognised agent
         // should look unrecognised rather than borrow one of the three identities.
         case .unknown:
@@ -119,6 +137,7 @@ struct AgentGlyph: View {
         if let cached = sheets[agent] { return cached }
         let names: [Agent: String] = [
             .claude: "agent-claude", .codex: "agent-codex", .gemini: "agent-gemini",
+            .opencode: "agent-opencode",
         ]
         let loaded = names[agent]
             .flatMap { name in

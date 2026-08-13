@@ -144,6 +144,7 @@ public enum Agent: String, Codable, Sendable, CaseIterable {
     case claude
     case codex
     case gemini
+    case opencode
     case unknown
 
     public init(source: String?) {
@@ -155,6 +156,7 @@ public enum Agent: String, Codable, Sendable, CaseIterable {
         case .claude: return "Claude"
         case .codex: return "Codex"
         case .gemini: return "Gemini"
+        case .opencode: return "opencode"
         case .unknown: return "Agent"
         }
     }

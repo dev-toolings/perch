@@ -1,4 +1,5 @@
 import AppKit
+import CoreGraphics
 import Foundation
 import Observation
 import PerchKit
@@ -29,6 +30,16 @@ final class AppModel {
         sounds.save()
     }
 
+    /// Whether blocking events also reach a phone through ntfy, and where.
+    private(set) var push = PushSettings.load()
+    /// One push per session per waiting episode — see `PushDecision`.
+    @ObservationIgnored private var pushDedup = PushDedupState()
+
+    func updatePush(_ settings: PushSettings) {
+        push = settings.sanitised
+        push.save()
+    }
+
     /// The ⌘Tab-style session switcher.
     private(set) var switcher = SessionSwitcher()
 
@@ -57,6 +68,9 @@ final class AppModel {
         permissions.onResolved = { [weak self] pending in
             guard let self, let session = pending.sessionId else { return }
             activity.answered(sessionId: session)
+            // The session stopped waiting — the next time it blocks is a new episode,
+            // and earns a push of its own.
+            pushDedup.endEpisode(for: session)
         }
     }
 
@@ -362,6 +376,49 @@ final class AppModel {
         SessionNotifier.post(kind, title: title, client: request.client)
     }
 
+    /// Sends a phone push for a request that just started blocking, when `PushDecision`
+    /// says the user is away and nobody already got one for this same wait.
+    private func maybePush(_ kind: InterruptionKind, requestKind: RequestKind, for request: PerchRequest) {
+        guard let sessionId = request.payload.sessionId else { return }
+
+        // `.combinedSessionState` reads across every input device rather than one, so a
+        // trackpad tap counts the same as a keypress — either one means someone is there.
+        let idleSeconds = CGEventSource.secondsSinceLastEventType(
+            .combinedSessionState, eventType: .null)
+        let isAway = PushDecision.isAway(
+            isScreenObscured: scenes.scene.isScreenObscured,
+            idleSeconds: idleSeconds,
+            thresholdMinutes: push.idleThresholdMinutes)
+
+        guard
+            PushDecision.shouldPush(
+                settings: push, kind: kind, isAway: isAway, sessionId: sessionId,
+                dedup: pushDedup)
+        else { return }
+        pushDedup.markPushed(for: sessionId)
+
+        let project = projectName(of: request) ?? t("Claude Code")
+        PushNotifier.send(
+            settings: push,
+            title: "\(project) - \(t(kind.title))",
+            body: whatItWaitsFor(requestKind))
+    }
+
+    /// The text a push shows instead of the card itself: a question's own text, or a
+    /// plan's full text — `PushNotifier` is the one that truncates it to a phone-sized
+    /// notification, not this. A plain permission carries no prose worth quoting, so it
+    /// gets a fixed line instead of a command nobody asked to see out of context.
+    private func whatItWaitsFor(_ kind: RequestKind) -> String {
+        switch kind {
+        case .question(let request):
+            return request.questions.map(\.question).joined(separator: " / ")
+        case .plan(let request):
+            return request.plan
+        case .permission:
+            return t("Waiting for a permission decision")
+        }
+    }
+
     private func handle(_ request: PerchRequest) async -> PerchResponse {
         guard request.event != Wire.statusEvent else {
             return PerchResponse(status: statusReport())
@@ -447,6 +504,11 @@ final class AppModel {
             } else {
                 notch.flashActivity()
             }
+            // Independent of `announce`'s decision: a quiet scene silences the panel for
+            // someone in the room, but someone who stepped away still needs the buzz —
+            // and a scene the panel judged loud enough to open is exactly the one where
+            // nobody was there to see it.
+            maybePush(kind, requestKind: requestKind, for: request)
         }
         var response = await permissions.request(request)
         notch.showAlert(

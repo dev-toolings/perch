@@ -170,6 +170,17 @@
 "Show what is used instead" = "Afficher plutôt ce qui est consommé";
 "Codex trust" = "Confiance Codex";
 "Run /hooks in Codex and approve the Perch entries." = "Lance /hooks dans Codex et approuve les entrées Perch.";
+"Push notifications" = "Notifications push";
+"A phone buzz through ntfy for the one case a notch on an empty desk cannot help with: an approval or a question waiting on you while you are away from the machine. Never sent while you are at it. Sends the question text — or the start of a plan — and the project name to your ntfy topic. ntfy topics are public by convention: anyone who knows the topic name can read what was sent. Pick a long, hard-to-guess topic, or point Server at your own instance to keep it off the public one." = "Une alerte sur le téléphone via ntfy pour le seul cas où une encoche sur un bureau vide ne peut rien faire : une approbation ou une question qui attend pendant que tu es loin de la machine. Jamais envoyée pendant que tu y es. Envoie le texte de la question — ou le début d'un plan — et le nom du projet vers ton sujet ntfy. Les sujets ntfy sont publics par convention : quiconque connaît le nom du sujet peut lire ce qui y a été envoyé. Choisis un nom long et difficile à deviner, ou pointe Serveur vers ta propre instance pour rester hors du service public.";
+"Push me when I'm away" = "M'alerter quand je suis absent";
+"Topic" = "Sujet";
+/* No accent on purpose: the topic field only accepts [A-Za-z0-9_-], and a
+   placeholder the field itself would refuse is a trap. */
+"your-private-topic" = "ton-sujet-prive";
+"Advanced" = "Avancé";
+"Server" = "Serveur";
+"Away after %lld min idle" = "Absent après %lld min d'inactivité";
+"Waiting for a permission decision" = "En attente d'une décision de permission";
 
 /* Task board */
 "Tasks (%@)" = "Tâches (%@)";

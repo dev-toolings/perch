@@ -299,3 +299,10 @@ private func specific(of output: HookOutput) throws -> [String: Any] {
         token: "t", event: "PreToolUse", wantsDecision: false, payload: payload)
     #expect(request.subagentLabel == "general-purpose")
 }
+
+/// `--source opencode` is a plain rawValue match, same as every other CLI — no transport
+/// change needed for a new agent to be recognised.
+@Test func opencodeIsRecognisedFromItsOwnSourceLabel() {
+    #expect(Agent(source: "opencode") == .opencode)
+    #expect(Agent.opencode.displayName == "opencode")
+}

@@ -165,6 +165,15 @@
 "Show what is used instead" = "Show what is used instead";
 "Codex trust" = "Codex trust";
 "Run /hooks in Codex and approve the Perch entries." = "Run /hooks in Codex and approve the Perch entries.";
+"Push notifications" = "Push notifications";
+"A phone buzz through ntfy for the one case a notch on an empty desk cannot help with: an approval or a question waiting on you while you are away from the machine. Never sent while you are at it. Sends the question text — or the start of a plan — and the project name to your ntfy topic. ntfy topics are public by convention: anyone who knows the topic name can read what was sent. Pick a long, hard-to-guess topic, or point Server at your own instance to keep it off the public one." = "A phone buzz through ntfy for the one case a notch on an empty desk cannot help with: an approval or a question waiting on you while you are away from the machine. Never sent while you are at it. Sends the question text — or the start of a plan — and the project name to your ntfy topic. ntfy topics are public by convention: anyone who knows the topic name can read what was sent. Pick a long, hard-to-guess topic, or point Server at your own instance to keep it off the public one.";
+"Push me when I'm away" = "Push me when I'm away";
+"Topic" = "Topic";
+"your-private-topic" = "your-private-topic";
+"Advanced" = "Advanced";
+"Server" = "Server";
+"Away after %lld min idle" = "Away after %lld min idle";
+"Waiting for a permission decision" = "Waiting for a permission decision";
 
 /* Menu, notifications */
 "Settings…" = "Settings…";

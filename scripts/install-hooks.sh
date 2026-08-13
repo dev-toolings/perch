@@ -4,10 +4,14 @@
 #   ./scripts/install-hooks.sh ~/some-project     # project-scoped (recommended)
 #   ./scripts/install-hooks.sh --global           # ~/.claude/settings.json
 #   ./scripts/install-hooks.sh --codex            # ~/.codex/hooks.json
-#   ./scripts/install-hooks.sh --uninstall <project-dir>|--global|--codex
+#   ./scripts/install-hooks.sh --opencode         # ~/.config/opencode/plugins/perch.js
+#   ./scripts/install-hooks.sh --uninstall <project-dir>|--global|--codex|--opencode
 #
 # Codex speaks the same hook vocabulary as Claude Code — same event names, same payload —
 # so it needs a different file and a `--source codex` flag, not a second event model.
+#
+# opencode has no hooks file to merge into: it loads a JS plugin instead, which is copied
+# into place rather than jq-merged. See scripts/opencode-plugin/perch.js.
 #
 # Existing hooks are preserved: Perch entries are merged in, and any previous Perch
 # entries are replaced rather than duplicated. Every site touched is recorded in
@@ -22,8 +26,6 @@ set -euo pipefail
 
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
-command -v jq >/dev/null 2>&1 || fail "jq is required"
-
 FORCE=0
 UNINSTALL=0
 TARGET=""
@@ -35,7 +37,68 @@ for argument in "$@"; do
   esac
 done
 [ -n "$TARGET" ] ||
-  fail "usage: install-hooks.sh [--uninstall] <project-dir>|--global|--codex [--force]"
+  fail "usage: install-hooks.sh [--uninstall] <project-dir>|--global|--codex|--opencode [--force]"
+
+# opencode has nothing in common with the jq-merged settings files below — it loads a
+# plugin file instead — so it branches off entirely before SETTINGS is even decided, and
+# before the jq check further down: neither side of this branch strictly needs jq (the
+# uninstall never touches it, and installing a fresh package.json only copies one).
+if [ "$TARGET" = "--opencode" ]; then
+  OPENCODE_PLUGIN_DIR="$HOME/.config/opencode/plugins"
+  OPENCODE_PLUGIN_SRC="$PERCH_ROOT/scripts/opencode-plugin"
+  DEST="$OPENCODE_PLUGIN_DIR/perch.js"
+  SITES="$PERCH_HOME/hook-sites.json"
+
+  if [ "$UNINSTALL" -eq 1 ]; then
+    if [ ! -f "$DEST" ]; then
+      ok "no Perch opencode plugin installed"
+      exit 0
+    fi
+    # Distinct suffix from the install-time backup below: that one may hold a plugin the
+    # user had in place before Perch ever touched this directory, and this uninstall must
+    # not overwrite it with the copy it is now removing.
+    cp "$DEST" "$DEST.perch-removed"
+    rm -f "$DEST"
+    if command -v jq >/dev/null 2>&1 && [ -f "$SITES" ]; then
+      jq --arg path "$DEST" 'map(select(. != $path))' "$SITES" >"$SITES.tmp" && mv "$SITES.tmp" "$SITES"
+    fi
+    ok "opencode plugin removed from $OPENCODE_PLUGIN_DIR"
+    info "backup at $DEST.perch-removed"
+    warn "package.json in $OPENCODE_PLUGIN_DIR was left in place — other plugins may need it"
+    exit 0
+  fi
+
+  [ -f "$OPENCODE_PLUGIN_SRC/perch.js" ] || fail "opencode plugin not found at $OPENCODE_PLUGIN_SRC/perch.js"
+  mkdir -p "$OPENCODE_PLUGIN_DIR"
+  [ -f "$DEST" ] && cp "$DEST" "$DEST.perch-backup"
+  cp "$OPENCODE_PLUGIN_SRC/perch.js" "$DEST"
+
+  # package.json is shared by every plugin in the directory, so it is only written when
+  # none exists yet — an existing one is never overwritten, only checked.
+  PKG="$OPENCODE_PLUGIN_DIR/package.json"
+  if [ ! -f "$PKG" ]; then
+    cp "$OPENCODE_PLUGIN_SRC/package.json" "$PKG"
+  elif command -v jq >/dev/null 2>&1 && ! jq -e '.type == "module"' "$PKG" >/dev/null 2>&1; then
+    warn "$PKG does not declare \"type\": \"module\" — opencode plugins need ES modules"
+  fi
+
+  # Recorded like every other site, so the header's promise ("every site touched is
+  # recorded") holds here too — remove.sh's own opencode check doesn't depend on this,
+  # but nothing else reading hook-sites.json should have to special-case this scope.
+  if command -v jq >/dev/null 2>&1; then
+    mkdir -p "$PERCH_HOME"
+    [ -f "$SITES" ] || echo '[]' >"$SITES"
+    jq --arg path "$DEST" '. + [$path] | unique' "$SITES" >"$SITES.tmp" && mv "$SITES.tmp" "$SITES"
+  fi
+
+  ok "opencode plugin installed at $DEST"
+  [ -f "$DEST.perch-backup" ] && info "backup at $DEST.perch-backup"
+  warn "restart any open opencode session — plugins load at startup"
+  info "remove with: ./scripts/install-hooks.sh --uninstall --opencode"
+  exit 0
+fi
+
+command -v jq >/dev/null 2>&1 || fail "jq is required"
 
 # Both files put their hooks under the same `.hooks` key, with the same event names, so
 # one jq program serves both.
