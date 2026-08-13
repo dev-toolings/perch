@@ -188,3 +188,105 @@ import Testing
     #expect(cli.client == nil)
     #expect(CodexSessions.Live(id: "abc", originator: nil).client == nil)
 }
+
+/// Superset claims to be kitty — `TERM_PROGRAM=kitty`, version and all — and believing it
+/// would run `kitty @` against an app that is not installed. Its own variables win, and
+/// its deep link is pane-precise without any CLI.
+@Test func supersetIsCaughtBeforeItsKittyDisguise() {
+    let client = ClientInfo.fromEnvironment([
+        "TERM_PROGRAM": "kitty",
+        "SUPERSET_PANE_ID": "pane-42",
+        "SUPERSET_WORKSPACE_ID": "ws-7",
+    ])
+    #expect(client.terminal == "Superset")
+    #expect(
+        TerminalJump.plan(for: client).target
+            == .deepLink(
+                bundleId: "com.superset.desktop",
+                url: "superset://v2-workspace/ws-7?terminalId=pane-42"))
+}
+
+/// Warp hands over its own focus URL and Perch passes it on untouched — the preview
+/// channel uses another scheme, so the variable is the contract, not the string.
+@Test func warpJumpsThroughItsOwnFocusURL() {
+    let client = ClientInfo.fromEnvironment([
+        "TERM_PROGRAM": "WarpTerminal",
+        "WARP_FOCUS_URL": "warp://session/abc123",
+    ])
+    #expect(
+        TerminalJump.plan(for: client).target
+            == .deepLink(bundleId: "dev.warp.Warp-Stable", url: "warp://session/abc123"))
+
+    // Without the URL, Warp is what it was: an app to bring forward.
+    let plain = ClientInfo.fromEnvironment(["TERM_PROGRAM": "WarpTerminal"])
+    #expect(TerminalJump.plan(for: plain).target == .activate(bundleId: "dev.warp.Warp-Stable"))
+}
+
+/// Wave's `wsh focusblock` takes the block on argv and the tab from the environment, so
+/// the tab rides in front of the command the way `/usr/bin/env` expects it.
+@Test func waveFocusesItsBlockWithTheTabInTheEnvironment() {
+    let client = ClientInfo.fromEnvironment([
+        "TERM_PROGRAM": "waveterm",
+        "WAVETERM_BLOCKID": "block-1",
+        "WAVETERM_TABID": "tab-9",
+    ])
+    #expect(client.displayName == "Wave")
+    #expect(
+        TerminalJump.plan(for: client).target
+            == .remoteControl(
+                bundleId: "dev.commandline.waveterm",
+                executable: "WAVETERM_TABID=tab-9",
+                arguments: ["wsh", "focusblock", "-b", "block-1"]))
+}
+
+/// JetBrains sets no TERM_PROGRAM at all — the launcher is the only signal, and it is
+/// enough to bring the IDE forward and put a name on the chip.
+@Test func aLauncherAloneIsStillSomewhereToLand() {
+    let client = ClientInfo.fromEnvironment([
+        "TERMINAL_EMULATOR": "JetBrains-JediTerm",
+        "__CFBundleIdentifier": "com.jetbrains.WebStorm",
+    ])
+    #expect(client.displayName == "WebStorm")
+    #expect(
+        TerminalJump.plan(for: client).target
+            == .activate(bundleId: "com.jetbrains.WebStorm"))
+
+    // Finder launches half the processes on a Mac and is never where a session lives.
+    let finder = ClientInfo.fromEnvironment(["__CFBundleIdentifier": "com.apple.Finder"])
+    #expect(finder.displayName == nil)
+    #expect(TerminalJump.plan(for: finder).target == .unavailable)
+}
+
+/// zellij and screen stack on the host terminal exactly as tmux does: focus the app, then
+/// tell the multiplexer which pane the click meant.
+@Test func multiplexersRideAlongAsFollowUps() {
+    let zellij = ClientInfo.fromEnvironment([
+        "TERM_PROGRAM": "ghostty",
+        "ZELLIJ_PANE_ID": "terminal_3",
+        "ZELLIJ_SESSION_NAME": "main",
+    ])
+    #expect(
+        TerminalJump.plan(for: zellij).followUps
+            == [["ZELLIJ_SESSION_NAME=main", "zellij", "action", "focus-pane-id", "terminal_3"]])
+
+    let screen = ClientInfo.fromEnvironment([
+        "TERM_PROGRAM": "iTerm.app",
+        "ITERM_SESSION_ID": "w0t0p0:X",
+        "STY": "12345.pts-0.host",
+        "WINDOW": "2",
+    ])
+    #expect(
+        TerminalJump.plan(for: screen).followUps
+            == [["screen", "-S", "12345.pts-0.host", "-X", "select", "2"]])
+}
+
+/// Conductor names itself only through its own variables; there is no focus deep link, so
+/// activating the app is the honest ceiling.
+@Test func conductorIsRecognisedByItsOwnVariables() {
+    let client = ClientInfo.fromEnvironment([
+        "CONDUCTOR_WORKSPACE_PATH": "/Users/x/repo",
+        "CONDUCTOR_SESSION_ID": "sess-1",
+    ])
+    #expect(client.terminal == "Conductor")
+    #expect(TerminalJump.plan(for: client).target == .activate(bundleId: "com.conductor.app"))
+}

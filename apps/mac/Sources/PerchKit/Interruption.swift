@@ -93,6 +93,10 @@ public struct QuietSettings: Codable, Sendable, Equatable {
     /// and the sound: a notification is the quietest of the three, and a finished turn
     /// that produces nothing at all is the complaint this whole app answers.
     public var notifiesOnComplete: Bool
+    /// A user-driven "heads-down" mode, lighter than the scene lockdown: non-blocking
+    /// events drop to a dot and stay silent, but a blocking approval still earns the panel
+    /// — being muted should never mean an agent sits blocked without a way to answer.
+    public var manualQuiet: Bool
 
     public init(
         duringFocus: Bool = true,
@@ -102,7 +106,8 @@ public struct QuietSettings: Codable, Sendable, Equatable {
         autoExpandOnComplete: Bool = false,
         soundEnabled: Bool = true,
         smartSuppression: Bool = true,
-        notifiesOnComplete: Bool = true
+        notifiesOnComplete: Bool = true,
+        manualQuiet: Bool = false
     ) {
         self.duringFocus = duringFocus
         self.whenScreenObscured = whenScreenObscured
@@ -112,12 +117,14 @@ public struct QuietSettings: Codable, Sendable, Equatable {
         self.soundEnabled = soundEnabled
         self.smartSuppression = smartSuppression
         self.notifiesOnComplete = notifiesOnComplete
+        self.manualQuiet = manualQuiet
     }
 
     /// Added after the file format shipped, so an existing `quiet.json` decodes without it.
     enum CodingKeys: String, CodingKey {
         case duringFocus, whenScreenObscured, whenScreenShared, quietHours
         case autoExpandOnComplete, soundEnabled, smartSuppression, notifiesOnComplete
+        case manualQuiet
     }
 
     public init(from decoder: any Decoder) throws {
@@ -135,6 +142,7 @@ public struct QuietSettings: Codable, Sendable, Equatable {
             try container.decodeIfPresent(Bool.self, forKey: .smartSuppression) ?? true
         notifiesOnComplete =
             try container.decodeIfPresent(Bool.self, forKey: .notifiesOnComplete) ?? true
+        manualQuiet = try container.decodeIfPresent(Bool.self, forKey: .manualQuiet) ?? false
     }
 }
 
@@ -175,8 +183,12 @@ public enum InterruptionPolicy {
             return .quiet
         }
 
-        // Something is blocked on an answer: that always earns the panel.
+        // Something is blocked on an answer: that always earns the panel — even heads-down.
         if kind.isBlocking { return .full }
+
+        // Heads-down: everything non-blocking drops to a dot. Sits below the blocking
+        // check above, so approvals still open while the rest goes silent.
+        if settings.manualQuiet { return .quiet }
 
         // Completions are the noisy ones, and the reason people turn notifications off.
         if kind == .taskComplete && !settings.autoExpandOnComplete { return .quiet }
@@ -204,6 +216,8 @@ public enum InterruptionPolicy {
         calendar: Calendar = .current
     ) -> Bool {
         guard settings.notifiesOnComplete, !kind.isBlocking else { return false }
+        // Heads-down mutes Notification Center too, or "quiet" would still bark completions.
+        if settings.manualQuiet { return false }
         if isQuietScene(scene: scene, settings: settings) { return false }
         if settings.quietHours?.contains(date, calendar: calendar) == true { return false }
         if let host, host == scene.frontmostBundleId { return false }

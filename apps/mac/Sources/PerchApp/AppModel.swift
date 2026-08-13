@@ -401,7 +401,8 @@ final class AppModel {
         PushNotifier.send(
             settings: push,
             title: "\(project) - \(t(kind.title))",
-            body: whatItWaitsFor(requestKind))
+            body: whatItWaitsFor(requestKind),
+            kind: kind)
     }
 
     /// The text a push shows instead of the card itself: a question's own text, or a

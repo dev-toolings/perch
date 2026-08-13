@@ -84,6 +84,16 @@ private struct GeneralPane: View {
             }
 
             Section(
+                t("Heads-down"),
+                note: t(
+                    "A mode you switch on yourself. Completions and other chatter drop to a "
+                        + "dot, no sound, no panel — but an approval still opens, so nothing "
+                        + "stays blocked while you focus.")
+            ) {
+                Toggle(t("Heads-down mode"), isOn: binding(\.manualQuiet))
+            }
+
+            Section(
                 t("Quiet hours"),
                 note: t("Crosses midnight when the end is earlier than the start.")
             ) {
@@ -1030,6 +1040,9 @@ private struct IntegrationsPane: View {
                                     "Away after %lld min idle",
                                     model.push.idleThresholdMinutes))
                         })
+                    Toggle(
+                        t("Also push when a task finishes (reaches a paired Apple Watch)"),
+                        isOn: pushCompletions)
                 }
                 .disabled(!model.push.enabled)
             }
@@ -1057,6 +1070,19 @@ private struct IntegrationsPane: View {
         // Reflects the sanitised result back — a topic with a stray space is shown
         // trimmed, not left on screen looking unchanged while a different one is saved.
         pushTopicDraft = model.push.topic
+    }
+
+    /// Membership of `.taskComplete` in `pushedKinds`, as a toggle. Blocking kinds are
+    /// always pushed and are left untouched; this only opts the "done" alert in or out.
+    private var pushCompletions: Binding<Bool> {
+        Binding(
+            get: { model.push.pushedKinds.contains(.taskComplete) },
+            set: { value in
+                var next = model.push
+                if value { next.pushedKinds.insert(.taskComplete) }
+                else { next.pushedKinds.remove(.taskComplete) }
+                model.updatePush(next)
+            })
     }
 
     private func commitPushServer() {

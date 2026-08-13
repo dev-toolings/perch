@@ -33,6 +33,11 @@ public struct JumpPlan: Equatable, Sendable {
     /// Run after the terminal is focused: inside tmux the visible pane is tmux's choice,
     /// not the terminal's.
     public var tmuxPane: String?
+    /// The other multiplexers, as argv lists for `/usr/bin/env` — zellij and screen do the
+    /// same job as tmux with different words, and a list keeps the executor from growing a
+    /// case per dialect. Best-effort like everything here: a wrong pane id is a command
+    /// that errors into a log line, not a dialog.
+    public var followUps: [[String]] = []
 
     public var isPossible: Bool { target != .unavailable }
 
@@ -61,6 +66,13 @@ public enum TerminalJump {
         // Not a terminal, and it never sets `TERM_PROGRAM` — Perch labels its sessions
         // itself, off the `originator` its rollouts carry.
         "Codex Desktop": "com.openai.codex",
+        // Agent managers, labelled from their own variables (see `fromEnvironment`).
+        // Superset's TERM_PROGRAM says kitty, which is why it must never get this far
+        // under that name.
+        "Superset": "com.superset.desktop",
+        "Conductor": "com.conductor.app",
+        "Orca": "com.stablyai.orca",
+        "waveterm": "dev.commandline.waveterm",
         "WarpTerminal": "dev.warp.Warp-Stable",
         "WezTerm": "com.github.wez.wezterm",
         "kitty": "net.kovidgoyal.kitty",
@@ -92,6 +104,14 @@ public enum TerminalJump {
         "com.todesktop.230313mzl4w4u92": "Cursor",
         "com.exafunction.windsurf": "Windsurf",
         "dev.zed.Zed": "Zed",
+        "com.superset.desktop": "Superset",
+        "com.superset.desktop.canary": "Superset",
+        "com.conductor.app": "Conductor",
+        "com.stablyai.orca": "Orca",
+        "dev.commandline.waveterm": "Wave",
+        "com.nimbalyst.electron": "Nimbalyst",
+        "com.google.antigravity": "Antigravity",
+        "dev.kiro.desktop": "Kiro",
     ]
 
     /// URL schemes the editors register. Perch's extension answers
@@ -103,7 +123,22 @@ public enum TerminalJump {
     ]
 
     public static func name(forBundle bundleId: String) -> String {
-        displayNames[bundleId] ?? bundleId
+        if let known = displayNames[bundleId] { return known }
+        // "com.jetbrains.WebStorm" reads as "WebStorm" on a chip; the raw id reads as a
+        // bug. The last segment is the app's own choice of name often enough to be the
+        // right guess, and it is only ever a label — the id itself is what gets activated.
+        let tail = bundleId.split(separator: ".").last.map(String.init) ?? bundleId
+        return tail.first?.isUppercase == true ? tail : tail.capitalized
+    }
+
+    /// Whether `__CFBundleIdentifier` names something worth jumping to.
+    ///
+    /// Finder, the Dock and loginwindow launch half the processes on a Mac, and none of
+    /// them is where an agent's terminal lives — Terminal.app is, and `TERM_PROGRAM`
+    /// already covers it. Everything non-Apple that launches an agent is, by that fact
+    /// alone, the application to bring forward.
+    public static func isUsableLauncher(_ bundleId: String) -> Bool {
+        !bundleId.isEmpty && !bundleId.hasPrefix("com.apple.")
     }
 
     /// The URI that focuses the right tab, once the extension is installed there.
@@ -123,10 +158,22 @@ public enum TerminalJump {
     }
 
     public static func plan(for client: ClientInfo?) -> JumpPlan {
+        let followUps = multiplexerFollowUps(for: client)
         guard let client, let terminal = client.terminal,
             let bundleId = bundleIds[terminal]
         else {
-            return JumpPlan(target: .unavailable, tmuxPane: client?.tmuxPane)
+            // No terminal, or one Perch has never heard of — but the launcher may still
+            // name the application this session lives in. JetBrains sets no TERM_PROGRAM
+            // at all; the next Electron agent manager will not either. Activating the
+            // launcher is the whole long tail covered by one line, and it costs nothing:
+            // a launcher that is not jump-worthy (Finder, loginwindow) is filtered out.
+            if let launcher = client?.launcher, isUsableLauncher(launcher) {
+                return JumpPlan(
+                    target: .activate(bundleId: launcher),
+                    tmuxPane: client?.tmuxPane, followUps: followUps)
+            }
+            return JumpPlan(
+                target: .unavailable, tmuxPane: client?.tmuxPane, followUps: followUps)
         }
 
         switch bundleId {
@@ -135,12 +182,12 @@ public enum TerminalJump {
             // matches directly.
             if let session = client.session, !session.isEmpty {
                 return JumpPlan(target: .iTerm(bundleId: bundleId, session: session),
-                                tmuxPane: client.tmuxPane)
+                                tmuxPane: client.tmuxPane, followUps: followUps)
             }
         case "com.apple.Terminal":
             if let tty = client.tty, !tty.isEmpty {
                 return JumpPlan(target: .appleTerminal(bundleId: bundleId, tty: tty),
-                                tmuxPane: client.tmuxPane)
+                                tmuxPane: client.tmuxPane, followUps: followUps)
             }
         case "net.kovidgoyal.kitty":
             // `KITTY_WINDOW_ID` is set in every kitty window's environment, and remote
@@ -150,7 +197,7 @@ public enum TerminalJump {
                     target: .remoteControl(
                         bundleId: bundleId, executable: "kitty",
                         arguments: ["@", "focus-window", "--match", "id:\(id)"]),
-                    tmuxPane: client.tmuxPane)
+                    tmuxPane: client.tmuxPane, followUps: followUps)
             }
         case "com.openai.codex":
             // Every Codex thread has an address the app itself uses — `{{ thread_url }}`
@@ -170,7 +217,7 @@ public enum TerminalJump {
                     target: .remoteControl(
                         bundleId: bundleId, executable: "cmux",
                         arguments: ["focus-panel", "--panel", panel]),
-                    tmuxPane: client.tmuxPane)
+                    tmuxPane: client.tmuxPane, followUps: followUps)
             }
         case "com.github.wez.wezterm":
             // WezTerm needs no configuration for this — `wezterm cli` talks to the running
@@ -180,7 +227,42 @@ public enum TerminalJump {
                     target: .remoteControl(
                         bundleId: bundleId, executable: "wezterm",
                         arguments: ["cli", "activate-pane", "--pane-id", pane]),
-                    tmuxPane: client.tmuxPane)
+                    tmuxPane: client.tmuxPane, followUps: followUps)
+            }
+        case "com.superset.desktop":
+            // Superset's TERM_PROGRAM says kitty — the label never reaches this switch,
+            // `fromEnvironment` renames it off its own variables. Its deep link is
+            // pane-precise from a bare `open`, no CLI required.
+            if let pane = client.session, !pane.isEmpty,
+                let workspace = client.workspace, !workspace.isEmpty
+            {
+                return JumpPlan(
+                    target: .deepLink(
+                        bundleId: bundleId,
+                        url: "superset://v2-workspace/\(workspace)?terminalId=\(pane)"),
+                    tmuxPane: client.tmuxPane, followUps: followUps)
+            }
+        case "dev.warp.Warp-Stable":
+            // `WARP_FOCUS_URL` arrives whole from Warp itself, and is passed on untouched:
+            // the preview channel emits a different scheme, and the variable — not the
+            // string inside it — is the contract.
+            if let url = client.session, url.contains("://") {
+                return JumpPlan(
+                    target: .deepLink(bundleId: bundleId, url: url),
+                    tmuxPane: client.tmuxPane, followUps: followUps)
+            }
+        case "dev.commandline.waveterm":
+            // `wsh focusblock` addresses the block on argv but reads the tab from the
+            // environment, so the tab rides in front of the command — `/usr/bin/env`
+            // treats a leading NAME=value exactly as intended.
+            if let block = client.session, !block.isEmpty,
+                let tab = client.workspace, !tab.isEmpty
+            {
+                return JumpPlan(
+                    target: .remoteControl(
+                        bundleId: bundleId, executable: "WAVETERM_TABID=\(tab)",
+                        arguments: ["wsh", "focusblock", "-b", block]),
+                    tmuxPane: client.tmuxPane, followUps: followUps)
             }
         default:
             // VS Code and its forks each register their own scheme, and each needs its own
@@ -188,11 +270,39 @@ public enum TerminalJump {
             if let scheme = editorSchemes[bundleId], let tty = client.tty, !tty.isEmpty {
                 return JumpPlan(
                     target: .editorURI(bundleId: bundleId, scheme: scheme, tty: tty),
-                    tmuxPane: client.tmuxPane)
+                    tmuxPane: client.tmuxPane, followUps: followUps)
             }
         }
 
-        return JumpPlan(target: .activate(bundleId: bundleId), tmuxPane: client.tmuxPane)
+        return JumpPlan(
+            target: .activate(bundleId: bundleId),
+            tmuxPane: client.tmuxPane, followUps: followUps)
+    }
+
+    /// What still has to run after the host terminal is forward: the multiplexers, which
+    /// choose the visible pane no matter what the terminal shows.
+    ///
+    /// tmux is not here — it predates this list and keeps its own field. zellij's
+    /// cross-session addressing is undocumented, so the session name is injected the way
+    /// zellij itself learns it, through the environment; if that guess misses, the command
+    /// errors into a log line and the jump has still reached the right terminal.
+    static func multiplexerFollowUps(for client: ClientInfo?) -> [[String]] {
+        guard let client else { return [] }
+        var followUps: [[String]] = []
+        if let pane = client.zellijPane, !pane.isEmpty {
+            var argv: [String] = []
+            if let session = client.zellijSession, !session.isEmpty {
+                argv.append("ZELLIJ_SESSION_NAME=\(session)")
+            }
+            argv.append(contentsOf: ["zellij", "action", "focus-pane-id", pane])
+            followUps.append(argv)
+        }
+        if let session = client.screenSession, !session.isEmpty,
+            let window = client.screenWindow, !window.isEmpty
+        {
+            followUps.append(["screen", "-S", session, "-X", "select", window])
+        }
+        return followUps
     }
 
     /// AppleScript that focuses the exact iTerm2 session, or does nothing if it has since

@@ -173,8 +173,19 @@ public struct ClientInfo: Codable, Sendable, Equatable {
     public var terminal: String?
     /// `ITERM_SESSION_ID`, `WEZTERM_PANE`, `KITTY_WINDOW_ID` — whichever the host sets.
     public var session: String?
+    /// The second half of a two-part address. Superset needs workspace *and* pane in its
+    /// deep link; Wave needs tab *and* block on its CLI. One field, because no host so far
+    /// needs three.
+    public var workspace: String?
     /// Inside tmux, the pane is what a jump has to target, not the window.
     public var tmuxPane: String?
+    /// zellij is tmux's shape with different names: the pane to focus, and the session it
+    /// lives in, both stacked on top of whatever terminal hosts them.
+    public var zellijPane: String?
+    public var zellijSession: String?
+    /// GNU screen, same again: `STY` names the session, `WINDOW` the window inside it.
+    public var screenSession: String?
+    public var screenWindow: String?
     /// The controlling terminal, e.g. `/dev/ttys004`. Terminal.app exposes `tty` on every
     /// tab, which makes this the only reliable way to find the right one there.
     public var tty: String?
@@ -185,58 +196,105 @@ public struct ClientInfo: Codable, Sendable, Equatable {
     public init(
         terminal: String? = nil,
         session: String? = nil,
+        workspace: String? = nil,
         tmuxPane: String? = nil,
+        zellijPane: String? = nil,
+        zellijSession: String? = nil,
+        screenSession: String? = nil,
+        screenWindow: String? = nil,
         tty: String? = nil,
         launcher: String? = nil
     ) {
         self.terminal = terminal
         self.session = session
+        self.workspace = workspace
         self.tmuxPane = tmuxPane
+        self.zellijPane = zellijPane
+        self.zellijSession = zellijSession
+        self.screenSession = screenSession
+        self.screenWindow = screenWindow
         self.tty = tty
         self.launcher = launcher
     }
 
     /// Reads the environment the hook was launched with.
+    ///
+    /// Vendor variables are checked before `TERM_PROGRAM`, because `TERM_PROGRAM` lies:
+    /// cmux embeds libghostty and reports `ghostty`; Superset flatly claims to be `kitty`.
+    /// Trusting the label sent every jump to an application the session is not in — and on
+    /// most machines, one that is not installed. A host's own variables are the truth.
     public static func fromEnvironment(
         _ environment: [String: String] = ProcessInfo.processInfo.environment,
         tty: String? = nil
     ) -> ClientInfo {
-        // cmux embeds libghostty, so it reports `TERM_PROGRAM=ghostty` — which sent every
-        // jump to Ghostty.app, an application that is not the one the session is in and on
-        // most machines is not installed at all. Its own variables are the truth, and they
-        // are checked first for exactly that reason.
-        if let panel = environment["CMUX_PANEL_ID"] ?? environment["CMUX_SURFACE_ID"] {
-            return ClientInfo(
-                terminal: "cmux",
-                session: panel,
-                tmuxPane: environment["TMUX_PANE"],
-                tty: tty ?? environment["TTY"],
-                launcher: environment["CMUX_BUNDLE_ID"]
-                    ?? environment["__CFBundleIdentifier"]
-            )
-        }
-
-        return ClientInfo(
-            terminal: environment["TERM_PROGRAM"],
-            session: environment["ITERM_SESSION_ID"]
-                ?? environment["TERM_SESSION_ID"]
-                ?? environment["WEZTERM_PANE"]
-                ?? environment["KITTY_WINDOW_ID"],
+        // The multiplexers stack on top of whichever host is found, so they are read once,
+        // here, rather than repeated in every branch below.
+        var info = ClientInfo(
             tmuxPane: environment["TMUX_PANE"],
+            zellijPane: environment["ZELLIJ_PANE_ID"],
+            zellijSession: environment["ZELLIJ_SESSION_NAME"],
+            screenSession: environment["STY"],
+            screenWindow: environment["WINDOW"],
             tty: tty ?? environment["TTY"],
             launcher: environment["__CFBundleIdentifier"]
         )
+
+        if let panel = environment["CMUX_PANEL_ID"] ?? environment["CMUX_SURFACE_ID"] {
+            info.terminal = "cmux"
+            info.session = panel
+            info.launcher = environment["CMUX_BUNDLE_ID"] ?? info.launcher
+        } else if let pane = environment["SUPERSET_PANE_ID"] {
+            // Superset's deep link wants the workspace and the pane both.
+            info.terminal = "Superset"
+            info.session = pane
+            info.workspace = environment["SUPERSET_WORKSPACE_ID"]
+        } else if environment["CONDUCTOR_WORKSPACE_PATH"] != nil
+            || environment["CONDUCTOR_SESSION_ID"] != nil
+        {
+            // Conductor is a Tauri app whose TERM_PROGRAM is unknown; its own variables
+            // are documented. No focus deep link exists, so the label is the whole win.
+            info.terminal = "Conductor"
+            info.session = environment["CONDUCTOR_SESSION_ID"]
+        } else if let block = environment["WAVETERM_BLOCKID"] {
+            // Wave's `wsh focusblock` reads the tab from the environment, so both halves
+            // are captured: the block as the address, the tab as the context.
+            info.terminal = "waveterm"
+            info.session = block
+            info.workspace = environment["WAVETERM_TABID"]
+        } else if let focus = environment["WARP_FOCUS_URL"] {
+            // The URL is opaque on purpose — Warp's preview channel emits another scheme,
+            // and the variable is the contract, not the string inside it.
+            info.terminal = "WarpTerminal"
+            info.session = focus
+        } else if environment["ZED_TERM"] == "true" {
+            // Zed sets no TERM_PROGRAM; ZED_TERM is its documented fingerprint.
+            info.terminal = "Zed"
+        } else {
+            info.terminal = environment["TERM_PROGRAM"]
+            info.session = environment["ITERM_SESSION_ID"]
+                ?? environment["TERM_SESSION_ID"]
+                ?? environment["WEZTERM_PANE"]
+                ?? environment["KITTY_WINDOW_ID"]
+        }
+        return info
     }
 
     /// The label the panel shows. `iTerm.app` reads badly next to `Ghostty`.
     public var displayName: String? {
-        guard let terminal, !terminal.isEmpty else { return nil }
+        guard let terminal, !terminal.isEmpty else {
+            // No terminal does not mean nowhere: an agent manager that is not a terminal
+            // (JetBrains, Nimbalyst, the next Electron shell) still names itself in
+            // `__CFBundleIdentifier`, and a chip that can say where the click lands should.
+            guard let launcher, TerminalJump.isUsableLauncher(launcher) else { return nil }
+            return TerminalJump.name(forBundle: launcher)
+        }
         switch terminal {
         case "Apple_Terminal": return "Terminal"
         case "iTerm.app": return "iTerm"
         case "WarpTerminal": return "Warp"
         case "vscode": return "VS Code"
         case "ghostty": return "Ghostty"
+        case "waveterm": return "Wave"
         // Lowercase, the way it writes its own name.
         case "cmux": return "cmux"
         case "Codex Desktop": return "Codex app"

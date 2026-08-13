@@ -67,6 +67,40 @@ private func at(_ hour: Int, _ minute: Int = 0) -> Date {
         InterruptionPolicy.decide(.taskComplete, scene: Scene(), settings: loud) == .full)
 }
 
+/// Heads-down mutes the chatter to a dot but must never hold a blocked session hostage.
+@Test func manualQuietMutesChatterButNotApprovals() {
+    let heads = QuietSettings(manualQuiet: true)
+
+    // Non-blocking drops to a dot, even the ones that would otherwise take the screen.
+    #expect(
+        InterruptionPolicy.decide(.taskError, scene: Scene(), settings: heads) == .quiet)
+    #expect(
+        InterruptionPolicy.decide(
+            .taskComplete, scene: Scene(),
+            settings: QuietSettings(autoExpandOnComplete: true, manualQuiet: true)) == .quiet)
+
+    // Blocking still earns the panel — being muted is not being stuck.
+    #expect(
+        InterruptionPolicy.decide(.approvalNeeded, scene: Scene(), settings: heads) == .full)
+    #expect(
+        InterruptionPolicy.decide(.questionAsked, scene: Scene(), settings: heads) == .full)
+}
+
+/// Heads-down also silences Notification Center, or "quiet" would still bark completions.
+@Test func manualQuietSilencesNotificationsToo() {
+    #expect(
+        !InterruptionPolicy.notifies(
+            .taskComplete, scene: anywhere, settings: QuietSettings(manualQuiet: true),
+            host: "com.googlecode.iterm2"))
+}
+
+/// A `quiet.json` written before heads-down existed must still decode, defaulting off.
+@Test func manualQuietDefaultsOffForOlderSettings() throws {
+    let raw = #"{"duringFocus": true}"#.data(using: .utf8)!
+    let settings = try JSONDecoder().decode(QuietSettings.self, from: raw)
+    #expect(!settings.manualQuiet)
+}
+
 /// `22:00 → 07:00` is a real range. Agents running overnight is the whole use case.
 @Test func quietHoursCrossMidnight() {
     let night = QuietHours(start: 22 * 60, end: 7 * 60)

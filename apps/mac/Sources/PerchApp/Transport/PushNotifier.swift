@@ -9,7 +9,9 @@ import PerchKit
 /// on — deciding whether to send at all — so a network failure here is not the caller's
 /// problem to wait for; it is a log line.
 enum PushNotifier {
-    static func send(settings: PushSettings, title: String, body: String) {
+    static func send(
+        settings: PushSettings, title: String, body: String, kind: InterruptionKind? = nil
+    ) {
         guard let url = URL(string: "\(settings.server)/\(settings.topic)") else {
             PerchLog.error("push: could not build a URL from the configured server/topic")
             return
@@ -20,6 +22,14 @@ enum PushNotifier {
         // ntfy reads the message title and body from headers/body directly — no JSON
         // envelope needed for the plain case this app uses.
         request.setValue(title, forHTTPHeaderField: "Title")
+        // Priority drives the phone's (and a mirrored Watch's) haptic; Tags become the
+        // card's leading icon. Both are plain ntfy headers, no envelope, no dependency.
+        if let kind {
+            request.setValue(priority(for: kind), forHTTPHeaderField: "Priority")
+            if let tags = tags(for: kind) {
+                request.setValue(tags, forHTTPHeaderField: "Tags")
+            }
+        }
         // Long enough to say what is waiting, short enough that a phone notification does
         // not become the whole plan.
         request.httpBody = Data(String(body.prefix(200)).utf8)
@@ -32,6 +42,25 @@ enum PushNotifier {
             } catch {
                 PerchLog.error("push: failed to send: \(error)")
             }
+        }
+    }
+
+    /// A blocked session should buzz; a completion should arrive quietly. `high`/`default`
+    /// are ntfy's own names — `high` triggers a haptic, `default` a plain banner.
+    private static func priority(for kind: InterruptionKind) -> String {
+        if kind.isBlocking || kind == .taskError { return "high" }
+        return "default"
+    }
+
+    /// ntfy renders a leading emoji from these short-codes. One per kind so the wrist can
+    /// tell an approval from a finished turn without reading.
+    private static func tags(for kind: InterruptionKind) -> String? {
+        switch kind {
+        case .approvalNeeded: return "warning"
+        case .questionAsked: return "question"
+        case .taskComplete: return "white_check_mark"
+        case .taskError: return "rotating_light"
+        default: return nil
         }
     }
 }
