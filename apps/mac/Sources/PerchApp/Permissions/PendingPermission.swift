@@ -37,6 +37,9 @@ final class PendingPermission: Identifiable {
     var tool: String { request.payload.toolName ?? "Tool" }
     var cwd: String? { request.payload.cwd }
     var sessionId: String? { request.payload.sessionId }
+    /// Nil for the main loop, set for a subagent — see `Abandonment`, the one thing that
+    /// reads this.
+    var agentId: String? { request.payload.agentId }
     /// Absent means Claude Code — every hook installed before `--source` existed.
     var agent: Agent { request.agent ?? .claude }
 

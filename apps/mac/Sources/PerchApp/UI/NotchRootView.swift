@@ -205,9 +205,18 @@ struct NotchRootView: View {
                         .truncationMode(.head)
                 } trailing: {
                     if model.permissions.waitingCount > 1 {
-                        Chip(
-                            text: t("%lld waiting", model.permissions.waitingCount - 1),
-                            tint: Theme.warning)
+                        HStack(spacing: 6) {
+                            Chip(
+                                text: t("%lld waiting", model.permissions.waitingCount - 1),
+                                tint: Theme.warning)
+                            // The one at the head is not always the one worth deciding
+                            // first — this rotates it to the back without answering it, so
+                            // the rest of the queue stops hiding behind it.
+                            Button(t("Skip")) { model.skipCurrentPermission() }
+                                .buttonStyle(.plain)
+                                .font(.system(size: 10))
+                                .foregroundStyle(Theme.secondary)
+                        }
                     }
                 }
 

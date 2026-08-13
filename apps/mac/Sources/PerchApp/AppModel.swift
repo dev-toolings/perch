@@ -67,6 +67,12 @@ final class AppModel {
         // card keeps claiming a session is waiting on you after nothing is.
         permissions.onResolved = { [weak self] pending in
             guard let self, let session = pending.sessionId else { return }
+            // One request leaving is not the session being unblocked. A session can have
+            // two waiting at once — a ghost sitting in front of a live one is the whole
+            // reason `Abandonment` exists — and announcing the first one's exit while the
+            // second is still on screen draws a blocked session as working, which turns off
+            // the one signal that says it needs you.
+            guard !permissions.queue.contains(where: { $0.sessionId == session }) else { return }
             activity.answered(sessionId: session)
             // The session stopped waiting — the next time it blocks is a new episode,
             // and earns a push of its own.
@@ -437,7 +443,10 @@ final class AppModel {
         // machine with hooks in two scopes — a project install on top of a global one —
         // would put every tool call on screen twice. The copy is still a blocked hook and
         // still gets an answer; it just does not repeat what its twin already did.
-        let isEcho = request.duplicateKey.map { !echoes.admit($0) } ?? false
+        // Held rather than rebuilt below: it encodes the whole payload and hashes it, and
+        // this is a process the agent is blocked on.
+        let duplicateKey = request.duplicateKey
+        let isEcho = duplicateKey.map { !echoes.admit($0) } ?? false
 
         if !isEcho {
             activity.record(request)
@@ -481,6 +490,35 @@ final class AppModel {
             // Claude Code has just written to a transcript, so this is exactly when there
             // is new usage to index — no polling needed.
             usage.scheduleRefresh()
+        }
+
+        // Claude Code answers `AskUserQuestion` and `ExitPlanMode` in its own terminal UI,
+        // running in parallel with the hook, and never tells the hook to stop waiting when
+        // it does. The hook stays blocked and the request stays queued — a ghost at the
+        // head that hides everything behind it, since the panel only ever draws
+        // `queue.first`. This event landing is the only proof that reaches Perch: the same
+        // session carrying on is what a still-blocked one cannot do.
+        let abandoned = permissions.queue.filter { pending in
+            Abandonment.isAbandoned(
+                kind: pending.kind, queuedAt: pending.arrivedAt, sessionId: pending.sessionId,
+                agentId: pending.agentId, duplicateKey: pending.duplicateKey,
+                event: request.event, eventSessionId: request.payload.sessionId,
+                eventAgentId: request.payload.agentId, eventDuplicateKey: duplicateKey,
+                eventAt: .now)
+        }
+        for pending in abandoned {
+            PerchLog.info(
+                "dropping abandoned \(pending.tool) request, session "
+                    + "\(pending.sessionId?.prefix(8) ?? "?"), proven by \(request.event)")
+            permissions.dropAbandoned(pending, reason: "Answered outside Perch")
+        }
+        // Only a panel already showing a card is refreshed. Whatever was queued behind the
+        // ghost has had its turn at `announce` and was shown or silenced then; a ghost being
+        // swept is not a second chance to open the notch over someone's full screen.
+        if !abandoned.isEmpty, notch.state == .alert {
+            notch.showAlert(
+                permissions.current != nil, extraHeight: alertExtraHeight,
+                extraWidth: alertExtraWidth)
         }
 
         guard request.wantsDecision else { return PerchResponse() }
@@ -606,6 +644,15 @@ final class AppModel {
             : nil
 
         permissions.resolve(pending, with: decision, rule: rule)
+        notch.showAlert(
+            permissions.current != nil, extraHeight: alertExtraHeight,
+            extraWidth: alertExtraWidth)
+    }
+
+    /// Moves the request on screen to the back of the queue without answering it — for the
+    /// one that will not be decided right now and should stop hiding whatever is behind it.
+    func skipCurrentPermission() {
+        permissions.skipCurrent()
         notch.showAlert(
             permissions.current != nil, extraHeight: alertExtraHeight,
             extraWidth: alertExtraWidth)

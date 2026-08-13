@@ -86,6 +86,24 @@ final class PermissionBroker {
         resolve(current, with: decision)
     }
 
+    /// Resolves a request that `Abandonment` has decided is dead, and takes it out of the
+    /// queue the same way everything else leaves it. `.ask` is the only honest answer here:
+    /// the hook is stuck talking to a terminal UI that already moved on, and Perch was
+    /// never the thing that decided — the same fallback the expiry timeout reaches for.
+    func dropAbandoned(_ pending: PendingPermission, reason: String) {
+        pending.resolve(.ask, reason: reason)
+        finish(pending)
+    }
+
+    /// Moves the head of the queue to the back. Nothing is resolved, nothing is answered,
+    /// no continuation is touched — this only changes which pending is on screen, for the
+    /// moment the one at the head is not one you can decide right now and the rest of the
+    /// queue should not stay hidden behind it.
+    func skipCurrent() {
+        guard queue.count > 1 else { return }
+        queue.append(queue.removeFirst())
+    }
+
     /// Falls back to `ask`, which hands the decision to Claude Code's own prompt. The
     /// session then behaves as if Perch were not installed instead of hanging.
     private func scheduleExpiry(for pending: PendingPermission) {

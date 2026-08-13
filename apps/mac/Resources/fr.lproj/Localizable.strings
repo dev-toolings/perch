@@ -69,6 +69,7 @@
 "Always" = "Toujours";
 "Deny" = "Refuser";
 "%lld waiting" = "%lld en attente";
+"Skip" = "Passer";
 
 /* Questions et plans */
 "Question" = "Question";
