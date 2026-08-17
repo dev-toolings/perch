@@ -52,6 +52,9 @@ final class ActivityStore {
     private var silenced: Set<String> = []
     /// Explicitly archived rows stay hidden until that session starts another turn.
     private var archived: Set<String> = []
+    /// When each row was archived, so a rollout that has been written to *since* is
+    /// recognised as a new turn — the rollout path has no `UserPromptSubmit` to say so.
+    private var archivedAt: [String: Date] = [:]
 
     var sessions: [String: SessionSnapshot] { tracker.sessions }
 
@@ -85,6 +88,11 @@ final class ActivityStore {
     /// rollout, which knows a second later. The hook wins on the sessions it covers.
     func applyCodex(_ sessions: [CodexSessions.Live], now: Date = .now) {
         for session in sessions {
+            // Archived, then written to again: that is the thread picking up, and the
+            // card comes back exactly as a hook-fed one does on its next prompt.
+            if let at = archivedAt[session.id], session.updatedAt > at {
+                unarchive(session.id)
+            }
             guard !archived.contains(session.id), !isSilenced(directory: session.cwd) else {
                 continue
             }
@@ -176,9 +184,21 @@ final class ActivityStore {
         tracker.answered(id: sessionId)
     }
 
-    func archive(sessionId: String) {
+    func archive(sessionId: String, now: Date = .now) {
         archived.insert(sessionId)
+        archivedAt[sessionId] = now
         tracker.archive(id: sessionId)
+    }
+
+    private func unarchive(_ sessionId: String) {
+        archived.remove(sessionId)
+        archivedAt[sessionId] = nil
+    }
+
+    /// The rows whose turn has been over for `SessionTracker.finishedLinger` — what the
+    /// sweep archives. Read here rather than in the model so the linger stays one number.
+    func finishedSessions(now: Date = .now) -> [String] {
+        tracker.finished(olderThan: SessionTracker.finishedLinger, now: now)
     }
 
     func record(_ request: PerchRequest) {
@@ -198,7 +218,7 @@ final class ActivityStore {
         }
 
         if let id = event.sessionId {
-            if event.kind == "UserPromptSubmit" { archived.remove(id) }
+            if event.kind == "UserPromptSubmit" { unarchive(id) }
             if tracker.sessions[id] == nil { sessionsEverSeen += 1 }
             // Claimed by the hook path, so the rollout reader stays off this card.
             hookFed.insert(id)

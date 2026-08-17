@@ -857,6 +857,13 @@ struct ExpandedPanelHeader<Leading: View, Trailing: View>: View {
   }
 }
 
+/// What the expanded panel is about. Sessions by default; the plan and the board on their
+/// own tabs, so "how much of the week is left" and "who is winning" are a click away
+/// rather than a settings window away.
+private enum PanelTab: String, CaseIterable {
+  case activity, stats, rank
+}
+
 private struct ExpandedView: View {
   let notch: CGSize
   let model: AppModel
@@ -866,6 +873,12 @@ private struct ExpandedView: View {
   let onClose: () -> Void
   @State private var openedSessionId: String?
   @State private var showsAllSessions = false
+  /// Back to `activity` every time the panel opens: what is running is the reason to open
+  /// it, and a stats tab left selected yesterday should not hide today's session.
+  @State private var tab: PanelTab = .activity
+
+  /// The strip's own row under the header, in the height and on screen.
+  private static let tabStripHeight: CGFloat = 24
 
   init(
     notch: CGSize, model: AppModel, focusedSessionId: String?,
@@ -902,6 +915,12 @@ private struct ExpandedView: View {
   }
 
   private var contentHeight: CGFloat {
+    // The stats and rank panes have their own fixed shape; only the session list is
+    // measured. 452 is what the panel used to be before it followed its content, and
+    // `NotchState.expandedHeight` still clamps it to the person's maximum.
+    guard tab == .activity else {
+      return notch.height + NotchState.bodyInset + 36 + Self.tabStripHeight + 452 + 20
+    }
     let rows = displayedSessions.reduce(CGFloat.zero) { total, session in
       let isOpen = openedSessionId == session.id
       let hasConversation = session.turn?.isEmpty == false || session.prompt?.isEmpty == false
@@ -920,7 +939,7 @@ private struct ExpandedView: View {
       return total + 34 + summarySpacing + (revealsConversation ? 166 : 0) + taskHeight
     }
     let footerHeight: CGFloat = additionalSessionCount > 0 ? 80 : 0
-    return notch.height + NotchState.bodyInset + 36
+    return notch.height + NotchState.bodyInset + 36 + Self.tabStripHeight
       + min(max(rows + footerHeight, 96), 452) + 20
   }
 
@@ -969,20 +988,41 @@ private struct ExpandedView: View {
         }
       }
 
-      ActivityList(
-        model: model,
-        focusedSessionId: focusedSessionId,
-        opened: $openedSessionId,
-        showsAllSessions: $showsAllSessions,
-        onFocusChange: onFocusChange)
+      TabBar(selection: tab) { tab = $0 }
         .padding(.horizontal, 20)
-        .padding(.bottom, 20)
+        .frame(height: Self.tabStripHeight)
+
+      Group {
+        switch tab {
+        case .activity:
+          ActivityList(
+            model: model,
+            focusedSessionId: focusedSessionId,
+            opened: $openedSessionId,
+            showsAllSessions: $showsAllSessions,
+            onFocusChange: onFocusChange)
+        case .stats:
+          StatsView(
+            usage: model.usage,
+            showsRemaining: model.preferences.showsRemainingQuota,
+            onToggleQuota: {
+              var next = model.preferences
+              next.showsRemainingQuota.toggle()
+              model.updatePreferences(next)
+            })
+        case .rank:
+          RankView(model: model)
+        }
+      }
+      .padding(.horizontal, 20)
+      .padding(.bottom, 20)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .onAppear {
       if let openedSessionId { onFocusChange(openedSessionId) }
       onHeightChange(contentHeight)
     }
+    .onChange(of: tab) { _, _ in onHeightChange(contentHeight) }
     .onChange(of: model.tasks.revision) { _, _ in
       if openedSessionId == nil,
         let planned = model.activity.visibleSessions.first(where: {
@@ -1014,6 +1054,32 @@ private struct ExpandedView: View {
       try? await Task.sleep(for: .milliseconds(420))
       guard !Task.isCancelled else { return }
       model.tasks.refreshAll(model.activity.activeSessions)
+    }
+  }
+}
+
+/// The three panes, as pills. The selected one is lit; the others are there to be found.
+private struct TabBar: View {
+  let selection: PanelTab
+  let onSelect: (PanelTab) -> Void
+
+  var body: some View {
+    HStack(spacing: 4) {
+      ForEach(PanelTab.allCases, id: \.self) { tab in
+        Button { onSelect(tab) } label: {
+          Text(t(tab.rawValue))
+            .font(Theme.label(11, .medium))
+            .foregroundStyle(tab == selection ? Theme.primary : Theme.tertiary)
+            .padding(.horizontal, 9)
+            .padding(.vertical, 4)
+            .background(
+              RoundedRectangle(cornerRadius: 6)
+                .fill(tab == selection ? Theme.hairlineStrong : .clear))
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("panel.tab.\(tab.rawValue)")
+      }
+      Spacer(minLength: 0)
     }
   }
 }

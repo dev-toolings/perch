@@ -27,6 +27,7 @@ enum PanelPreview {
 
         return VStack(alignment: .leading, spacing: 0) {
             header
+            tabStrip
 
             SessionCardView(session: focused, tasks: plan, layout: layout, isCollapsed: false)
                 .padding(.horizontal, 20)
@@ -129,6 +130,26 @@ enum PanelPreview {
             .padding(.vertical, 12)
             .frame(width: 680, alignment: .topLeading)
             .background(Theme.surface)
+    }
+
+    /// The live panel's tab strip, drawn the same way so a render shows the same panel.
+    /// `activity` lit, as it is on every open.
+    private static var tabStrip: some View {
+        HStack(spacing: 4) {
+            ForEach(["activity", "stats", "rank"], id: \.self) { tab in
+                Text(t(tab))
+                    .font(Theme.label(11, .medium))
+                    .foregroundStyle(tab == "activity" ? Theme.primary : Theme.tertiary)
+                    .padding(.horizontal, 9)
+                    .padding(.vertical, 4)
+                    .background(
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill(tab == "activity" ? Theme.hairlineStrong : .clear))
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 20)
+        .frame(height: 24)
     }
 
     private static var header: some View {

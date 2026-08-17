@@ -63,6 +63,11 @@ final class AppModel {
   /// One pending reminder per session and category. Replacing a task cancels the older
   /// deadline, so repeated hook copies cannot produce repeated reminders.
   @ObservationIgnored private var followUpTasks: [String: Task<Void, Never>] = [:]
+  /// Archives turns that finished `SessionTracker.finishedLinger` ago. A clock rather
+  /// than a per-session timer: the tracker already knows when each turn finished, and
+  /// one sweep every few seconds is cheaper to reason about than a task per session
+  /// that has to be cancelled every time that session moves again.
+  @ObservationIgnored private var finishedSweep: Task<Void, Never>?
   @ObservationIgnored private var remoteCodexUsageTasks: [UUID: Task<Void, Never>] = [:]
   @ObservationIgnored private var remoteCodexUsageLastProbeAt: [UUID: Date] = [:]
   /// Incremented as soon as the panel is shown. A completion reminder captures this
@@ -411,6 +416,19 @@ final class AppModel {
     // Desktop does not run hooks reliably enough to provide that identity by itself;
     // its authoritative thread name lives in `session_index.jsonl`.
     Task { await refreshCodexSessions() }
+
+    // "Done" is worth reading, not worth keeping: a finished turn leaves the panel on
+    // its own once it has been done for a while. Deliberately not held back while the
+    // panel is open — the person asked for it to go, and the archive button already
+    // makes the same choice.
+    finishedSweep?.cancel()
+    finishedSweep = Task { [weak self] in
+      while !Task.isCancelled {
+        try? await Task.sleep(for: .seconds(5))
+        guard !Task.isCancelled, let self else { return }
+        for id in activity.finishedSessions() { archiveSession(id) }
+      }
+    }
   }
 
   func stop() {
@@ -425,6 +443,8 @@ final class AppModel {
     server = nil
     followUpTasks.values.forEach { $0.cancel() }
     followUpTasks.removeAll()
+    finishedSweep?.cancel()
+    finishedSweep = nil
     remoteCodexUsageTasks.values.forEach { $0.cancel() }
     remoteCodexUsageTasks.removeAll()
   }
