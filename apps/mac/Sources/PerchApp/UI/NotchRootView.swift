@@ -187,6 +187,7 @@ struct NotchRootView: View {
       ExpandedView(
         notch: controller.geometry.size, model: model,
         focusedSessionId: controller.activeSessionId,
+        revealsCompletion: controller.isTransientReveal,
         onHeightChange: { controller.setExpandedContentHeight($0) },
         onFocusChange: { controller.focus(sessionId: $0) },
         onClose: { controller.dismiss() })
@@ -901,6 +902,7 @@ private struct ExpandedView: View {
 
   init(
     notch: CGSize, model: AppModel, focusedSessionId: String?,
+    revealsCompletion: Bool = false,
     onHeightChange: @escaping (CGFloat) -> Void,
     onFocusChange: @escaping (String) -> Void,
     onClose: @escaping () -> Void
@@ -912,9 +914,16 @@ private struct ExpandedView: View {
     self.onFocusChange = onFocusChange
     self.onClose = onClose
     let visible = model.activity.visibleSessions
-    let initiallyOpened = SessionDisplaySelection.featured(
-      in: visible, focusedSessionId: focusedSessionId)?.id
-    _openedSessionId = State(initialValue: initiallyOpened)
+    let featured = SessionDisplaySelection.featured(
+      in: visible, focusedSessionId: focusedSessionId)
+    // The featured card starts open while there is something to watch — a harness at
+    // work, a request waiting — and when the panel opened itself to show a turn that
+    // just finished. A finished turn you hover back to later stays folded behind its
+    // "Done": the answer was shown when it arrived, and a panel that re-opens the same
+    // transcript on every hover is a panel that never lets a thing be finished.
+    let opensFeatured =
+      featured.map { $0.isWorking || $0.status.needsYou || revealsCompletion } ?? false
+    _openedSessionId = State(initialValue: opensFeatured ? featured?.id : nil)
   }
 
   private var selectedSessionId: String? { openedSessionId ?? focusedSessionId }

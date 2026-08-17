@@ -68,6 +68,10 @@ public struct NotchInteraction: Sendable, Equatable {
 
     public var activeSessionId: String? { policy.activeSessionId }
 
+    /// True while the panel is up on its own initiative — a finished turn revealed, a
+    /// warning flashed — and will take itself down again. A panel someone opened is not.
+    public var isTransient: Bool { policy.state == .transient }
+
     @discardableResult
     public mutating func handle(_ event: Event) -> [Effect] {
         if event == .hoverExited {

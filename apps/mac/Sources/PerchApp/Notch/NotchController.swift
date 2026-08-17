@@ -15,6 +15,10 @@ final class NotchController {
   /// Bumped on every hook event so the idle view can pulse without resizing the panel.
   private(set) var activityPulse: Int = 0
   var activeSessionId: String? { interaction.activeSessionId }
+  /// Whether the panel opened by itself to show a finished turn, or was opened by hand.
+  /// Read at the moment the panel is built, which is why `state` — published — is
+  /// enough to invalidate it.
+  var isTransientReveal: Bool { interaction.isTransient }
 
   @ObservationIgnored private var interaction = NotchInteraction()
   @ObservationIgnored private let window = NotchWindow()
