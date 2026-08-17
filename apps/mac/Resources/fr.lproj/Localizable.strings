@@ -477,6 +477,7 @@
 /* Onboarding — la cérémonie, une fois le Mac configuré */
 "This Mac is a Perch" = "Ce Mac est un perchoir";
 "Done" = "Terminé";
+"Interrupted" = "Interrompu";
 
 /* AskUserQuestion — the free-text answer */
 "Other — write your answer" = "Autre — écris ta réponse";
