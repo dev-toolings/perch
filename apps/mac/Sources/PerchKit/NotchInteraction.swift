@@ -56,7 +56,10 @@ public struct NotchInteraction: Sendable, Equatable {
     /// Grace periods: crossing the edge of a panel should not make it flicker, and a
     /// bigger panel needs longer because there is more empty space to cross.
     public static let peekGrace = 220
-    public static let expandedGrace = 700
+    /// Mouse leaves the expanded panel → it collapses a second later. Long enough not to
+    /// close on a hand crossing the edge, short enough to be gone by the time you have
+    /// looked away.
+    public static let expandedGrace = 1_000
     /// A peek nobody asked for has to last long enough to read and short enough to forgive.
     public static let revealGrace = 5_000
     /// Long enough to read six words, short enough that it is gone before it is in the

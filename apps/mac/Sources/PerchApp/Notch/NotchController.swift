@@ -186,16 +186,31 @@ final class NotchController {
       return
     }
 
-    guard inside != isHovering else { return }
-    isHovering = inside
-
-    if inside {
-      guard expandsOnHover else { return }
-      send(.hoverEntered)
+    if inside != isHovering {
+      isHovering = inside
+      if inside {
+        // From rest, honour the hover-to-expand preference. Once a panel is already
+        // open, re-entering it always cancels a pending collapse — that is not the
+        // same choice as whether hovering opens it in the first place.
+        if state == .idle {
+          if expandsOnHover { send(.hoverEntered) }
+        } else {
+          send(.hoverEntered)
+        }
+      } else if collapsesOnHoverExit {
+        send(.hoverExited)
+      }
       return
     }
 
-    if collapsesOnHoverExit { send(.hoverExited) }
+    // A panel opened by a click the cursor never entered — it dropped down below the
+    // pointer, or the pointer left before the next sample — has no leave edge to fire,
+    // so it used to sit open until something else closed it. If it is expanded, the
+    // cursor is outside, auto-collapse is on and nothing is already counting down, arm
+    // the same one-second leave timer now.
+    if state == .expanded, !inside, collapsesOnHoverExit, collapseTask == nil {
+      send(.hoverExited)
+    }
   }
 
   /// Where the panel actually is on screen: centred in the canvas, hanging from its top
