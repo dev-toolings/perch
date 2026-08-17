@@ -887,6 +887,10 @@ private struct ExpandedView: View {
   let onFocusChange: (String) -> Void
   let onClose: () -> Void
   @State private var openedSessionId: String?
+  /// The person closed a card on purpose. Nothing that opens cards on its own — a plan
+  /// moving, a board refreshing — gets to undo that; only a turn finishing does, because
+  /// that is news. Reset with the panel: a fresh open is a fresh start.
+  @State private var closedByHand = false
   @State private var showsAllSessions = false
   /// Back to `activity` every time the panel opens: what is running is the reason to open
   /// it, and a stats tab left selected yesterday should not hide today's session.
@@ -1014,6 +1018,7 @@ private struct ExpandedView: View {
             model: model,
             focusedSessionId: focusedSessionId,
             opened: $openedSessionId,
+            closedByHand: $closedByHand,
             showsAllSessions: $showsAllSessions,
             onFocusChange: onFocusChange)
         case .stats:
@@ -1039,7 +1044,7 @@ private struct ExpandedView: View {
     }
     .onChange(of: tab) { _, _ in onHeightChange(contentHeight) }
     .onChange(of: model.tasks.revision) { _, _ in
-      if openedSessionId == nil,
+      if openedSessionId == nil, !closedByHand,
         let planned = model.activity.visibleSessions.first(where: {
           !model.tasks.board(for: $0.id).isEmpty
         })
@@ -1200,6 +1205,7 @@ private struct ActivityList: View {
   /// One at a time, and closed to begin with. Six sessions of full cards is four screens
   /// of scrolling, and a panel you have to scroll is a panel you do not glance at.
   @Binding var opened: String?
+  @Binding var closedByHand: Bool
   @Binding var showsAllSessions: Bool
   let onFocusChange: (String) -> Void
 
@@ -1258,6 +1264,7 @@ private struct ActivityList: View {
                   onToggle: {
                     let next = opened == session.id ? nil : session.id
                     opened = next
+                    closedByHand = next == nil
                     if let next { onFocusChange(next) }
                   },
                   onJump: { TerminalJumper.jump(to: session.client) },
@@ -1270,16 +1277,25 @@ private struct ActivityList: View {
                 )
               }
             }
+            // A turn that has *just* finished opens its card, so the answer is on
+            // screen the moment it exists. Only that transition: this used to fire on
+            // any status change of any session — every tool call of the other harness
+            // — and re-open a finished card the person had just closed, over and over.
             .onChange(
               of: activity.visibleSessions.map { "\($0.id):\($0.status.rawValue)" }
-            ) { _, _ in
-              guard
-                let completed = shownSessions.last(where: {
-                  $0.status == .idle
-                    && ($0.turn?.isEmpty == false || $0.prompt?.isEmpty == false)
+            ) { before, after in
+              let previous = Dictionary(
+                uniqueKeysWithValues: before.compactMap { entry -> (String, String)? in
+                  guard let colon = entry.lastIndex(of: ":") else { return nil }
+                  return (String(entry[..<colon]), String(entry[entry.index(after: colon)...]))
                 })
-              else { return }
-              opened = completed.id
+              let justFinished = shownSessions.first { session in
+                session.status == .idle
+                  && (session.turn?.isEmpty == false || session.prompt?.isEmpty == false)
+                  && previous[session.id].map { $0 != SessionStatus.idle.rawValue } == true
+              }
+              guard let justFinished else { return }
+              opened = justFinished.id
             }
             .onChange(of: model.switcher.index) { _, index in
               guard model.switcher.isOpen,
