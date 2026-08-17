@@ -1,0 +1,248 @@
+[
+  {
+    "path": "AppIcon.icns",
+    "size": 841228,
+    "sha256": "62a6eeb5f8a65fd06b870165bd72db5f2f85dfd33a17fa55a45e3135ac61da80",
+    "pixelWidth": 1024,
+    "pixelHeight": 1024
+  },
+  {
+    "path": "Fonts/DepartureMono-Regular.otf",
+    "size": 84480,
+    "sha256": "4d53f663155cf8bf7ffc8e688776e719625f7bbb80a8d90073438b249261a2e0"
+  },
+  {
+    "path": "Hooks/vibe-island-hook-darwin-amd64",
+    "size": 2960416,
+    "sha256": "1c869c0c8ec2f13f3c5fcf170743822c5b4800e8c9baf3c5af8ca4dbf1f4822d"
+  },
+  {
+    "path": "Hooks/vibe-island-hook-darwin-arm64",
+    "size": 2849168,
+    "sha256": "48b17b4d822fd64b702492afb48bb2628795d78d90e7a5a003834980727c606d"
+  },
+  {
+    "path": "Hooks/vibe-island-hook-freebsd-amd64",
+    "size": 2814110,
+    "sha256": "9c34169ff0569a9f250aed1f56df171d3c9e38252364838e1d8cef11f6b33aa6"
+  },
+  {
+    "path": "Hooks/vibe-island-hook-freebsd-arm64",
+    "size": 2752670,
+    "sha256": "0b3619e79bfa26316311f88e6f2c341db638716171f9f2b6bc647b96d717bc84"
+  },
+  {
+    "path": "Hooks/vibe-island-hook-linux-amd64",
+    "size": 2838676,
+    "sha256": "85566bcc2ce6ab66a9bec8333884ac18788aa4a17001c343fb345f9813fb22fe"
+  },
+  {
+    "path": "Hooks/vibe-island-hook-linux-arm64",
+    "size": 2818196,
+    "sha256": "dac4c7aa5dc777f21627baa59269272319df974aa102947d3e04b4f17ad81563"
+  },
+  {
+    "path": "NOTICE.txt",
+    "size": 722,
+    "sha256": "0c33102d9750fd99df01412fec912ee7ce8ef3b249cb12cf50e2d24f90d12cca"
+  },
+  {
+    "path": "Sounds/onboarding-ceremony.wav",
+    "size": 1152078,
+    "sha256": "c78716d9f6143e8c94a5ba3a3333dfc96c0dc475037a43605a014a3b056e5d75"
+  },
+  {
+    "path": "antigravity-icon.png",
+    "size": 8009,
+    "sha256": "277c58a1ad5fa6277c1833cc7d1e430684abfc4cae89ba182cb0748a80329455",
+    "pixelWidth": 128,
+    "pixelHeight": 128
+  },
+  {
+    "path": "claude-desktop-icon.png",
+    "size": 21535,
+    "sha256": "f3889e0ac9a0010c7d13bba6798fc855e7997aba672b5fbb59fe1256387671b1",
+    "pixelWidth": 128,
+    "pixelHeight": 128
+  },
+  {
+    "path": "codex-app-icon.png",
+    "size": 13047,
+    "sha256": "04fa59926422e71fac284a21c290ab61df902cac6761a3071ee9467cdfc6ff34",
+    "pixelWidth": 128,
+    "pixelHeight": 128
+  },
+  {
+    "path": "community-config.json",
+    "size": 61,
+    "sha256": "ae52931a14af809cd8230c2cb35a66c7c765094f517086a52cc7be620e4a2977"
+  },
+  {
+    "path": "cursor-pixel.png",
+    "size": 166,
+    "sha256": "e6119baa112ae52324cbce836f0b792b31999f2966e5a41cbf752a8132b287ee",
+    "pixelWidth": 16,
+    "pixelHeight": 16
+  },
+  {
+    "path": "de.lproj/InfoPlist.strings",
+    "size": 236,
+    "sha256": "648d0aabae3569a20b4cb6756557364ca28a3fcd5b410d42a3723ce4eab79f45"
+  },
+  {
+    "path": "de.lproj/Localizable.strings",
+    "size": 69634,
+    "sha256": "20c0dc7692e681e3622896f44ab81fab5e4b65fc4d6bb224464141956e608ab1"
+  },
+  {
+    "path": "en.lproj/InfoPlist.strings",
+    "size": 212,
+    "sha256": "bdf6bf2c0a86be658c5de664568243665c102cc447e757a7eacf6844abd12c48"
+  },
+  {
+    "path": "en.lproj/Localizable.strings",
+    "size": 62986,
+    "sha256": "17301c7cc173148418d32ebf162a352b2f59d7aa68c52e3488cb383f413f498a"
+  },
+  {
+    "path": "extension-icon.png",
+    "size": 9784,
+    "sha256": "89e665648e755355734dc8fc5e743c85456441a4b4a3fa6c4876bd8043ca970d",
+    "pixelWidth": 128,
+    "pixelHeight": 128
+  },
+  {
+    "path": "feishu-group-qr.png",
+    "size": 7368,
+    "sha256": "2c105b158601a92d80d7d8b1c599471cfa5d479a775ae51dbcae5275952167f1",
+    "pixelWidth": 290,
+    "pixelHeight": 300
+  },
+  {
+    "path": "fr.lproj/InfoPlist.strings",
+    "size": 267,
+    "sha256": "9630a3db2674cb8dca4434d4213911c6cb2371e0982e6fd4e257f254b70aa4cd"
+  },
+  {
+    "path": "fr.lproj/Localizable.strings",
+    "size": 70674,
+    "sha256": "ab74d61556f22b08e432ff67a0065fd264683c3b7ea02bda41d7ea57659136bd"
+  },
+  {
+    "path": "gemini-icon.png",
+    "size": 10059,
+    "sha256": "a6b6dbfdbe9006192d3daba0142af35847f833bc94e9924186a19ab92208d93b",
+    "pixelWidth": 128,
+    "pixelHeight": 128
+  },
+  {
+    "path": "grok-icon.png",
+    "size": 9416,
+    "sha256": "305c7123662333e68860857b1be780c0ad83dfb83f9c599da821d10fbee26520",
+    "pixelWidth": 128,
+    "pixelHeight": 128
+  },
+  {
+    "path": "he.lproj/InfoPlist.strings",
+    "size": 278,
+    "sha256": "e3bcdb3b2fb22ccfbe6dacd64605ac0285598b8c2c76a92415de9d09820dfe75"
+  },
+  {
+    "path": "he.lproj/Localizable.strings",
+    "size": 78224,
+    "sha256": "c1806409dba41f4d887a8ebaf700fb244c924862152e7368f29ea15e8a05c793"
+  },
+  {
+    "path": "ja.lproj/InfoPlist.strings",
+    "size": 289,
+    "sha256": "d47f472f2b87df98acb62fa9577250442a7d45e33840939fe43f5d5901d9364c"
+  },
+  {
+    "path": "ja.lproj/Localizable.strings",
+    "size": 76993,
+    "sha256": "e926a57c1f654175bab891fa572d846921dbc5d477713855a8a7ee12d1ee44da"
+  },
+  {
+    "path": "kimi-icon.png",
+    "size": 14483,
+    "sha256": "be93f0c6a8e0e979fe09ce6e15eab74f546fb705aec7a523364e6a88397108d1",
+    "pixelWidth": 128,
+    "pixelHeight": 128
+  },
+  {
+    "path": "ko.lproj/InfoPlist.strings",
+    "size": 224,
+    "sha256": "894d3ed4813e75ba9a5a2633c47acd0756a18cc2615be7f2317551594551c499"
+  },
+  {
+    "path": "ko.lproj/Localizable.strings",
+    "size": 70511,
+    "sha256": "86e7adad5bc7eb57607e983d5fd75766e4734d6d17d382a08e59d0933019b2f0"
+  },
+  {
+    "path": "onboarding-wallpaper.jpg",
+    "size": 630284,
+    "sha256": "f08eacc5d574625c7d53013b7c775c53a780e7353bf00253f262d1c0f03d370a",
+    "pixelWidth": 3456,
+    "pixelHeight": 2234
+  },
+  {
+    "path": "pt-BR.lproj/InfoPlist.strings",
+    "size": 246,
+    "sha256": "9cd8a145fa027b5b1ec4d057b8bb69fe3c8c7d43785e2a25764d393b067ef142"
+  },
+  {
+    "path": "pt-BR.lproj/Localizable.strings",
+    "size": 68897,
+    "sha256": "9bb0042f2efea642bbd4e11f4ca876aabc411cf3fa945b246bca251c8fd18923"
+  },
+  {
+    "path": "ru.lproj/InfoPlist.strings",
+    "size": 336,
+    "sha256": "1b08294746257c8b697d3767dd94f80235d0cc2ed1039f5a067d6428aa06a38b"
+  },
+  {
+    "path": "ru.lproj/Localizable.strings",
+    "size": 93099,
+    "sha256": "8c05ae65f5831e3a99ff6bc23612d5a12f46aad4757d9e1942622c0354f4a971"
+  },
+  {
+    "path": "usage-pricing.json",
+    "size": 17446,
+    "sha256": "61a0836a06fffa7cba42603a6de498600a666559cac63db9fdc4dd03bda5f44c"
+  },
+  {
+    "path": "wechat-group-qr.jpg",
+    "size": 306501,
+    "sha256": "cd50f13563c197675f2e20fb7b75eb369416bed94afd0a75115f73451613842d",
+    "pixelWidth": 1080,
+    "pixelHeight": 1632
+  },
+  {
+    "path": "zai-icon.png",
+    "size": 4697,
+    "sha256": "940300931a9f63f9aac382ba98eaebbf1d6d9c9dbc33eb96dadf908c3741d992",
+    "pixelWidth": 128,
+    "pixelHeight": 128
+  },
+  {
+    "path": "zh-Hans.lproj/InfoPlist.strings",
+    "size": 208,
+    "sha256": "a1a7abf6094b561477b63f22766f3c29f2332145988fcdb529fcd74a43d59b0e"
+  },
+  {
+    "path": "zh-Hans.lproj/Localizable.strings",
+    "size": 62343,
+    "sha256": "7a27308128c73982575e3316868c67bf0e2f13af4c46880203308fbbf0b3074f"
+  },
+  {
+    "path": "zh-Hant.lproj/InfoPlist.strings",
+    "size": 219,
+    "sha256": "adb04e5206f9990787089b5aa85cbbcee17cd9cc21c10e130f37636b0c5d04e4"
+  },
+  {
+    "path": "zh-Hant.lproj/Localizable.strings",
+    "size": 63187,
+    "sha256": "22523fcbabb41d9c3c3969abf16778ad80081ca761d767d6a6e7b461bc379592"
+  }
+]

@@ -1,0 +1,69 @@
+Window: "Perch Settings", App: Perch.
+0 fenêtre standard Perch Settings, Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton À propos
+		15 diviseur (disabled, settable, float) 196
+		16 container
+			17 image bell.badge.fill
+			18 texte Notifications
+			19 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+				20 texte Moments de silence
+				21 commutateur Un mode Concentration est actif, Value: on
+				22 commutateur L'écran est verrouillé ou en veille, Value: on
+				23 commutateur L'écran est enregistré ou partagé, Value: on
+				24 text Perch se tait dès que l'une de ces conditions est vraie — pas de panneau, pas de son, approbations comprises. Les demandes restent en file, la session reste tenue, et un point les signale. Concentration manuelle
+				25 commutateur Activer la concentration manuelle, Value: off
+				26 text Un mode que tu actives toi-même. Les fins de tâche et le bruit restent réduits à un point, sans son ni panneau ; les approbations continuent de s'ouvrir pour ne rien laisser bloqué. Heures calmes
+				27 commutateur Faire silence sur une plage horaire, Value: off
+				28 text Traverse minuit quand la fin précède le début. Notifications de fin
+				29 commutateur Rester silencieux quand le terminal qui demande est déjà au premier plan, Value: on
+				30 commutateur Jouer les sons, Value: on
+				31 commutateur Me prévenir quand un tour se termine hors de ma vue, Value: on
+				32 texte Une notification macOS, muette — le son reste géré par Perch. Elle se tait pendant une scène silencieuse, pendant les heures calmes, et tant que tu regardes le terminal concerné. Un clic t'y emmène.
+				33 commutateur Ouvrir le panneau à la fin d'une tâche, Value: off
+				34 text Désactivé par défaut : un son à chaque tour terminé finit vite par faire couper toute l'app. Notifications push
+				35 commutateur M'alerter quand je suis absent, Value: off
+				36 texte Sujet
+				37 champ de texte (disabled) ton-sujet-prive
+				38 Triangle d’expansion (disabled) Description: Avancé, Value: off
+				39 text Une alerte sur le téléphone via ntfy pour le seul cas où une encoche sur un bureau vide ne peut rien faire : une approbation ou une question qui attend pendant que tu es loin de la machine. Jamais envoyée pendant que tu y es. Envoie le texte de la question — ou le début d'un plan — et le nom du projet vers ton sujet ntfy. Les sujets ntfy sont publics par convention : quiconque connaît le nom du sujet peut lire ce qui y a été envoyé. Choisis un nom long et difficile à deviner, ou pointe Serveur vers ta propr Préréglages
+				40 commutateur prompt prefix “## Memory Writing Agent”, Value: off
+				41 commutateur prompt contains “generate a short title”, Value: off
+				42 commutateur prompt prefix “Summarize this conversation”, Value: off
+				43 commutateur directory contains “/.claude/worktrees/”, Value: off
+				44 commutateur directory prefix “/private/var/folders/”, Value: off
+				45 text Known background sessions. Off by default — hiding a session you wanted is the expensive mistake. Tes filtres
+				46 bouton de menu local Répertoire
+				47 bouton de menu local contient
+				48 champ de texte (settable) motif
+				49 bouton (disabled) Ajouter
+				50 text Aucun filtre à toi pour l'instant. Un clic droit sur une carte en ajoute un aussi. Apps lanceuses bloquées
+				51 champ de texte (settable) bundle identifier, e.g. com.example.helper
+				52 bouton Choisir une app…
+				53 bouton (disabled) Bloquer
+				54 text Rien de bloqué. For helpers that drive an agent without a terminal, where a directory or prompt rule has nothing to bite on.
+				55 barre de défilement (settable, float) 0
+					56 indicateur de valeur (settable, float) 0
+					57 Flèche d’augmentation
+					58 Flèche de diminution
+					59 Bouton d’augmentation de page
+					60 Bouton de diminution de page
+	61 barre d’outils
+		62 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	63 Bouton de fermeture
+	64 Bouton de réduction ou d’agrandissement
+	65 bouton de minimisation
+
+The focused UI element is 0 fenêtre standard Perch Settings, Secondary Actions: Raise

@@ -1,0 +1,175 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image bell.badge.fill
+		3 texte Notifications
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+			19 en-tête Notifications de fin
+			20 container
+				21 commutateur Désactivez pour garder le panneau replié et afficher une lueur discrète., Value: on
+				22 bouton de menu local Sous-agents et Agent Teams, Value: Lorsque l'agent principal répond
+			23 texte Les approbations et les questions s’affichent toujours immédiatement.
+			24 en-tête Rappels de suivi
+			25 container
+				26 bouton de menu local Value: Désactivé, Envoie un seul rappel après le délai choisi. Un changement d’état l’annule ; une session au premier plan reste silencieuse.
+				27 texte Lorsqu’ils sont activés, inclure
+					28 case à cocher (disabled) Description: Votre réponse est requise, Approbations et questions, Value: 1
+					29 case à cocher (disabled) Description: Tâches terminées, Uniquement tant que le résultat reste non lu, Value: 0
+			30 en-tête Notifications mobiles
+			31 container
+				32 commutateur Nécessite l’app gratuite Bark sur votre iPhone., Value: off
+				33 texte Connexion
+					34 texte Non configuré
+					35 bouton Configurer…
+			36 texte Les alertes peuvent être répliquées sur une Apple Watch jumelée. Les approbations et réponses restent sur votre Mac.
+			37 en-tête Scènes silencieuses
+			38 texte Reste silencieux tant qu'une scène ci-dessous est active — pas de déploiement automatique, pas de son, approbations incluses. Un point discret signale toujours les tâches terminées.
+			39 container
+				40 commutateur Mode Concentration, Value: off
+				41 commutateur Écran verrouillé ou en veille, Value: off
+				42 commutateur Enregistrement ou partage d'écran, Value: off
+			43 en-tête Filtres intégrés
+			44 commutateur Détails du filtre prédéfini, Value: on
+			45 texte Les filtres prédéfinis de dossier et de prompt apparaissent dans les sections correspondantes ci-dessous.
+			46 en-tête Apps de lancement bloquées
+			47 texte Supprime les sessions lancées par les apps choisies avant leur apparition dans Vibe Island.
+			48 container
+				49 bouton Ajouter une app…
+				50 texte Aucune app de lancement personnalisée bloquée.
+			51 texte À utiliser pour les probes en arrière-plan et les apps helper. Les filtres de projet normaux vont dans Dossier ou Premier prompt.
+			52 en-tête Filtres personnalisés : répertoire
+			53 texte Masquer toute session dont le dossier de travail contient :
+			54 container
+				55 champ de texte (settable) ex. /chronicle/dev-experiments
+				56 bouton (disabled) Ajouter un motif
+				57 image Description: sparkle.magnifyingglass, Help: Aperçu en direct : combien de sessions actuelles ce filtre masquerait
+				58 texte Help: Aperçu en direct : combien de sessions actuelles ce filtre masquerait, Value: Saisissez un motif pour voir les correspondances
+				59 image Description: Déplacer, ID: folder, Help: Codex Memory Writer (cwd)
+Utilisé par les sessions d'écriture mémoire Codex stockées sous ~/.codex/memories.
+Contient: /.codex/memories
+				60 texte Value: Codex Memory Writer (cwd), Help: Codex Memory Writer (cwd)
+Utilisé par les sessions d'écriture mémoire Codex stockées sous ~/.codex/memories.
+Contient: /.codex/memories
+				61 texte Value: Prédéfini, Help: Codex Memory Writer (cwd)
+Utilisé par les sessions d'écriture mémoire Codex stockées sous ~/.codex/memories.
+Contient: /.codex/memories
+				62 texte Value: Contient · /.codex/memories, Help: Codex Memory Writer (cwd)
+Utilisé par les sessions d'écriture mémoire Codex stockées sous ~/.codex/memories.
+Contient: /.codex/memories
+				63 image Description: Détails du filtre prédéfini, ID: info.circle, Help: Codex Memory Writer (cwd)
+Utilisé par les sessions d'écriture mémoire Codex stockées sous ~/.codex/memories.
+Contient: /.codex/memories
+				64 bouton de basculement on
+				65 image Description: Déplacer, ID: folder, Help: Codex Chronicle Memory Summary
+Utilisé par les sessions Codex Desktop de résumé mémoire des enregistrements d'écran.
+Contient: /chronicle/screen_recording
+				66 texte Value: Codex Chronicle Memory Summary, Help: Codex Chronicle Memory Summary
+Utilisé par les sessions Codex Desktop de résumé mémoire des enregistrements d'écran.
+Contient: /chronicle/screen_recording
+				67 texte Value: Prédéfini, Help: Codex Chronicle Memory Summary
+Utilisé par les sessions Codex Desktop de résumé mémoire des enregistrements d'écran.
+Contient: /chronicle/screen_recording
+				68 texte Value: Contient · /chronicle/screen_recording, Help: Codex Chronicle Memory Summary
+Utilisé par les sessions Codex Desktop de résumé mémoire des enregistrements d'écran.
+Contient: /chronicle/screen_recording
+				69 image Description: Détails du filtre prédéfini, ID: info.circle, Help: Codex Chronicle Memory Summary
+Utilisé par les sessions Codex Desktop de résumé mémoire des enregistrements d'écran.
+Contient: /chronicle/screen_recording
+				70 bouton de basculement on
+				71 image Description: Déplacer, ID: folder, Help: Sessions d'arrière-plan du plugin Claude-Mem
+Utilisé par les sessions de compression en arrière-plan du plugin Claude-Mem.
+Contient: /.claude-mem
+				72 texte Value: Sessions d'arrière-plan du plugin Claude-Mem, Help: Sessions d'arrière-plan du plugin Claude-Mem
+Utilisé par les sessions de compression en arrière-plan du plugin Claude-Mem.
+Contient: /.claude-mem
+				73 texte Value: Prédéfini, Help: Sessions d'arrière-plan du plugin Claude-Mem
+Utilisé par les sessions de compression en arrière-plan du plugin Claude-Mem.
+Contient: /.claude-mem
+				74 texte Value: Contient · /.claude-mem, Help: Sessions d'arrière-plan du plugin Claude-Mem
+Utilisé par les sessions de compression en arrière-plan du plugin Claude-Mem.
+Contient: /.claude-mem
+				75 image Description: Détails du filtre prédéfini, ID: info.circle, Help: Sessions d'arrière-plan du plugin Claude-Mem
+Utilisé par les sessions de compression en arrière-plan du plugin Claude-Mem.
+Contient: /.claude-mem
+				76 bouton de basculement on
+			77 texte Astuce : clic droit sur une carte de session pour ajouter son dossier comme filtre.
+			78 en-tête Filtres personnalisés : premier prompt
+			79 texte Masquer toute session dont le premier prompt utilisateur commence par :
+			80 container
+				81 bouton de menu local Type de correspondance, Value: Commence par
+				82 champ de texte (settable) p. ex. ## Agent de rédaction de mémoire
+				83 bouton (disabled) Ajouter un motif
+				84 image Description: sparkle.magnifyingglass, Help: Aperçu en direct : combien de sessions actuelles ce filtre masquerait
+				85 texte Help: Aperçu en direct : combien de sessions actuelles ce filtre masquerait, Value: Saisissez un motif pour voir les correspondances
+				86 image Description: Insérer Du Texte, ID: text.cursor, Help: Codex Memory Writer (préfixe de prompt)
+Utilisé par les sessions Codex qui démarrent avec un prompt fixe d'écriture mémoire.
+Préfixe: ## Memory Writing Agent
+				87 text Value: Codex Memory Writer (préfixe de prompt) Prédéfini Préfixe · ## Memory Writing Agent, Help: Codex Memory Writer (préfixe de prompt)
+Utilisé par les sessions Codex qui démarrent avec un prompt fixe d'écriture mémoire.
+Préfixe: ## Memory Writing Agent
+				88 image Description: Détails du filtre prédéfini, ID: info.circle, Help: Codex Memory Writer (préfixe de prompt)
+Utilisé par les sessions Codex qui démarrent avec un prompt fixe d'écriture mémoire.
+Préfixe: ## Memory Writing Agent
+				89 bouton de basculement on
+				90 image Description: Insérer Du Texte, ID: text.cursor, Help: Prompts suggérés de Codex App
+Utilisé par Codex App pour générer les prompts suggérés sur l'écran d'accueil.
+Préfixe: # Overview Generate 0 to 3 hyperpersonalized suggestions
+				91 text Help: Prompts suggérés de Codex App
+Utilisé par Codex App pour générer les prompts suggérés sur l'écran d'accueil.
+Préfixe: # Overview Generate 0 to 3 hyperpersonalized suggestions, Value: Prompts suggérés de Codex App Prédéfini Préfixe · # Overview Generate 0 to 3 hyperpersonalized suggestions
+				92 image Description: Détails du filtre prédéfini, ID: info.circle, Help: Prompts suggérés de Codex App
+Utilisé par Codex App pour générer les prompts suggérés sur l'écran d'accueil.
+Préfixe: # Overview Generate 0 to 3 hyperpersonalized suggestions
+				93 bouton de basculement on
+				94 image Description: Insérer Du Texte, ID: text.cursor, Help: Prompts Git helper de Codex App
+Utilisé par le helper Commit or push de Codex App pour générer des suggestions de message Git.
+Préfixe: Using the supplied git context below, generate
+				95 text Value: Prompts Git helper de Codex App Prédéfini Préfixe · Using the supplied git context below, generate, Help: Prompts Git helper de Codex App
+Utilisé par le helper Commit or push de Codex App pour générer des suggestions de message Git.
+Préfixe: Using the supplied git context below, generate
+				96 image Description: Détails du filtre prédéfini, ID: info.circle, Help: Prompts Git helper de Codex App
+Utilisé par le helper Commit or push de Codex App pour générer des suggestions de message Git.
+Préfixe: Using the supplied git context below, generate
+				97 bouton de basculement on
+				98 image Description: Insérer Du Texte, ID: text.cursor, Help: Générateur de titre Craft Agent
+Utilisé par Craft Agent pour générer un titre court pour une conversation GUI-hosted.
+Préfixe: What topic or area is the user exploring? Reply with ONLY a short descriptive title
+				99 text Help: Générateur de titre Craft Agent
+Utilisé par Craft Agent pour générer un titre court pour une conversation GUI-hosted.
+Préfixe: What topic or area is the user exploring? Reply with ONLY a short descriptive title, Value: Générateur de titre Craft Agent Prédéfini Préfixe · What topic or area is the user exploring? Reply with ONLY a short descriptive title
+				100 image Description: Détails du filtre prédéfini, ID: info.circle, Help: Générateur de titre Craft Agent
+Utilisé par Craft Agent pour générer un titre court pour une conversation GUI-hosted.
+Préfixe: What topic or area is the user exploring? Reply with ONLY a short descriptive title
+				101 bouton de basculement on
+			102 texte Astuce : faites un clic droit sur une carte de session pour ajouter son premier prompt comme filtre.
+			103 barre de défilement (settable, float) 0
+				104 indicateur de valeur (settable, float) 0
+				105 Flèche d’augmentation
+				106 Flèche de diminution
+				107 Bouton d’augmentation de page
+				108 Bouton de diminution de page
+	109 Bouton de fermeture
+	110 Bouton de réduction ou d’agrandissement (disabled)
+	111 bouton de minimisation
+112 menu bar
+	113 Vibe Island
+	114 Édition
+	115 Présentation
+	116 Fenêtre
+	117 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

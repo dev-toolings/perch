@@ -21,7 +21,18 @@ struct TranscriptView: View {
 
     private var prompt: String? {
         let prompt = turn.prompt ?? fallbackPrompt
-        return (prompt?.isEmpty == false) ? prompt : nil
+        guard let prompt, !prompt.isEmpty else { return nil }
+        let lowercased = prompt.lowercased()
+        if lowercased.hasPrefix("code=")
+          || lowercased.contains("get_app_state")
+          || lowercased.contains("element_index")
+          || lowercased.contains("noderepl")
+          || lowercased.contains("sky.")
+          || lowercased.contains("tools.")
+        {
+          return nil
+        }
+        return prompt
     }
 
     var body: some View {
@@ -37,21 +48,16 @@ struct TranscriptView: View {
                         .lineLimit(2)
                         .truncationMode(.tail)
                     Spacer(minLength: 6)
-                    // Only while it is being written. `Done` beside a row whose own line
-                    // already says "Waiting for you" is the same fact twice, and it was
-                    // the pair of them that read as a contradiction.
-                    if !isFinished {
-                        Text(t("Writing…"))
-                            .font(Theme.mono(9))
-                            .foregroundStyle(Theme.active)
-                    }
+                    Text(isFinished ? t("Done") : t("Writing…"))
+                        .font(Theme.mono(9))
+                        .foregroundStyle(isFinished ? Theme.tertiary : Theme.active)
                 }
                 .padding(.horizontal, 9)
                 .padding(.vertical, 7)
                 .background(Theme.hairline.opacity(0.5))
             }
 
-            if !turn.reply.isEmpty {
+            if !turn.reply.isEmpty && !turn.reply.lowercased().contains("get_app_state") {
                 // Clipped, not scrolled. A scroll view inside a card inside a panel that
                 // scrolls takes the wheel away from the panel the moment the cursor is over
                 // a reply — and the panel is the thing being scrolled. The bounded height

@@ -47,6 +47,26 @@ final class PendingPermission: Identifiable {
         cwd.map(ProjectRoot.name(for:))
     }
 
+    /// Stable for every reconstruction of this card and distinct for two requests in the
+    /// same session. Newer clients expose the first two components directly; older hook
+    /// payloads fall back to the duplicate fingerprint, which is still request-scoped.
+    var questionDraftID: QuestionDraftID {
+        QuestionDraftID(
+            sessionId: sessionId ?? "",
+            runtimeInstanceId: request.payload.runtimeInstanceId
+                ?? rawString("runtime_instance_id", "runtimeInstanceId") ?? "",
+            requestId: request.payload.toolUseId
+                ?? rawString("request_id", "requestId", "tool_use_id", "toolUseId")
+                ?? duplicateKey ?? id.uuidString)
+    }
+
+    private func rawString(_ keys: String...) -> String? {
+        for key in keys {
+            if let value = request.raw?[key]?.stringValue, !value.isEmpty { return value }
+        }
+        return nil
+    }
+
     /// What the tool is about to do, in one line.
     var detail: String { ActivityEvent.summarize(request) }
 

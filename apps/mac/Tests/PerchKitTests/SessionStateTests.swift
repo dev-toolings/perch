@@ -16,6 +16,60 @@ private let epoch = Date(timeIntervalSince1970: 1_700_000_000)
     #expect(tracker.sessions.count == 1)
 }
 
+@Suite("Completion read state")
+struct CompletionReadStateTests {
+    @Test("a completion arriving while closed is unread")
+    func closedCompletionIsUnread() {
+        var tracker = SessionTracker()
+        tracker.record(id: "s1", kind: "UserPromptSubmit", at: epoch)
+        tracker.record(id: "s1", kind: "Stop", at: epoch)
+
+        #expect(tracker.sessions["s1"]?.isCompletionUnread == true)
+    }
+
+    @Test("opening the panel reads existing completions")
+    func openingReadsExistingCompletions() {
+        var tracker = SessionTracker()
+        tracker.record(id: "s1", kind: "UserPromptSubmit", at: epoch)
+        tracker.record(id: "s1", kind: "Stop", at: epoch)
+
+        tracker.hold()
+
+        #expect(tracker.sessions["s1"]?.isCompletionUnread == false)
+    }
+
+    @Test("a completion visible as it arrives is already read")
+    func visibleCompletionStaysRead() {
+        var tracker = SessionTracker()
+        tracker.record(id: "s1", kind: "UserPromptSubmit", at: epoch)
+        tracker.hold()
+
+        tracker.record(id: "s1", kind: "Stop", at: epoch)
+
+        #expect(tracker.sessions["s1"]?.isCompletionUnread == false)
+    }
+
+    @Test("an idle Codex session discovered at launch is not new mail")
+    func discoveredIdleSessionStartsRead() {
+        var tracker = SessionTracker()
+
+        tracker.observe(id: "s1", status: .idle, at: epoch)
+
+        #expect(tracker.sessions["s1"]?.isCompletionUnread == false)
+    }
+
+    @Test("new work clears a previous completion")
+    func newWorkClearsCompletion() {
+        var tracker = SessionTracker()
+        tracker.record(id: "s1", kind: "UserPromptSubmit", at: epoch)
+        tracker.record(id: "s1", kind: "Stop", at: epoch)
+
+        tracker.record(id: "s1", kind: "UserPromptSubmit", at: epoch)
+
+        #expect(tracker.sessions["s1"]?.isCompletionUnread == false)
+    }
+}
+
 /// A turn that ends in failure is still an ended turn. Before `StopFailure` was wired up
 /// the notch kept spinning on a session that had already given up.
 @Test func stopFailureEndsTheTurnToo() {
@@ -55,10 +109,12 @@ private let epoch = Date(timeIntervalSince1970: 1_700_000_000)
     var tracker = SessionTracker()
     tracker.record(id: "s1", kind: "PreCompact", at: epoch)
     #expect(tracker.sessions["s1"]?.status == .compacting)
+    #expect(tracker.sessions["s1"]?.compactingStartedAt == epoch)
     #expect(tracker.workingCount == 1)
 
     tracker.record(id: "s1", kind: "PreToolUse", at: epoch)
     #expect(tracker.sessions["s1"]?.status == .runningTool)
+    #expect(tracker.sessions["s1"]?.compactingStartedAt == nil)
     #expect(tracker.sessions["s1"]?.isWorking == true)
 }
 
@@ -186,9 +242,10 @@ struct AnsweredTests {
     #expect(children.last?.startedAt == epoch.addingTimeInterval(30))
 
     // No id in these events, so the old reading stands: one of them finished, and the
-    // oldest is the honest guess. See below for what happens when the id is there.
+    // oldest is the honest guess. The completed row remains as context for this turn.
     tracker.record(id: "s1", kind: "SubagentStop", at: epoch.addingTimeInterval(60))
-    #expect(tracker.sessions["s1"]?.children.map(\.label) == ["subagent"])
+    #expect(tracker.sessions["s1"]?.children.map(\.label) == ["code-reviewer", "subagent"])
+    #expect(tracker.sessions["s1"]?.children.first?.completedAt == epoch.addingTimeInterval(60))
     #expect(tracker.subagentCount == 1)
 }
 
@@ -207,13 +264,35 @@ struct AnsweredTests {
     tracker.record(
         id: "s1", kind: "SubagentStop", agentId: "a2", at: epoch.addingTimeInterval(60))
 
-    #expect(tracker.sessions["s1"]?.children.map(\.label) == ["yoda"])
+    #expect(tracker.sessions["s1"]?.children.map(\.label) == ["yoda", "obiwan"])
     #expect(tracker.sessions["s1"]?.children.first?.startedAt == epoch)
+    #expect(tracker.sessions["s1"]?.children.last?.completedAt == epoch.addingTimeInterval(60))
+    #expect(tracker.subagentCount == 1)
 
     // An agent older than Perch stops too, and closes nothing it does not own.
     tracker.record(
         id: "s1", kind: "SubagentStop", agentId: "unknown", at: epoch.addingTimeInterval(70))
-    #expect(tracker.sessions["s1"]?.children.map(\.label) == ["yoda"])
+    #expect(tracker.sessions["s1"]?.children.map(\.label) == ["yoda", "obiwan"])
+}
+
+/// Completed children explain the current result but do not leak into the next request.
+@Test func completedSubagentsRemainForTheTurnThenClearOnTheNextPrompt() {
+    var tracker = SessionTracker()
+    tracker.record(
+        id: "s1", kind: "SubagentStart", subagentLabel: "reviewer", agentId: "a1",
+        at: epoch)
+    tracker.record(
+        id: "s1", kind: "SubagentStop", agentId: "a1", at: epoch.addingTimeInterval(30))
+
+    #expect(tracker.sessions["s1"]?.children.count == 1)
+    #expect(tracker.sessions["s1"]?.completedSubagents == 1)
+    #expect(tracker.sessions["s1"]?.subagents == 0)
+    #expect(tracker.sessions["s1"]?.hasLiveWork == false)
+
+    tracker.record(
+        id: "s1", kind: "UserPromptSubmit", prompt: "start the next task",
+        at: epoch.addingTimeInterval(60))
+    #expect(tracker.sessions["s1"]?.children.isEmpty == true)
 }
 
 /// The bug this whole state exists for: `Stop` fires when background work is *launched*,
@@ -241,11 +320,13 @@ struct AnsweredTests {
     // And the agent earns a child row even though Perch never saw it start.
     #expect(tracker.sessions["s1"]?.children.map(\.label) == ["Lot 2A auth HMAC"])
 
-    // Everything came back: now the turn really is over.
+    // Everything came back: now the turn is over, and its completed card remains readable.
     tracker.record(id: "s1", kind: "Stop", backgroundTasks: [], at: epoch.addingTimeInterval(600))
     #expect(tracker.sessions["s1"]?.status == .idle)
-    #expect(tracker.sessions["s1"]?.children.isEmpty == true)
-    #expect(tracker.visible.isEmpty)
+    #expect(tracker.sessions["s1"]?.children.count == 1)
+    #expect(tracker.sessions["s1"]?.children.first?.completedAt == epoch.addingTimeInterval(600))
+    #expect(tracker.sessions["s1"]?.subagents == 0)
+    #expect(tracker.visible.count == 1)
 }
 
 /// A CLI that reports no such list — Codex — must not have its subagents wiped by a `Stop`
@@ -338,6 +419,42 @@ struct AnsweredTests {
     #expect(SessionTracker.condense("\n\n  fix the auth bug  \n\nand then deploy") == "fix the auth bug")
     #expect(SessionTracker.condense(String(repeating: "a", count: 100)).count == 73)
     #expect(SessionTracker.condense(String(repeating: "a", count: 100)).hasSuffix("…"))
+}
+
+@Test func injectedTaskNotificationsNeverReplaceTheVisiblePrompt() {
+    var tracker = SessionTracker()
+    tracker.record(
+        id: "s1", kind: "UserPromptSubmit", prompt: "review the ingress plan", at: epoch)
+    tracker.record(
+        id: "s1", kind: "Notification",
+        prompt: "<task-notification><task-id>worker-1</task-id></task-notification>",
+        at: epoch)
+
+    #expect(tracker.sessions["s1"]?.prompt == "review the ingress plan")
+    #expect(
+        SessionTracker.condense(
+            "<system-reminder>internal</system-reminder>\nship the release") == "ship the release")
+}
+
+@Test func teammateTransportMessagesNeverBecomeTheVisiblePrompt() {
+    var tracker = SessionTracker()
+    tracker.record(
+        id: "s1", kind: "UserPromptSubmit", prompt: "finish the Vibe parity audit", at: epoch)
+    tracker.record(
+        id: "s1", kind: "Notification",
+        prompt: """
+            Another Claude session sent a message:
+            <teammate-message teammate_id="reviewer" summary="done">
+            Internal review transport payload.
+            </teammate-message>
+            """,
+        at: epoch)
+
+    #expect(tracker.sessions["s1"]?.prompt == "finish the Vibe parity audit")
+    #expect(
+        SessionTracker.condense(
+            "Another Claude session sent a message:\n<teammate-message>done</teammate-message>")
+            .isEmpty)
 }
 
 @Test func terminalIdentityIsRememberedAndPrettyPrinted() {
@@ -478,31 +595,42 @@ struct AnsweredTests {
     #expect(tracker.active.map(\.id) == ["c"])
 }
 
+/// An explicit archive is different from an automatic disappearance: the row the person
+/// chose must leave immediately even while the rest of the list is held steady.
+@Test func archiveRemovesTheChosenSessionDuringAHold() {
+    var tracker = SessionTracker()
+    tracker.record(id: "a", kind: "Stop", at: epoch)
+    tracker.record(id: "b", kind: "Stop", at: epoch.addingTimeInterval(1))
+    tracker.hold()
+
+    tracker.archive(id: "a")
+
+    #expect(tracker.sessions["a"] == nil)
+    #expect(tracker.visible.map(\.id) == ["b"])
+}
+
 // MARK: - What the panel shows
 
-/// "Done" was an honest label for a turn that ended, and a row of them is still a list of
-/// things already dealt with. The session stays tracked — it is the row that goes.
-@Test func aFinishedTurnLeavesTheListButNotTheTracker() {
+/// A turn ending leaves its answer readable until the session itself ends.
+@Test func aFinishedTurnStaysInTheListAndTheTracker() {
     var tracker = SessionTracker()
     tracker.record(id: "a", kind: "PreToolUse", at: epoch)
     tracker.record(id: "b", kind: "PreToolUse", at: epoch.addingTimeInterval(60))
     #expect(tracker.visible.map(\.id) == ["a", "b"])
 
     tracker.record(id: "a", kind: "Stop", at: epoch.addingTimeInterval(120))
-    #expect(tracker.visible.map(\.id) == ["b"])
-    // Still there: the diagnostics report what is tracked, not what is worth looking at.
+    #expect(tracker.visible.map(\.id) == ["a", "b"])
     #expect(tracker.active.map(\.id) == ["a", "b"])
     #expect(tracker.sessions.count == 2)
 }
 
-/// Hidden rather than dropped, so the next prompt puts the row back where it was. Dropping
-/// the session would restart it at the bottom of the list, nameless, once per turn.
-@Test func theNextTurnBringsTheRowBackInItsPlace() {
+/// The next prompt reuses the completed row in place rather than appending another card.
+@Test func theNextTurnReusesTheRowInItsPlace() {
     var tracker = SessionTracker()
     tracker.record(id: "a", kind: "UserPromptSubmit", prompt: "fix the bridge", at: epoch)
     tracker.record(id: "b", kind: "PreToolUse", at: epoch.addingTimeInterval(60))
     tracker.record(id: "a", kind: "Stop", at: epoch.addingTimeInterval(120))
-    #expect(tracker.visible.map(\.id) == ["b"])
+    #expect(tracker.visible.map(\.id) == ["a", "b"])
 
     tracker.record(id: "a", kind: "UserPromptSubmit", at: epoch.addingTimeInterval(180))
     #expect(tracker.visible.map(\.id) == ["a", "b"])
@@ -510,9 +638,8 @@ struct AnsweredTests {
     #expect(tracker.sessions["a"]?.title == "fix the bridge")
 }
 
-/// A failure is news you may have missed, and everything blocked on a person is the
-/// opposite of finished. Only the clean end of a turn goes.
-@Test func onlyACleanEndingDisappears() {
+/// Failures, decisions and clean completed turns all remain readable.
+@Test func everyResolvedOrActionableTurnRemainsVisible() {
     var tracker = SessionTracker()
     tracker.record(id: "failed", kind: "StopFailure", at: epoch)
     tracker.record(id: "asks", kind: "PermissionRequest", tool: "Bash", at: epoch)
@@ -521,12 +648,11 @@ struct AnsweredTests {
         id: "waiting", kind: "Notification", message: "Claude is waiting for your input",
         at: epoch)
 
-    #expect(tracker.visible.map(\.id).sorted() == ["answers", "asks", "failed"])
+    #expect(tracker.visible.map(\.id).sorted() == ["answers", "asks", "failed", "waiting"])
 }
 
-/// The row must not evaporate under the cursor: a turn ending while the panel is open is a
-/// removal like any other, and it waits until you look away.
-@Test func aTurnEndingUnderTheCursorKeepsItsRowUntilYouLookAway() {
+/// A turn ending under the cursor remains available after the hold is released.
+@Test func aTurnEndingUnderTheCursorKeepsItsRow() {
     var tracker = SessionTracker()
     tracker.record(id: "a", kind: "PreToolUse", at: epoch)
 
@@ -535,7 +661,7 @@ struct AnsweredTests {
     #expect(tracker.visible.map(\.id) == ["a"])
 
     tracker.release(now: epoch.addingTimeInterval(20))
-    #expect(tracker.visible.isEmpty)
+    #expect(tracker.visible.map(\.id) == ["a"])
 }
 
 /// And one that both starts and finishes while you are reading: it earned its row when it
@@ -550,7 +676,7 @@ struct AnsweredTests {
     #expect(tracker.visible.map(\.id) == ["a", "b"])
 
     tracker.release(now: epoch.addingTimeInterval(30))
-    #expect(tracker.visible.map(\.id) == ["a"])
+    #expect(tracker.visible.map(\.id) == ["a", "b"])
 }
 
 /// A session starting appends. It must not push the list someone is reading downward.
@@ -670,10 +796,14 @@ struct WatchedSessionTests {
 
     tracker.identify(
         id: "s1", aiTitle: "Refondre la modal configuration",
-        client: ClientInfo(terminal: "Codex Desktop", session: "019ff878"))
+        client: ClientInfo(terminal: "Codex Desktop", session: "019ff878"),
+        model: "gpt-5.6-sol", reasoningEffort: "medium", gitBranch: "main")
 
     let session = tracker.sessions["s1"]
     #expect(session?.aiTitle == "Refondre la modal configuration")
+    #expect(session?.model == "gpt-5.6-sol")
+    #expect(session?.reasoningEffort == "medium")
+    #expect(session?.gitBranch == "main")
     #expect(session?.client?.session == "019ff878")
     #expect(session?.status == .idle)
     #expect(session?.lastEvent == epoch)

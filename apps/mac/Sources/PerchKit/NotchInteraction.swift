@@ -22,6 +22,9 @@ public struct NotchInteraction: Sendable, Equatable {
         /// Perch has something worth a glance but not an answer — a quota window crossing
         /// the line you set. Shows the peek and takes it away again on its own.
         case revealRequested
+        /// A completed turn is worth the full session and transcript, not a one-line
+        /// flash. It still dismisses itself because nobody explicitly opened it.
+        case expandedRevealRequested
         /// One line of news: a turn ended, a session failed, a quota window crossed.
         /// Shows the flash and takes it back on its own.
         case flashRequested
@@ -36,9 +39,18 @@ public struct NotchInteraction: Sendable, Equatable {
     }
 
     public private(set) var state: NotchState = .idle
+    public var autoDisplayMilliseconds: Int
+    private var policy: DisplayPolicy
 
-    public init(state: NotchState = .idle) {
+    public init(
+        state: NotchState = .idle,
+        autoDisplayMilliseconds: Int = NotchInteraction.revealGrace
+    ) {
         self.state = state
+        self.autoDisplayMilliseconds = autoDisplayMilliseconds
+        self.policy = DisplayPolicy(
+            state: Self.displayState(for: state),
+            transientMilliseconds: autoDisplayMilliseconds)
     }
 
     /// Grace periods: crossing the edge of a panel should not make it flicker, and a
@@ -46,101 +58,114 @@ public struct NotchInteraction: Sendable, Equatable {
     public static let peekGrace = 220
     public static let expandedGrace = 700
     /// A peek nobody asked for has to last long enough to read and short enough to forgive.
-    public static let revealGrace = 4_000
+    public static let revealGrace = 5_000
     /// Long enough to read six words, short enough that it is gone before it is in the
     /// way. It is also the ceiling on how wrong this can be: nothing waits on a flash.
-    public static let flashGrace = 2_200
+    public static let flashGrace = 5_000
+
+    public var activeSessionId: String? { policy.activeSessionId }
 
     @discardableResult
     public mutating func handle(_ event: Event) -> [Effect] {
-        // A pending permission owns the notch: nothing but a decision dismisses it, or a
-        // blocked Claude Code session could be hidden by an idle mouse movement.
-        if state == .alert {
-            switch event {
-            case .permissionsCleared:
-                state = .idle
-                return [.cancelCollapse]
-            case .permissionArrived:
-                return []
-            default:
-                return []
-            }
-        }
-
-        switch event {
-        case .permissionArrived:
-            state = .alert
-            return [.cancelCollapse]
-
-        case .hoverEntered:
-            switch state {
-            case .idle:
-                state = .peek
-                return [.cancelCollapse]
-            case .flash:
-                // Reaching for a notice is asking for the rest of it, and the peek is the
-                // rest of it. The timer that would have taken the flash away has to die
-                // with it, or the panel closes under the cursor two seconds later.
-                state = .peek
-                return [.cancelCollapse]
-            case .peek, .expanded:
-                // Keep it open while the cursor is inside.
-                return [.cancelCollapse]
-            case .alert:
-                return []
-            }
-
-        case .hoverExited:
+        if event == .hoverExited {
             switch state {
             case .peek:
                 return [.scheduleCollapse(milliseconds: Self.peekGrace)]
             case .expanded:
                 return [.scheduleCollapse(milliseconds: Self.expandedGrace)]
-            // A flash is already on its way out; rescheduling on a cursor that merely
-            // passed by would restart the clock on news nobody read.
             case .idle, .flash, .alert:
                 return []
             }
+        }
 
+        guard let intent = displayIntent(for: event) else { return [] }
+        return handle(intent)
+    }
+
+    /// The full Vibe display contract entry point. The event adapter above remains for
+    /// cursor and keyboard callers; session-aware model events use this so focus is not
+    /// discarded on the way to the controller.
+    @discardableResult
+    public mutating func handle(_ intent: DisplayIntent) -> [Effect] {
+        policy.transientMilliseconds = autoDisplayMilliseconds
+        let decision = policy.decide(intent)
+        guard decision.accepted else { return [] }
+
+        state = renderedState(for: decision, current: state)
+        switch decision.timerPolicy {
+        case .transient(let milliseconds):
+            return [.scheduleCollapse(milliseconds: milliseconds)]
+        case .cancel:
+            return [.cancelCollapse]
+        case .unchanged:
+            return []
+        }
+    }
+
+    private func displayIntent(for event: Event) -> DisplayIntent? {
+        switch event {
+        case .hoverEntered:
+            switch state {
+            case .idle: return .hoverExpand
+            case .flash: return .peek(sessionId: nil)
+            case .peek, .expanded: return .pin(sessionId: nil)
+            case .alert: return nil
+            }
+        case .hoverExited:
+            return nil
         case .tappedNotch:
-            state = state == .expanded ? .idle : .expanded
-            return [.cancelCollapse]
-
+            return state == .expanded
+                ? .collapse(.manual) : .manualExpand(sessionId: nil)
         case .tappedBody:
-            // Peek is a preview with nothing to click, so treating its whole surface as
-            // "open me" is the only way out that does not require hitting a 32pt strip.
-            guard state == .peek else { return [] }
-            state = .expanded
-            return [.cancelCollapse]
-
-        case .flashRequested:
-            // Only from rest, and never over a panel: an open panel is someone reading,
-            // and a peek is someone about to. Losing a line of news to either is the
-            // right trade — it is news, not a question.
-            guard state == .idle else { return [] }
-            state = .flash
-            return [.scheduleCollapse(milliseconds: Self.flashGrace)]
-
-        case .revealRequested:
-            // Only from rest. Interrupting a panel someone opened, or one they are
-            // hovering, to show them something they did not ask for is the behaviour that
-            // makes people quit an app that lives in the menu bar.
-            guard state == .idle else { return [] }
-            state = .peek
-            return [.scheduleCollapse(milliseconds: Self.revealGrace)]
-
+            return state == .peek ? .promotePeek(sessionId: nil) : nil
         case .escapePressed:
-            guard state != .idle else { return [] }
-            state = .idle
-            return [.cancelCollapse]
-
-        case .collapseTimerFired:
-            guard state == .peek || state == .expanded || state == .flash else { return [] }
-            state = .idle
-            return []
-
+            return state == .idle ? nil : .collapse(.manual)
+        case .permissionArrived:
+            return .permission(sessionId: nil)
         case .permissionsCleared:
-            return []
+            return state == .alert ? .collapse(.system) : nil
+        case .revealRequested:
+            return .deferredReveal(sessionId: nil)
+        case .expandedRevealRequested:
+            return .taskComplete(sessionId: nil)
+        case .flashRequested:
+            return .statusWarning(sessionId: nil)
+        case .collapseTimerFired:
+            return state == .peek || state == .expanded || state == .flash
+                ? .collapse(.autoTransient) : nil
+        }
+    }
+
+    private static func displayState(for state: NotchState) -> NotchDisplayState {
+        switch state {
+        case .idle: return .closed
+        case .flash: return .transient
+        case .peek: return .peek
+        case .expanded: return .manualExpanded
+        case .alert: return .blocking(.permission)
+        }
+    }
+
+    private func renderedState(
+        for decision: DisplayDecision, current: NotchState
+    ) -> NotchState {
+        switch decision.nextState {
+        case .closed:
+            return .idle
+        case .peek:
+            return .peek
+        case .manualExpanded:
+            return .expanded
+        case .blocking:
+            return .alert
+        case .transient:
+            switch decision.expansion {
+            case .collapse: return .idle
+            case .expand: return .expanded
+            case .peek: return .peek
+            case .none:
+                return current == .idle ? .flash : current
+            }
         }
     }
 }

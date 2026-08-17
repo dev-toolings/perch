@@ -1,0 +1,50 @@
+Window: "", App: Perch.
+0 fenêtre standard Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton Pass
+			15 bouton À propos
+		16 diviseur (disabled, settable, float) 188
+		17 container
+			18 image keyboard.fill
+			19 texte Raccourcis
+			20 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+				21 text Touche modificateur Touche modificateur
+				22 bouton de menu local Description: Touche modificateur, Value: ⌃ Control
+				23 texte Raccourcis globaux
+				24 bouton de basculement Value: on, Description: Activer les raccourcis clavier, Désactive tous les raccourcis Perch sans effacer vos raccourcis configurés.
+				25 text Ouvrir le sélecteur Appui court : ouvrir et choisir avec ↑↓ + Entrée. Maintenir et appuyer à nouveau : faire défiler les sessions, puis relâcher le modificateur pour rejoindre.
+				26 bouton ⌃G
+				27 bouton Description: Fermer, ID: xmark.circle.fill
+				28 bouton de basculement Description: Sélecteur inverse, ⌃⇧G, Ajoute Maj au raccourci du sélecteur pour défiler à l'envers., Value: on
+				29 text Replier le panneau esc Actif uniquement lorsque le panneau est déplié. Raccourcis du panneau Approuver ⌃ + Y Refuser ⌃ + N Toujours autoriser ⌃ + A Bypass des autorisations ⌃ + B Rejoindre le terminal ⌃ + T Sélectionner l'option ⌃ + 1–9 Envoyer la sélection multiple ⌃ + ↵ Naviguer entre les sessions ↑  ↓ Tous les raccourcis ci-dessous sont actifs lorsque le panneau est déplié. Maintenez votre touche modificateur pour afficher les indices sur chaque bouton.
+				30 barre de défilement (settable, float) 0
+					31 indicateur de valeur (settable, float) 0
+					32 Flèche d’augmentation
+					33 Flèche de diminution
+					34 Bouton d’augmentation de page
+					35 Bouton de diminution de page
+	36 barre d’outils
+		37 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	38 Bouton de fermeture
+	39 Bouton de réduction ou d’agrandissement (disabled)
+	40 bouton de minimisation
+41 menu bar
+	42 Perch
+	43 Édition
+	44 Présentation
+	45 Fenêtre
+	46 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

@@ -1,0 +1,58 @@
+Window: "", App: Perch.
+0 fenêtre standard Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton Pass
+			15 bouton À propos
+		16 diviseur (disabled, settable, float) 188
+		17 container
+			18 image Description: Informations, ID: info.circle.fill
+			19 texte À propos
+			20 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+				21 image
+				22 text Perch v0.1.0
+				23 bouton (disabled) Rechercher les mises à jour
+				24 link Description: Notes de version, v0.1.0, Value: github.com/dev-toolings/perch/releases
+				25 bouton de basculement Value: on, Description: Rechercher automatiquement les mises à jour, Désactivé : ne cherche les nouvelles versions que via Rechercher les mises à jour.
+				26 bouton de basculement Value: on, Description: Installer les mises à jour automatiquement, Désactivé : un bouton ↑ apparaît dans le panneau quand une mise à jour est prête.
+				27 link Description: Site web, Value: github.com/dev-toolings/perch
+				28 link Description: Créateur, Value: github.com/dev-toolings
+				29 link Description: Signaler un bug, Value: github.com/dev-toolings/perch/issues
+				30 link Description: Rejoindre la communauté, Value: github.com/dev-toolings/perch/discussions
+				31 link Description: Envoyer un commentaire, Value: github.com/dev-toolings/perch/discussions/new/choose
+				32 bouton Exporter le rapport de diagnostic
+				33 texte Inclut les informations système et les journaux de diagnostic. Vérifiez le rapport avant de le partager.
+				34 bouton Remerciements
+				35 bouton Désinstaller Perch…
+				36 texte Retire les hooks, restaure ta statusline et supprime Perch. Mettre l'app à la corbeille ne fait rien de tout ça.
+				37 bouton Quitter Perch
+				38 barre de défilement (settable, float) 0
+					39 indicateur de valeur (settable, float) 0
+					40 Flèche d’augmentation
+					41 Flèche de diminution
+					42 Bouton d’augmentation de page
+					43 Bouton de diminution de page
+	44 barre d’outils
+		45 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	46 Bouton de fermeture
+	47 Bouton de réduction ou d’agrandissement (disabled)
+	48 bouton de minimisation
+49 menu bar
+	50 Perch
+	51 Édition
+	52 Présentation
+	53 Fenêtre
+	54 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

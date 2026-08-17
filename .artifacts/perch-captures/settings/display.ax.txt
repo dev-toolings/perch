@@ -1,0 +1,39 @@
+Window: "Perch Settings", App: Perch.
+0 fenêtre standard Perch Settings, Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton À propos
+		15 diviseur (disabled, settable, float) 196
+		16 container
+			17 image Description: Changer La Taille Du Texte, ID: textformat.size
+			18 texte Affichage
+			19 zone de défilement
+				20 texte Présentation du notch
+				21 bouton Épuré, Plus de place pour la barre de menus
+				22 bouton Détaillé, Titres et statuts visibles d'un coup d'œil
+				23 text Épuré garde une ligne par session, pour que six agents tiennent encore à l'écran. Détaillé ajoute ce que vous avez demandé et le plan en cours. Encoche
+				24 curseur Largeur de l'encoche  -60 pt, Value: -60, Secondary Actions: Increment, Decrement
+					25 indicateur de valeur -60
+				26 curseur Hauteur de l'encoche  -12 pt, Value: -12, Secondary Actions: Increment, Decrement
+					27 indicateur de valeur -12
+				28 bouton Revenir à ce que macOS annonce
+				29 commutateur Afficher le forfait à côté de l'encoche quand rien ne tourne, Value: on
+				30 texte Ajuste uniquement si le panneau ne se place pas exactement sur l'encoche. Zéro utilise les dimensions détectées par macOS.
+	31 barre d’outils
+		32 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	33 Bouton de fermeture
+	34 Bouton de réduction ou d’agrandissement
+	35 bouton de minimisation
+
+The focused UI element is 0 fenêtre standard Perch Settings, Secondary Actions: Raise

@@ -18,8 +18,8 @@ enum PanelPreview {
         VStack(alignment: .leading, spacing: Theme.rowSpacing) {
             header
 
-            SessionCardView(session: working, tasks: plan, layout: layout, isOpen: true)
-            SessionCardView(session: unattended, layout: layout)
+            SessionCardView(session: working, tasks: plan, layout: layout, isCollapsed: false)
+            SessionCardView(session: unattended, layout: layout, isCollapsed: false)
             SessionCardView(session: waiting, layout: layout)
         }
         .padding(.horizontal, 14)
@@ -274,6 +274,7 @@ enum PanelPreview {
                         IdleView(
                             reading: reading, notchWidth: 200, notchHeight: 32,
                             waiting: busy ? 1 : 0, quota: busy ? nil : quota)
+                            .frame(width: 200 + flank * 2, height: 40)
                     }
                     .overlay(
                         Rectangle().stroke(Theme.hairline, lineWidth: 1)
@@ -312,6 +313,9 @@ enum PanelPreview {
                 IdleView(
                     reading: IdleReading(agents: [], count: 0, needsYou: false),
                     notchWidth: notch.width, notchHeight: notch.height, quota: quota)
+                    .frame(width: NotchState.idle.size(notch: notch, flank: IdleView.flank(
+                        for: IdleReading(agents: [], count: 0, needsYou: false), quota: quota
+                    )).width)
             }
 
             stage(
@@ -323,6 +327,9 @@ enum PanelPreview {
                 IdleView(
                     reading: busy, notchWidth: notch.width, notchHeight: notch.height,
                     waiting: 1)
+                    .frame(width: NotchState.idle.size(
+                        notch: notch, flank: IdleView.flank(for: busy, waiting: 1)
+                    ).width)
             }
 
             stage("flash · a turn ended", size: NotchState.flash.size(notch: notch)) {
@@ -362,7 +369,7 @@ enum PanelPreview {
                     }
 
                     VStack(alignment: .leading, spacing: Theme.rowSpacing) {
-                        SessionCardView(session: working, tasks: plan, isOpen: true)
+                        SessionCardView(session: working, tasks: plan, isCollapsed: false)
                         SessionCardView(session: unattended)
                         SessionCardView(session: waiting)
                     }

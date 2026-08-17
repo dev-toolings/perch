@@ -11,9 +11,6 @@ import PerchKit
 // Every failure path exits 0 with no stdout. If Perch is not running, is wedged, or
 // answers nonsense, Claude Code must behave exactly as if this hook did not exist.
 
-/// Events where we block and wait for the user to decide in the notch.
-let decisionEvents: Set<String> = ["PermissionRequest"]
-
 func parseArguments() -> (event: String, timeout: TimeInterval?, source: String?) {
     var event = "Unknown"
     var timeout: TimeInterval?
@@ -56,10 +53,34 @@ let input = readStdin()
 
 // Decode leniently: an unparseable payload is still worth forwarding as an event.
 let decoder = JSONDecoder()
-let payload = (try? decoder.decode(ClaudeHookPayload.self, from: input)) ?? ClaudeHookPayload()
+var payload = (try? decoder.decode(ClaudeHookPayload.self, from: input)) ?? ClaudeHookPayload()
+let genericPayload = try? decoder.decode(JSONValue.self, from: input)
 
-// The payload's own event name wins — argv is only a fallback.
-let event = payload.hookEventName ?? eventArgument
+/// Cursor uses different event names and a flatter payload, but still provides the same
+/// core facts under a small set of stable aliases. Normalize those facts here so the app
+/// receives one wire model instead of growing a second session engine.
+if sourceArgument == "cursor", let generic = genericPayload {
+    func string(_ keys: [String]) -> String? {
+        keys.lazy.compactMap { generic[$0]?.stringValue }.first
+    }
+    payload.sessionId = payload.sessionId ?? string(["session_id", "conversation_id", "sessionId"])
+    payload.cwd = payload.cwd ?? string(["cwd", "workspace_root", "workspaceRoot"])
+    payload.prompt = payload.prompt ?? string(["prompt", "user_prompt", "message"])
+    payload.message = payload.message ?? string(["message", "response", "result"])
+    payload.toolName = payload.toolName ?? string(["tool_name", "tool", "type"])
+    payload.toolInput = payload.toolInput ?? generic["tool_input"] ?? generic["input"]
+}
+payload = HookBehavior.normalizedPayload(
+    payload, source: sourceArgument, environment: ProcessInfo.processInfo.environment)
+if let genericPayload {
+    payload = HookBehavior.normalizedPayload(
+        payload, source: sourceArgument, json: genericPayload)
+}
+
+// Claude-compatible agents name the event in the payload. Cursor names its own event
+// vocabulary there, so its installer supplies the mapped Perch event on argv instead.
+let event = HookBehavior.resolvedEvent(
+    argument: eventArgument, payloadEvent: payload.hookEventName, source: sourceArgument)
 
 /// Events for which the untyped copy of the payload is worth building.
 ///
@@ -70,7 +91,7 @@ let event = payload.hookEventName ?? eventArgument
 /// contents — to answer a question nobody asked, in a process holding a blocked session.
 let rawEvents: Set<String> = ["SubagentStart", "SubagentStop"]
 let raw = rawEvents.contains(event) ? try? decoder.decode(JSONValue.self, from: input) : nil
-let wantsDecision = decisionEvents.contains(event)
+let wantsDecision = HookBehavior.wantsDecision(event: event, source: sourceArgument)
 // A day for decisions, matching the hook entry the installer writes: the app owns the
 // deadline. Telemetry events get two seconds and are never worth stalling a session for.
 let timeout = timeoutOverride ?? (wantsDecision ? 86_400 : 2)

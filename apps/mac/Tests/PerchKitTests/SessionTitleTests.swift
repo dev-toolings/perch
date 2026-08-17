@@ -32,6 +32,16 @@ private func transcript(_ lines: [String]) -> String {
     try? FileManager.default.removeItem(atPath: path)
 }
 
+@Test func anInjectedNotificationTitleFallsBackToTheLastHumanTitle() {
+    let path = transcript([
+        #"{"type":"ai-title","aiTitle":"Ingress relay plan","sessionId":"s1"}"#,
+        #"{"type":"ai-title","aiTitle":"<task-notification>","sessionId":"s1"}"#,
+    ])
+    #expect(SessionTitle.read(transcriptPath: path) == "Ingress relay plan")
+    #expect(SessionTitle.clean("<system-reminder>").isEmpty)
+    try? FileManager.default.removeItem(atPath: path)
+}
+
 @Test func aTranscriptWithNoTitleYieldsNothing() {
     let path = transcript([#"{"type":"user","message":{}}"#])
     #expect(SessionTitle.read(transcriptPath: path) == nil)

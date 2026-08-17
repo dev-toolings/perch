@@ -197,7 +197,7 @@ public enum CodexQuota {
 
     /// `10080` → `7d`, `300` → `5h`, `60` → `1h`. An unnamed width falls back to the plain
     /// word rather than to a made-up number.
-    static func title(forWindowMinutes minutes: Int?) -> String {
+    public static func title(forWindowMinutes minutes: Int?) -> String {
         guard let minutes, minutes > 0 else { return "quota" }
         if minutes % 1_440 == 0 { return "\(minutes / 1_440)d" }
         if minutes % 60 == 0 { return "\(minutes / 60)h" }

@@ -64,19 +64,15 @@ Gemini→warning, opencode→active, unknown→secondary.
 
 ### Typography
 
-**One typeface everywhere by design: Departure Mono** (one weight only —
-emphasis comes from colour and pill backgrounds, not weight). Rationale in
-`Theme.swift`: a bitmap mono reads as *hardware* hanging off a physical cutout,
-and a fixed advance keeps a live token counter from shifting layout every tick.
+**SwiftUI platform designs by intent:** the Vibe binary references the system
+`monospaced`, `rounded` and `default` designs rather than a custom family. The
+bundled `DepartureMono-Regular.otf` is an unused resource in the inspected app;
+it must not be treated as the source of truth for the Island Bar typography.
 
-- `mono(size, weight)` — content (commands, paths, numbers).
-- `label(size, weight)` — chrome (tabs, titles); same face, separate intent.
-- `prose(size, weight)` — **system face**, deliberately. Paragraph replies get a
-  humanist face; only code blocks stay mono. This is the one considered
-  exception to "mono everywhere."
-- Fallbacks when the bundle can't register the font: `.monospaced` for mono,
-  `.rounded` for label, `.default` for prose. `--diagnose` reports registration
-  via `resolvedTypefaceName`.
+- `mono(size, weight)` — system monospaced design for commands, paths and numbers.
+- `label(size, weight)` — system rounded design for chrome, tabs and titles.
+- `prose(size, weight)` — system default design for replies and paragraphs.
+- `--diagnose` reports the active trio via `resolvedTypefaceName`.
 
 **Observed size ladder (ad-hoc, not tokenized):** `7` (chevron), `8` (peek
 chevron), `9` (age, children, chips, "recent"), `10` (most body/activity/peek),

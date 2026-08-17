@@ -1,0 +1,86 @@
+Window: "", App: Perch.
+0 fenêtre standard Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton Pass
+			15 bouton À propos
+		16 diviseur (disabled, settable, float) 188
+		17 container
+			18 image puzzlepiece.extension.fill
+			19 texte Intégrations
+			20 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+				21 text Agents Claude Code
+				22 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				23 texte Actif
+				24 bouton de basculement on
+				25 texte Codex
+				26 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				27 texte Actif
+				28 bouton de basculement on
+				29 texte OpenCode
+				30 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				31 texte Actif
+				32 bouton de basculement on
+				33 texte Gemini CLI
+				34 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				35 texte Actif
+				36 bouton de basculement on
+				37 texte Cursor Agent
+				38 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				39 texte Actif
+				40 bouton de basculement on
+				41 texte Droid
+				42 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				43 texte Actif
+				44 bouton de basculement on
+				45 texte Pi Agent
+				46 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				47 texte Actif
+				48 bouton de basculement on
+				49 texte Amp
+				50 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				51 texte Actif
+				52 bouton de basculement on
+				53 bouton Ajouter une branche CLI…
+				54 bouton de basculement Value: on, Description: Configurer automatiquement les nouveaux agents, Configure automatiquement les agents compatibles nouvellement détectés.
+				55 text Gérez la façon dont Perch se connecte à chaque agent. IDE Cursor
+				56 bouton Installer
+				57 text Installez les extensions pour rejoindre directement le bon onglet de terminal dans votre IDE. Développeur
+				58 bouton Règles de saut personnalisées
+				59 text Les développeurs de terminaux tiers peuvent enregistrer un schéma URL pour activer le saut précis de session. Hooks
+				60 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				61 text Claude Code (global) 15 events /Users/<username>/.claude/settings.json
+				62 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				63 text Codex 14 events /Users/<username>/.codex/hooks.json Installe avec ./scripts/install-hooks.sh <projet> ou --codex. Les hooks sont lus au démarrage d'une session. Redémarre les sessions existantes après la configuration. Confiance Codex
+				64 image Description: Avertissement, ID: exclamationmark.triangle.fill
+				65 text 10 of 14 hooks trusted Lance /hooks dans Codex et approuve les entrées Perch. Perch lit l'état de confiance Codex sans modifier son registre de sécurité.
+				66 barre de défilement (settable, float) 0
+					67 indicateur de valeur (settable, float) 0
+					68 Flèche d’augmentation
+					69 Flèche de diminution
+					70 Bouton d’augmentation de page
+					71 Bouton de diminution de page
+	72 barre d’outils
+		73 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	74 Bouton de fermeture
+	75 Bouton de réduction ou d’agrandissement (disabled)
+	76 bouton de minimisation
+77 menu bar
+	78 Perch
+	79 Édition
+	80 Présentation
+	81 Fenêtre
+	82 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

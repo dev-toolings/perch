@@ -1,0 +1,99 @@
+Window: "", App: Perch.
+0 fenêtre standard Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton Pass
+			15 bouton À propos
+		16 diviseur (disabled, settable, float) 188
+		17 container
+			18 image bell.badge.fill
+			19 texte Notifications
+			20 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+				21 texte Notifications de fin
+				22 bouton de basculement Value: on, Description: Déployer le panneau pour les notifications de fin, Désactivez pour garder le panneau replié et afficher une lueur discrète.
+				23 texte Sous-agents et Agent Teams
+				24 bouton de menu local Description: Sous-agents et Agent Teams, Value: Lorsque l'agent principal répond
+				25 text Les approbations et les questions sont toujours affichées immédiatement. Rappels de suivi Me le rappeler Envoie un seul rappel après le délai choisi. Un changement d’état l’annule ; une session au premier plan reste silencieuse.
+				26 bouton de menu local Description: Me le rappeler, Value: Désactivé
+				27 texte Lorsqu’ils sont activés, inclure
+				28 case à cocher (disabled) Description: Votre réponse est requise, Approbations et questions, Value: 1
+				29 case à cocher (disabled) Description: Tâches terminées, Uniquement tant que le résultat reste non lu, Value: 0
+				30 texte Notifications mobiles
+				31 bouton de basculement Description: Notifier mon iPhone, Nécessite l’app gratuite Bark sur votre iPhone., Value: off
+				32 texte Connexion
+				33 image exclamationmark.circle.fill
+				34 texte Non configuré
+				35 bouton Configurer…
+				36 text Les alertes peuvent être répliquées sur une Apple Watch jumelée. Les approbations et réponses restent sur votre Mac. Scènes silencieuses
+				37 bouton de basculement Description: Un mode Concentration est actif, Value: off
+				38 bouton de basculement Description: L'écran est verrouillé ou en veille, Value: off
+				39 bouton de basculement Description: L'écran est enregistré ou partagé, Value: off
+				40 texte Filtres intégrés
+				41 bouton de basculement Description: Détails du filtre prédéfini, Value: on
+				42 text Les filtres prédéfinis de dossier et de prompt apparaissent dans les sections correspondantes ci-dessous. Apps lanceuses bloquées
+				43 bouton Ajouter une app…
+				44 text Aucune app de lancement personnalisée bloquée. À utiliser pour les probes en arrière-plan et les apps helper. Les filtres de projet normaux vont dans Dossier ou Premier prompt. Filtres personnalisés : répertoire Masquer toute session dont le dossier de travail contient :
+				45 champ de texte (settable) e.g. /chronicle/dev-experiments
+				46 bouton (disabled) Ajouter un motif
+				47 texte Saisissez un motif pour voir les correspondances
+				48 image Description: Déplacer, ID: folder
+				49 texte Codex Memory Writer (cwd)
+				50 bouton de basculement off
+				51 text Prédéfini Contient · /.codex/memories
+				52 image Description: Déplacer, ID: folder
+				53 texte Codex Chronicle Memory Summary
+				54 bouton de basculement off
+				55 text Prédéfini Contient · /chronicle/screen_recording
+				56 image Description: Déplacer, ID: folder
+				57 texte Sessions d'arrière-plan du plugin Claude-Mem
+				58 bouton de basculement off
+				59 text Prédéfini Contient · /.claude-mem Astuce : clic droit sur une carte de session pour ajouter son dossier comme filtre. Filtres personnalisés : premier prompt Masquer toute session dont le premier prompt utilisateur commence par :
+				60 champ de texte (settable) e.g. ## Memory Writing Agent
+				61 bouton (disabled) Ajouter un motif
+				62 texte Saisissez un motif pour voir les correspondances
+				63 image Description: Insérer Du Texte, ID: text.cursor
+				64 texte Codex Memory Writer (préfixe de prompt)
+				65 bouton de basculement off
+				66 text Prédéfini Préfixe · ## Memory Writing Agent
+				67 image Description: Insérer Du Texte, ID: text.cursor
+				68 texte Prompts suggérés de Codex App
+				69 bouton de basculement off
+				70 text Prédéfini Préfixe · # Overview Generate 0 to 3 hyperpersonalized suggestions
+				71 image Description: Insérer Du Texte, ID: text.cursor
+				72 texte Prompts Git helper de Codex App
+				73 bouton de basculement off
+				74 text Prédéfini Préfixe · Using the supplied git context below, generate
+				75 image Description: Insérer Du Texte, ID: text.cursor
+				76 texte Générateur de titre Craft Agent
+				77 bouton de basculement off
+				78 text Prédéfini Préfixe · What topic or area is the user exploring? Reply with ONLY a short descriptive title Astuce : faites un clic droit sur une carte de session pour ajouter son premier prompt comme filtre.
+				79 barre de défilement (settable, float) 0
+					80 indicateur de valeur (settable, float) 0
+					81 Flèche d’augmentation
+					82 Flèche de diminution
+					83 Bouton d’augmentation de page
+					84 Bouton de diminution de page
+	85 barre d’outils
+		86 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	87 Bouton de fermeture
+	88 Bouton de réduction ou d’agrandissement (disabled)
+	89 bouton de minimisation
+90 menu bar
+	91 Perch
+	92 Édition
+	93 Présentation
+	94 Fenêtre
+	95 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

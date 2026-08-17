@@ -1,0 +1,34 @@
+Window: "Perch Settings", App: Perch.
+0 fenêtre standard Perch Settings, Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton À propos
+		15 diviseur (disabled, settable, float) 196
+		16 container
+			17 image network
+			18 texte SSH distant
+			19 zone de défilement
+				20 text Surveille et approuve les sessions CLI IA distantes depuis l'encoche. Ajoute un hôte, déploie le hook, puis connecte le tunnel. Hôtes
+				21 bouton Ajouter un hôte, ./scripts/remote.sh add build-box user@host
+				22 bouton Déployer le hook, ./scripts/remote.sh deploy build-box
+				23 bouton Connecter, ./scripts/remote.sh connect build-box
+				24 text L'authentification SSH par clé publique est recommandée. Conteneurs
+				25 bouton Conteneur Docker, Copier la commande de passerelle en une ligne pour un conteneur.
+	26 barre d’outils
+		27 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	28 Bouton de fermeture
+	29 Bouton de réduction ou d’agrandissement
+	30 bouton de minimisation
+
+The focused UI element is 0 fenêtre standard Perch Settings, Secondary Actions: Raise

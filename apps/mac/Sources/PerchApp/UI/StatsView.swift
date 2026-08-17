@@ -31,11 +31,15 @@ struct StatsView: View {
         }
     }
 
-    /// Remote hosts report a Claude quota read from their own statusline bridge. They have
-    /// nothing to say about Codex, so they are listed under the tab they belong to rather
-    /// than under both.
+    /// Each remote provider stays under its own agent tab. Combining accounts or showing
+    /// a Claude statusline beneath Codex would make the quota look authoritative when it is
+    /// not even the same subscription.
     private var agentRemotes: [String: UsageLimitsReader.Reading] {
-        usage.agent == .claude ? usage.remoteLimits : [:]
+        switch usage.agent {
+        case .claude: return usage.remoteLimits
+        case .codex: return usage.remoteCodexLimits
+        case .opencode: return [:]
+        }
     }
 
     private var header: some View {

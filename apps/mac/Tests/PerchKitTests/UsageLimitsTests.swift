@@ -3,6 +3,19 @@ import Testing
 
 @testable import PerchKit
 
+@Test func quotaWindowUsesItsHumanTitleWhenTheProviderIdIsInternal() {
+  let window = NamedWindow(
+    id: "codex_primary", title: "7d",
+    window: RateLimitWindow(utilization: 76, resetsAt: nil))
+
+  #expect(window.shortLabel == "7d")
+  #expect(
+    NamedWindow(
+      id: "five_hour", title: "5h session",
+      window: RateLimitWindow(utilization: 10, resetsAt: nil)
+    ).shortLabel == "5h")
+}
+
 /// The payload Claude Code hands the statusline, trimmed to what the bridge caches.
 private let payload = """
     {

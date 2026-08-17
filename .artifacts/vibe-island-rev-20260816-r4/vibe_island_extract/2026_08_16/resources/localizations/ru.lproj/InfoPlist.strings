@@ -1,0 +1,2 @@
+/* InfoPlist.strings (Русский) */
+"NSAppleEventsUsageDescription" = "Vibe Island необходимо управлять приложениями терминала (iTerm2, Terminal), чтобы переходить к нужному окну, вкладке и сеансу при нажатии на уведомление.";

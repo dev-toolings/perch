@@ -8,8 +8,16 @@ import PerchKit
 /// Everything here is best-effort by design. A jump that misses — the tab was closed, the
 /// user never granted Automation — must leave the panel exactly as it was rather than
 /// raising anything.
+@MainActor
 enum TerminalJumper {
+    private static var customRules: [CustomJumpRule] = []
+
+    static func configure(customRules: [CustomJumpRule]) {
+        self.customRules = customRules
+    }
+
     static func jump(to client: ClientInfo?) {
+        if jumpUsingCustomRule(to: client) { return }
         let plan = TerminalJump.plan(for: client)
         // Every click leaves a line. The whole path below is deliberately silent on
         // failure, which is right for the person clicking and useless for whoever has to
@@ -55,6 +63,29 @@ enum TerminalJumper {
         case .unavailable:
             break
         }
+    }
+
+    private static func jumpUsingCustomRule(to client: ClientInfo?) -> Bool {
+        guard let client, let terminal = client.terminal,
+            let rule = customRules.first(where: { $0.terminal == terminal })
+        else { return false }
+
+        let values = [
+            "session": client.session ?? "", "tty": client.tty ?? "",
+            "workspace": client.workspace ?? "",
+        ]
+        var rendered = rule.urlTemplate
+        for (key, value) in values {
+            let escaped = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            rendered = rendered.replacingOccurrences(of: "{\(key)}", with: escaped)
+        }
+        guard let url = URL(string: rendered), url.scheme != nil else {
+            PerchLog.error("custom jump rule for \(terminal) produced an invalid URL")
+            return true
+        }
+        activate(rule.bundleId)
+        NSWorkspace.shared.open(url)
+        return true
     }
 
     private static func activate(_ bundleId: String) {

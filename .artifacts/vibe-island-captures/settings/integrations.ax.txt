@@ -1,0 +1,82 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image puzzlepiece.extension.fill
+		3 texte Intégrations
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+			19 en-tête Agents
+			20 container
+				21 texte Claude Code
+				22 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				23 texte Actif
+				24 bouton de basculement on
+				25 texte Codex
+				26 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				27 texte Actif
+				28 bouton de basculement on
+				29 texte OpenCode
+				30 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				31 texte Actif
+				32 bouton de basculement on
+				33 texte Gemini CLI
+				34 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				35 texte Actif
+				36 bouton de basculement on
+				37 texte Cursor Agent
+				38 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				39 texte Actif
+				40 bouton de basculement on
+				41 texte Droid
+				42 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				43 texte Actif
+				44 bouton de basculement on
+				45 texte Pi Agent
+				46 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				47 texte Actif
+				48 bouton de basculement on
+				49 texte Amp
+				50 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				51 texte Actif
+				52 bouton de basculement on
+				53 bouton Ajouter une branche CLI…
+				54 commutateur Configure automatiquement les agents compatibles nouvellement détectés., Value: on
+			55 texte Gérez la façon dont Vibe Island se connecte à chaque agent.
+			56 en-tête IDE
+			57 container
+				58 texte Cursor
+				59 bouton Installer
+			60 texte Installez les extensions pour rejoindre directement le bon onglet de terminal dans votre IDE.
+			61 en-tête Développeur
+			62 bouton Règles de saut personnalisées
+			63 texte Les développeurs de terminaux tiers peuvent enregistrer un schéma URL pour activer le saut précis de session.
+			64 barre de défilement (settable, float) 0
+				65 indicateur de valeur (settable, float) 0
+				66 Flèche d’augmentation
+				67 Flèche de diminution
+				68 Bouton d’augmentation de page
+				69 Bouton de diminution de page
+	70 Bouton de fermeture
+	71 Bouton de réduction ou d’agrandissement (disabled)
+	72 bouton de minimisation
+73 menu bar
+	74 Vibe Island
+	75 Édition
+	76 Présentation
+	77 Fenêtre
+	78 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

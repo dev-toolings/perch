@@ -135,7 +135,11 @@ struct PermissionAlertView: View {
 
     private var buttons: some View {
         HStack(spacing: 6) {
-            AlertButton(title: "Allow", tint: .green, shortcut: "⌥↵") {
+            ApprovalButton(
+                label: t("Allow"), shortcut: "⌥↵",
+                foreground: Theme.active, background: Theme.active,
+                axIdentifier: "permission.allow"
+            ) {
                 decide(.allow, nil)
             }
 
@@ -143,18 +147,30 @@ struct PermissionAlertView: View {
             // scopes: the grant that lasts as long as this chat, and the one written down
             // for good. Both show the exact rule so nobody grants more than they meant to.
             if let rule = PermissionRule.rule(for: pending.request) {
-                AlertButton(title: "This chat", tint: .green.opacity(0.6), shortcut: nil) {
+                ApprovalButton(
+                    label: t("This chat"), foreground: Theme.active.opacity(0.75),
+                    background: Theme.active,
+                    axIdentifier: "permission.allow.session"
+                ) {
                     decide(.allow, .session)
                 }
                 .help("Allows \(rule) for the rest of this conversation")
 
-                AlertButton(title: "Always", tint: .green.opacity(0.6), shortcut: nil) {
+                ApprovalButton(
+                    label: t("Always"), foreground: Theme.active.opacity(0.75),
+                    background: Theme.active,
+                    axIdentifier: "permission.allow.always"
+                ) {
                     decide(.allow, .localSettings)
                 }
                 .help("Adds \(rule) to this project's .claude/settings.local.json")
             }
 
-            AlertButton(title: "Deny", tint: .red, shortcut: "⌥⌫") {
+            ApprovalButton(
+                label: t("Deny"), shortcut: "⌥⌫",
+                foreground: Theme.danger, background: Theme.danger,
+                axIdentifier: "permission.deny"
+            ) {
                 decide(.deny, nil)
             }
 
@@ -164,52 +180,21 @@ struct PermissionAlertView: View {
             // for requests you have not read is how a permission system stops meaning
             // anything.
             if waitingCount > 1, let decideAll {
-                Button(t("Allow all %lld", waitingCount)) { decideAll(.allow) }
-                    .buttonStyle(.plain)
-                    .font(.system(size: 10))
-                    .foregroundStyle(Theme.active.opacity(0.8))
-                Button(t("Deny all")) { decideAll(.deny) }
-                    .buttonStyle(.plain)
-                    .font(.system(size: 10))
-                    .foregroundStyle(Theme.danger.opacity(0.8))
+                ApprovalButton(
+                    label: t("Allow all %lld", waitingCount),
+                    foreground: Theme.active,
+                    axIdentifier: "permission.allowAll"
+                ) { decideAll(.allow) }
+                ApprovalButton(
+                    label: t("Deny all"), foreground: Theme.danger,
+                    axIdentifier: "permission.denyAll"
+                ) { decideAll(.deny) }
             }
 
-            Button(t("Ask in terminal")) { decide(.ask, nil) }
-                .buttonStyle(.plain)
-                .font(.system(size: 10))
-                .foregroundStyle(.white.opacity(0.45))
+            ApprovalButton(
+                label: t("Ask in terminal"),
+                axIdentifier: "permission.terminal"
+            ) { decide(.ask, nil) }
         }
-    }
-}
-
-private struct AlertButton: View {
-    let title: String
-    let tint: Color
-    let shortcut: String?
-    let action: () -> Void
-
-    @State private var isHovering = false
-
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 5) {
-                Text(title)
-                    .font(.system(size: 11, weight: .medium))
-                if let shortcut {
-                    Text(shortcut)
-                        .font(.system(size: 9, design: .monospaced))
-                        .foregroundStyle(.white.opacity(0.4))
-                }
-            }
-            .foregroundStyle(.white)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(
-                RoundedRectangle(cornerRadius: 6)
-                    .fill(tint.opacity(isHovering ? 0.45 : 0.25))
-            )
-        }
-        .buttonStyle(.plain)
-        .onHover { isHovering = $0 }
     }
 }

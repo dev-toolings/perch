@@ -73,25 +73,36 @@ public struct AdmissionPolicy: Codable, Sendable, Equatable {
     /// someone did want is worse than showing one they did not, so these are opt-in.
     public static let presets: [AdmissionRule] = [
         AdmissionRule(
-            id: "preset.claude-mem", field: .prompt, match: .prefix,
-            pattern: "## Memory Writing Agent", enabled: false, isPreset: true,
+            id: "preset.codex-memory-cwd", field: .directory, match: .contains,
+            pattern: "/.codex/memories", enabled: false, isPreset: true,
+            note: "Codex Memory Writer (cwd)"),
+        AdmissionRule(
+            id: "preset.codex-chronicle", field: .directory, match: .contains,
+            pattern: "/chronicle/screen_recording", enabled: false, isPreset: true,
+            note: "Codex Chronicle Memory Summary"),
+        AdmissionRule(
+            id: "preset.claude-mem-directory", field: .directory, match: .contains,
+            pattern: "/.claude-mem", enabled: false, isPreset: true,
             note: "Claude-Mem plugin background compression sessions"),
         AdmissionRule(
-            id: "preset.title-generator", field: .prompt, match: .contains,
-            pattern: "generate a short title", enabled: false, isPreset: true,
-            note: "Title generators for GUI-hosted conversations"),
+            id: "preset.claude-mem", field: .prompt, match: .prefix,
+            pattern: "## Memory Writing Agent", enabled: false, isPreset: true,
+            note: "Codex Memory Writer (prompt prefix)"),
         AdmissionRule(
-            id: "preset.summary", field: .prompt, match: .prefix,
-            pattern: "Summarize this conversation", enabled: false, isPreset: true,
-            note: "Automatic conversation summaries"),
+            id: "preset.codex-suggestions", field: .prompt, match: .prefix,
+            pattern: "# Overview Generate 0 to 3 hyperpersonalized suggestions",
+            enabled: false, isPreset: true,
+            note: "Codex App suggested prompts"),
         AdmissionRule(
-            id: "preset.worktree-scratch", field: .directory, match: .contains,
-            pattern: "/.claude/worktrees/", enabled: false, isPreset: true,
-            note: "Throwaway agent worktrees"),
+            id: "preset.codex-git-helper", field: .prompt, match: .prefix,
+            pattern: "Using the supplied git context below, generate",
+            enabled: false, isPreset: true,
+            note: "Codex App Git helper prompts"),
         AdmissionRule(
-            id: "preset.tmp", field: .directory, match: .prefix,
-            pattern: "/private/var/folders/", enabled: false, isPreset: true,
-            note: "Sessions started in a temporary directory"),
+            id: "preset.craft-title", field: .prompt, match: .prefix,
+            pattern: "What topic or area is the user exploring? Reply with ONLY a short descriptive title",
+            enabled: false, isPreset: true,
+            note: "Craft Agent title generator"),
     ]
 
     /// True when the session should never reach the panel.
@@ -146,8 +157,16 @@ extension AdmissionPolicy {
 
         // Presets added by a later version must appear for people who already have a file.
         var policy = decoded
-        for preset in AdmissionPolicy.presets where !policy.rules.contains(where: { $0.id == preset.id }) {
-            policy.rules.append(preset)
+        let presetIDs = Set(AdmissionPolicy.presets.map(\.id))
+        policy.rules.removeAll { $0.isPreset && !presetIDs.contains($0.id) }
+        for preset in AdmissionPolicy.presets {
+            if let index = policy.rules.firstIndex(where: { $0.id == preset.id }) {
+                let enabled = policy.rules[index].enabled
+                policy.rules[index] = preset
+                policy.rules[index].enabled = enabled
+            } else {
+                policy.rules.append(preset)
+            }
         }
         return policy
     }

@@ -1,0 +1,82 @@
+Window: "Perch Settings", App: Perch.
+0 fenêtre standard Perch Settings, Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton À propos
+		15 diviseur (disabled, settable, float) 196
+		16 container
+			17 image Description: Volume Fort, ID: speaker.wave.2.fill
+			18 texte Son
+			19 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+				20 texte Son
+				21 commutateur Jouer les sons, Value: off
+				22 texte Volume
+				23 curseur (disabled) Value: 0.6, Secondary Actions: Increment, Decrement
+					24 indicateur de valeur 0.6
+				25 text 60% A source is a chiptune jingle synthesised on the spot, a macOS system sound, a file you picked, or nothing at all. Packs
+				26 bouton Import a pack…
+				27 text No packs installed. A pack is a folder of audio files with a manifest. Applying one points the events it covers at its files and leaves the rest alone. Per event Session start
+				28 bouton de menu local (disabled) Off
+				29 bouton (disabled) Choose…
+				30 bouton (disabled) Preview
+				31 texte Prompt submitted
+				32 bouton de menu local (disabled) Off
+				33 bouton (disabled) Choose…
+				34 bouton (disabled) Preview
+				35 texte Task complete
+				36 bouton de menu local (disabled) Off
+				37 bouton (disabled) Choose…
+				38 bouton (disabled) Preview
+				39 texte Task error
+				40 bouton de menu local (disabled) Basso
+				41 bouton (disabled) Choose…
+				42 bouton (disabled) Preview
+				43 texte Approval needed
+				44 bouton de menu local (disabled) Submarine
+				45 bouton (disabled) Choose…
+				46 bouton (disabled) Preview
+				47 texte Question asked
+				48 bouton de menu local (disabled) Submarine
+				49 bouton (disabled) Choose…
+				50 bouton (disabled) Preview
+				51 texte Context limit
+				52 bouton de menu local (disabled) Funk
+				53 bouton (disabled) Choose…
+				54 bouton (disabled) Preview
+				55 texte Idle reminder
+				56 bouton de menu local (disabled) Off
+				57 bouton (disabled) Choose…
+				58 bouton (disabled) Preview
+				59 texte Usage almost full
+				60 bouton de menu local (disabled) Funk
+				61 bouton (disabled) Choose…
+				62 bouton (disabled) Preview
+				63 texte Usage refreshed
+				64 bouton de menu local (disabled) Off
+				65 bouton (disabled) Choose…
+				66 bouton (disabled) Preview
+				67 texte The noisy ones start silent: a chime for every finished turn is how an app gets muted for good.
+				68 barre de défilement (settable, float) 0
+					69 indicateur de valeur (settable, float) 0
+					70 Flèche d’augmentation
+					71 Flèche de diminution
+					72 Bouton d’augmentation de page
+					73 Bouton de diminution de page
+	74 barre d’outils
+		75 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	76 Bouton de fermeture
+	77 Bouton de réduction ou d’agrandissement
+	78 bouton de minimisation
+
+The focused UI element is 0 fenêtre standard Perch Settings, Secondary Actions: Raise

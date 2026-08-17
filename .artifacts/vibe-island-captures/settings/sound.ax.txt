@@ -1,0 +1,32 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image Description: Volume Fort, ID: speaker.wave.2.fill
+		3 texte Son
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement
+			19 commutateur Activer les effets sonores, Value: off
+	20 Bouton de fermeture
+	21 Bouton de réduction ou d’agrandissement (disabled)
+	22 bouton de minimisation
+23 menu bar
+	24 Vibe Island
+	25 Édition
+	26 Présentation
+	27 Fenêtre
+	28 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

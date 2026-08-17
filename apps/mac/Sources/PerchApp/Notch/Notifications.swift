@@ -18,11 +18,13 @@ enum SessionNotifier {
     enum Kind {
         case finished
         case failed
+        case reminder
 
         var title: String {
             switch self {
             case .finished: return t("Turn finished")
             case .failed: return t("Turn ended on a failure")
+            case .reminder: return t("Unread completion")
             }
         }
     }

@@ -6,87 +6,95 @@ import Testing
 /// Lines in the shapes a real rollout uses. Taken from a Codex Desktop session that was
 /// running while this was written, trimmed to the fields that are read.
 private enum Line {
-    static func meta(
-        id: String = "019fbcf4-e1c5-7330-a3f0-1cd11bf960fa",
-        cwd: String = "/Users/kevin/lab/iautos-mobile",
-        originator: String = "Codex Desktop"
-    ) -> String {
-        // `base_instructions` is why the header is read with a byte bound: on a desktop
-        // session it carries the whole system prompt.
-        """
-        {"timestamp":"2026-08-01T10:55:22.221Z","type":"session_meta","payload":\
-        {"session_id":"\(id)","cwd":"\(cwd)","originator":"\(originator)",\
-        "cli_version":"0.146.0-alpha.9.2","source":"vscode",\
-        "base_instructions":{"text":"\(String(repeating: "x", count: 4096))"}}}
-        """
-    }
+  static func meta(
+    id: String = "019fbcf4-e1c5-7330-a3f0-1cd11bf960fa",
+    cwd: String = "/Users/kevin/lab/iautos-mobile",
+    originator: String = "Codex Desktop"
+  ) -> String {
+    // `base_instructions` is why the header is read with a byte bound: on a desktop
+    // session it carries the whole system prompt.
+    """
+    {"timestamp":"2026-08-01T10:55:22.221Z","type":"session_meta","payload":\
+    {"session_id":"\(id)","cwd":"\(cwd)","originator":"\(originator)",\
+    "cli_version":"0.146.0-alpha.9.2","source":"vscode",\
+    "git":{"commit_hash":"abc123","branch":"codex/vibe-parity"},\
+    "base_instructions":{"text":"\(String(repeating: "x", count: 4096))"}}}
+    """
+  }
 
-    static let reasoning =
-        #"{"timestamp":"2026-08-01T11:02:27.569Z","type":"response_item","payload":{"type":"reasoning"}}"#
+  static func context(model: String, effort: String) -> String {
+    """
+    {"timestamp":"2026-08-01T11:02:20.000Z","type":"turn_context","payload":\
+    {"turn_id":"turn-1","model":"\(model)","effort":"\(effort)"}}
+    """
+  }
 
-    static func toolCall(name: String = "exec", input: String = "ls -la") -> String {
-        """
-        {"timestamp":"2026-08-01T11:02:34.040Z","type":"response_item","payload":\
-        {"type":"custom_tool_call","name":"\(name)","input":"\(input)","status":"in_progress"}}
-        """
-    }
+  static let reasoning =
+    #"{"timestamp":"2026-08-01T11:02:27.569Z","type":"response_item","payload":{"type":"reasoning"}}"#
 
-    static let toolOutput =
-        #"{"timestamp":"2026-08-01T11:02:34.064Z","type":"response_item","payload":{"type":"custom_tool_call_output"}}"#
+  static func toolCall(name: String = "exec", input: String = "ls -la") -> String {
+    """
+    {"timestamp":"2026-08-01T11:02:34.040Z","type":"response_item","payload":\
+    {"type":"custom_tool_call","name":"\(name)","input":"\(input)","status":"in_progress"}}
+    """
+  }
 
-    static func agentMessage(_ text: String) -> String {
-        """
-        {"timestamp":"2026-08-01T11:02:30.922Z","type":"event_msg","payload":\
-        {"type":"agent_message","message":"\(text)","phase":"final"}}
-        """
-    }
+  static let toolOutput =
+    #"{"timestamp":"2026-08-01T11:02:34.064Z","type":"response_item","payload":{"type":"custom_tool_call_output"}}"#
 
-    static let tokenCount =
-        #"{"timestamp":"2026-08-01T11:02:34.064Z","type":"event_msg","payload":{"type":"token_count"}}"#
+  static func agentMessage(_ text: String) -> String {
+    """
+    {"timestamp":"2026-08-01T11:02:30.922Z","type":"event_msg","payload":\
+    {"type":"agent_message","message":"\(text)","phase":"final"}}
+    """
+  }
+
+  static let tokenCount =
+    #"{"timestamp":"2026-08-01T11:02:34.064Z","type":"event_msg","payload":{"type":"token_count"}}"#
 }
 
 /// A rollout tree laid out the way Codex files them: `sessions/YYYY/MM/DD/rollout-…-<uuid>.jsonl`.
 private struct Fixture {
-    let root: URL
-    let index: URL
+  let root: URL
+  let index: URL
 
-    init() throws {
-        let base = URL(fileURLWithPath: NSTemporaryDirectory())
-            .appendingPathComponent("perch-codex-\(UUID().uuidString)")
-        root = base.appendingPathComponent("sessions", isDirectory: true)
-        index = base.appendingPathComponent("session_index.jsonl")
-        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+  init() throws {
+    let base = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent("perch-codex-\(UUID().uuidString)")
+    root = base.appendingPathComponent("sessions", isDirectory: true)
+    index = base.appendingPathComponent("session_index.jsonl")
+    try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+  }
+
+  func destroy() { try? FileManager.default.removeItem(at: root.deletingLastPathComponent()) }
+
+  @discardableResult
+  func rollout(
+    id: String, day: Date, lines: [String], modified: Date? = nil
+  ) throws -> URL {
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = .current
+    let parts = calendar.dateComponents([.year, .month, .day], from: day)
+    let directory =
+      root
+      .appendingPathComponent(String(format: "%04d", parts.year!), isDirectory: true)
+      .appendingPathComponent(String(format: "%02d", parts.month!), isDirectory: true)
+      .appendingPathComponent(String(format: "%02d", parts.day!), isDirectory: true)
+    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+
+    let url = directory.appendingPathComponent("rollout-2026-08-01T12-53-13-\(id).jsonl")
+    try (lines.joined(separator: "\n") + "\n").write(to: url, atomically: true, encoding: .utf8)
+    if let modified {
+      try FileManager.default.setAttributes(
+        [.modificationDate: modified], ofItemAtPath: url.path)
     }
+    return url
+  }
 
-    func destroy() { try? FileManager.default.removeItem(at: root.deletingLastPathComponent()) }
-
-    @discardableResult
-    func rollout(
-        id: String, day: Date, lines: [String], modified: Date? = nil
-    ) throws -> URL {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = .current
-        let parts = calendar.dateComponents([.year, .month, .day], from: day)
-        let directory =
-            root
-            .appendingPathComponent(String(format: "%04d", parts.year!), isDirectory: true)
-            .appendingPathComponent(String(format: "%02d", parts.month!), isDirectory: true)
-            .appendingPathComponent(String(format: "%02d", parts.day!), isDirectory: true)
-        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-
-        let url = directory.appendingPathComponent("rollout-2026-08-01T12-53-13-\(id).jsonl")
-        try (lines.joined(separator: "\n") + "\n").write(to: url, atomically: true, encoding: .utf8)
-        if let modified {
-            try FileManager.default.setAttributes(
-                [.modificationDate: modified], ofItemAtPath: url.path)
-        }
-        return url
-    }
-
-    func names(_ lines: [String]) throws {
-        try (lines.joined(separator: "\n") + "\n")
-            .write(to: index, atomically: true, encoding: .utf8)
-    }
+  func names(_ lines: [String]) throws {
+    try (lines.joined(separator: "\n") + "\n")
+      .write(to: index, atomically: true, encoding: .utf8)
+  }
 }
 
 private let sessionA = "019fbcf4-e1c5-7330-a3f0-1cd11bf960fa"
@@ -95,232 +103,257 @@ private let sessionB = "019fbcba-5dda-7e60-af11-dddc12a2ae00"
 @Suite("Codex sessions")
 struct CodexSessionsTests {
 
-    /// The whole point: a desktop session that never sends a hook still becomes a card.
-    @Test func aDesktopSessionBecomesACardWithoutAnyHook() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
+  /// The whole point: a desktop session that never sends a hook still becomes a card.
+  @Test func aDesktopSessionBecomesACardWithoutAnyHook() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
 
-        let now = Date()
-        try fixture.rollout(
-            id: sessionA, day: now,
-            lines: [Line.meta(), Line.reasoning, Line.toolCall(input: "npm test")],
-            modified: now.addingTimeInterval(-5))
-        try fixture.names([
-            #"{"id":"\#(sessionA)","thread_name":"Revoir tabs et header mobile"}"#
-        ])
+    let now = Date()
+    try fixture.rollout(
+      id: sessionA, day: now,
+      lines: [
+        Line.meta(), Line.context(model: "gpt-5.6-sol", effort: "high"),
+        Line.reasoning, Line.toolCall(input: "npm test"),
+      ],
+      modified: now.addingTimeInterval(-5))
+    try fixture.names([
+      #"{"id":"\#(sessionA)","thread_name":"Revoir tabs et header mobile"}"#
+    ])
 
-        let live = CodexSessions.live(
-            root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
+    let live = CodexSessions.live(
+      root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
 
-        #expect(live.count == 1)
-        let session = try #require(live.first)
-        #expect(session.id == sessionA)
-        #expect(session.cwd == "/Users/kevin/lab/iautos-mobile")
-        #expect(session.originator == "Codex Desktop")
-        #expect(session.title == "Revoir tabs et header mobile")
-        #expect(session.detail == "exec: npm test")
-        #expect(session.isRunningTool)
-        #expect(session.isWorking(now: now, within: 45))
-    }
+    #expect(live.count == 1)
+    let session = try #require(live.first)
+    #expect(session.id == sessionA)
+    #expect(session.cwd == "/Users/kevin/lab/iautos-mobile")
+    #expect(session.originator == "Codex Desktop")
+    #expect(session.model == "gpt-5.6-sol")
+    #expect(session.reasoningEffort == "high")
+    #expect(session.gitBranch == "codex/vibe-parity")
+    #expect(session.title == "Revoir tabs et header mobile")
+    #expect(session.detail == "exec: npm test")
+    #expect(session.isRunningTool)
+    #expect(session.isWorking(now: now, within: 45))
+  }
 
-    /// A tool whose output has arrived is finished, and a card still drawing it as running
-    /// is a card claiming work that is over.
-    @Test func aToolWithItsOutputIsNoLongerRunning() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
-        let now = Date()
-        try fixture.rollout(
-            id: sessionA, day: now,
-            lines: [Line.meta(), Line.toolCall(), Line.toolOutput, Line.tokenCount],
-            modified: now)
+  /// A tool whose output has arrived is finished, and a card still drawing it as running
+  /// is a card claiming work that is over.
+  @Test func aToolWithItsOutputIsNoLongerRunning() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
+    let now = Date()
+    try fixture.rollout(
+      id: sessionA, day: now,
+      lines: [Line.meta(), Line.toolCall(), Line.toolOutput, Line.tokenCount],
+      modified: now)
 
-        let live = CodexSessions.live(
-            root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
-        #expect(live.first?.isRunningTool == false)
-        // Still the tool, because it is what the session last did — only its state moved.
-        #expect(live.first?.detail == "exec: ls -la")
-    }
+    let live = CodexSessions.live(
+      root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
+    #expect(live.first?.isRunningTool == false)
+    // Still the tool, because it is what the session last did — only its state moved.
+    #expect(live.first?.detail == "exec: ls -la")
+  }
 
-    /// Silence is the only end-of-turn signal a rollout has.
-    @Test func aSessionThatStoppedWritingIsNoLongerWorking() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
-        let now = Date()
-        try fixture.rollout(
-            id: sessionA, day: now, lines: [Line.meta(), Line.agentMessage("Done.")],
-            modified: now.addingTimeInterval(-300))
+  /// Silence is the only end-of-turn signal a rollout has.
+  @Test func aSessionThatStoppedWritingIsNoLongerWorking() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
+    let now = Date()
+    try fixture.rollout(
+      id: sessionA, day: now, lines: [Line.meta(), Line.agentMessage("Done.")],
+      modified: now.addingTimeInterval(-300))
 
-        let session = try #require(
-            CodexSessions.live(
-                root: fixture.root, index: fixture.index, now: now, activeWithin: 1800
-            ).first)
-        #expect(!session.isWorking(now: now, within: 45))
-        #expect(session.detail == "Done.")
-    }
+    let session = try #require(
+      CodexSessions.live(
+        root: fixture.root, index: fixture.index, now: now, activeWithin: 1800
+      ).first)
+    #expect(!session.isWorking(now: now, within: 45))
+    #expect(session.detail == "Done.")
+  }
 
-    /// A rollout nobody has touched for longer than the timeout is a session that is gone.
-    @Test func aStaleRolloutIsNotASession() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
-        let now = Date()
-        try fixture.rollout(
-            id: sessionA, day: now, lines: [Line.meta()],
-            modified: now.addingTimeInterval(-3600))
+  /// A rollout nobody has touched for longer than the timeout is a session that is gone.
+  @Test func aStaleRolloutIsNotASession() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
+    let now = Date()
+    try fixture.rollout(
+      id: sessionA, day: now, lines: [Line.meta()],
+      modified: now.addingTimeInterval(-3600))
 
-        #expect(
-            CodexSessions.live(
-                root: fixture.root, index: fixture.index, now: now, activeWithin: 1800
-            ).isEmpty)
-    }
+    #expect(
+      CodexSessions.live(
+        root: fixture.root, index: fixture.index, now: now, activeWithin: 1800
+      ).isEmpty)
+  }
 
-    /// Rollouts are filed by the day they *started*, so a session open since yesterday is
-    /// still writing into yesterday's directory.
-    @Test func aSessionOpenedYesterdayIsStillFound() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
-        let now = Date()
-        let yesterday = now.addingTimeInterval(-86_400)
-        try fixture.rollout(
-            id: sessionB, day: yesterday, lines: [Line.meta(id: sessionB)],
-            modified: now.addingTimeInterval(-10))
+  /// Rollouts are filed by the day they *started*, so a session open since yesterday is
+  /// still writing into yesterday's directory.
+  @Test func aSessionOpenedYesterdayIsStillFound() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
+    let now = Date()
+    let yesterday = now.addingTimeInterval(-86_400)
+    try fixture.rollout(
+      id: sessionB, day: yesterday, lines: [Line.meta(id: sessionB)],
+      modified: now.addingTimeInterval(-10))
 
-        let live = CodexSessions.live(
-            root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
-        #expect(live.map(\.id) == [sessionB])
-    }
+    let live = CodexSessions.live(
+      root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
+    #expect(live.map(\.id) == [sessionB])
+  }
 
-    /// The newest name wins: Codex renames a thread as it learns what it is about, and
-    /// appends rather than rewrites.
-    @Test func theLastThreadNameForAnIdIsTheOneUsed() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
-        try fixture.names([
-            #"{"id":"\#(sessionA)","thread_name":"Untitled"}"#,
-            #"{"id":"\#(sessionA)","thread_name":"Revoir tabs et header mobile"}"#,
-        ])
-        #expect(
-            CodexSessions.threadNames(index: fixture.index)[sessionA]
-                == "Revoir tabs et header mobile")
-    }
+  /// The newest name wins: Codex renames a thread as it learns what it is about, and
+  /// appends rather than rewrites.
+  @Test func theLastThreadNameForAnIdIsTheOneUsed() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
+    try fixture.names([
+      #"{"id":"\#(sessionA)","thread_name":"Untitled"}"#,
+      #"{"id":"\#(sessionA)","thread_name":"Revoir tabs et header mobile"}"#,
+    ])
+    #expect(
+      CodexSessions.threadNames(index: fixture.index)[sessionA]
+        == "Revoir tabs et header mobile")
+  }
 
-    /// The desktop app prefixes ambient turns with a block nobody typed. Showing it back
-    /// would put plumbing where the question belongs — the same reason the Claude side
-    /// strips `<system-reminder>`.
-    @Test func ambientScaffoldingIsNotAnActivityLine() {
-        let text = """
-            <in-app-browser-context source="ambient-ui-state">
-            This block is automatically supplied ambient UI state.
-            </in-app-browser-context>
-            Revoir les tabs
-            """
-        #expect(CodexSessions.condense(text) == "Revoir les tabs")
-    }
+  /// The desktop app prefixes ambient turns with a block nobody typed. Showing it back
+  /// would put plumbing where the question belongs — the same reason the Claude side
+  /// strips `<system-reminder>`.
+  @Test func ambientScaffoldingIsNotAnActivityLine() {
+    let text = """
+      <in-app-browser-context source="ambient-ui-state">
+      This block is automatically supplied ambient UI state.
+      </in-app-browser-context>
+      Revoir les tabs
+      """
+    #expect(CodexSessions.condense(text) == "Revoir les tabs")
+  }
 
-    /// Sessions come out newest first, which is the order the strip draws them in.
-    @Test func theNewestSessionComesFirst() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
-        let now = Date()
-        try fixture.rollout(
-            id: sessionA, day: now, lines: [Line.meta(id: sessionA)],
-            modified: now.addingTimeInterval(-600))
-        try fixture.rollout(
-            id: sessionB, day: now, lines: [Line.meta(id: sessionB)],
-            modified: now.addingTimeInterval(-5))
+  /// Sessions come out newest first, which is the order the strip draws them in.
+  @Test func theNewestSessionComesFirst() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
+    let now = Date()
+    try fixture.rollout(
+      id: sessionA, day: now, lines: [Line.meta(id: sessionA)],
+      modified: now.addingTimeInterval(-600))
+    try fixture.rollout(
+      id: sessionB, day: now, lines: [Line.meta(id: sessionB)],
+      modified: now.addingTimeInterval(-5))
 
-        let live = CodexSessions.live(
-            root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
-        #expect(live.map(\.id) == [sessionB, sessionA])
-    }
+    let live = CodexSessions.live(
+      root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
+    #expect(live.map(\.id) == [sessionB, sessionA])
+  }
 
-    /// A header too corrupt to parse is still a session: the id is in the filename, and a
-    /// card with no project name beats no card at all.
-    @Test func aSessionSurvivesAnUnreadableHeader() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
-        let now = Date()
-        try fixture.rollout(
-            id: sessionA, day: now, lines: ["{not json at all", Line.reasoning], modified: now)
+  /// A header too corrupt to parse is still a session: the id is in the filename, and a
+  /// card with no project name beats no card at all.
+  @Test func aSessionSurvivesAnUnreadableHeader() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
+    let now = Date()
+    try fixture.rollout(
+      id: sessionA, day: now, lines: ["{not json at all", Line.reasoning], modified: now)
 
-        let session = try #require(
-            CodexSessions.live(
-                root: fixture.root, index: fixture.index, now: now, activeWithin: 1800
-            ).first)
-        #expect(session.id == sessionA)
-        #expect(session.cwd == nil)
-    }
+    let session = try #require(
+      CodexSessions.live(
+        root: fixture.root, index: fixture.index, now: now, activeWithin: 1800
+      ).first)
+    #expect(session.id == sessionA)
+    #expect(session.cwd == nil)
+  }
 }
 
 @Suite("Codex tool summaries")
 struct CodexToolSummaryTests {
 
-    /// The desktop app writes a fragment of JavaScript around the arguments. What a card
-    /// wants is the command inside it.
-    @Test func theCommandIsPulledOutOfTheJavaScriptWrapper() {
-        let input = #"const r = await tools.exec_command({"cmd":"npm test -- --watch=false"})"#
-        #expect(CodexSessions.toolSummary(name: "exec", input: input) == "exec: npm test -- --watch=false")
-    }
+  /// The desktop app writes a fragment of JavaScript around the arguments. What a card
+  /// wants is the command inside it.
+  @Test func theCommandIsPulledOutOfTheJavaScriptWrapper() {
+    let input = #"const r = await tools.exec_command({"cmd":"npm test -- --watch=false"})"#
+    #expect(
+      CodexSessions.toolSummary(name: "exec", input: input) == "exec: npm test -- --watch=false")
+  }
 
-    /// Real inputs carry newlines inside the command, because a shell call can be a script.
-    @Test func aMultiLineCommandBecomesOneLine() {
-        let input = "const r = await tools.exec_command({\"cmd\":\"sed -n '1,180p' A.tsx\nsed -n '1,120p' B.tsx\"})"
-        #expect(
-            CodexSessions.toolSummary(name: "exec", input: input)
-                == "exec: sed -n '1,180p' A.tsx sed -n '1,120p' B.tsx")
-    }
+  /// Real inputs carry newlines inside the command, because a shell call can be a script.
+  @Test func aMultiLineCommandBecomesOneLine() {
+    let input =
+      "const r = await tools.exec_command({\"cmd\":\"sed -n '1,180p' A.tsx\nsed -n '1,120p' B.tsx\"})"
+    #expect(
+      CodexSessions.toolSummary(name: "exec", input: input)
+        == "exec: sed -n '1,180p' A.tsx sed -n '1,120p' B.tsx")
+  }
 
-    /// Nothing in there is about the work, so the name is the better answer — this is the
-    /// call that used to put `wait: {"cell_id":"37","yield_time_ms":20000}` on a card.
-    @Test func argumentsThatSayNothingLeaveJustTheName() {
-        let input = #"{"cell_id":"37","yield_time_ms":20000,"max_tokens":20000}"#
-        #expect(CodexSessions.toolSummary(name: "wait", input: input) == "wait")
-    }
+  /// Nothing in there is about the work, so the name is the better answer — this is the
+  /// call that used to put `wait: {"cell_id":"37","yield_time_ms":20000}` on a card.
+  @Test func argumentsThatSayNothingLeaveJustTheName() {
+    let input = #"{"cell_id":"37","yield_time_ms":20000,"max_tokens":20000}"#
+    #expect(CodexSessions.toolSummary(name: "wait", input: input) == "wait")
+  }
 
-    @Test func aToolWithNoArgumentsIsItsName() {
-        #expect(CodexSessions.toolSummary(name: "read_file", input: "") == "read_file")
-    }
+  @Test func aToolWithNoArgumentsIsItsName() {
+    #expect(CodexSessions.toolSummary(name: "read_file", input: "") == "read_file")
+  }
+
+  @Test func aWrappedUpdatePlanBecomesATaskBoard() throws {
+    let input =
+      #"const r = await tools.update_plan({explanation:"keep { braces } safe",plan:[{step:"Inspect Vibe",status:"completed"},{step:"Match the panel",status:"in_progress"},{step:"Verify side by side",status:"pending"}]}); text(r);"#
+    let board = try #require(CodexSessions.planBoard(toolName: "exec", input: input))
+
+    #expect(board.completed == 1)
+    #expect(board.inProgress == 1)
+    #expect(board.open == 1)
+    #expect(
+      board.tasks.map(\.subject) == ["Match the panel", "Verify side by side", "Inspect Vibe"])
+  }
+
+  @Test func unrelatedExecCallIsNotAPlan() {
+    #expect(
+      CodexSessions.planBoard(toolName: "exec", input: #"tools.exec({"cmd":"echo hi"})"#) == nil)
+  }
 }
 
 @Suite("Codex rollouts that share a session")
 struct CodexSharedSessionTests {
 
-    /// One `codex exec` run wrote two files a second apart — a short one and the 475 KB
-    /// where the work happened — with different uuids in their names and the same
-    /// `session_id` inside. Keyed on the filename that is two cards for one run.
-    @Test func twoRolloutsOfOneSessionAreOneCard() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
-        let now = Date()
-        let shared = "019fbd0e-2d6c-76f3-a11e-9d2de8df9260"
+  /// One `codex exec` run wrote two files a second apart — a short one and the 475 KB
+  /// where the work happened — with different uuids in their names and the same
+  /// `session_id` inside. Keyed on the filename that is two cards for one run.
+  @Test func twoRolloutsOfOneSessionAreOneCard() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
+    let now = Date()
+    let shared = "019fbd0e-2d6c-76f3-a11e-9d2de8df9260"
 
-        try fixture.rollout(
-            id: shared, day: now,
-            lines: [Line.meta(id: shared), Line.agentMessage("the short one")],
-            modified: now.addingTimeInterval(-240))
-        try fixture.rollout(
-            id: "019fbd0e-2e52-7df1-a6c4-233864913ffd", day: now,
-            lines: [Line.meta(id: shared), Line.toolCall(input: "npm run build")],
-            modified: now.addingTimeInterval(-2))
+    try fixture.rollout(
+      id: shared, day: now,
+      lines: [Line.meta(id: shared), Line.agentMessage("the short one")],
+      modified: now.addingTimeInterval(-240))
+    try fixture.rollout(
+      id: "019fbd0e-2e52-7df1-a6c4-233864913ffd", day: now,
+      lines: [Line.meta(id: shared), Line.toolCall(input: "npm run build")],
+      modified: now.addingTimeInterval(-2))
 
-        let live = CodexSessions.live(
-            root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
+    let live = CodexSessions.live(
+      root: fixture.root, index: fixture.index, now: now, activeWithin: 1800)
 
-        #expect(live.count == 1)
-        // The newest wins, so the card shows the file the work is actually in.
-        #expect(live.first?.id == shared)
-        #expect(live.first?.detail == "exec: npm run build")
-    }
+    #expect(live.count == 1)
+    // The newest wins, so the card shows the file the work is actually in.
+    #expect(live.first?.id == shared)
+    #expect(live.first?.detail == "exec: npm run build")
+  }
 
-    /// The filename is the fallback, so a header nobody can read still leaves a card.
-    @Test func aRolloutWithNoReadableHeaderFallsBackToItsFilename() throws {
-        let fixture = try Fixture()
-        defer { fixture.destroy() }
-        let now = Date()
-        try fixture.rollout(id: sessionB, day: now, lines: ["{broken"], modified: now)
+  /// The filename is the fallback, so a header nobody can read still leaves a card.
+  @Test func aRolloutWithNoReadableHeaderFallsBackToItsFilename() throws {
+    let fixture = try Fixture()
+    defer { fixture.destroy() }
+    let now = Date()
+    try fixture.rollout(id: sessionB, day: now, lines: ["{broken"], modified: now)
 
-        #expect(
-            CodexSessions.live(
-                root: fixture.root, index: fixture.index, now: now, activeWithin: 1800
-            ).first?.id == sessionB)
-    }
+    #expect(
+      CodexSessions.live(
+        root: fixture.root, index: fixture.index, now: now, activeWithin: 1800
+      ).first?.id == sessionB)
+  }
 }

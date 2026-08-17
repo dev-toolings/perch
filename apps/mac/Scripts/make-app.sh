@@ -57,6 +57,13 @@ cp -R "$MAC_DIR/Resources/Fonts" "$APP/Contents/Resources/"
 # The icon, drawn by Scripts/make-icon.swift and committed rather than generated here: the
 # build should not need AppKit to draw a picture, and the .icns changes about once a year.
 cp "$MAC_DIR/Resources/AppIcon.icns" "$APP/Contents/Resources/"
+# The setup report mirrors Vibe's reference badge without changing Perch's own bundle icon.
+cp "$MAC_DIR/Resources/VibeIslandReference.icns" "$APP/Contents/Resources/"
+
+# The onboarding uses the same authored wallpaper and completion cue on every machine.
+# Keep them as bundle resources rather than synthesising approximations in Swift.
+cp "$MAC_DIR/Resources/onboarding-wallpaper.jpg" "$APP/Contents/Resources/"
+cp -R "$MAC_DIR/Resources/Sounds" "$APP/Contents/Resources/"
 
 # Agent sprites, if anyone drops some in. Optional by construction: with this directory
 # absent — which is how the repository ships — AgentGlyph draws its own pixel art and
@@ -75,6 +82,9 @@ for script in lib.sh install-hooks.sh install-extension.sh configure-kitty.sh \
   usage-bridge.sh remote.sh uninstall.sh; do
   cp "$MAC_DIR/../../scripts/$script" "$APP/Contents/Resources/scripts/"
 done
+cp -R "$MAC_DIR/../../scripts/opencode-plugin" "$APP/Contents/Resources/scripts/"
+cp -R "$MAC_DIR/../../scripts/amp-plugin" "$APP/Contents/Resources/scripts/"
+cp -R "$MAC_DIR/../../scripts/pi-extension" "$APP/Contents/Resources/scripts/"
 
 # The public half of the appcast key, baked in so the app can verify an update before it
 # ever looks at the version. Absent until ./scripts/appcast-keys.sh has been run, in which

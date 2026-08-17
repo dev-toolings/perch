@@ -73,6 +73,16 @@ import Testing
     }
 }
 
+/// Vibe Island 1.0.44 renders a 198 x 30 px active pill on the reference display. The
+/// shoulders add one pixel per side and the rasterized edge adds two rows, so its SwiftUI
+/// frame is 196 x 28 pt.
+@Test func activeIdleFrameMatchesTheVibeIslandReferenceCapture() {
+    let notch = CGSize(width: 190, height: 32)
+    let size = NotchState.idle.size(notch: notch, flank: 3)
+
+    #expect(size == CGSize(width: 196, height: 28))
+}
+
 /// The window is set to this once and never resized, so anything it fails to contain is
 /// content clipped mid-animation with no way to notice from the code.
 @Test func theCanvasContainsEveryStateItHasToHold() {
@@ -107,6 +117,17 @@ import Testing
 
     #expect(notch.state == .flash)
     #expect(effects == [.scheduleCollapse(milliseconds: NotchInteraction.flashGrace)])
+
+    notch.handle(.collapseTimerFired)
+    #expect(notch.state == .idle)
+}
+
+@Test func aCompletedTurnRevealsTheFullPanelAndTakesItselfBack() {
+    var notch = NotchInteraction(autoDisplayMilliseconds: 7_000)
+    let effects = notch.handle(.expandedRevealRequested)
+
+    #expect(notch.state == .expanded)
+    #expect(effects == [.scheduleCollapse(milliseconds: 7_000)])
 
     notch.handle(.collapseTimerFired)
     #expect(notch.state == .idle)

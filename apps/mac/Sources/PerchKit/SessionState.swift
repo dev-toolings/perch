@@ -77,12 +77,18 @@ public struct SubagentRun: Sendable, Equatable, Identifiable {
     public let id: String
     public var label: String
     public var startedAt: Date
+    /// Kept until the next user turn so the panel can show what just finished instead of
+    /// making the row disappear at the exact moment it becomes useful context.
+    public var completedAt: Date?
 
-    public init(id: String? = nil, label: String, startedAt: Date) {
+    public init(id: String? = nil, label: String, startedAt: Date, completedAt: Date? = nil) {
         self.id = id ?? UUID().uuidString
         self.label = label
         self.startedAt = startedAt
+        self.completedAt = completedAt
     }
+
+    public var isCompleted: Bool { completedAt != nil }
 }
 
 public struct SessionSnapshot: Sendable, Equatable {
@@ -110,8 +116,8 @@ public struct SessionSnapshot: Sendable, Equatable {
     public var lastEvent: Date
     public var lastDetail: String
     public var status: SessionStatus
-    /// Subagents currently running under this session — fan-out `Task` calls and Agent
-    /// Team members both report through `SubagentStart` / `SubagentStop`.
+    /// Subagents observed during the current turn — fan-out `Task` calls and Agent Team
+    /// members both report through `SubagentStart` / `SubagentStop`.
     ///
     /// Oldest first, and matched by `agent_id`: a stop closes the row it belongs to, not
     /// whichever one started first. Two agents launched together and finishing out of
@@ -128,7 +134,8 @@ public struct SessionSnapshot: Sendable, Equatable {
     public var background: [BackgroundTask] = []
 
     /// How many are running. Kept as the name every caller already used.
-    public var subagents: Int { children.count }
+    public var subagents: Int { children.count(where: { !$0.isCompleted }) }
+    public var completedSubagents: Int { children.count(where: \.isCompleted) }
     /// What the user last asked. This is what makes a card identifiable at a glance:
     /// "fix auth bug" says more than a session id ever will.
     public var prompt: String?
@@ -148,6 +155,14 @@ public struct SessionSnapshot: Sendable, Equatable {
     public var turn: TranscriptTurn?
     /// The session's permission mode, as Claude Code reports it on every hook.
     public var permissionMode: String?
+    /// Runtime identity read from the session's own telemetry when available.
+    public var model: String?
+    public var reasoningEffort: String?
+    public var gitBranch: String?
+    /// Start of the current context-compaction episode, when one is active.
+    public var compactingStartedAt: Date?
+    /// A completed turn that arrived while the panel was not being read.
+    public var isCompletionUnread = false
 
     /// The short, shouted form for the card — and only when it is worth shouting.
     ///
@@ -203,7 +218,7 @@ public struct SessionSnapshot: Sendable, Equatable {
     /// `SubagentStop` that eventually arrived recreated a blank, untitled session at the
     /// bottom of the list. A backgrounded shell command is worse: it never emits anything
     /// at all.
-    public var hasLiveWork: Bool { !background.isEmpty || !children.isEmpty }
+    public var hasLiveWork: Bool { !background.isEmpty || subagents > 0 }
 
     /// The card's heading: the prompt if we have one, the project otherwise.
     /// What the card calls this session. Claude Code's own name first — it is the one you
@@ -253,11 +268,16 @@ public struct SessionTracker: Sendable {
         status: SessionStatus,
         cwd: String? = nil,
         detail: String = "",
+        prompt: String? = nil,
         agent: Agent? = nil,
         aiTitle: String? = nil,
         client: ClientInfo? = nil,
+        model: String? = nil,
+        reasoningEffort: String? = nil,
+        gitBranch: String? = nil,
         at date: Date = .now
     ) {
+        let previousStatus = sessions[id]?.status
         var session =
             sessions[id]
             ?? SessionSnapshot(
@@ -267,12 +287,20 @@ public struct SessionTracker: Sendable {
         session.cwd = cwd ?? session.cwd
         session.lastEvent = date
         if !detail.isEmpty { session.lastDetail = detail }
+        if let prompt, !prompt.isEmpty { session.prompt = prompt }
         if let agent { session.agent = agent }
         if let aiTitle, !aiTitle.isEmpty { session.aiTitle = aiTitle }
+        if let model, !model.isEmpty { session.model = model }
+        if let reasoningEffort, !reasoningEffort.isEmpty {
+            session.reasoningEffort = reasoningEffort
+        }
+        if let gitBranch, !gitBranch.isEmpty { session.gitBranch = gitBranch }
         // Never cleared by a later observation: where a session runs is fixed for its
         // lifetime, and a read that happens not to carry it must not take the chip away.
         if let client { session.client = client }
         session.status = status
+        updateCompletionReadState(
+            of: &session, previousStatus: previousStatus, acceptsInitialCompletion: false)
 
         sessions[id] = session
         if holdsSteady, status != .idle { heldVisible.insert(id) }
@@ -289,11 +317,22 @@ public struct SessionTracker: Sendable {
     /// Unknown sessions are ignored: this names what is already on screen, it does not
     /// bring anything back.
     public mutating func identify(
-        id: String, aiTitle: String? = nil, client: ClientInfo? = nil
+      id: String, aiTitle: String? = nil, client: ClientInfo? = nil,
+        model: String? = nil, reasoningEffort: String? = nil, gitBranch: String? = nil,
+        prompt: String? = nil
     ) {
         guard var session = sessions[id] else { return }
         if let aiTitle, !aiTitle.isEmpty { session.aiTitle = aiTitle }
         if let client { session.client = client }
+        if let model, !model.isEmpty { session.model = model }
+        if let reasoningEffort, !reasoningEffort.isEmpty {
+            session.reasoningEffort = reasoningEffort
+        }
+        if let gitBranch, !gitBranch.isEmpty { session.gitBranch = gitBranch }
+        // Codex Desktop has the authoritative human prompt in its rollout. A hook can
+        // observe the same session, but its payload may be the JavaScript control call
+        // that caused the hook to fire. Keep the rollout's clean prompt when it is known.
+        if let prompt, !prompt.isEmpty { session.prompt = prompt }
         sessions[id] = session
     }
 
@@ -363,6 +402,7 @@ public struct SessionTracker: Sendable {
         // session from ageing out — but it does not get to say what the session is doing.
         let belongsToSubagent = agentId != nil && !Self.subagentLifecycle.contains(kind)
 
+        let previousStatus = sessions[id]?.status
         var session =
             sessions[id]
             ?? SessionSnapshot(
@@ -378,7 +418,10 @@ public struct SessionTracker: Sendable {
         }
         // A new prompt replaces the old one: the card should describe the current task,
         // not the one it opened with.
-        if let prompt, !prompt.isEmpty { session.prompt = Self.condense(prompt) }
+        if let prompt {
+            let visiblePrompt = Self.condense(prompt)
+            if !visiblePrompt.isEmpty { session.prompt = visiblePrompt }
+        }
         if let client, client != ClientInfo() { session.client = client }
         if let agent { session.agent = agent }
         // The title is refined as the session goes, so a later one replaces an earlier.
@@ -389,6 +432,14 @@ public struct SessionTracker: Sendable {
         if let turn { session.turn = turn }
         // Toggled mid-session with shift+tab, so the latest event is the truth.
         if let permissionMode, !permissionMode.isEmpty { session.permissionMode = permissionMode }
+        if kind != "PreCompact", session.status == .compacting {
+            session.compactingStartedAt = nil
+        }
+        // A child summary belongs to one user turn. Completed rows stay long enough to
+        // explain the result, then the next prompt starts with a clean delegation list.
+        if kind == "UserPromptSubmit" {
+            session.children.removeAll(where: \.isCompleted)
+        }
 
         switch kind {
         case _ where belongsToSubagent:
@@ -409,13 +460,16 @@ public struct SessionTracker: Sendable {
             // start — an agent older than the app — closes nothing here, and the `Stop`
             // that follows reconciles the list against what is actually running.
             if let agentId {
-                session.children.removeAll { $0.id == agentId }
-            } else if !session.children.isEmpty {
+                if let index = session.children.firstIndex(where: { $0.id == agentId }) {
+                    session.children[index].completedAt = date
+                }
+            } else if let index = session.children.firstIndex(where: { !$0.isCompleted }) {
                 // Oldest first, for a CLI that sends no id. This is what it always did.
-                session.children.removeFirst()
+                session.children[index].completedAt = date
             }
         case "PreCompact":
             session.status = .compacting
+            session.compactingStartedAt = date
         case "Stop":
             // The turn ending is not the work ending. `Stop` fires when something is
             // launched in the background, not when it comes back, and the payload carries
@@ -427,7 +481,7 @@ public struct SessionTracker: Sendable {
             } else {
                 // A CLI that reports no such list — Codex — leaves only what the subagent
                 // events already said.
-                session.status = session.children.isEmpty ? .idle : .background
+                session.status = session.subagents == 0 ? .idle : .background
             }
         case "StopFailure":
             session.status = .failed
@@ -458,6 +512,9 @@ public struct SessionTracker: Sendable {
             // there is no event announcing that compaction finished.
             session.status = .working
         }
+
+        updateCompletionReadState(
+            of: &session, previousStatus: previousStatus, acceptsInitialCompletion: true)
 
         sessions[id] = session
         // A session that turns up while the list is held earns its row for the rest of the
@@ -498,7 +555,14 @@ public struct SessionTracker: Sendable {
     ) -> [SubagentRun] {
         let subagents = running.filter(\.isSubagent)
         let live = Set(subagents.map(\.id))
-        var rows = children.filter { live.contains($0.id) }
+        var rows = children
+        for index in rows.indices where !rows[index].isCompleted {
+            if live.contains(rows[index].id) {
+                rows[index].completedAt = nil
+            } else {
+                rows[index].completedAt = date
+            }
+        }
         let known = Set(rows.map(\.id))
         for task in subagents where !known.contains(task.id) {
             rows.append(
@@ -518,12 +582,21 @@ public struct SessionTracker: Sendable {
 
     /// Prompts arrive as whole messages — paragraphs, pasted logs, command output. The
     /// card has one line, so take the first meaningful one and stop.
-    static func condense(_ prompt: String, limit: Int = 72) -> String {
+    public static func condense(_ prompt: String, limit: Int = 72) -> String {
+        let wrappers =
+            "command-name|command-message|command-args|local-command-stdout|"
+            + "system-reminder|task-notification|teammate-message|user-prompt-submit-hook"
+        var visible = prompt.replacingOccurrences(
+            of: "<(\(wrappers))(?: [^>]*)?>[\\s\\S]*?</\\1>", with: "",
+            options: .regularExpression)
+        visible = visible.replacingOccurrences(
+            of: "(?m)^Another Claude session sent a message:\\s*$", with: "",
+            options: .regularExpression)
         let firstLine =
-            prompt
+            visible
             .split(separator: "\n", omittingEmptySubsequences: true)
             .first { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
-            .map(String.init) ?? prompt
+            .map(String.init) ?? visible
 
         let trimmed = firstLine.trimmingCharacters(in: .whitespaces)
         guard trimmed.count > limit else { return trimmed }
@@ -532,6 +605,14 @@ public struct SessionTracker: Sendable {
 
     public mutating func drop(id: String) {
         remove(id: id)
+    }
+
+    /// Removes a row immediately because the person reading it explicitly asked to.
+    /// Automatic removals wait while the panel is held steady; an archive button must not.
+    public mutating func archive(id: String) {
+        sessions.removeValue(forKey: id)
+        heldVisible.remove(id)
+        withheld.remove(id)
     }
 
     public mutating func prune(now: Date = .now) {
@@ -569,7 +650,15 @@ public struct SessionTracker: Sendable {
 
     public mutating func hold() {
         holdsSteady = true
+        markAllCompletionsRead()
         heldVisible = Set(visible.map(\.id))
+    }
+
+    /// Opening the panel reads every completion currently displayed.
+    public mutating func markAllCompletionsRead() {
+        for id in sessions.keys where sessions[id]?.isCompletionUnread == true {
+            sessions[id]?.isCompletionUnread = false
+        }
     }
 
     /// Lets go, and applies everything that was withheld.
@@ -587,6 +676,21 @@ public struct SessionTracker: Sendable {
             return
         }
         withheld.insert(id)
+    }
+
+    private func updateCompletionReadState(
+        of session: inout SessionSnapshot,
+        previousStatus: SessionStatus?,
+        acceptsInitialCompletion: Bool
+    ) {
+        let isCompleted = session.status == .idle || session.status == .failed
+        guard isCompleted else {
+            session.isCompletionUnread = false
+            return
+        }
+        guard previousStatus != session.status else { return }
+        guard previousStatus != nil || acceptsInitialCompletion else { return }
+        session.isCompletionUnread = !holdsSteady
     }
 
     /// Every live session, in an order that does not move.
@@ -615,20 +719,11 @@ public struct SessionTracker: Sendable {
         }
     }
 
-    /// What the panel shows, which is less than what is tracked.
-    ///
-    /// A turn that ended is not something to look at. "Done" was the honest label for it,
-    /// but a row that says the work is over still takes the same space as one where it is
-    /// going on, and a screen of them is a list of things you have already dealt with.
-    ///
-    /// Hidden rather than removed: the snapshot stays, so the next prompt brings the row
-    /// back where it was, with its title and its place in the order. Dropping the session
-    /// would restart it at the bottom of the list, nameless, once per turn.
-    ///
-    /// A failure keeps its row. So does everything blocked on a person — that is the
-    /// opposite of finished.
+    /// What the panel shows. Vibe keeps a completed turn visible until the session itself
+    /// ends, so its answer can be read from the completion card. `SessionEnd` and timeout
+    /// pruning still remove stale sessions; `Stop` only ends one turn.
     public var visible: [SessionSnapshot] {
-        active.filter { $0.status != .idle || heldVisible.contains($0.id) }
+        active
     }
 
     public var workingCount: Int {

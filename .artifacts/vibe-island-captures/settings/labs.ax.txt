@@ -1,0 +1,51 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image flask.fill
+		3 texte Labs
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+			19 en-tête Mises à jour bêta
+			20 commutateur Value: off, Accédez en avant-première aux nouvelles fonctionnalités. Les versions bêta peuvent être moins stables.
+			21 en-tête Stabilité
+			22 commutateur Value: off, Filet de sécurité optionnel. Relance uniquement si la mémoire reste élevée et que toutes les sessions sont inactives.
+			23 en-tête Claude Code
+			24 container
+				25 commutateur Remplace Bypass par Auto Mode. Claude Code juge lui-même la sûreté de chaque action., Value: off
+				26 commutateur Value: off, Ignore les cartes et notifications de validation Vibe Island, et laisse Claude Code gérer les validations dans le terminal.
+			27 en-tête Codex
+			28 container
+				29 bouton de menu local Les requêtes Auto Review restent toujours silencieuses, Value: Suivre le focus
+				30 commutateur Value: off, Cliquer sur une session exécutée via codex app-server ouvre son fil dans l'application Codex au lieu du terminal. Le fil peut ne pas y apparaître si l'outil utilise un backend séparé.
+			31 en-tête Autres CLI
+			32 bouton de menu local Lit automatiquement la configuration YOLO de Cursor pour décider., Value: Détection automatique
+			33 barre de défilement (settable, float) 0
+				34 indicateur de valeur (settable, float) 0
+				35 Flèche d’augmentation
+				36 Flèche de diminution
+				37 Bouton d’augmentation de page
+				38 Bouton de diminution de page
+	39 Bouton de fermeture
+	40 Bouton de réduction ou d’agrandissement (disabled)
+	41 bouton de minimisation
+42 menu bar
+	43 Vibe Island
+	44 Édition
+	45 Présentation
+	46 Fenêtre
+	47 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

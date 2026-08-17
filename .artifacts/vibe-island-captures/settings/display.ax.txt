@@ -1,0 +1,69 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image Description: Changer La Taille Du Texte, ID: textformat.size
+		3 texte Affichage
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+			19 en-tête Notch
+			20 container
+				21 image
+				22 texte AskUserQuestion: README.md
+				23 image Description: Notifications, ID: bell.fill
+				24 texte 3
+				25 bouton 2, Épurée, Plus de place pour la barre de menus
+				26 bouton 2, ses, Détaillée, Titres et statuts des sessions visibles d'un coup d'œil
+				27 bouton de menu local Écran, Value: Écran principal
+			28 en-tête Taille du panneau
+			29 container
+				30 bouton de menu local Taille de police du contenu, Value: 11pt (Par défaut)
+				31 text Hauteur de la carte de fin 90pt Hauteur maximale du panneau 560pt Largeur maximale du panneau 640pt
+			32 en-tête Carte de session
+			33 container
+				34 commutateur Afficher le nom du projet, Value: on
+				35 commutateur Afficher l'arbre de travail, Value: on
+				36 commutateur Afficher le modèle d'IA, Value: off
+				37 commutateur Afficher l’effort de raisonnement, Value: off
+				38 text Afficher les tâches Affiche la liste des tâches dans chaque carte de session.
+				39 bouton de basculement on
+				40 text Afficher les sous-agents Affiche le détail des sous-agents dans les cartes de session. Une fois masqué, un compteur d'agents actifs les remplace ; les approbations et les questions restent visibles.
+				41 bouton de basculement on
+				42 commutateur Afficher les détails d'activité de l'agent, Value: on
+				43 text ⁨vibe-island⁩ ⎇ ⁨chat-ui⁩ · ⁨Refactor auth flow⁩ Claude Ghostty You: extract chatEndpoint into a transport-agnostic layer Editing chatEndpoint.ts · 12s Tâches (1 terminées, 1 en cours, 1 ouvertes) Auditer le flux d'authentification Ajouter des tests de régression
+				44 image (selected) Description: Sélectionné, ID: checkmark.square.fill
+				45 texte Cartographier l'état de session
+				46 image Description: Diviser, ID: arrow.triangle.branch
+				47 text Agents (2) Explore (Search API endpoints) 8s ⎿ Grep: handleRequest Explore (Read config files) Done
+			48 en-tête Ajustement
+			49 container
+				50 text Largeur de l'encoche 0pt Hauteur de l'encoche 0pt Affinez les dimensions de l'encoche si votre Mac ne correspond pas parfaitement. 0 utilise la valeur détectée par l'API macOS.
+			51 barre de défilement (settable, float) 0
+				52 indicateur de valeur (settable, float) 0
+				53 Flèche d’augmentation
+				54 Flèche de diminution
+				55 Bouton d’augmentation de page
+				56 Bouton de diminution de page
+	57 Bouton de fermeture
+	58 Bouton de réduction ou d’agrandissement (disabled)
+	59 bouton de minimisation
+60 menu bar
+	61 Vibe Island
+	62 Édition
+	63 Présentation
+	64 Fenêtre
+	65 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

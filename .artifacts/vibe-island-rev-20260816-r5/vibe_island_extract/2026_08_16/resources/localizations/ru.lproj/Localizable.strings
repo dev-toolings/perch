@@ -1,0 +1,1051 @@
+/* ============================================================
+   Localizable.strings (Русский)
+   Vibe Island — macOS Notch Status Panel
+   ============================================================ */
+
+/* Onboarding */
+"onboarding.tagline" = "Динамический остров для ваших AI-инструментов разработки";
+"onboarding.feature.permissions" = "Разрешения с первого взгляда";
+"onboarding.feature.jump" = "Клик — и вы в нужном окне";
+"onboarding.feature.zeroConfig" = "Без настройки, работает сразу";
+"onboarding.start" = "Начать";
+"onboarding.contextSwitches" = "Переключения контекста";
+"onboarding.agentsRunning" = "У вас запущено 4 агента.";
+"onboarding.oneWaiting" = "Один из них уже ждёт вас.";
+"onboarding.15hours" = "Это 15 часов в неделю.";
+"onboarding.next" = "Далее";
+"onboarding.hooksHint" = "Отдельными хуками CLI можно управлять в настройках.";
+"onboarding.everythingOneGlance" = "Всё. Одним взглядом.";
+"onboarding.approveWithout" = "Подтверждайте, не переключаясь.";
+"onboarding.jumpToTab" = "Переходите точно к нужной вкладке.";
+"onboarding.yourEnvironment" = "Ваше окружение";
+"onboarding.agents" = "AI-агенты";
+"onboarding.terminals" = "Терминалы и IDE";
+"onboarding.detected" = "обнаружено";
+"onboarding.allConfigured" = "Всё настроено. Действий не требуется.";
+"onboarding.allSet" = "Готово";
+"onboarding.autoConfigured" = "Vibe Island автоматически обнаружил и настроил ваши инструменты.";
+"onboarding.launchAtLoginSubtitle" = "Запускать автоматически при входе в систему";
+"onboarding.chooseVibe" = "Выберите свой стиль";
+"onboarding.readyToLand" = "Готовы приземлиться?";
+"onboarding.purchaseNoSubscriptions" = "Разовая покупка · без подписок";
+"onboarding.paywallFeature.permission" = "Больше не пропустите ни один запрос разрешения";
+"onboarding.paywallFeature.jump" = "Переход к любому терминалу в один клик";
+"onboarding.paywallFeature.agents" = "Все ваши агенты в одном Notch";
+"onboarding.welcomeAboard" = "Добро пожаловать на борт";
+"onboarding.startVibing" = "Поехали";
+"onboarding.readyRestartHint" = "Перезапустите активные сеансы или начните новый.";
+"onboarding.startTrial" = "Начать 2-дневный пробный период";
+"onboarding.getEarlyBird" = "Получить цену Early Bird — %@";
+"onboarding.alreadyHaveKey" = "Уже есть лицензионный ключ?";
+"onboarding.checkEmail" = "Проверьте почту — там лицензионный ключ";
+"onboarding.pasteKey" = "Вставьте лицензионный ключ";
+"onboarding.reopenCheckout" = "Открыть оформление заново";
+"onboarding.startTrialInstead" = "Начать пробный период";
+
+/* Paywall shared (Onboarding + LicenseWindow) */
+"paywall.tier.1Mac" = "1 Mac";
+"paywall.tier.2Macs" = "2 Mac";
+"paywall.tier.3Macs" = "3 Mac";
+"paywall.earlyBird.banner" = "Early Bird · ограниченное время";
+"paywall.earlyBird.locked" = "Цена Early Bird закреплена за вашей установкой";
+"paywall.earlyAdopterPriceLockedPrefix" = "Цена для первых пользователей закреплена за вами: ";
+"paywall.getLicense.withPrice" = "Купить лицензию · %@";
+
+/* LicenseWindow V3 Purchase-primary */
+"paywall.chooseYourPlan" = "Выберите план";
+"paywall.chooseYourPlan.desc" = "Разовая покупка, 1 год обновлений. Приложение остаётся с вами навсегда. Скидка Early Bird закреплена за вашей установкой.";
+
+/* LicenseWindow V4 Activation-primary (post-checkout) */
+"paywall.badge.awaitingKey" = "Ожидание ключа";
+"paywall.pasteYourKey" = "Вставьте лицензионный ключ";
+"paywall.pasteYourKey.desc" = "Мы отправили ключ на почту после оформления. Вставьте его ниже, чтобы завершить активацию.";
+"paywall.yourPlan" = "Ваш план";
+"paywall.changePlan" = "Изменить";
+"paywall.resendEmail" = "Письмо не пришло? Открыть оформление заново";
+"paywall.browsePlans" = "Посмотреть планы снова";
+
+/* Permission Approval */
+"approval.operateInTerminal" = "Продолжить в терминале";
+"approval.goToTerminal" = "Перейти в терминал";
+"approval.continueInApp" = "Продолжить в %@";
+"approval.reviewInTerminal" = "Проверить в терминале";
+"approval.reviewInApp" = "Проверить в %@";
+"approval.goToApp" = "Перейти в %@";
+"approval.deny" = "Отклонить";
+"approval.denyAll" = "Отклонить все";
+"approval.allow" = "Разрешить один раз";
+"codex.approval.allowThisConversation" = "Разрешить в этом диалоге";
+"codex.approval.allowForAllSites" = "Разрешить для всех сайтов";
+"approval.always" = "Разрешать всегда";
+"approval.allowAll" = "Разрешить все";
+"approval.pendingCount" = "Ожидает: %lld";
+"approval.bypass" = "Bypass";
+"approval.autoMode" = "Авто";
+"codex.approval.bypassThisTurn" = "Обойти в этом ходе";
+"codex.turnBypass.active" = "BYPASS";
+"codex.turnBypass.approvalFailed" = "Bypass не смог одобрить следующий запрос. Продолжите в Codex.";
+"codex.turnBypass.verificationFailed" = "Статус следующего запроса неясен. Проверьте в Codex.";
+"bypass.active.label" = "BYPASS";
+"approval.detailsUnavailable" = "(%@ — детали недоступны)";
+"approval.detail.moreLines" = "+%lld строк";
+"approval.detail.newFile" = "новый файл";
+
+/* Question / AskUserQuestion */
+"question.waiting.agent" = "%@ ждёт ответа";
+"question.answerInTerminal" = "Пожалуйста, ответьте в терминале";
+"question.agentQuestion" = "Вопрос от %@";
+"question.count" = "(вопросов: %lld)";
+"question.multiSelect" = "Множественный выбор";
+"question.confirmSelection" = "Подтвердить выбор (%lld)";
+"question.submitAll" = "Отправить все ответы";
+"question.answerAllWarning" = "Пожалуйста, ответьте на все вопросы";
+"question.wizard.progress" = "Вопрос %lld из %lld";
+"question.wizard.previous" = "Назад";
+"question.wizard.next" = "Далее";
+"question.wizard.submit" = "Отправить";
+"question.custom.placeholder" = "Введите или вставьте ответ...";
+"question.custom.submit" = "Отправить ответ";
+
+/* ExitPlanMode */
+"exitPlan.title" = "Выйти из режима плана";
+"exitPlan.tag" = "План";
+"exitPlan.bypass" = "Bypass разрешений";
+"exitPlan.bypassDesc" = "Пропускать все запросы разрешений";
+"exitPlan.autoMode" = "Автоматический режим";
+"exitPlan.autoModeDesc" = "Claude оценивает каждое действие";
+"exitPlan.manualApprove" = "Подтверждать вручную";
+"exitPlan.manualApproveDesc" = "Проверять каждое действие · безопаснее всего";
+"exitPlan.feedbackPlaceholder" = "Укажите %@, что изменить…";
+"exitPlan.requestedPermissions" = "Запрошенные разрешения:";
+
+/* Settings Menu */
+"menu.launchAtLogin" = "Запуск при входе";
+"menu.display" = "Дисплей";
+"menu.mainDisplay" = "Основной дисплей";
+"menu.followFocus" = "Следовать за фокусом";
+"menu.auto" = "Авто";
+"menu.builtIn" = "Встроенный";
+"menu.main" = "Основной";
+"menu.layout" = "Макет";
+"layout.clean" = "Чистый";
+"layout.detailed" = "Подробный";
+"layout.cleanDesc" = "Больше места для строки меню";
+"layout.detailedDesc" = "Названия и статусы сеансов с первого взгляда";
+"menu.modifierKey" = "Клавиша-модификатор";
+"menu.labs" = "Лаборатория";
+"menu.labs.warpTabJump" = "Переход по вкладкам Warp";
+"menu.helpImprove" = "Помочь улучшить Vibe Island";
+"menu.exportDiagnostics" = "Экспорт диагностического отчёта";
+"menu.exportDiagnosticsSaveTitle" = "Сохранить диагностический отчёт";
+"menu.exportDiagnosticsFooter" = "Включает сведения о системе и диагностические журналы. Некоторые пути и распознанные конфиденциальные поля скрываются; короткие фрагменты событий или команд могут сохраниться. Проверьте перед отправкой.";
+"menu.settings" = "Настройки…";
+"menu.checkUpdates" = "Проверить обновления";
+"settings.releaseNotes.title" = "Примечания к выпуску";
+"settings.releaseNotes.subtitle" = "Повторно открыть описание этой версии";
+"releaseNotes.viewAllVersions" = "Посмотреть все версии";
+"releaseNotes.loadError" = "Не удалось загрузить примечания к выпуску";
+"settings.autoChecks.title" = "Проверять обновления автоматически";
+"settings.autoChecks.subtitle" = "Если выключено, новые версии ищутся только через ручную проверку обновлений";
+"settings.autoInstall.title" = "Устанавливать обновления автоматически";
+"settings.autoInstall.subtitle" = "Если выключено, при готовом обновлении на панели появится кнопка ↑";
+"update.pill.label" = "Обновить";
+"menu.creator" = "Создатель";
+"menu.testSentry" = "Тест Sentry";
+"menu.testSentryDetail" = "Отправить тестовое событие";
+"menu.debugLayout" = "Отладка макета";
+"menu.quit" = "Завершить Vibe Island";
+"settings.removeAutoConfig" = "Удалить всю автонастройку";
+"settings.removeAutoConfigMessage" = "Это удалит все хуки из инструментов CLI, деинсталлирует расширения IDE и удалит рабочие файлы. Ваши инструменты CLI вернутся в состояние по умолчанию.";
+"settings.removeAutoConfigDone" = "Вся автонастройка удалена. Теперь можно завершить работу и удалить приложение.";
+"menu.sentryTestTitle" = "Тест Sentry";
+"menu.sentryTestMessage" = "Тестовое событие отправлено! Проверьте панель Sentry через несколько секунд.";
+"menu.ok" = "OK";
+
+/* Session */
+"session.showAll" = "Показать все сеансы: %lld";
+"session.you" = "Вы:";
+"session.restartForLive" = "Перезапустите сеанс для отслеживания в реальном времени";
+"session.restartBannerTitle" = "Перезапустите сеансы";
+"session.restartBannerSubtitle" = "Хуки установлены — перезапустите активные сеансы для подключения";
+"session.codexHookTrustBannerTitle" = "Codex обновлён — подтвердите авторизацию";
+"session.codexHookTrustBannerSubtitle" = "Codex обновил свою модель безопасности. Подтвердите Vibe Island один раз, чтобы сохранить отслеживание сеансов и подтверждения.";
+"session.codexHookTrustBannerAuthorizing" = "Подтверждение авторизации...";
+"session.codexHookTrustBannerFailed" = "Не удалось подтвердить автоматически. Откройте настройки, чтобы авторизовать вручную.";
+"session.codexHookTrustBannerManualTitle" = "Codex требует ручного подтверждения доверия";
+"session.codexHookTrustBannerManualSubtitle" = "• Codex CLI: выполните /hooks → доверить Vibe Island\n• Codex Desktop: Настройки → Hooks → доверить Vibe Island";
+"session.codexHookTrustBannerManualConfirm" = "Понятно";
+"settings.codex.trust.manualStatus" = "Требуется ручное доверие";
+"settings.codex.trust.manualTooltip" = "Codex нужно доверить вручную.\n• Codex CLI: выполните /hooks → доверить Vibe Island\n• Codex Desktop: Настройки → Hooks → доверить Vibe Island\nVibe Island обнаружит это автоматически.";
+"session.ideExtensionBannerTitle" = "Установить расширение %@?";
+"session.ideExtensionBannerSubtitle" = "Включает точный переход по вкладкам терминала";
+"session.kittyConfigBannerTitle" = "Включить точный переход для Kitty";
+"session.kittyConfigBannerSubtitle" = "Добавит 2 строки в kitty.conf — перезапустите Kitty для применения";
+"session.kittyConfigRestartHint" = "Конфигурация Kitty обновлена — нажмите Cmd+Q в Kitty для применения";
+"session.interrupted" = "Прервано";
+"session.doneTag" = "Готово";
+"session.statusWarning.title" = "Требует внимания";
+"paseo.syncFailed.title" = "Paseo всё ещё требует внимания";
+"paseo.syncFailed.detail" = "Paseo не смог подтвердить этот запрос. Завершите его в Paseo.";
+"codex.usageLimit.atTime" = "Вы достигли лимита использования. Перейдите на chatgpt.com/codex/settings/usage, чтобы купить больше кредитов, или повторите попытку в %@.";
+"codex.usageLimit.later" = "Вы достигли лимита использования. Перейдите на chatgpt.com/codex/settings/usage, чтобы купить больше кредитов, или повторите попытку позже.";
+"session.ready" = "Готов";
+"session.mayNeedAttention" = "Возможно, требует внимания";
+"session.subagents" = "Субагенты";
+"session.subagentMore.running" = "В работе: %lld";
+"session.subagentMore.done" = "Готово: %lld";
+"child_agents.running_%d" = "Активных агентов: %d";
+"child_agents.running_one" = "Активных агентов: 1";
+"child_agents.requester_from" = "от %@";
+"child_agents.generic_requester" = "Субагент";
+"session.compacting" = "Сжатие контекста...";
+"session.compactingWithElapsed" = "Сжатие · %@";
+"session.compactComplete" = "Диалог сжат";
+"session.waitingForSession" = "Ожидание сеанса";
+"session.emptyFirstInstall" = "Остров ждёт";
+"session.emptyFirstInstallHint" = "Перезапустите терминал или начните новый сеанс";
+"session.hideFromPanel" = "Скрыть сеанс с панели";
+
+/* Tasks */
+"tasks.title" = "Задачи";
+"tasks.stats" = "(готово: %lld, в работе: %lld, открыто: %lld)";
+"tasks.hiddenCompleted" = "… завершено: +%lld";
+"tasks.hiddenActive" = "… активно: +%lld";
+
+/* Content (Header) */
+"content.session" = "сеанс";
+"content.sessions" = "сеансы";
+"content.sessionCount.one" = "%lld сеанс";
+"content.sessionCount.other" = "Сеансов: %lld";
+
+/* Beta Expiration */
+"beta.expiredTitle" = "Бета-версия истекла";
+"beta.expiredMessage" = "Срок действия этой бета-версии истёк %@.\n\nНажмите \"Проверить обновления\", чтобы получить последнюю версию.";
+"beta.checkUpdate" = "Проверить обновления";
+"beta.quit" = "Завершить";
+
+/* License */
+"menu.license" = "Лицензия";
+"payment.trouble.hint" = "Проблема с оплатой? Нажмите, чтобы связаться с поддержкой";
+"license.trial" = "Пробный период";
+"license.trialDays" = "Пробный период (осталось дн.: %lld)";
+"license.trialEnded" = "Пробный период завершён";
+"license.issue" = "Проблема с лицензией";
+"license.expired" = "Истекла";
+"license.licensed" = "Активирована";
+"license.activateTitle" = "Активировать Vibe Island";
+"license.activateDesc" = "Введите лицензионный ключ из письма с подтверждением покупки:";
+"license.activeTitle" = "Лицензия активна";
+"license.activeDesc" = "Спасибо за поддержку Vibe Island!";
+"license.autoCleanedHint" = "Ваше предыдущее устройство было автоматически освобождено.";
+"license.getLicense" = "Получить лицензию...";
+"license.activate" = "Активировать";
+"license.unlockFullControl" = "Разблокировать полный контроль";
+"license.unlockDetail" = "Переходы, подтверждения и сочетания клавиш";
+"license.unlockDetailWithSessions" = "Переходы, подтверждения, сочетания клавиш и ещё сеансов: +%lld";
+"license.lockedSessionsSummary" = "С лицензией ещё сеансов: +%lld";
+"license.deactivate" = "Деактивировать лицензию";
+"license.manageDevices" = "Управление устройствами";
+"license.limitTitle" = "Достигнут лимит активаций";
+"license.limitDesc" = "Все слоты лицензии заняты. Добавьте слот для этого Mac или освободите один, деактивировав устройство, которым больше не пользуетесь.";
+"license.useDifferentKey" = "Использовать другой лицензионный ключ";
+"license.reactivateTitle" = "Повторно активируйте лицензию";
+"license.reactivateDesc" = "Введите лицензионный ключ повторно, чтобы снова активировать Vibe Island на этом Mac. Он есть в письме с подтверждением покупки.";
+"license.devices.title" = "Устройства";
+"license.devices.used" = "Использовано %1$d из %2$d";
+"license.devices.thisMac" = "ЭТОТ MAC";
+"license.devices.deactivate" = "Деактивировать";
+"license.devices.retry" = "Повторить";
+"license.devices.loadFailed" = "Не удалось загрузить устройства";
+"license.devices.slotFreed" = "Освобождён 1 слот — активируйте снова";
+"license.devices.addMac" = "Добавить Mac";
+"license.devices.addMacFailed" = "Не удалось открыть оплату. Попробуйте ещё раз.";
+"license.devices.confirmTitle" = "Деактивировать это устройство?";
+"license.deactivateConfirm.title" = "Деактивировать этот Mac?";
+"license.deactivateConfirm.body" = "Место освободится для другого Mac.";
+"license.deactivateConfirm.keyHint" = "Сохраните — больше не будет показан";
+"license.deactivateConfirm.purchasedWith" = "Куплено с %@";
+"license.deactivateConfirm.copyAction" = "Скопировать и деактивировать";
+"license.deactivateConfirm.copyFailed" = "Не удалось скопировать ключ. Повторите попытку или сохраните его другим способом.";
+"license.deactivateConfirm.withoutCopyingAction" = "Деактивировать без копирования";
+"license.deactivateConfirm.plainAction" = "Деактивировать";
+"license.deactivateConfirm.cancel" = "Отмена";
+"license.buyButton" = "Купить лицензию — $19.99";
+"license.keyPlaceholder" = "Введите лицензионный ключ";
+"license.activating" = "Активация...";
+"license.error.invalidKey" = "Неверный лицензионный ключ";
+"license.error.network" = "Ошибка сети, повторите попытку";
+"license.error.persistence" = "Активация прошла успешно, но Vibe Island не смог сохранить её на этом Mac. Повторите попытку или переустановите приложение.";
+"license.error.keychainLocked" = "Активация прошла успешно, но связка ключей входа заблокирована, поэтому Vibe Island не смог её сохранить. Перезагрузите Mac и активируйте снова. Если не помогло, откройте «Связку ключей» и разблокируйте связку «Вход».";
+"license.error.wrongProduct" = "Этот ключ от другого продукта";
+"license.error.activationLimit" = "Достигнут лимит активаций. Сначала деактивируйте другое устройство.";
+"license.error.disabled" = "Этот лицензионный ключ отключён";
+"license.expiredBanner" = "Пробный период истёк";
+"license.expiredBannerSub" = "Активируйте лицензию, чтобы продолжить";
+
+/* Edition (Easter Egg) — titles stay English across all locales */
+"edition.title.founder" = "FOUNDER";
+"edition.title.pioneer" = "PIONEER";
+"edition.title.explorer" = "EXPLORER";
+"edition.title.voyager" = "VOYAGER";
+"edition.title.islander" = "ISLANDER";
+
+/* Settings - Behaviour */
+"settings.autoCollapseOnLeave" = "Автосворачивание при уходе курсора";
+"settings.taskCompleteDwell" = "Задержка автопоказа";
+"settings.taskCompleteDwell.help" = "Как долго панель остаётся открытой при показе завершений и предупреждений. Нажмите ESC, чтобы закрыть раньше.";
+"settings.dismissOnOutsideClick" = "Закрывать автопоказ по клику снаружи";
+"settings.dismissOnOutsideClick.help" = "Клик в любом месте вне панели нотча сразу закрывает показ завершений и предупреждений, игнорируя оставшуюся задержку.";
+"settings.autoExpandOnAgentTeamComplete" = "Автораскрытие при завершении участника команды агентов";
+"settings.autoExpandOnAgentTeamComplete.help" = "По умолчанию выключено — завершения участников команды и субагентов не выдвигают панель и не воспроизводят звук завершения.";
+"settings.childAgentNotificationTiming" = "Субагенты и команды агентов";
+"settings.childAgentNotificationTiming.rootResponses" = "Когда отвечает основной агент";
+"settings.childAgentNotificationTiming.allFinished" = "После завершения всех субагентов и участников";
+"settings.childAgentNotificationTiming.everyCompletion" = "При каждом завершении субагента или участника";
+"settings.notifications.completion" = "Уведомления о завершении";
+"settings.notificationCompletion.footer" = "Подтверждения и вопросы всегда появляются сразу.";
+"settings.autoExpandOnTaskComplete" = "Раскрывать панель для уведомлений о завершении";
+"settings.autoExpandOnTaskComplete.help" = "Выключите, чтобы панель оставалась свёрнутой и показывала лёгкое свечение.";
+"settings.attentionReminder.section" = "Повторные напоминания";
+"settings.attentionReminder.delay" = "Напомнить снова";
+"settings.attentionReminder.help" = "Один раз напоминает после выбранной задержки. Смена состояния отменяет напоминание; активный сеанс не беспокоит.";
+"settings.attentionReminder.include" = "Когда включено, напоминать о";
+"settings.attentionReminder.needsResponse" = "Требуется ваш ответ";
+"settings.attentionReminder.needsResponseHelp" = "Подтверждения и вопросы";
+"settings.attentionReminder.completedTasks" = "Завершённые задачи";
+"settings.attentionReminder.completedTasksHelp" = "Только пока результат не прочитан";
+"settings.attentionReminder.off" = "Выкл.";
+"settings.attentionReminder.10min" = "Через 10 минут";
+"settings.attentionReminder.30min" = "Через 30 минут";
+"settings.attentionReminder.1hour" = "Через 1 час";
+"settings.quietDuringFocus" = "Фокусирование";
+"settings.quietScenes.section" = "Тихие сценарии";
+"settings.quietScenes.intro" = "Остаётся тихим, пока активен любой из сценариев ниже — без автораскрытия, без звука, включая подтверждения. Завершения по-прежнему отмечаются небольшой точкой.";
+"settings.quiet.screenObscured" = "Экран заблокирован или в режиме сна";
+"settings.quiet.screenCapture" = "Запись или трансляция экрана";
+"focusMode.doNotDisturb" = "Не беспокоить";
+"focusMode.personal" = "Личное";
+"focusMode.work" = "Работа";
+"focusMode.sleep" = "Сон";
+"focusMode.reduceInterruptions" = "Уменьшение отвлечений";
+"focusMode.reading" = "Чтение";
+"focusMode.gaming" = "Игры";
+"focusMode.driving" = "За рулём";
+"focusMode.custom" = "Пользовательский фокус";
+"settings.behaviour.interaction" = "Взаимодействие";
+"settings.disableClickToJump" = "Отключить переход по клику";
+"settings.disableClickToJump.help" = "Если включено, клик по сеансу не переключает на его терминал или IDE.";
+
+/* Settings - Usage */
+"settings.usage" = "Использование";
+"settings.usage.section" = "Лимиты использования";
+
+/* Settings - Display */
+"settings.display" = "Дисплей";
+"settings.contentFontSize" = "Размер шрифта содержимого";
+"settings.maxPanelHeight" = "Макс. высота панели";
+"settings.completionHeight" = "Высота карточки завершения";
+"settings.maxPanelWidth" = "Макс. ширина панели";
+"settings.tuning" = "Тонкая настройка";
+"settings.notchHeight" = "Высота нотча";
+"settings.notchWidth" = "Ширина нотча";
+"settings.tuning.help" = "Точная настройка размеров нотча, если ваш компьютер не подходит идеально. 0 использует значение из macOS API.";
+"settings.showTasks" = "Показывать задачи";
+"settings.showTasks.help" = "Показывает список задач в каждой карточке сеанса.";
+"settings.preview.task.active" = "Проверить процесс аутентификации";
+"settings.preview.task.pending" = "Добавить регрессионные тесты";
+"settings.preview.task.done" = "Сопоставить состояния сеанса";
+"settings.showSubagents" = "Показывать субагентов";
+"settings.showSubagents.help" = "Показывать подробности субагентов в карточках сессий. При скрытии вместо них отображается счётчик активных агентов; запросы на подтверждение и вопросы остаются видимыми.";
+"settings.showAgentDetail" = "Показывать детали активности агента";
+"settings.showModel" = "Показывать модель AI";
+"settings.showReasoningEffort" = "Показывать интенсивность рассуждений";
+"settings.showWorktree" = "Показывать worktree";
+"settings.showProjectName" = "Показывать имя проекта";
+
+/* Pass */
+"pass.copyImage" = "Копировать изображение";
+"pass.saveImage" = "Сохранить изображение";
+"pass.licenseDevices" = "Лицензия и устройства";
+
+/* Session Status */
+"status.waitingForInput" = "Ожидание ввода";
+"status.processing" = "Обработка";
+"status.thinking" = "Размышление";
+"status.runningTool" = "Выполнение инструмента";
+"status.waitingForApproval" = "Требуется подтверждение";
+"status.question" = "Ожидание ответа";
+"status.compacting" = "Сжатие";
+"status.ended" = "Завершено";
+"status.unknown" = "Неизвестно";
+
+/* Tool Display */
+"tool.thinkingEllipsis" = "Размышление...";
+"tool.thinkingDetail" = "Размышление: %@";
+"tool.workingEllipsis" = "Работа...";
+"tool.allowPrefix" = "Разрешить %@";
+"tool.runningSkill" = "Выполнение навыка";
+"tool.editing" = "Редактирование";
+"tool.reading" = "Чтение";
+"tool.writing" = "Запись";
+"tool.running" = "Выполнение";
+"tool.searching" = "Поиск";
+"tool.finding" = "Поиск файлов";
+"tool.tasking" = "Постановка задачи";
+"tool.fetching" = "Загрузка";
+
+/* Update */
+"update.checking" = "Проверка обновлений...";
+"update.install" = "Установить";
+"update.installRelaunch" = "Установить и перезапустить";
+"update.remindLater" = "Напомнить позже...";
+"update.skipVersion" = "Пропустить эту версию";
+"update.downloading" = "Загрузка...";
+"update.extracting" = "Подготовка обновления...";
+"update.installing" = "Установка...";
+"update.upToDate" = "У вас последняя версия!";
+"update.upToDateDesc" = "Vibe Island %@ — последняя версия.";
+"update.error" = "Ошибка обновления";
+"update.errorHint" = "Перезапустите приложение или проверьте снова, чтобы завершить обновление.";
+"update.retry" = "Проверить снова";
+"update.dismiss" = "Закрыть";
+
+/* Settings: Sound & Advanced */
+"settings.sound" = "Звук";
+"settings.advanced" = "Дополнительно";
+
+/* Settings: Shortcuts */
+"settings.globalShortcuts" = "Глобальные сочетания клавиш";
+"settings.keyboardShortcutsEnabled" = "Включить сочетания клавиш";
+"settings.keyboardShortcutsEnabledDesc" = "Отключить все сочетания клавиш Vibe Island, не удаляя ваши назначения.";
+"settings.togglePanel" = "Открыть переключатель";
+"settings.togglePanelDesc" = "Быстрое нажатие открывает переключатель, выбор — ↑↓ + Enter (в стиле Alfred). Удерживайте и нажимайте снова для перебора сеансов, отпустите модификатор для перехода (в стиле ⌘Tab).";
+"settings.reverseSwitcherEnabled" = "Обратный переключатель";
+"settings.reverseSwitcherEnabledDesc" = "Добавляет комбинацию Shift + переключатель для перебора в обратную сторону. Активна только при открытой панели переключателя, поэтому редко конфликтует с сочетаниями других приложений.";
+"settings.recordShortcut" = "Записать сочетание";
+"settings.panelShortcuts" = "Сочетания панели";
+"settings.shortcut.approve" = "Разрешить";
+"settings.shortcut.deny" = "Отклонить";
+"settings.shortcut.alwaysAllow" = "Разрешать всегда";
+"settings.shortcut.bypass" = "Bypass разрешений";
+"settings.shortcut.terminal" = "Перейти к терминалу";
+"settings.shortcut.selectOption" = "Выбрать вариант";
+"settings.shortcut.submitMulti" = "Подтвердить множественный выбор";
+"settings.shortcut.navigate" = "Навигация по сеансам";
+"settings.shortcut.collapse" = "Свернуть панель";
+"settings.shortcut.collapseDesc" = "Активно только при раскрытой панели.";
+"settings.shortcut.footer" = "Все сочетания ниже активны при раскрытой панели. Удерживайте клавишу-модификатор, чтобы показать подсказки на каждой кнопке — удобно для забытых сочетаний.";
+"settings.shortcut.resetDefaults" = "Сбросить к значениям по умолчанию";
+
+/* Settings: Sidebar */
+"settings.general" = "Основные";
+"settings.integrations" = "Интеграции";
+"settings.shortcuts" = "Сочетания клавиш";
+"settings.labs" = "Лаборатория";
+"settings.pass" = "Pass";
+"settings.about" = "О программе";
+"settings.developer" = "Разработчик";
+"settings.customJumpRules" = "Пользовательские правила перехода";
+"settings.customJumpRules.footer" = "Сторонние разработчики терминалов могут зарегистрировать URL-схему для точного перехода к сеансам.";
+"settings.kiro.configure" = "Настроить";
+"settings.hermes.activate" = "Активировать";
+"settings.hermes.activate.help" = "Hermes 2026-04+ требует ручного включения плагинов. Нажмите, чтобы выполнить `hermes plugins enable vibe-island`.";
+"settings.codex.hooks.disabled" = "Отключено в конфигурации";
+"settings.codex.hooks.enable" = "Включить";
+"settings.codex.hooks.needsTrust" = "Требуется доверие";
+"settings.codex.hooks.trustAction" = "Исправить";
+"settings.codex.hooks.trustTitle" = "Авторизовать хуки Codex";
+"settings.codex.hooks.trustMessage" = "Vibe Island может авторизовать свои хуки Codex через собственный API конфигурации Codex. Если не получится, выполните /hooks в Codex в качестве запасного варианта.";
+"settings.codex.trust.required" = "Требуется авторизация";
+"settings.codex.trust.authorize" = "Авторизовать";
+"settings.codex.trust.help" = "Авторизуйте хуки Vibe Island через собственный API конфигурации Codex.";
+"settings.codex.trust.verify_failed" = "Некоторые хуки не удалось авторизовать. Выполните /hooks в Codex, чтобы доверить вручную.";
+
+/* Settings: Section Headers & Items */
+"settings.behaviour" = "Поведение";
+"settings.version" = "Версия";
+"settings.experiments" = "Эксперименты";
+"settings.noExperiments" = "Нет доступных экспериментов";
+"settings.behaviour.expansion" = "Раскрытие";
+"settings.behaviour.visibility" = "Видимость";
+"settings.behaviour.dismissal" = "Закрытие";
+"settings.expandOnHover" = "Раскрывать нотч при наведении";
+"settings.hoverDuration" = "Задержка наведения";
+"settings.hideInFullscreen" = "Скрывать в полноэкранном режиме";
+"settings.smartSuppression" = "Умное подавление";
+"settings.smartSuppression.help" = "Не раскрывать автоматически, когда вкладка терминала агента в фокусе";
+
+/* License: Network Error Messages */
+"license.error.timeout" = "Истекло время ожидания соединения — проверьте сеть и повторите попытку";
+"license.error.noInternet" = "Нет подключения к интернету";
+"license.error.server" = "Ошибка сервера, повторите попытку позже";
+"license.error.tls" = "Не удалось установить защищённое соединение — попробуйте отключить прокси/VPN или сменить сеть";
+"license.error.trustChain" = "Не удалось проверить ответ лицензии — повторите попытку или обратитесь в поддержку, если проблема сохраняется";
+"license.verifying" = "Проверка лицензии...";
+"license.startingTrial" = "Запуск пробного периода...";
+"license.connectToStartTrial" = "Подключитесь один раз, чтобы начать пробный период";
+
+/* Settings: Agents / IDEs */
+"settings.agents.footer" = "Управление подключением Vibe Island к каждому агенту.";
+"settings.agents.autoConfigureNewAgents" = "Автоматически настраивать новых агентов";
+"settings.agents.autoConfigureNewAgents.help" = "Автоматически настраивать новые обнаруженные поддерживаемые агенты.";
+"settings.ideExtensions" = "IDE";
+"settings.ideExtensions.footer" = "Установите расширения, чтобы переходить прямо к нужной вкладке терминала в вашей IDE.";
+"settings.antigravity.subtitle" = "Поддерживаются настольные и терминальные агенты";
+"settings.status.installed" = "Установлено";
+"settings.status.cliNotFound" = "CLI не найден";
+"settings.status.active" = "Активно";
+"settings.trae.hooks.enablePath" = "Trae: Settings → Hooks → Global";
+"settings.trae.hooks.fileReady" = "Файл хука готов";
+"settings.trae.hooks.enableHelp" = "Vibe Island записал hooks.json для Trae. В Trae откройте Settings → Hooks → Global и включите Configured Hooks. Рекомендуется Run in Sandbox.";
+"settings.status.notInstalled" = "Не установлено";
+"settings.status.denied" = "Отклонено";
+"settings.status.needsAccess" = "Требуется доступ";
+
+/* Settings: Permission Recovery */
+"settings.permissions" = "Разрешения";
+"settings.permissions.footer" = "Включите недостающие разрешения для точного перехода к окнам и сеансам.";
+"settings.permission.accessibility" = "Универсальный доступ";
+"settings.permission.automation" = "Автоматизация %@";
+"settings.fixInSettings" = "Открыть Системные настройки";
+
+/* Settings: Auto-Hide */
+"settings.autoHideWhenIdle" = "Автоскрытие при отсутствии активных сеансов";
+
+/* Settings: Buttons */
+"settings.install" = "Установить";
+"settings.enable" = "Включить";
+"settings.uninstall" = "Удалить";
+"settings.repair" = "Восстановить";
+"settings.retry" = "Повторить";
+"settings.hookRepair.invalidConfiguration" = "Не удалось прочитать конфигурацию %@ в %@. Исправьте её или восстановите резервную копию и повторите попытку.";
+"settings.hookRepair.pathNotWritable" = "Vibe Island не может записать данные в %@. Разрешите запись по этому пути и повторите попытку.";
+"settings.hookRepair.unmanagedRoot" = "%@ использует %@, но Vibe Island пока не управляет этим каталогом. Добавьте каталог конфигурации выше.";
+"settings.hookRepair.externallyOverwritten" = "Другая программа постоянно заменяет %@. Проверьте CC Switch или похожий менеджер конфигураций и повторите попытку.";
+"settings.hookRepair.diagnosticRequired" = "Vibe Island не удалось восстановить %@. Экспортируйте диагностический отчёт для дальнейшей проверки.";
+"settings.hookRepair.exportReport" = "Экспортировать";
+"settings.hookRepair.preparingReport" = "Подготовка…";
+"settings.hookRepair.reportSaved" = "Отчёт сохранён";
+"settings.hookRepair.retryExport" = "Повторить экспорт";
+"settings.cancel" = "Отмена";
+"settings.add" = "Добавить";
+"settings.addCLIBranch" = "Добавить ветку CLI…";
+
+/* Settings: Custom CLI Config Paths */
+"settings.addClaudeFork" = "Добавить конфигурацию Claude Code…";
+"settings.addCodexBranch" = "Добавить ветку Codex…";
+"settings.customPath.placeholder" = "~/.xxx/engine/cc";
+"settings.customPath.codexPlaceholder" = "~/.internal-codex";
+"settings.customPath.help" = "Укажите каталог конфигурации Claude Code для другого аккаунта или форка (должен содержать settings.json или он будет создан)";
+"settings.customPath.codexHelp" = "Укажите каталог конфигурации вашей ветки Codex (содержит config.toml, hooks.json и sessions/)";
+"settings.customPath.invalid" = "Каталог не существует";
+"settings.customPath.duplicate" = "Этот путь уже настроен";
+"settings.customPath.remove" = "Удалить этот пользовательский путь";
+
+/* Settings: Terminal Section */
+"settings.terminal" = "Терминал";
+"settings.manageTerminalTitles" = "Настроить заголовки Ghostty для точных переходов";
+"settings.manageTerminalTitles.description" = "Добавляет маркер сеанса, чтобы Vibe Island мог вернуться к нужному сеансу.";
+"settings.terminalTitleFormat" = "Формат заголовка";
+"settings.terminalTitleFormat.project" = "Проект";
+"settings.terminalTitleFormat.projectAndPrompt" = "Проект + Промпт";
+"settings.terminalTitleFormat.prompt" = "Промпт";
+
+/* Settings: Display Section Headers */
+"settings.display.system" = "Система";
+"settings.display.notch" = "Notch";
+"settings.display.panel" = "Размер панели";
+"settings.display.sessionCard" = "Карточка сеанса";
+"settings.picker.default" = "(По умолчанию)";
+"settings.priceLocked" = "Ваша цена закреплена: %@ · нажмите, чтобы купить";
+
+/* Settings: Pass */
+"settings.pass.placeholder" = "Активируйте лицензию, чтобы разблокировать ваш Pass";
+
+/* Settings: About */
+"settings.website" = "Веб-сайт";
+"settings.joinCommunity" = "Присоединиться к сообществу";
+"settings.reportBug" = "Сообщить об ошибке";
+"settings.sendFeedback" = "Отправить отзыв";
+"settings.acknowledgements" = "Благодарности";
+"settings.slider.default" = "· По умолчанию";
+"settings.slider.reset" = "Сбросить к значению по умолчанию";
+"settings.slider.auto" = "Авто";
+
+/* WeChat QR Sheet */
+"wechat.community.title" = "👾 Сообщество Vibe Island";
+"wechat.scanToJoin" = "Отсканируйте в WeChat, чтобы присоединиться";
+"wechat.close" = "Закрыть";
+
+/* Sound Settings */
+"sound.enable" = "Включить звуковые эффекты";
+"sound.volume" = "Громкость";
+"sound.section.session" = "Сеанс";
+"sound.section.interactions" = "Взаимодействия";
+"sound.section.system" = "Система";
+"sound.section.filters" = "Фильтры";
+"sound.autoDetectProbes" = "Автоопределение проверочных сеансов";
+"sound.autoDetectProbes.help" = "Автоматически отключает звук для сеансов проверки состояния (например, CodexBar ClaudeProbe)";
+"sound.preview" = "Прослушать";
+
+/* Quiet Hours */
+"sound.quietHours.section" = "Тихие часы";
+"sound.quietHours.enable" = "Тишина в тихие часы";
+"sound.quietHours.start" = "С";
+"sound.quietHours.end" = "До";
+"sound.quietHours.help" = "Отключает все звуки в выбранном диапазоне времени (переходит через полночь, если конец раньше начала). Удобно, когда агенты работают ночью.";
+"sound.quietHours.activeNow" = "Тихие часы активны — звуки отключены";
+
+/* Sound Categories */
+"sound.cat.sessionStart" = "Начало сеанса";
+"sound.cat.taskAcknowledge" = "Задача принята";
+"sound.cat.taskComplete" = "Задача завершена";
+"sound.cat.taskError" = "Ошибка задачи";
+"sound.cat.inputRequired" = "Требуется подтверждение";
+"sound.cat.resourceLimit" = "Лимит контекста";
+"sound.cat.idleReminder" = "Напоминание о простое";
+"sound.cat.userSpam" = "Обнаружение спама";
+"sound.cat.usageWarning" = "Лимит почти исчерпан";
+"sound.cat.usageReset" = "Лимит обновлён";
+
+/* Sound Category Descriptions */
+"sound.desc.sessionStart" = "Новый сеанс Claude / Codex / Gemini";
+"sound.desc.taskAcknowledge" = "Вы отправили промпт";
+"sound.desc.taskComplete" = "AI завершил свой ход";
+"sound.desc.taskError" = "Сбой инструмента или ошибка API";
+"sound.desc.inputRequired" = "Ожидается разрешение или вопрос";
+"sound.desc.resourceLimit" = "Окно контекста почти заполнено";
+"sound.desc.idleReminder" = "AI ждёт вашего ввода";
+"sound.desc.userSpam" = "3+ промпта за 10 секунд";
+"sound.desc.usageWarning" = "Квота подписки приближается к лимиту";
+"sound.desc.usageReset" = "Окно использования сброшено, квота обновлена";
+
+/* Sound Source Picker (per-event source selection) */
+"settings.sound.mySounds" = "Мои звуки";
+"settings.sound.noCustomSounds" = "Пока нет импортированных звуков.";
+"settings.sound.addSound" = "Добавить звук...";
+"settings.sound.importNew" = "Импортировать звук...";
+"settings.sound.deleteCustom" = "Удалить звук";
+"settings.sound.source.off" = "Выкл.";
+"settings.sound.source.builtin" = "Vibe Island";
+"settings.sound.source.appleHeader" = "Системные Apple";
+"settings.sound.source.appleMore" = "Больше звуков Apple";
+"settings.sound.source.appleLabel" = "Apple — %@";
+"settings.sound.source.customLabel" = "Свой — %@";
+"settings.sound.source.customMissing" = "Свой — (файл отсутствует)";
+
+/* Hook Watcher */
+"hookWatcher.restored" = "Хуки восстановлены — ваши хуки CLI были изменены другим инструментом.";
+"hookWatcher.rateLimited" = "Хуки продолжают удаляться. Откройте Настройки → Интеграции → Хуки CLI для управления.";
+"cliDiscovery.configured" = "%@ настроен для Vibe Island. Перезапустите активные сеансы, чтобы применить.";
+
+/* Usage */
+"usage.activate" = "Показать лимиты использования";
+"usage.activate.tip" = "Нажмите, чтобы посмотреть лимиты использования";
+"usage.activate.loading" = "Загрузка лимитов использования...";
+"settings.showUsage" = "Показывать лимиты использования";
+"settings.showUsageHelp" = "Показывать лимиты использования подписки в заголовке панели нотча";
+"settings.showCodexResetCards" = "Показывать Reset Cards";
+"settings.showCodexResetCardsHelp" = "Показывать доступные Codex Reset Cards и ближайший срок действия в заголовке использования.";
+"settings.usageValueMode" = "Отображаемое значение";
+"settings.usageValueMode.used" = "Использовано";
+"settings.usageValueMode.remaining" = "Осталось";
+"settings.usageThresholdAlert" = "Оповещение о лимите использования";
+"settings.usageThresholdAlertHelp" = "Один раз показывать лёгкое уведомление, когда любое окно использования превысит выбранный процент.";
+"settings.usageThresholdPercent" = "Порог оповещения";
+"usage.bridgeHint.enable" = "Подключить использование Claude";
+"usage.bridgeHint.restore" = "Подключить использование Claude";
+"usage.bridgeHint.repair" = "Подключить использование Claude";
+"usage.bridgeHint.dismiss" = "Напомнить позже";
+"usage.waitingForProvider" = "Ожидание активности %@";
+"usage.peek.limitReached" = "Достигнут лимит %@";
+"usage.peek.thresholdReached" = "Использование %@ близко к лимиту";
+"usage.peek.windowUsed" = "Окно %@ использовано на %d%%";
+"usage.peek.limitReset" = "Лимит %@ сброшен";
+"usage.peek.windowAvailable" = "Окно %@ снова доступно";
+"usage.peek.windowsAvailable" = "Окна %@ снова доступны";
+"usage.peek.resetCreditAdded.one" = "Карта сброса Codex добавлена";
+"usage.peek.resetCreditAdded.many" = "Добавлено карт сброса Codex: %d";
+"usage.peek.resetCreditsAvailable" = "Доступно: %d";
+"usage.peek.resetCreditsAvailableExpires" = "Доступно: %d · истекает %@";
+"usage.resetCards.available" = "Доступно Codex Reset Cards: %d";
+"usage.resetCards.availableEarliestExpiry" = "Доступно Codex Reset Cards: %d. Ближайшая истекает через %@.";
+"usage.peek.codexCapacityRestored" = "Ёмкость Codex восстановлена до 100%";
+"usage.peek.codexResetProbable" = "Tibo может сбросить Codex";
+"usage.peek.codexResetProbableDetail" = "Публичный пост намекает на возможный сброс";
+"usage.peek.codexResetAnnounced" = "Объявлен сброс Codex";
+"usage.peek.codexResetAnnouncedDetail" = "Tibo сообщает, что сброс уже в пути";
+"usage.peek.openSource" = "Открыть исходный пост";
+"usage.window.fiveHourTitle" = "Сеанс 5 ч";
+"usage.window.sevenDayTitle" = "Неделя 7 дн.";
+"usage.window.monthlyShort" = "Мес.";
+"usage.window.monthlyTitle" = "Месячный лимит";
+"usage.window.monthlyToolsTitle" = "Инструменты за месяц";
+"usage.resetsIn" = "сброс %@";
+"usage.updatedAt" = "Обновлено %@";
+"settings.usageProvider" = "Предпочитаемый провайдер";
+"settings.usageProvider.auto" = "Авто (по сеансу)";
+
+/* Beta Updates */
+"settings.betaUpdates" = "Бета-обновления";
+"settings.betaUpdates.help" = "Ранний доступ к новым функциям. Бета-версии могут быть менее стабильными.";
+"settings.labs.autoMode" = "Использовать Автоматический режим вместо Bypass";
+"settings.labs.autoMode.help" = "Заменяет Bypass Автоматическим режимом. Claude Code сам оценивает безопасность каждого действия.";
+"settings.labs.cursorApproval" = "Подтверждение песочницы Cursor";
+"settings.labs.cursorApproval.help" = "В режиме «Авто» читает конфигурацию YOLO в Cursor для решения.";
+"settings.labs.cursorApproval.auto" = "Автоопределение";
+"settings.labs.cursorApproval.always" = "Всегда в Notch";
+"settings.labs.cursorApproval.never" = "Никогда (только наблюдение)";
+"settings.labs.codexApprovalTarget" = "Цель подтверждений Codex";
+"settings.labs.codexApprovalTarget.help" = "«Умно» оставляет подтверждение во вкладке терминала, которую вы просматриваете; иначе — в Notch.";
+"settings.labs.codexApprovalTarget.smart" = "Умно (по фокусу)";
+"settings.labs.codexApprovalTarget.notch" = "Всегда в Notch";
+"settings.labs.codexApprovalTarget.terminal" = "Всегда в терминале";
+"settings.labs.codexAppServerJump" = "Открывать app-server-сессии в Codex";
+"settings.labs.codexAppServerJump.help" = "Клик по сессии, запущенной через codex app-server, открывает её тред в приложении Codex вместо терминала. Тред может отсутствовать там, если инструмент использует отдельный бэкенд.";
+"settings.labs.codexApprovalMode" = "Когда Codex требует вашего подтверждения";
+"settings.labs.codexApprovalMode.help" = "Автопроверенные запросы всегда беззвучны";
+"settings.labs.codexApprovalMode.approveHere" = "Следовать за фокусом";
+"settings.labs.codexApprovalMode.remind" = "Уведомлять меня";
+"settings.labs.codexApprovalMode.hide" = "Оставаться беззвучным";
+"settings.labs.section.claude" = "Claude Code";
+"settings.labs.section.codex" = "Codex";
+"settings.labs.section.otherCLIs" = "Другие CLI";
+"settings.labs.section.terminal" = "Терминал";
+"settings.labs.nativeCodexApprovals" = "Использовать нативные подтверждения Codex";
+"settings.labs.nativeCodexApprovals.help" = "Пропускать карточки и уведомления подтверждения Vibe Island; пусть Codex или AutoReview решают в терминале.";
+"settings.labs.nativeClaudeApprovals" = "Использовать нативные подтверждения Claude Code";
+"settings.labs.nativeClaudeApprovals.help" = "Пропускать карточки и уведомления подтверждения Vibe Island; пусть Claude Code обрабатывает подтверждения в терминале.";
+"settings.labs.codexApproval" = "Оповещение о подтверждении Codex Desktop";
+"settings.labs.codexApproval.help" = "Обнаружение запросов подтверждения через сканирование Универсального доступа. Отключите, если Codex падает.";
+"settings.labs.kiroHints" = "Подсказки о разрешениях Kiro";
+"settings.labs.kiroHints.help" = "Выберите, как долго Kiro должен выполнять инструмент, прежде чем Vibe Island покажет возможную подсказку о подтверждении.";
+"settings.labs.kiroHints.off" = "Выкл.";
+"settings.labs.kiroHints.seconds" = "%d сек.";
+"settings.labs.section.stability" = "Стабильность";
+"settings.labs.memoryRestart" = "Перезапуск при высоком потреблении памяти";
+"settings.labs.memoryRestart.help" = "Дополнительная подстраховка. Перезапускает приложение, только когда потребление памяти остаётся высоким, а все сеансы простаивают.";
+"settings.labs.aiNaming.section" = "AI-именование сеансов (экспериментально)";
+"settings.labs.aiNaming" = "Автоматически именовать сеансы";
+"settings.labs.aiNaming.help" = "Codex называет каждый сеанс “цель｜прогресс” и обновляет его по мере развития. Только для Claude Code.";
+"settings.labs.aiNaming.terminal" = "Синхронизировать с вкладкой терминала";
+"settings.labs.aiNaming.writeback" = "Записывать обратно в сеансы Claude";
+"settings.labs.aiNaming.writeback.help" = "Также появляется в claude --resume. Записывает в собственные файлы данных Claude; по умолчанию выключено.";
+"settings.labs.aiNaming.footer" = "Заголовки генерирует Codex на вашем Mac, используя отдельную квоту вашего плана ChatGPT — использование Claude не затрагивается.";
+"settings.appLanguage" = "Язык приложения";
+"settings.appLanguage.system" = "Как в системе";
+"settings.appLanguage.relaunch" = "Перезапустить";
+"settings.behaviour.idleTimeout" = "Очистка простаивающих сеансов";
+"settings.behaviour.idleTimeout.help" = "Применяется только к сеансам без явного сигнала закрытия (Codex, OpenCode, Cursor).";
+"settings.behaviour.idleTimeout.never" = "Никогда";
+"settings.behaviour.idleTimeout.30m" = "30 минут";
+"settings.behaviour.idleTimeout.1h" = "1 час";
+"settings.behaviour.idleTimeout.2h" = "2 часа (по умолчанию)";
+"settings.behaviour.idleTimeout.4h" = "4 часа";
+"settings.behaviour.idleTimeout.8h" = "8 часов";
+"settings.behaviour.idleTimeout.24h" = "24 часа";
+
+/* Common buttons */
+"common.cancel" = "Отмена";
+"common.remove" = "Удалить";
+"common.ok" = "OK";
+"common.done" = "Готово";
+"common.retry" = "Повторить";
+"common.install" = "Установить";
+"common.openInBrowser" = "Открыть в браузере";
+"common.reveal" = "Показать в Finder";
+"common.copy" = "Копировать";
+"common.copied" = "Скопировано";
+
+/* Integrations / Display section headers */
+"settings.integrations.agentsSection" = "Агенты";
+"settings.display.agentsSection" = "Агенты";
+
+/* Sound Packs (v2) */
+"settings.sound.theme" = "Звуковая тема";
+"settings.sound.themePicker" = "Тема";
+"settings.sound.builtin" = "Встроенная 8-bit";
+"settings.sound.editorPicks" = "Выбор редакции";
+"settings.sound.loadFailed" = "Не удалось загрузить реестр звуковых наборов";
+"settings.sound.filter" = "Фильтр…";
+"settings.sound.import" = "Импортировать звуковой набор…";
+"settings.sound.uninstallPack" = "Удалить %@";
+"settings.sound.allPacks" = "Все наборы: %lld";
+"settings.sound.noMatches" = "Нет наборов по запросу \"%@\"";
+"settings.sound.moreTypeToFilter" = "Ещё: %lld — введите текст для фильтра";
+"settings.sound.poweredBy" = "Работает на [PeonPing Registry](https://github.com/PeonPing/registry)";
+"settings.sound.importDialog.message" = "Выберите папку или .zip-файл звукового набора CESP";
+"settings.sound.importDialog.prompt" = "Импортировать";
+
+/* Screen Switch Tip */
+"screen.switchTip" = "Основной дисплей — %@, ";
+"screen.switchAction" = "переключиться на него";
+
+/* SSH Remote */
+"sshRemote" = "Удалённый SSH";
+"sshRemote.intro" = "Отслеживайте и подтверждайте удалённые сеансы AI CLI прямо из Notch.";
+"sshRemote.introHint" = "Добавить хост → Настроить → Подключиться. Требуется аутентификация по SSH-ключу (или ControlMaster для MFA).";
+"sshRemote.setupPrompt.title" = "Настроить удалённый мониторинг?";
+"sshRemote.setupPrompt.message" = "Это загрузит небольшой бинарный файл на удалённый сервер и настроит ваши инструменты CLI (Claude Code, Codex и др.) на пересылку событий обратно в Vibe Island.";
+"sshRemote.setupNow" = "Настроить сейчас";
+"sshRemote.setupLater" = "Позже";
+"sshRemote.codexRoots.title" = "Каталоги Codex";
+"sshRemote.codexRoots.subtitle" = "Выберите конфигурации Codex для подключения на %@.";
+"sshRemote.codexRoots.default" = "По умолчанию";
+"sshRemote.codexRoots.detectedPaperclip" = "Обнаружено через Paperclip";
+"sshRemote.codexRoots.previouslySelected" = "Выбрано ранее";
+"sshRemote.codexRoots.manual" = "Добавлено вручную";
+"sshRemote.codexRoots.pathPlaceholder" = "/absolute/path/to/codex-home";
+"sshRemote.codexRoots.addPath" = "Добавить каталог Codex";
+"sshRemote.codexRoots.invalidPath" = "Введите абсолютный путь на удалённом хосте.";
+"sshRemote.codexRoots.setUpSelected" = "Настроить выбранные";
+"sshRemote.codexRoots.configure" = "Настроить каталоги Codex";
+"sshRemote.hosts" = "Хосты";
+"sshRemote.noHosts" = "Хосты ещё не настроены";
+"sshRemote.addHost" = "Добавить хост";
+"sshRemote.usage.title" = "Удалённое использование (необязательно)";
+"sshRemote.usage.claude" = "Claude";
+"sshRemote.usage.claude.help" = "Передавать лимиты Claude из statusline этого удалённого хоста.";
+"sshRemote.usage.codex" = "Codex";
+"sshRemote.usage.codex.help" = "Опрашивать аккаунт Codex этого удалённого хоста только при обнаружении активности Codex.";
+"sshRemote.usage.hint" = "Используйте это, когда Claude или Codex авторизованы на удалённом хосте, а не на этом Mac.";
+"sshRemote.usage.status" = "Использование: %@";
+"sshRemote.advancedConnection.title" = "Расширенное подключение";
+"sshRemote.manualConnectionOnly" = "Только ручное подключение";
+"sshRemote.manualConnectionOnly.description" = "Для входа по SSH через браузер или корпоративный SSO. Vibe Island подключается только после нажатия «Подключиться».";
+"sshRemote.autoUpdateHooks" = "Обновлять удалённые хуки автоматически";
+"sshRemote.autoUpdateHooks.description" = "После обновления приложения Vibe Island заново разворачивает хук на этом сервере при следующем подключении туннеля. Отключите, чтобы обновлять только по нажатию «Настроить заново».";
+"sshRemote.portConflict.title" = "Удалённый порт уже используется";
+"sshRemote.portConflict.message" = "Другой сеанс SSH уже пересылает на порт этого сервера. Если вы запускаете Vibe Island на другом Mac, подключённом к тому же серверу, измените TCP-порт этого Mac ниже на уникальное значение (например, 17892) — разные порты позволяют обоим Mac получать события одновременно через fan-out. Если это устаревший слушатель из предыдущего сеанса, подождите 60 секунд и попробуйте снова.\n\nЗатронуто:";
+"sshRemote.stalePort.title" = "Удалённый порт занят устаревшим туннелем";
+"sshRemote.stalePort.message" = "Предыдущий туннель с этого Mac всё ещё удерживает удалённый порт (обычно после смены VPN/сети). Автоочистка продолжает попытки; нажмите «Подключиться», чтобы запустить проверенную очистку сейчас. Затронуто:";
+"sshRemote.deploy" = "Настроить";
+"sshRemote.redeploy" = "Настроить заново";
+"sshRemote.connect" = "Подключиться";
+"sshRemote.disconnect" = "Отключиться";
+"sshRemote.codexTrust.required" = "Хукам Codex требуется доверие";
+"sshRemote.codexTrust.unverified" = "Не удалось проверить доверие к хукам Codex";
+"sshRemote.qoder.upgradeRequired" = "⚠️ Версия удалённого Qoder CLI %@ ниже требуемой %@. Vibe Island не настроил управляемые хуки Qoder; обновите Qoder CLI и повторите настройку.";
+"sshRemote.qoder.versionUnverified" = "⚠️ Не удалось проверить версию удалённого Qoder CLI (минимум %@). Vibe Island не настроил управляемые хуки Qoder; обновите Qoder CLI и повторите настройку.";
+"sshRemote.codexTrust.guidance" = "Откройте Codex на %@, выполните /hooks, доверьтесь хукам Vibe Island и проверьте снова.";
+"sshRemote.codexTrust.checkAgain" = "Проверить снова";
+"sshRemote.edit" = "Изменить";
+"sshRemote.manual" = "Вручную";
+"sshRemote.uninstall" = "Удалить";
+"sshRemote.deploySuccess" = "Настройка успешна";
+"sshRemote.deployFailed" = "Сбой настройки";
+"sshRemote.uninstallConfirm" = "Удалить удалённую настройку?";
+"sshRemote.uninstallMessage" = "Это удалит файлы Vibe Island и конфигурации CLI с %@.";
+"sshRemote.uninstallResult" = "Результат удаления";
+"sshRemote.tunnel.disconnected" = "Туннель: не подключён — нажмите «Подключиться», чтобы начать";
+"sshRemote.notDeployed" = "Не настроено — нажмите «Настроить», чтобы настроить удалённый хост";
+"sshRemote.tunnel.connecting" = "Туннель: подключение...";
+"sshRemote.tunnel.connected" = "Туннель: подключён";
+"sshRemote.tunnel.connectedAgo" = "Туннель: подключён (%@)";
+"sshRemote.tunnel.reconnecting" = "Туннель: переподключение (#%lld)...";
+"sshRemote.tunnel.error" = "Туннель: ошибка — %@";
+"sshRemote.addHostTitle" = "Добавить хост SSH";
+"sshRemote.editHostTitle" = "Изменить хост SSH";
+"sshRemote.field.host" = "Хост";
+"sshRemote.field.user" = "Пользователь";
+"sshRemote.field.hostPlaceholder" = "server.example.com или 10.0.0.5";
+"sshRemote.field.userPlaceholder" = "deploy";
+"sshRemote.disclosure.docker" = "Контейнер Docker";
+"sshRemote.disclosure.manual" = "Установка вручную (для сетей с ограничениями)";
+"sshRemote.manual.scpBlocked" = "Корпоративные брандмауэры часто блокируют scp (подсистему sftp-server), оставляя открытыми ssh и HTTPS. Установите бинарный файл хука любым способом; Vibe Island обнаружит его при следующей настройке и пропустит загрузку.";
+"sshRemote.manual.pickPlatform" = "Выберите удалённую платформу:";
+"sshRemote.manual.runOnRemote" = "Выполните на удалённом хосте (внутри сеанса SSH):";
+"sshRemote.manual.clickDeploy" = "Затем нажмите \"Настроить\" выше или включите переключатель удалённого использования. Мы обнаружим бинарный файл, пропустим загрузку и настроим только хуки.";
+"sshRemote.manual.airgapIntro" = "Если удалённый хост не может достучаться до GitHub (полностью изолированные сети), скопируйте бинарный файл вручную:";
+"sshRemote.manual.transport" = "Перенесите через AirDrop / email / USB / rsync и поместите в ~/ на удалённом хосте.";
+"sshRemote.manual.thenOnRemote" = "Затем на удалённом хосте:";
+"sshRemote.manual.airgapFallback" = "Запасной вариант для офлайн / изолированных сетей";
+"sshRemote.docker.intro" = "Выберите, где работает контейнер. Локальные контейнеры настраиваются автоматически; контейнеру на SSH-сервере нужен доступный ретранслятор.";
+"sshRemote.docker.location" = "Контейнер работает на:";
+"sshRemote.docker.location.local" = "Этом Mac";
+"sshRemote.docker.location.remote" = "SSH-сервере";
+"sshRemote.docker.platform" = "Платформа контейнера:";
+"sshRemote.docker.local.automatic" = "Адрес хоста контейнера определяется автоматически.";
+"sshRemote.docker.remote.noHosts" = "Сначала добавьте и настройте SSH-хост выше.";
+"sshRemote.docker.remote.host" = "SSH-хост:";
+"sshRemote.docker.remote.setupHostFirst" = "Перед удалённым Docker настройте этот SSH-хост выше.";
+"sshRemote.docker.remote.connectHostFirst" = "Перед запуском команды подключите этот SSH-хост выше.";
+"sshRemote.docker.remote.relayAddress" = "Адрес ретранслятора:";
+"sshRemote.docker.remote.relayPlaceholder" = "172.17.0.1 или host.docker.internal";
+"sshRemote.docker.remote.relayTarget" = "Используйте порт %@ на SSH-сервере и перенаправьте его на %@.";
+"sshRemote.docker.remote.relayNotManaged" = "Vibe Island подставляет порт туннеля, но не создаёт ретранслятор.";
+"sshRemote.docker.remote.enterRelay" = "Перед копированием укажите адрес ретранслятора.";
+"sshRemote.docker.pasteInContainer" = "Вставьте внутри вашего контейнера:";
+"sshRemote.docker.rerun" = "Запустите заново после пересборки контейнера. Для постоянной настройки монтируйте бинарный файл через volume.";
+"sshRemote.hookUpdateAvailable" = "Доступно обновление удалённого хука";
+"sshRemote.hookUpdateNow" = "Обновить сейчас";
+"sshRemote.field.alias" = "Псевдоним";
+"sshRemote.field.sshOptions" = "Параметры SSH";
+"sshRemote.commonOptions" = "Частые параметры:";
+"sshRemote.option.port" = "Нестандартный порт SSH";
+"sshRemote.option.key" = "Определённый SSH-ключ";
+"sshRemote.option.jump" = "Переход через bastion host";
+"sshRemote.option.mfa" = "MFA / Duo (повторное использование сеанса терминала)";
+"sshRemote.option.proxyCommand" = "ProxyCommand (в кавычках; туннель через bastion)";
+"sshRemote.formFooter" = "Требуется аутентификация по SSH-ключу (или ControlMaster для MFA)";
+"sshRemote.add" = "Добавить";
+"sshRemote.save" = "Сохранить";
+"sshRemote.tcpPort" = "TCP-порт";
+"sshRemote.restartToApply" = "перезапустите для применения";
+"sshRemote.tunnelKind.tcp" = "TCP (универсальный)";
+"sshRemote.tunnelKind.uds" = "Unix Socket (только CLI SSH)";
+"sshRemote.tunnelKind.tcp.desc" = "Работает с Termius, Prompt и другими графическими SSH-клиентами";
+"sshRemote.tunnelKind.uds.desc" = "Только для консольного ssh, требуется OpenSSH 6.7+";
+
+/* Usage — Claude Usage Bridge */
+"settings.usage.bridge.section" = "Мост использования Claude";
+"settings.usage.bridge.description" = "Лимиты использования Claude передаются через Status Line в Claude Code. Vibe Island может добавить небольшой обратимый мост для чтения этих данных, сохраняя вывод вашей Status Line без изменений.";
+"settings.usage.bridge.guidance.title.shell" = "Безопасная установка сниппета";
+"settings.usage.bridge.guidance.title.claudeHud" = "Совместимо с Claude HUD";
+"settings.usage.bridge.guidance.title.wrapper" = "Подключить использование Claude";
+"settings.usage.bridge.guidance.title.installed" = "Мост использования Claude активен";
+"settings.usage.bridge.guidance.title.missing" = "Требуется ручное восстановление";
+"settings.usage.bridge.guidance.shell" = "Похоже на обычную shell-statusline. Vibe Island добавит один помеченный блок сразу после строки чтения stdin и оставит остальную часть скрипта без изменений.";
+"settings.usage.bridge.guidance.claudeHud" = "Обнаружен Claude HUD. Vibe Island не редактирует файлы или конфигурацию Claude HUD; он лишь оборачивает сгенерированную команду, кэширует rate_limits и передаёт тот же stdin в HUD, чтобы /claude-hud:configure продолжал работать.";
+"settings.usage.bridge.guidance.opaque" = "Vibe Island добавит небольшой мост к вашей текущей настройке Status Line, чтобы читать данные об использовании Claude. Видимый вывод вашей Status Line останется прежним.";
+"settings.usage.bridge.guidance.snippetInstalled" = "Мост уже установлен. При его удалении стирается только помеченный блок Vibe Island, а ваш исходный скрипт statusline остаётся на месте.";
+"settings.usage.bridge.guidance.chainInstalled" = "Vibe Island читает данные об использовании Claude из ввода Status Line. Отображение вашей Status Line остаётся неизменным; удаление моста лишь убирает подключение Vibe Island.";
+"settings.usage.bridge.guidance.claudeHudInstalled" = "Claude HUD по-прежнему управляет видимым HUD, а /claude-hud:configure может продолжать менять настройки HUD. Если /claude-hud:setup позже перезапишет statusLine, вернитесь сюда и снова включите мост.";
+"settings.usage.bridge.guidance.missing" = "Настройки Claude указывают на несуществующий скрипт, поэтому Vibe Island не будет менять его автоматически. Сначала исправьте или удалите эту команду statusLine.";
+"settings.usage.bridge.enable" = "Подключить использование";
+"settings.usage.bridge.remove" = "Удалить мост";
+"settings.usage.bridge.preview" = "Показать предпросмотр";
+"settings.usage.bridge.status.installed" = "Мост установлен";
+"settings.usage.bridge.status.snippetReady" = "Обнаружена shell-statusline. Vibe Island может добавить небольшой удаляемый мост после строки чтения stdin.";
+"settings.usage.bridge.status.chainReady" = "Обнаружена пользовательская Status Line. Vibe Island может добавить небольшой мост для отслеживания использования, не меняя её видимый вывод.";
+"settings.usage.bridge.status.chainInstalled" = "Мост использования Claude установлен. Ваша текущая Status Line по-прежнему управляет видимым выводом.";
+"settings.usage.bridge.status.scriptMissing" = "Скрипт statusline не найден — проверьте ~/.claude/settings.json";
+"settings.usage.bridge.preview.caption" = "Перед любыми изменениями сохраняется резервная копия с меткой времени. Удаление моста восстанавливает вашу исходную настройку Status Line.";
+"settings.usage.bridge.error.title" = "Не удалось обновить statusline";
+
+/* Notifications — top-level pane (formerly Silence). Currently contains Filters section, future Quiet Mode etc. */
+"settings.notifications" = "Уведомления";
+"settings.silence" = "Тишина";
+"silence.builtIn.section" = "Встроенные фильтры";
+"silence.builtIn.footnote" = "Готовые фильтры по каталогам и промптам появляются в соответствующих разделах ниже.";
+"silence.preset.chip" = "Готовый";
+"silence.builtIn.codexInternalWorkers" = "Внутренние воркеры Codex";
+"silence.builtIn.codexInternalWorkers.help" = "Скрывает фоновые воркеры Codex — рецензента и консолидацию памяти — у которых нет видимого префикса промпта.";
+"silence.preset.info.accessibilityLabel" = "Детали готового фильтра";
+"silence.preset.match.prefix" = "Префикс";
+"silence.preset.match.contains" = "Содержит";
+"silence.preset.match.equals" = "Равно";
+"admission.appBundle.section" = "Заблокированные приложения-лаунчеры";
+"admission.appBundle.description" = "Отбрасывать сеансы, запущенные выбранными приложениями, до их появления в Vibe Island.";
+"admission.appBundle.addButton" = "Добавить приложение…";
+"admission.appBundle.empty" = "Нет заблокированных пользовательских приложений-лаунчеров.";
+"admission.appBundle.footnote" = "Используйте это для фоновых проверок и вспомогательных приложений. Обычные фильтры проектов — в разделах «Каталог» или «Первый промпт».";
+"admission.appBundle.picker.title" = "Выберите приложение для блокировки";
+"admission.appBundle.picker.prompt" = "Выбрать";
+"admission.appBundle.added.format" = "%@ добавлено.";
+"admission.appBundle.reenabled.format" = "%@ снова включено.";
+"admission.appBundle.exists.format" = "%@ уже заблокировано.";
+"admission.appBundle.unreadable" = "Не удалось прочитать Bundle ID этого приложения.";
+"admission.appBundle.saveFailed" = "Не удалось сохранить правило.";
+"silence.custom.section" = "Пользовательские фильтры";
+"silence.custom.description" = "Скрывать любой сеанс, рабочий каталог которого содержит:";
+"silence.custom.placeholder" = "например, /chronicle/dev-experiments";
+"silence.custom.hint" = "Совет: щёлкните карточку сеанса правой кнопкой, чтобы добавить её каталог как фильтр.";
+"silence.addPattern.button" = "Добавить шаблон";
+"silence.contextMenu.hide" = "Скрыть сеансы в этом каталоге";
+"silence.contextMenu.hidePrompt" = "Заглушить промпты, начинающиеся с…";
+"silence.custom.kind.directory" = "Каталог";
+"silence.custom.kind.prompt" = "Промпт";
+"silence.custom.prompt.placeholder" = "например, ## Memory Writing Agent";
+"silence.custom.prompt.description" = "Скрывать любой сеанс, чей первый промпт пользователя начинается с:";
+"silence.custom.prompt.description.contains" = "Скрывать любой сеанс, чей первый промпт пользователя содержит:";
+"silence.matchType.prefix" = "Начинается с";
+"silence.matchType.contains" = "Содержит";
+"silence.matchType.label" = "Тип совпадения";
+"silence.custom.section.directory" = "Пользовательские фильтры: каталог";
+"silence.custom.section.prompt" = "Пользовательские фильтры: первый промпт";
+"silence.custom.prompt.hint" = "Совет: щёлкните карточку сеанса правой кнопкой, чтобы добавить её первый промпт как фильтр.";
+"silence.custom.empty" = "Пока нет пользовательских фильтров.";
+"silence.livePreview.noMatch" = "0 совпадений";
+"silence.livePreview.matchCountFormat" = "Совпадений: %d";
+"silence.livePreview.tooltip" = "Сколько текущих сеансов заглушил бы этот шаблон";
+"silence.livePreview.idleHint" = "Введите шаблон, чтобы увидеть совпадения";
+"silence.builtIn.memoryConsolidation" = "Консолидация памяти Codex";
+"silence.builtIn.memoryWriterCwd" = "Запись памяти Codex (cwd)";
+"silence.builtIn.memoryWriterPrompt" = "Запись памяти Codex (префикс промпта)";
+"silence.builtIn.guardian" = "Агент Codex Guardian / AutoReview";
+"silence.builtIn.chronicle" = "Сводка памяти Codex Chronicle";
+"silence.builtIn.codexAppSuggestions" = "Предлагаемые промпты Codex App";
+"silence.builtIn.codexAppGitHelper" = "Промпты Git-помощника Codex App";
+"silence.builtIn.claudeMem" = "Фоновые сеансы плагина Claude-Mem";
+"silence.builtIn.craftTitle" = "Генератор заголовков Craft Agent";
+"silence.preset.help.memoryWriterCwd" = "Используется сеансами записи памяти Codex, хранящимися в ~/.codex/memories.";
+"silence.preset.help.memoryWriterPrompt" = "Используется сеансами записи памяти Codex, начинающимися с фиксированного промпта записи памяти.";
+"silence.preset.help.chronicle" = "Используется сеансами сводки памяти Codex Desktop на основе записи экрана.";
+"silence.preset.help.codexAppSuggestions" = "Используется Codex App для генерации предлагаемых промптов на главном экране.";
+"silence.preset.help.codexAppGitHelper" = "Используется помощником Codex App для коммита или push, генерирующим предложения Git-сообщений.";
+"silence.preset.help.claudeMem" = "Используется фоновыми сеансами сжатия плагина Claude-Mem.";
+"silence.preset.help.craftTitle" = "Используется Craft Agent для генерации короткого заголовка диалога в графическом интерфейсе.";
+
+"cowork.option.count" = "Вариантов: %lld";
+
+/* Integrity reinstall nudge (SUP-352) */
+"integrity.reinstallTitle" = "Рекомендуется переустановка";
+"integrity.reinstallSubtitle" = "Файлы приложения выглядят повреждёнными. Переустановите с vibeisland.app для восстановления целостности.";
+"integrity.reinstallCTA" = "Переустановить";
+
+/* Мобильные уведомления Bark (SUP-1190) */
+"settings.bark.section" = "Мобильные уведомления";
+"settings.bark.enabled" = "Уведомлять мой iPhone";
+"settings.bark.enabledHelp" = "Требуется бесплатное приложение Bark на iPhone.";
+"settings.bark.connection" = "Подключение";
+"settings.bark.configure" = "Настроить…";
+"settings.bark.status.notConfigured" = "Не настроено";
+"settings.bark.status.needsAttention" = "Требуется повторное подключение";
+"settings.bark.setup.title" = "Настройка Bark";
+"settings.bark.setup.subtitle" = "Подключите Bark, проверьте доставку и при необходимости зашифруйте текст уведомлений.";
+"settings.bark.destination" = "Назначение";
+"settings.bark.server" = "Сервер";
+"settings.bark.server.public" = "Публичный сервер Bark";
+"settings.bark.server.selfHosted" = "Свой сервер";
+"settings.bark.server.selfHostedHelp" = "Используйте HTTPS-сервер Bark. Vibe Island отправляет данные на его endpoint /push.";
+"settings.bark.deviceKey" = "Ключ устройства";
+"settings.bark.sendTest" = "Отправить тест";
+"settings.bark.deviceKeyHelp" = "Скопируйте в приложении Bark";
+"settings.bark.getBark" = "Нет приложения Bark?";
+"settings.bark.getBarkHelp" = "Отсканируйте камерой iPhone, чтобы установить Bark из App Store.";
+"settings.bark.awayOnly" = "Уведомлять, только когда меня нет за этим Mac";
+"settings.bark.awayOnlyHelp" = "«Меня нет» — экран заблокирован или выключен, либо Mac неактивен 2 минуты.";
+"settings.bark.events" = "Уведомлять о";
+"settings.bark.event.approvals" = "Подтверждения";
+"settings.bark.event.questions" = "Вопросы";
+"settings.bark.event.completions" = "Завершённые задачи";
+"settings.bark.event.warnings" = "Предупреждения";
+"settings.bark.encryption" = "Шифровать содержимое уведомлений";
+"settings.bark.encryptionHelp" = "Шифрует заголовок, текст и группу на этом Mac. Сервер Bark по-прежнему видит ключ устройства и метаданные доставки.";
+"settings.bark.encryptionSetup" = "В Bark откройте Настройки > Push Encryption, выберите AES256, GCM и NoPadding, затем вставьте Key и IV.";
+"settings.bark.encryptionFailure" = "Не удалось создать настройки шифрования";
+"settings.bark.copyEncryptionKey" = "Копировать Key";
+"settings.bark.copyEncryptionIV" = "Копировать IV";
+"settings.bark.copied" = "Скопировано";
+"settings.bark.contentPreviews" = "Включать детали диалога";
+"settings.bark.contentPreviewsHelp" = "Добавляет локально очищенный заголовок диалога и до 240 символов ответов, вопросов или предупреждений.";
+"settings.bark.privacy" = "Конфиденциальность";
+"settings.bark.privacyDetails" = "Как защищается конфиденциальность уведомлений";
+"settings.bark.plaintextExplanation" = "Без шифрования текст уведомления проходит через выбранный сервер Bark в читаемом виде. Он отправляется только на настроенный ключ устройства и не публикуется, но оператор сервера может его прочитать.";
+"settings.bark.detailedUnencrypted.title" = "Отправлять подробное содержимое без шифрования?";
+"settings.bark.detailedUnencrypted.message" = "Заголовки и фрагменты диалогов пройдут через выбранный сервер Bark в читаемом виде. Они не публикуются, но оператор сервера может их прочитать.";
+"settings.bark.detailedUnencrypted.confirm" = "Отправить без шифрования";
+"settings.bark.save" = "Сохранить";
+"settings.bark.saveFailure" = "Не удалось сохранить настройки Bark";
+"settings.bark.notificationOnlyHelp" = "Уведомления могут дублироваться на сопряжённых Apple Watch. Подтверждения и ответы остаются на Mac.";
+"settings.bark.testSuccess" = "Принято Bark. Проверьте устройство.";
+"settings.bark.testFailure" = "Не удалось отправить тестовое уведомление";
+"notification.bark.testBody" = "Vibe Island может отправлять уведомления Bark на это устройство.";
+"notification.bark.approvalTitle" = "Требуется подтверждение";
+"notification.bark.questionTitle" = "Вопрос ожидает ответа";
+"notification.bark.warningTitle" = "Задача требует внимания";
+"notification.bark.approveOnMac" = "Вернитесь к Mac, чтобы подтвердить или отклонить.";
+"notification.bark.answerOnMac" = "Вернитесь к Mac, чтобы ответить.";
+"notification.bark.openResponseOnMac" = "Откройте Vibe Island на Mac, чтобы посмотреть ответ.";
+"notification.bark.openDetailsOnMac" = "Откройте Vibe Island на Mac, чтобы посмотреть подробности.";

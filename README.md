@@ -6,8 +6,12 @@ Approve Claude Code from your MacBook's notch — and see where your tokens go.
 - **Watch** live sessions: tool calls, subagents, when a turn ends.
 - **Count** tokens per minute / hour / day / month, with cost and plan quota.
 
-Status: **M3** — activity, approvals and token stats work end to end. Claude Code and Codex
-are supported; the leaderboard API is the last piece in flight.
+Status: **M10** — the native panel, activity, approvals, questions, token stats, usage
+limits, jumps, notifications, and multi-agent configuration are implemented. Claude Code,
+Codex, Gemini, Cursor, OpenCode, Droid, Pi, Amp, Kimi, Kimi Code, Mistral Vibe, and
+DeepSeek TUI/CodeWhale, WorkBuddy, CodeBuddy, Antigravity CLI, and GitHub Copilot CLI have
+explicit source and configuration paths; provider-specific capabilities are reported
+separately rather than silently presented as Claude features.
 
 ## Install
 
@@ -27,9 +31,9 @@ a downloaded app it cannot check with *"Perch is damaged"*, which reads like a c
 download and is not one. Releases are built by `.github/workflows/dmg.yml` on every `v*` tag,
 and can be built on demand from the Actions tab.
 
-Launch it and the first screen finds your CLIs and wires them up — the bundle carries the
-`scripts/` it needs, so a DMG install needs no clone. Then restart any Claude Code session
-already open.
+Launch it and the first screen finds your CLIs and wires compatible ones up — the bundle
+carries the `scripts/` it needs, so a DMG install needs no clone. Then restart any agent
+session already open; hook files are read at session start.
 
 ## Building it yourself
 

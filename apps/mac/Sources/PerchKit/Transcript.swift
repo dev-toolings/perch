@@ -124,8 +124,12 @@ public enum Transcript {
         var result = text
         for tag in injected {
             result = result.replacingOccurrences(
-                of: "<\(tag)>[\\s\\S]*?</\(tag)>", with: "", options: .regularExpression)
+                of: "<\(tag)(?: [^>]*)?>[\\s\\S]*?</\(tag)>", with: "",
+                options: .regularExpression)
         }
+        result = result.replacingOccurrences(
+            of: "(?m)^Another Claude session sent a message:\\s*$", with: "",
+            options: .regularExpression)
         let trimmed = result.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty, !isMachineWritten(trimmed) else { return nil }
         return trimmed
@@ -157,6 +161,6 @@ public enum Transcript {
     /// falls back to the prompt the hook carried.
     private static let injected = [
         "command-name", "command-message", "command-args", "local-command-stdout",
-        "system-reminder", "task-notification", "user-prompt-submit-hook",
+        "system-reminder", "task-notification", "teammate-message", "user-prompt-submit-hook",
     ]
 }

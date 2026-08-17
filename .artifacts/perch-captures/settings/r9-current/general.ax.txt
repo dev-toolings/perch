@@ -1,0 +1,65 @@
+Window: "", App: Perch.
+0 fenêtre standard Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton Pass
+			15 bouton À propos
+		16 diviseur (disabled, settable, float) 188
+		17 container
+			18 image gearshape.fill
+			19 texte Général
+			20 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+				21 texte Système
+				22 bouton de basculement Description: Ouvrir à l'ouverture de session, Value: on
+				23 texte Langue de l'app
+				24 bouton de menu local Description: Langue de l'app, Value: Langue du système
+				25 texte Déploiement
+				26 bouton de basculement Description: Déplier le notch au survol, Value: on
+				27 text Délai de survol 0.15s
+				28 curseur Value: 0.15, Secondary Actions: Increment, Decrement
+					29 indicateur de valeur 0.15
+				30 bouton de basculement Description: Suppression intelligente, Value: on
+				31 text Ne pas déplier automatiquement lorsque l'onglet du terminal de l'agent est au premier plan Visibilité
+				32 bouton de basculement Description: Masquer en plein écran, Value: on
+				33 bouton de basculement Description: Masquer automatiquement en l'absence de session active, Value: off
+				34 texte Fermeture
+				35 bouton de basculement Description: Replier automatiquement à la sortie de la souris, Value: on
+				36 texte Durée de l'affichage automatique
+				37 bouton de menu local Description: Durée de l'affichage automatique, Value: 5s
+				38 texte Durée pendant laquelle le panneau reste ouvert pour les notifications de fin et d'avertissement. Appuyez sur Échap pour fermer plus tôt.
+				39 bouton de basculement Description: Fermer l'affichage automatique par clic extérieur, Value: off
+				40 text Cliquer n'importe où en dehors du panneau ferme immédiatement les notifications de fin et d'avertissement, en ignorant le temps restant. Nettoyage des sessions inactives
+				41 bouton de menu local Description: Nettoyage des sessions inactives, Value: 30 minutes
+				42 text Ne s'applique qu'aux sessions sans signal de fermeture clair (Codex, OpenCode, Cursor). Interaction
+				43 bouton de basculement Description: Désactiver le saut au clic, Value: off
+				44 texte Lorsque cette option est activée, cliquer sur une session ne bascule pas vers son terminal ou son IDE.
+				45 barre de défilement (settable, float) 0
+					46 indicateur de valeur (settable, float) 0
+					47 Flèche d’augmentation
+					48 Flèche de diminution
+					49 Bouton d’augmentation de page
+					50 Bouton de diminution de page
+	51 barre d’outils
+		52 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	53 Bouton de fermeture
+	54 Bouton de réduction ou d’agrandissement (disabled)
+	55 bouton de minimisation
+56 menu bar
+	57 Perch
+	58 Édition
+	59 Présentation
+	60 Fenêtre
+	61 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

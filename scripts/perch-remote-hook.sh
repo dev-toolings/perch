@@ -25,6 +25,12 @@ PORT="${PERCH_PORT:-17890}"
 # has no tunnel and reaches the Mac directly.
 HOST="${PERCH_HOST:-127.0.0.1}"
 TOKEN="${PERCH_TOKEN:-}"
+REMOTE_HOST="${PERCH_HOST_ALIAS:-}"
+if [ -z "$REMOTE_HOST" ] && [ -n "${PERCH_HOST_ALIAS_B64:-}" ]; then
+  REMOTE_HOST="$(printf '%s' "$PERCH_HOST_ALIAS_B64" | base64 -d 2>/dev/null \
+    || printf '%s' "$PERCH_HOST_ALIAS_B64" | base64 --decode 2>/dev/null)"
+fi
+REMOTE_HOST_ESCAPED=$(printf '%s' "$REMOTE_HOST" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' | tr -d '\n')
 [ -n "$TOKEN" ] || exit 0
 
 EVENT="${1:-Unknown}"
@@ -65,8 +71,8 @@ esac
 
 # The payload is already JSON, so it is embedded verbatim rather than re-encoded — which
 # is also why no jq is needed to build the frame.
-LINE=$(printf '{"v":1,"token":"%s","event":"%s","wantsDecision":%s,"rawOutput":true,"agent":"%s","payload":%s}' \
-  "$TOKEN" "$EVENT" "$WANTS" "$SOURCE" "$PAYLOAD")
+LINE=$(printf '{"v":1,"token":"%s","event":"%s","wantsDecision":%s,"rawOutput":true,"agent":"%s","remoteHost":"%s","payload":%s}' \
+  "$TOKEN" "$EVENT" "$WANTS" "$SOURCE" "$REMOTE_HOST_ESCAPED" "$PAYLOAD")
 
 reply=""
 

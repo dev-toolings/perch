@@ -1,0 +1,38 @@
+Window: "", App: Perch.
+0 fenêtre standard Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton Pass
+			15 bouton À propos
+		16 diviseur (disabled, settable, float) 188
+		17 container
+			18 image wallet.bifold.fill
+			19 texte Pass
+			20 zone de défilement
+				21 image wallet.bifold
+				22 texte Activez une licence pour débloquer votre Pass
+				23 bouton Activer
+	24 barre d’outils
+		25 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	26 Bouton de fermeture
+	27 Bouton de réduction ou d’agrandissement (disabled)
+	28 bouton de minimisation
+29 menu bar
+	30 Perch
+	31 Édition
+	32 Présentation
+	33 Fenêtre
+	34 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

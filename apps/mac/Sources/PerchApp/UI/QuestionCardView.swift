@@ -1,13 +1,131 @@
 import PerchKit
 import SwiftUI
 
+struct QuestionCardView: View {
+    let request: AskUserQuestionRequest
+    let draftID: QuestionDraftID
+    let drafts: QuestionDraftStore
+    var isReadOnly = false
+    let submit: ([String: [String]]) -> Void
+    let cancel: () -> Void
+
+    @ViewBuilder
+    var body: some View {
+        if isReadOnly {
+            CopilotQuestionReadOnlyView(request: request, cancel: cancel)
+        } else if request.questions.count == 1 {
+            SingleQuestionView(
+                request: request, draftID: draftID, drafts: drafts,
+                submit: submit, cancel: cancel)
+        } else {
+            WizardQuestionView(
+                request: request, draftID: draftID, drafts: drafts,
+                submit: submit, cancel: cancel)
+        }
+    }
+}
+
+/// Copilot can surface a question through its hook without accepting an answer payload
+/// from Perch. The options remain readable, while the only action returns to the owning
+/// client instead of presenting controls that cannot complete the request.
+struct CopilotQuestionReadOnlyView: View {
+    let request: AskUserQuestionRequest
+    let cancel: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 9) {
+            HStack(spacing: 8) {
+                Image(systemName: "questionmark.circle.fill")
+                    .font(.system(size: 11))
+                    .foregroundStyle(Theme.info)
+                Text(t("Question"))
+                    .font(Theme.label(12, .semibold))
+                    .foregroundStyle(Theme.primary)
+                Spacer(minLength: 0)
+                TagPill(text: "Copilot", brandColor: Theme.info)
+            }
+
+            ForEach(request.questions) { question in
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(question.question)
+                        .font(Theme.label(12, .semibold))
+                        .foregroundStyle(Theme.primary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    ForEach(question.options) { option in
+                        HStack(alignment: .top, spacing: 7) {
+                            Image(systemName: question.multiSelect ? "square" : "circle")
+                                .font(.system(size: 9))
+                                .foregroundStyle(Theme.tertiary)
+                                .padding(.top, 2)
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text(option.label)
+                                    .font(Theme.label(11, .medium))
+                                if !option.description.isEmpty {
+                                    Text(option.description)
+                                        .font(Theme.mono(9))
+                                        .foregroundStyle(Theme.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            HStack {
+                Spacer(minLength: 0)
+                ApprovalButton(
+                    label: t("Answer in terminal"),
+                    axIdentifier: "question.copilot.terminal",
+                    action: cancel)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityIdentifier("question.copilot.readOnly")
+    }
+}
+
+/// Vibe treats one direct question and a multi-step questionnaire as separate surfaces.
+/// They deliberately share the answer engine below; the distinction controls navigation,
+/// identity and future state-specific presentation without duplicating submission rules.
+struct SingleQuestionView: View {
+    let request: AskUserQuestionRequest
+    let draftID: QuestionDraftID
+    let drafts: QuestionDraftStore
+    let submit: ([String: [String]]) -> Void
+    let cancel: () -> Void
+
+    var body: some View {
+        QuestionSubmissionView(
+            request: request, draftID: draftID, drafts: drafts,
+            submit: submit, cancel: cancel)
+            .accessibilityIdentifier("question.single")
+    }
+}
+
+struct WizardQuestionView: View {
+    let request: AskUserQuestionRequest
+    let draftID: QuestionDraftID
+    let drafts: QuestionDraftStore
+    let submit: ([String: [String]]) -> Void
+    let cancel: () -> Void
+
+    var body: some View {
+        QuestionSubmissionView(
+            request: request, draftID: draftID, drafts: drafts,
+            submit: submit, cancel: cancel)
+            .accessibilityIdentifier("question.wizard")
+    }
+}
+
 /// Answering `AskUserQuestion` from the notch.
 ///
 /// Approving the *asking* of a question is useless — the point of the tool is the answer.
 /// A session is blocked while this is up, so it shows one question at a time with its
 /// options, and only submits once every question has one.
-struct QuestionCardView: View {
+private struct QuestionSubmissionView: View {
     let request: AskUserQuestionRequest
+    let draftID: QuestionDraftID
+    let drafts: QuestionDraftStore
     let submit: ([String: [String]]) -> Void
     let cancel: () -> Void
 
@@ -15,6 +133,24 @@ struct QuestionCardView: View {
     /// What was typed rather than picked, keyed by question.
     @State private var typed: [String: String] = [:]
     @State private var index = 0
+
+    init(
+        request: AskUserQuestionRequest, draftID: QuestionDraftID,
+        drafts: QuestionDraftStore, submit: @escaping ([String: [String]]) -> Void,
+        cancel: @escaping () -> Void
+    ) {
+        self.request = request
+        self.draftID = draftID
+        self.drafts = drafts
+        self.submit = submit
+        self.cancel = cancel
+
+        let draft = drafts.draft(for: draftID)
+        _answers = State(initialValue: draft.responses.mapValues(\.picked))
+        _typed = State(initialValue: draft.responses.mapValues(\.typed))
+        _index = State(
+            initialValue: min(max(0, draft.currentIndex), max(0, request.questions.count - 1)))
+    }
 
     private var question: AskQuestion? {
         request.questions.indices.contains(index) ? request.questions[index] : nil
@@ -55,6 +191,17 @@ struct QuestionCardView: View {
             controls
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .background {
+            Button("") {
+                guard request.isComplete(effective) else { return }
+                submit(effective)
+            }
+            .keyboardShortcut(.return, modifiers: .control)
+            .opacity(0)
+        }
+        .onChange(of: answers) { _, _ in saveDraft() }
+        .onChange(of: typed) { _, _ in saveDraft() }
+        .onChange(of: index) { _, _ in saveDraft() }
     }
 
     private var header: some View {
@@ -82,13 +229,35 @@ struct QuestionCardView: View {
 
     private func options(for question: AskQuestion) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            ForEach(question.options) { option in
-                OptionRow(
-                    option: option,
-                    isSelected: selected(question).contains(option.label),
-                    multiSelect: question.multiSelect
-                ) {
-                    toggle(option.label, in: question)
+            ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
+                if question.multiSelect {
+                    let row = MultiSelectOptionButton(
+                        index: index,
+                        option: option,
+                        isSelected: selected(question).contains(option.label)
+                    ) {
+                        toggle(option.label, in: question)
+                    }
+                    if index < 9 {
+                        row.keyboardShortcut(
+                            KeyEquivalent(Character(String(index + 1))), modifiers: .control)
+                    } else {
+                        row
+                    }
+                } else {
+                    let row = SingleSelectOptionButton(
+                        index: index,
+                        option: option,
+                        isSelected: selected(question).contains(option.label)
+                    ) {
+                        toggle(option.label, in: question)
+                    }
+                    if index < 9 {
+                        row.keyboardShortcut(
+                            KeyEquivalent(Character(String(index + 1))), modifiers: .control)
+                    } else {
+                        row
+                    }
                 }
             }
         }
@@ -127,30 +296,54 @@ struct QuestionCardView: View {
     private var controls: some View {
         HStack(spacing: 6) {
             if index > 0 {
-                SmallButton(title: t("Back"), tint: nil) { index -= 1 }
+                ApprovalButton(label: t("Back"), axIdentifier: "question.back") {
+                    index -= 1
+                }
             }
 
             Spacer(minLength: 0)
 
-            SmallButton(title: t("Answer in terminal"), tint: nil, action: cancel)
+            ApprovalButton(
+                label: t("Answer in terminal"), axIdentifier: "question.terminal",
+                action: cancel)
 
             if index < request.questions.count - 1 {
-                SmallButton(title: t("Next"), tint: Theme.info) { index += 1 }
-                    .disabled(effective[question?.question ?? ""]?.isEmpty ?? true)
+                ApprovalButton(
+                    label: t("Next"), foreground: Theme.info,
+                    axIdentifier: "question.next",
+                    isEnabled: !(effective[question?.question ?? ""]?.isEmpty ?? true)
+                ) { index += 1 }
             } else {
-                SmallButton(
-                    title: request.questions.count > 1 ? t("Submit all") : t("Submit"),
-                    tint: Theme.active
+                ApprovalButton(
+                    label: request.questions.count > 1 ? t("Submit all") : t("Submit"),
+                    shortcut: "⌃↩",
+                    foreground: Theme.active,
+                    axIdentifier: "question.submit",
+                    isEnabled: request.isComplete(effective)
                 ) {
                     submit(effective)
                 }
-                .disabled(!request.isComplete(effective))
             }
         }
     }
 
     private func hasTyped(_ question: AskQuestion) -> Bool {
         !(typed[question.question] ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    private func saveDraft() {
+        var responses: [String: QuestionResponseDraft] = [:]
+        for question in request.questions {
+            let response = QuestionResponseDraft(
+                picked: answers[question.question] ?? [],
+                typed: typed[question.question] ?? "")
+            if !response.picked.isEmpty || !response.typed.isEmpty {
+                responses[question.question] = response
+            }
+        }
+        drafts.save(
+            QuestionAnswerDraft(currentIndex: index, responses: responses),
+            for: draftID)
     }
 
     /// What the option rows draw as picked.
@@ -183,55 +376,112 @@ struct QuestionCardView: View {
     }
 }
 
-private struct OptionRow: View {
+private struct SingleSelectOptionButton: View {
+    let index: Int
     let option: AskQuestion.Option
     let isSelected: Bool
-    let multiSelect: Bool
-    let action: () -> Void
+    var modSymbol = "⌃"
+    var showsShortcutHint = true
+    let onSelect: () -> Void
+
+    @State private var isHovered = false
 
     var body: some View {
-        Button(action: action) {
-            HStack(alignment: .top, spacing: 7) {
-                Image(
-                    systemName: multiSelect
-                        ? (isSelected ? "checkmark.square.fill" : "square")
-                        : (isSelected ? "largecircle.fill.circle" : "circle")
-                )
+        Button(action: onSelect) {
+            QuestionOptionLabel(
+                option: option,
+                symbol: isSelected ? "largecircle.fill.circle" : "circle",
+                shortcut: shortcut,
+                isSelected: isSelected,
+                isHovered: isHovered)
+        }
+        .buttonStyle(.plain)
+        .onHover { isHovered = $0 }
+        .accessibilityIdentifier("question.option.single.\(index)")
+    }
+
+    private var shortcut: String? {
+        showsShortcutHint && isHovered && index < 9 ? "\(modSymbol)\(index + 1)" : nil
+    }
+}
+
+private struct MultiSelectOptionButton: View {
+    let index: Int
+    let option: AskQuestion.Option
+    let isSelected: Bool
+    var modSymbol = "⌃"
+    var showsShortcutHint = true
+    let onToggle: () -> Void
+
+    @State private var isHovered = false
+
+    var body: some View {
+        Button(action: onToggle) {
+            QuestionOptionLabel(
+                option: option,
+                symbol: isSelected ? "checkmark.square.fill" : "square",
+                shortcut: shortcut,
+                isSelected: isSelected,
+                isHovered: isHovered)
+        }
+        .buttonStyle(.plain)
+        .onHover { isHovered = $0 }
+        .accessibilityIdentifier("question.option.multi.\(index)")
+    }
+
+    private var shortcut: String? {
+        showsShortcutHint && isHovered && index < 9 ? "\(modSymbol)\(index + 1)" : nil
+    }
+}
+
+private struct QuestionOptionLabel: View {
+    let option: AskQuestion.Option
+    let symbol: String
+    let shortcut: String?
+    let isSelected: Bool
+    let isHovered: Bool
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 7) {
+            Image(systemName: symbol)
                 .font(.system(size: 10))
                 .foregroundStyle(isSelected ? Theme.active : Theme.tertiary)
                 .padding(.top, 1)
 
-                VStack(alignment: .leading, spacing: 1) {
-                    Text(option.label)
-                        .font(Theme.label(11, .medium))
-                        .foregroundStyle(Theme.primary)
-                    if !option.description.isEmpty {
-                        // Unclipped. Two lines was enough for a label and never enough for
-                        // a reason, and the reason is what the option is being chosen on —
-                        // an ellipsis here sends you to the terminal to read the question
-                        // this card exists to answer.
-                        Text(option.description)
-                            .font(Theme.mono(9))
-                            .foregroundStyle(Theme.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
+            VStack(alignment: .leading, spacing: 1) {
+                Text(option.label)
+                    .font(Theme.label(11, .medium))
+                    .foregroundStyle(Theme.primary)
+                if !option.description.isEmpty {
+                    Text(option.description)
+                        .font(Theme.mono(9))
+                        .foregroundStyle(Theme.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-
-                Spacer(minLength: 0)
             }
-            .padding(.vertical, 5)
-            .padding(.horizontal, 8)
-            .background(
-                RoundedRectangle(cornerRadius: 6)
-                    .fill(isSelected ? Theme.active.opacity(0.12) : Theme.raised.opacity(0.5))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 6)
-                    .stroke(isSelected ? Theme.active.opacity(0.5) : Theme.hairline, lineWidth: 1)
-            )
-            .contentShape(Rectangle())
+
+            Spacer(minLength: 0)
+
+            if let shortcut {
+                Text(shortcut)
+                    .font(Theme.mono(9, .medium))
+                    .foregroundStyle(Theme.tertiary)
+            }
         }
-        .buttonStyle(.plain)
+        .padding(.vertical, 5)
+        .padding(.horizontal, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 6)
+                .fill(
+                    isSelected
+                        ? Theme.active.opacity(0.12)
+                        : Theme.raised.opacity(isHovered ? 0.75 : 0.5))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(isSelected ? Theme.active.opacity(0.5) : Theme.hairline, lineWidth: 1)
+        )
+        .contentShape(Rectangle())
     }
 }
 
@@ -293,19 +543,21 @@ struct PlanCardView: View {
                 )
 
             HStack(spacing: 6) {
-                SmallButton(
-                    title: feedback.isEmpty ? t("Reject") : t("Send feedback"),
-                    tint: Theme.warning
+                ApprovalButton(
+                    label: feedback.isEmpty ? t("Reject") : t("Send feedback"),
+                    foreground: Theme.warning,
+                    axIdentifier: "plan.reject"
                 ) {
                     reject(feedback)
                 }
                 Spacer(minLength: 0)
                 ForEach(PlanMode.allCases, id: \.self) { mode in
-                    SmallButton(
-                        title: t(mode.title),
+                    ApprovalButton(
+                        label: t(mode.title),
                         // Bypass is the one that stops asking about anything at all, and
                         // it reads the same as the other two if it is not coloured.
-                        tint: mode == .bypassPermissions ? Theme.danger : Theme.active
+                        foreground: mode == .bypassPermissions ? Theme.danger : Theme.active,
+                        axIdentifier: "plan.\(mode.rawValue)"
                     ) {
                         approve(mode)
                     }
@@ -313,6 +565,46 @@ struct PlanCardView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+/// The decision button contract reflected by Vibe's `ApprovalButton`.
+struct ApprovalButton: View {
+    let label: String
+    var shortcut: String?
+    var foreground: Color = Theme.secondary
+    var background: Color = Color.white
+    var axIdentifier: String
+    var axLabel: String?
+    var isEnabled = true
+    let action: () -> Void
+
+    @State private var isHovered = false
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 5) {
+                Text(label)
+                if let shortcut {
+                    Text(shortcut)
+                        .font(Theme.mono(9, .medium))
+                        .opacity(0.65)
+                }
+            }
+            .font(Theme.label(11, .medium))
+            .foregroundStyle(isEnabled ? foreground : Theme.tertiary)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(background.opacity(isHovered && isEnabled ? 0.2 : 0.12))
+            )
+        }
+        .buttonStyle(.plain)
+        .disabled(!isEnabled)
+        .onHover { isHovered = $0 }
+        .accessibilityIdentifier(axIdentifier)
+        .accessibilityLabel(axLabel ?? label)
     }
 }
 

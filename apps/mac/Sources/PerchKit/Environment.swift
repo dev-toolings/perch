@@ -39,8 +39,20 @@ public enum EnvironmentScan {
         ("Claude Code", ".claude", ".claude/settings.json"),
         ("Codex", ".codex", ".codex/hooks.json"),
         ("Gemini CLI", ".gemini", ".gemini/settings.json"),
-        ("Cursor CLI", ".cursor", ".cursor/hooks.json"),
-        ("OpenCode", ".opencode", ".opencode/settings.json"),
+        ("Cursor Agent", ".cursor", ".cursor/hooks.json"),
+        ("Droid", ".factory", ".factory/settings.json"),
+        ("Pi Agent", ".pi", ".pi/agent/extensions/perch.ts"),
+        ("Amp", ".config/amp", ".config/amp/plugins/perch.ts"),
+        ("OpenCode", ".config/opencode", ".config/opencode/plugins/perch.js"),
+        ("Kimi", ".kimi", ".kimi/config.toml"),
+        ("Kimi Code", ".kimi-code", ".kimi-code/config.toml"),
+        ("Mistral Vibe", ".vibe", ".vibe/hooks.toml"),
+        ("DeepSeek TUI", ".deepseek", ".deepseek/config.toml"),
+        ("CodeWhale", ".codewhale", ".codewhale/config.toml"),
+        ("WorkBuddy", ".workbuddy", ".workbuddy/settings.json"),
+        ("CodeBuddy", ".codebuddy", ".codebuddy/settings.json"),
+        ("Antigravity CLI", ".gemini/antigravity-cli", ".gemini/config/hooks.json"),
+        ("GitHub Copilot CLI", ".copilot", ".copilot/hooks/perch.json"),
     ]
 
     static let terminalBundles: [(String, String)] = [

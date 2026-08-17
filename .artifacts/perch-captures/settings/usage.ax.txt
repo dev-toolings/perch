@@ -1,0 +1,37 @@
+Window: "Perch Settings", App: Perch.
+0 fenêtre standard Perch Settings, Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton À propos
+		15 diviseur (disabled, settable, float) 196
+		16 container
+			17 image gauge.with.dots.needle.67percent
+			18 texte Utilisation
+			19 zone de défilement
+				20 texte Quota du forfait
+				21 commutateur Me prévenir quand une fenêtre se remplit, Value: on
+				22 curseur 90%, Value: 90, Secondary Actions: Increment, Decrement
+					23 indicateur de valeur 90
+				24 texte L'encoche se montre une fois, quand une fenêtre franchit ce seuil — et reste muette pendant un partage d'écran, comme le reste.
+				25 commutateur Afficher ce qui reste plutôt que ce qui est consommé, Value: off
+				26 text Affiche les limites d'abonnement dans l'en-tête du panneau et choisis quand Perch doit te prévenir. Passerelle d'utilisation Claude
+				27 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				28 text Pont statusline connecté 5h session 16% utilisé 7d all models 49% utilisé
+	29 barre d’outils
+		30 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	31 Bouton de fermeture
+	32 Bouton de réduction ou d’agrandissement
+	33 bouton de minimisation
+
+The focused UI element is 0 fenêtre standard Perch Settings, Secondary Actions: Raise

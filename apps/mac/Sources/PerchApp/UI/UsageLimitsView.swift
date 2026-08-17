@@ -169,7 +169,7 @@ struct UsageLimitsStrip: View {
             HStack(spacing: 8) {
                 ForEach(windows) { window in
                     HStack(spacing: Self.spacing) {
-                        Text(short(window.id))
+                        Text(window.shortLabel)
                             .font(Theme.mono(9))
                             .foregroundStyle(Theme.tertiary)
                         // The colour always follows what is *spent*, whichever number is
@@ -199,8 +199,6 @@ struct UsageLimitsStrip: View {
         Self.percentage(window, showsRemaining: showsRemaining)
     }
 
-    private func short(_ id: String) -> String { Self.short(id) }
-
     /// A dash, not a number, once the window has reset: whatever the last render said is
     /// about the week that ended, and the next one is minutes away.
     static func percentage(_ window: RateLimitWindow, showsRemaining: Bool) -> String {
@@ -210,21 +208,15 @@ struct UsageLimitsStrip: View {
     }
 
     /// The header has room for `5h`, not `5h session`.
-    static func short(_ id: String) -> String {
-        switch id {
-        case "five_hour": return "5h"
-        case "seven_day": return "7d"
-        case "seven_day_opus": return "7d opus"
-        case "seven_day_sonnet": return "7d sonnet"
-        default: return id
-        }
+    static func short(_ window: NamedWindow) -> String {
+        window.shortLabel
     }
 
     /// The chip's pieces, in the order they are drawn.
     static func pieces(
         for window: NamedWindow, showsRemaining: Bool = false, showsReset: Bool = true
     ) -> [String] {
-        [short(window.id), percentage(window.window, showsRemaining: showsRemaining),
+        [short(window), percentage(window.window, showsRemaining: showsRemaining),
          showsReset ? window.window.timeLeft() : nil]
             .compactMap { $0 }
     }

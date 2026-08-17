@@ -17,6 +17,18 @@ import Foundation
 /// valid bundle, and a button that silently does nothing is worse than no button.
 enum RepoScripts {
 
+    struct Output: Sendable {
+        let status: Int32
+        let stdout: String
+        let stderr: String
+
+        var succeeded: Bool { status == 0 }
+        var failure: String {
+            let detail = stderr.trimmingCharacters(in: .whitespacesAndNewlines)
+            return detail.isEmpty ? "Script exited with status \(status)" : detail
+        }
+    }
+
     /// The `scripts/` directory to run from: bundled first, repository second.
     static var directory: URL? {
         let bundled = Bundle.main.resourceURL?
@@ -40,11 +52,14 @@ enum RepoScripts {
     /// Runs a script and reports whether it exited cleanly. Output is discarded: what these
     /// scripts change is on disk, and that is what the caller re-reads.
     @discardableResult
-    static func run(_ name: String, _ arguments: [String] = []) -> Bool {
+    static func run(
+        _ name: String, _ arguments: [String] = [], environment: [String: String] = [:]
+    ) -> Bool {
         guard let script = url(of: name) else { return false }
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/bin/bash")
         process.arguments = [script.path] + arguments
+        process.environment = ProcessInfo.processInfo.environment.merging(environment) { _, new in new }
         process.standardOutput = FileHandle.nullDevice
         process.standardError = FileHandle.nullDevice
         do {
@@ -53,6 +68,35 @@ enum RepoScripts {
             return process.terminationStatus == 0
         } catch {
             return false
+        }
+    }
+
+    /// Runs a short-lived helper whose stdout is the data contract consumed by Swift.
+    /// Unlike `run`, failures stay observable so a remote setup sheet can explain what
+    /// actually failed instead of presenting an empty discovery result as success.
+    static func runCapturing(
+        _ name: String, _ arguments: [String] = [], environment: [String: String] = [:]
+    ) -> Output {
+        guard let script = url(of: name) else {
+            return Output(status: 127, stdout: "", stderr: "Missing helper: \(name)")
+        }
+        let process = Process()
+        let stdout = Pipe()
+        let stderr = Pipe()
+        process.executableURL = URL(fileURLWithPath: "/bin/bash")
+        process.arguments = [script.path] + arguments
+        process.environment = ProcessInfo.processInfo.environment.merging(environment) { _, new in new }
+        process.standardOutput = stdout
+        process.standardError = stderr
+        do {
+            try process.run()
+            process.waitUntilExit()
+            return Output(
+                status: process.terminationStatus,
+                stdout: String(data: stdout.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? "",
+                stderr: String(data: stderr.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? "")
+        } catch {
+            return Output(status: 126, stdout: "", stderr: error.localizedDescription)
         }
     }
 

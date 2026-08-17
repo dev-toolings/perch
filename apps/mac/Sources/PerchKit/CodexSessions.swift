@@ -25,343 +25,640 @@ import Foundation
 /// Code's `ai-title` instead of asking a model for one.
 public enum CodexSessions {
 
-    /// A Codex session as a card would show it.
-    public struct Live: Sendable, Equatable, Identifiable {
-        public var id: String
-        public var cwd: String?
-        /// The thread name Codex gave it, from `session_index.jsonl`.
-        public var title: String?
-        /// `Codex Desktop`, `codex_cli_rs`, … — whatever wrote the rollout says so itself.
-        public var originator: String?
-        /// The activity line: what it is running, or the last thing it said.
-        public var detail: String
-        /// A tool call with no output after it yet.
-        public var isRunningTool: Bool
-        /// When the rollout was last written, which is the only liveness signal there is.
-        public var updatedAt: Date
-
-        public init(
-            id: String, cwd: String? = nil, title: String? = nil, originator: String? = nil,
-            detail: String = "", isRunningTool: Bool = false, updatedAt: Date = .now
-        ) {
-            self.id = id
-            self.cwd = cwd
-            self.title = title
-            self.originator = originator
-            self.detail = detail
-            self.isRunningTool = isRunningTool
-            self.updatedAt = updatedAt
-        }
-
-        /// Where a click on this card should land, when there is somewhere to land.
-        ///
-        /// Only the desktop app, and only because it is an application with an address for
-        /// every thread. The CLI originators run inside a terminal that a rollout cannot
-        /// see — that one is the hook's to report, and a session whose hooks fire never
-        /// reaches this code at all.
-        public var client: ClientInfo? {
-            guard originator == "Codex Desktop" else { return nil }
-            return ClientInfo(terminal: originator, session: id)
-        }
-
-        /// Whether the model is mid-turn, as opposed to waiting for the next prompt.
-        ///
-        /// Codex writes no "the turn is over" line, so there is nothing to read for it. What
-        /// there is, is silence: a session mid-turn writes reasoning, tool calls and token
-        /// counts continuously, and one waiting on a person writes nothing at all. The
-        /// threshold is generous because a single long tool call is a real gap.
-        public func isWorking(now: Date = .now, within: TimeInterval) -> Bool {
-            now.timeIntervalSince(updatedAt) <= within
-        }
-    }
-
-    public static var defaultRoot: URL {
-        URL(fileURLWithPath: NSHomeDirectory())
-            .appendingPathComponent(".codex/sessions", isDirectory: true)
-    }
-
-    public static var defaultIndex: URL {
-        URL(fileURLWithPath: NSHomeDirectory())
-            .appendingPathComponent(".codex/session_index.jsonl")
-    }
-
-    /// How far back a rollout may have been *created* and still be one to look at.
+  /// A Codex session as a card would show it.
+  public struct Live: Sendable, Equatable, Identifiable {
+    public var id: String
+    public var cwd: String?
+    /// The thread name Codex gave it, from `session_index.jsonl`.
+    public var title: String?
+    /// `Codex Desktop`, `codex_cli_rs`, … — whatever wrote the rollout says so itself.
+    public var originator: String?
+    public var model: String?
+    public var reasoningEffort: String?
+    public var gitBranch: String?
+    /// The activity line: what it is running, or the last thing it said.
+    public var detail: String
+    /// The latest human request, kept separate so the card can render Vibe's
+    /// `You:` line even after the model has emitted several tool updates.
+    public var prompt: String?
+    /// A tool call with no output after it yet.
+    public var isRunningTool: Bool
+    /// The newest `update_plan` snapshot emitted by this Codex thread.
     ///
-    /// Rollouts are filed under `sessions/YYYY/MM/DD/` by the day they started, and a
-    /// session that has been open since Friday keeps writing into Friday's directory. So
-    /// the walk cannot be "today"; nor should it be the whole tree, which is what the usage
-    /// indexer walks and what cost 220ms a pass before it was made to skip. Three days of
-    /// directory listings is a handful of `getattrlistbulk` calls, and a session older than
-    /// that which is still alive is a session that will be picked up when it is restarted.
-    static let daysScanned = 3
+    /// Codex Desktop has no Claude-style task directory. Its plan lives in the
+    /// rollout as a tool call, which is the same source Vibe Island reads.
+    public var tasks: TaskBoard
+    /// When the rollout was last written, which is the only liveness signal there is.
+    public var updatedAt: Date
 
-    /// Reads the rollouts that have been written to recently.
+    public init(
+      id: String, cwd: String? = nil, title: String? = nil, originator: String? = nil,
+      model: String? = nil, reasoningEffort: String? = nil, gitBranch: String? = nil,
+      detail: String = "", isRunningTool: Bool = false, tasks: TaskBoard = .empty,
+      prompt: String? = nil,
+      updatedAt: Date = .now
+    ) {
+      self.id = id
+      self.cwd = cwd
+      self.title = title
+      self.originator = originator
+      self.model = model
+      self.reasoningEffort = reasoningEffort
+      self.gitBranch = gitBranch
+      self.detail = detail
+      self.prompt = prompt
+      self.isRunningTool = isRunningTool
+      self.tasks = tasks
+      self.updatedAt = updatedAt
+    }
+
+    /// Where a click on this card should land, when there is somewhere to land.
     ///
-    /// - Parameters:
-    ///   - activeWithin: how long after its last write a session is still worth a card.
-    ///     The same timeout the hook-fed sessions use, so both kinds age out together.
-    public static func live(
-        root: URL = defaultRoot,
-        index: URL = defaultIndex,
-        now: Date = .now,
-        activeWithin: TimeInterval
-    ) -> [Live] {
-        let titles = threadNames(index: index)
-        var sessions: [Live] = []
-
-        for url in recentRollouts(root: root, now: now, activeWithin: activeWithin) {
-            guard let modified = modificationDate(of: url) else { continue }
-            let header = meta(of: url)
-            // The header's session id wins, and the filename is the fallback.
-            //
-            // They disagree, and the disagreement is the point. One `codex exec` run
-            // produced two files a second apart — a short one and the 475 KB where the work
-            // actually happened — with different uuids in their names and the *same*
-            // `session_id` inside. Keyed on the filename that is two cards for one run;
-            // keyed on the header it is one, which is what it is. A rollout whose header
-            // cannot be read is still a session, so the filename remains the fallback.
-            guard
-                let id = header.sessionId
-                    ?? CodexRollout.sessionId(inFilename: url.lastPathComponent)
-            else { continue }
-
-            let activity = lastActivity(in: url)
-            sessions.append(
-                Live(
-                    id: id,
-                    cwd: header.cwd,
-                    title: titles[id],
-                    originator: header.originator,
-                    detail: activity.detail,
-                    isRunningTool: activity.isRunningTool,
-                    updatedAt: modified))
-        }
-
-        // Newest first, which is the order the strip draws them in — and the order that
-        // makes the first entry per id the one to keep when a session wrote two files.
-        return sessions
-            .sorted { $0.updatedAt > $1.updatedAt }
-            .reduce(into: (seen: Set<String>(), kept: [Live]())) { result, session in
-                guard result.seen.insert(session.id).inserted else { return }
-                result.kept.append(session)
-            }
-            .kept
+    /// Only the desktop app, and only because it is an application with an address for
+    /// every thread. The CLI originators run inside a terminal that a rollout cannot
+    /// see — that one is the hook's to report, and a session whose hooks fire never
+    /// reaches this code at all.
+    public var client: ClientInfo? {
+      guard originator == "Codex Desktop" else { return nil }
+      return ClientInfo(terminal: originator, session: id)
     }
 
-    // MARK: - Finding them
-
-    /// Rollout files written recently, from the last few days of directories.
-    static func recentRollouts(root: URL, now: Date, activeWithin: TimeInterval) -> [URL] {
-        let manager = FileManager.default
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = .current
-
-        var found: [URL] = []
-        for dayOffset in 0..<daysScanned {
-            guard let day = calendar.date(byAdding: .day, value: -dayOffset, to: now) else {
-                continue
-            }
-            let parts = calendar.dateComponents([.year, .month, .day], from: day)
-            guard let year = parts.year, let month = parts.month, let dayOfMonth = parts.day
-            else { continue }
-            let directory =
-                root
-                .appendingPathComponent(String(format: "%04d", year), isDirectory: true)
-                .appendingPathComponent(String(format: "%02d", month), isDirectory: true)
-                .appendingPathComponent(String(format: "%02d", dayOfMonth), isDirectory: true)
-
-            // Modification dates come off the directory listing in batches rather than a
-            // `stat` per file, which is the difference this same codebase measured at six
-            // times on the usage indexer.
-            let entries =
-                (try? manager.contentsOfDirectory(
-                    at: directory, includingPropertiesForKeys: [.contentModificationDateKey],
-                    options: [.skipsHiddenFiles])) ?? []
-
-            for entry in entries where entry.pathExtension == "jsonl" {
-                guard let modified = modificationDate(of: entry),
-                    now.timeIntervalSince(modified) <= activeWithin
-                else { continue }
-                found.append(entry)
-            }
-        }
-        return found
-    }
-
-    private static func modificationDate(of url: URL) -> Date? {
-        (try? url.resourceValues(forKeys: [.contentModificationDateKey]))?
-            .contentModificationDate
-    }
-
-    // MARK: - Reading one
-
-    struct Meta: Equatable {
-        /// The session this rollout belongs to, which is not always the one its filename
-        /// names. See `live`.
-        var sessionId: String?
-        var cwd: String?
-        var originator: String?
-    }
-
-    /// The header, which is the first line of the file.
+    /// Whether the model is mid-turn, as opposed to waiting for the next prompt.
     ///
-    /// Bounded, because that line carries the whole system prompt on a desktop session and
-    /// runs to tens of kilobytes. Read from the top rather than remembered, because it
-    /// cannot change: a rollout belongs to one session, one working directory and one
-    /// originator for its whole life.
-    static func meta(of url: URL, headBytes: Int = 128 * 1024) -> Meta {
-        guard let handle = try? FileHandle(forReadingFrom: url) else { return Meta() }
-        defer { try? handle.close() }
-        guard let head = try? handle.read(upToCount: headBytes), !head.isEmpty,
-            let newline = head.firstIndex(of: 0x0A)
-        else { return Meta() }
+    /// Codex writes no "the turn is over" line, so there is nothing to read for it. What
+    /// there is, is silence: a session mid-turn writes reasoning, tool calls and token
+    /// counts continuously, and one waiting on a person writes nothing at all. The
+    /// threshold is generous because a single long tool call is a real gap.
+    public func isWorking(now: Date = .now, within: TimeInterval) -> Bool {
+      now.timeIntervalSince(updatedAt) <= within
+    }
+  }
 
-        let line = Data(head[head.startIndex..<newline])
-        guard let object = try? JSONSerialization.jsonObject(with: line) as? [String: Any],
-            object["type"] as? String == "session_meta",
-            let payload = object["payload"] as? [String: Any]
-        else { return Meta() }
+  public static var defaultRoot: URL {
+    URL(fileURLWithPath: NSHomeDirectory())
+      .appendingPathComponent(".codex/sessions", isDirectory: true)
+  }
 
-        return Meta(
-            sessionId: payload["session_id"] as? String,
-            cwd: payload["cwd"] as? String,
-            originator: payload["originator"] as? String)
+  public static var defaultIndex: URL {
+    URL(fileURLWithPath: NSHomeDirectory())
+      .appendingPathComponent(".codex/session_index.jsonl")
+  }
+
+  /// How far back a rollout may have been *created* and still be one to look at.
+  ///
+  /// Rollouts are filed under `sessions/YYYY/MM/DD/` by the day they started, and a
+  /// session that has been open since Friday keeps writing into Friday's directory. So
+  /// the walk cannot be "today"; nor should it be the whole tree, which is what the usage
+  /// indexer walks and what cost 220ms a pass before it was made to skip. Three days of
+  /// directory listings is a handful of `getattrlistbulk` calls, and a session older than
+  /// that which is still alive is a session that will be picked up when it is restarted.
+  static let daysScanned = 3
+
+  /// Reads the rollouts that have been written to recently.
+  ///
+  /// - Parameters:
+  ///   - activeWithin: how long after its last write a session is still worth a card.
+  ///     The same timeout the hook-fed sessions use, so both kinds age out together.
+  public static func live(
+    root: URL = defaultRoot,
+    index: URL = defaultIndex,
+    now: Date = .now,
+    activeWithin: TimeInterval
+  ) -> [Live] {
+    let titles = threadNames(index: index)
+    var sessions: [Live] = []
+
+    for url in recentRollouts(root: root, now: now, activeWithin: activeWithin) {
+      guard let modified = modificationDate(of: url) else { continue }
+      let header = meta(of: url)
+      // The header's session id wins, and the filename is the fallback.
+      //
+      // They disagree, and the disagreement is the point. One `codex exec` run
+      // produced two files a second apart — a short one and the 475 KB where the work
+      // actually happened — with different uuids in their names and the *same*
+      // `session_id` inside. Keyed on the filename that is two cards for one run;
+      // keyed on the header it is one, which is what it is. A rollout whose header
+      // cannot be read is still a session, so the filename remains the fallback.
+      guard
+        let id = header.sessionId
+          ?? CodexRollout.sessionId(inFilename: url.lastPathComponent)
+      else { continue }
+
+      let activity = lastActivity(in: url)
+      let context = latestContext(in: url)
+      sessions.append(
+        Live(
+          id: id,
+          cwd: header.cwd,
+          title: titles[id],
+          originator: header.originator,
+          model: context.model,
+          reasoningEffort: context.reasoningEffort,
+          gitBranch: header.gitBranch,
+          detail: activity.detail,
+          isRunningTool: activity.isRunningTool,
+          tasks: lastPlan(in: url),
+          prompt: lastPrompt(in: url),
+          updatedAt: modified))
     }
 
-    struct Activity: Equatable {
-        var detail: String = ""
-        var isRunningTool: Bool = false
+    // Newest first, which is the order the strip draws them in — and the order that
+    // makes the first entry per id the one to keep when a session wrote two files.
+    return
+      sessions
+      .sorted { $0.updatedAt > $1.updatedAt }
+      .reduce(into: (seen: Set<String>(), kept: [Live]())) { result, session in
+        guard result.seen.insert(session.id).inserted else { return }
+        result.kept.append(session)
+      }
+      .kept
+  }
+
+  // MARK: - Finding them
+
+  /// Rollout files written recently, from the last few days of directories.
+  static func recentRollouts(root: URL, now: Date, activeWithin: TimeInterval) -> [URL] {
+    let manager = FileManager.default
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = .current
+
+    var found: [URL] = []
+    for dayOffset in 0..<daysScanned {
+      guard let day = calendar.date(byAdding: .day, value: -dayOffset, to: now) else {
+        continue
+      }
+      let parts = calendar.dateComponents([.year, .month, .day], from: day)
+      guard let year = parts.year, let month = parts.month, let dayOfMonth = parts.day
+      else { continue }
+      let directory =
+        root
+        .appendingPathComponent(String(format: "%04d", year), isDirectory: true)
+        .appendingPathComponent(String(format: "%02d", month), isDirectory: true)
+        .appendingPathComponent(String(format: "%02d", dayOfMonth), isDirectory: true)
+
+      // Modification dates come off the directory listing in batches rather than a
+      // `stat` per file, which is the difference this same codebase measured at six
+      // times on the usage indexer.
+      let entries =
+        (try? manager.contentsOfDirectory(
+          at: directory, includingPropertiesForKeys: [.contentModificationDateKey],
+          options: [.skipsHiddenFiles])) ?? []
+
+      for entry in entries where entry.pathExtension == "jsonl" {
+        guard let modified = modificationDate(of: entry),
+          now.timeIntervalSince(modified) <= activeWithin
+        else { continue }
+        found.append(entry)
+      }
     }
+    return found
+  }
 
-    /// What the session was last seen doing.
-    ///
-    /// Read backwards from the end of the file, and it stops at the first line that says
-    /// something a card can show. A tool call is what it is running; anything after that
-    /// tool's output is the model talking, and the last thing it said is what a card shows
-    /// instead. `reasoning` and `token_count` are steps rather than statements — they mean
-    /// the session is alive, which the modification date already said, so they are skipped
-    /// rather than turned into an activity line reading "reasoning".
-    static func lastActivity(in url: URL, tailBytes: Int = 64 * 1024) -> Activity {
-        let lines = Transcript.tail(path: url.path, maximumBytes: tailBytes)
-        // A tool whose output has already arrived is finished, and the card should not
-        // still be showing it as running.
-        var sawToolOutput = false
+  private static func modificationDate(of url: URL) -> Date? {
+    (try? url.resourceValues(forKeys: [.contentModificationDateKey]))?
+      .contentModificationDate
+  }
 
-        for line in lines.reversed() {
-            guard let object = try? JSONSerialization.jsonObject(with: line) as? [String: Any],
-                let payload = object["payload"] as? [String: Any],
-                let kind = payload["type"] as? String
-            else { continue }
+  // MARK: - Reading one
 
-            switch kind {
-            case "custom_tool_call_output", "function_call_output":
-                sawToolOutput = true
-            case "custom_tool_call", "function_call":
-                let name = payload["name"] as? String ?? "tool"
-                let input = payload["input"] as? String ?? payload["arguments"] as? String ?? ""
-                return Activity(
-                    detail: toolSummary(name: name, input: input),
-                    isRunningTool: !sawToolOutput)
-            case "agent_message":
-                if let message = payload["message"] as? String {
-                    let summary = condense(message)
-                    if !summary.isEmpty { return Activity(detail: summary) }
-                }
-            case "user_message":
-                if let message = payload["message"] as? String {
-                    let summary = condense(message)
-                    if !summary.isEmpty { return Activity(detail: summary) }
-                }
-            default:
-                continue
-            }
+  struct Meta: Equatable {
+    /// The session this rollout belongs to, which is not always the one its filename
+    /// names. See `live`.
+    var sessionId: String?
+    var cwd: String?
+    var originator: String?
+    var gitBranch: String?
+  }
+
+  /// The header, which is the first line of the file.
+  ///
+  /// Bounded, because that line carries the whole system prompt on a desktop session and
+  /// runs to tens of kilobytes. Read from the top rather than remembered, because it
+  /// cannot change: a rollout belongs to one session, one working directory and one
+  /// originator for its whole life.
+  static func meta(of url: URL, headBytes: Int = 128 * 1024) -> Meta {
+    guard let handle = try? FileHandle(forReadingFrom: url) else { return Meta() }
+    defer { try? handle.close() }
+    guard let head = try? handle.read(upToCount: headBytes), !head.isEmpty,
+      let newline = head.firstIndex(of: 0x0A)
+    else { return Meta() }
+
+    let line = Data(head[head.startIndex..<newline])
+    guard let object = try? JSONSerialization.jsonObject(with: line) as? [String: Any],
+      object["type"] as? String == "session_meta",
+      let payload = object["payload"] as? [String: Any]
+    else { return Meta() }
+
+    return Meta(
+      sessionId: payload["session_id"] as? String,
+      cwd: payload["cwd"] as? String,
+      originator: payload["originator"] as? String,
+      gitBranch: (payload["git"] as? [String: Any])?["branch"] as? String)
+  }
+
+  struct Context: Equatable {
+    var model: String?
+    var reasoningEffort: String?
+  }
+
+  private struct ContextCacheEntry {
+    var fileSize: UInt64
+    var context: Context
+  }
+
+  nonisolated(unsafe) private static var contextCache: [String: ContextCacheEntry] = [:]
+  private static let contextCacheLock = NSLock()
+
+  private struct PromptCacheEntry {
+    var fileSize: UInt64
+    var prompt: String?
+  }
+
+  nonisolated(unsafe) private static var promptCache: [String: PromptCacheEntry] = [:]
+  private static let promptCacheLock = NSLock()
+
+  /// The model and reasoning effort from the latest turn context.
+  ///
+  /// Rollouts can be tens of megabytes, while this record is emitted once per turn. The
+  /// first read is bounded to the latest 4 MB; later reads inspect only newly appended
+  /// bytes and retain the last proven context when no new turn has started.
+  static func latestContext(in url: URL) -> Context {
+    let fileSize = (try? FileHandle(forReadingFrom: url).seekToEnd()) ?? 0
+    let cached = contextCacheLock.withLock { contextCache[url.path] }
+    let appended = cached.map { fileSize > $0.fileSize ? fileSize - $0.fileSize : 0 } ?? fileSize
+    let bytes = Int(min(max(appended + 64 * 1024, 128 * 1024), 4 * 1024 * 1024))
+
+    var context = cached?.context ?? Context()
+    for line in Transcript.tail(path: url.path, maximumBytes: bytes).reversed() {
+      guard let object = try? JSONSerialization.jsonObject(with: line) as? [String: Any],
+        object["type"] as? String == "turn_context",
+        let payload = object["payload"] as? [String: Any]
+      else { continue }
+      context = Context(
+        model: payload["model"] as? String,
+        reasoningEffort: payload["effort"] as? String)
+      break
+    }
+    contextCacheLock.withLock {
+      contextCache[url.path] = ContextCacheEntry(fileSize: fileSize, context: context)
+    }
+    return context
+  }
+
+  struct Activity: Equatable {
+    var detail: String = ""
+    var isRunningTool: Bool = false
+  }
+
+  /// What the session was last seen doing.
+  ///
+  /// Read backwards from the end of the file, and it stops at the first line that says
+  /// something a card can show. A tool call is what it is running; anything after that
+  /// tool's output is the model talking, and the last thing it said is what a card shows
+  /// instead. `reasoning` and `token_count` are steps rather than statements — they mean
+  /// the session is alive, which the modification date already said, so they are skipped
+  /// rather than turned into an activity line reading "reasoning".
+  static func lastActivity(in url: URL, tailBytes: Int = 64 * 1024) -> Activity {
+    let lines = Transcript.tail(path: url.path, maximumBytes: tailBytes)
+    // A tool whose output has already arrived is finished, and the card should not
+    // still be showing it as running.
+    var sawToolOutput = false
+
+    for line in lines.reversed() {
+      guard let object = try? JSONSerialization.jsonObject(with: line) as? [String: Any],
+        let payload = object["payload"] as? [String: Any],
+        let kind = payload["type"] as? String
+      else { continue }
+
+      switch kind {
+      case "custom_tool_call_output", "function_call_output":
+        sawToolOutput = true
+      case "custom_tool_call", "function_call":
+        let name = payload["name"] as? String ?? "tool"
+        let input = payload["input"] as? String ?? payload["arguments"] as? String ?? ""
+        return Activity(
+          detail: toolSummary(name: name, input: input),
+          isRunningTool: !sawToolOutput)
+      case "agent_message":
+        if let message = payload["message"] as? String {
+          let summary = condense(message)
+          if !summary.isEmpty { return Activity(detail: summary) }
         }
-        return Activity()
-    }
-
-    /// What a tool call reads as on a card.
-    ///
-    /// Codex does not hand a tool a tidy argument list. The desktop app writes a fragment of
-    /// JavaScript — `const r = await tools.exec_command({"cmd":"npm test"})` — and other
-    /// calls arrive as a bare JSON object. Printed as they are, a card shows
-    /// `wait: {"cell_id":"37","yield_time_ms":20000}`, which is the plumbing rather than the
-    /// work.
-    ///
-    /// So the one field that is about the work is preferred when it is there, and when it is
-    /// not, the tool's own name is a better answer than its arguments. Matched on the shape
-    /// rather than on a list of tools, because the list is not ours and grows without saying.
-    static func toolSummary(name: String, input: String) -> String {
-        for key in ["cmd", "command", "query", "path", "file_path", "url"] {
-            if let value = firstJSONString(forKey: key, in: input), !value.isEmpty {
-                return "\(name): \(condense(value))"
-            }
+      case "user_message":
+        if let message = payload["message"] as? String {
+          let summary = condense(message)
+          if !summary.isEmpty { return Activity(detail: summary) }
         }
-        // Nothing worth reading inside: an object, or code wrapping one. The name alone.
-        let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmed.isEmpty || trimmed.hasPrefix("{") || trimmed.contains("await tools.") {
-            return name
+      default:
+        continue
+      }
+    }
+    return Activity()
+  }
+
+  /// Reads the latest human request independently of the current activity line. A Codex
+  /// rollout commonly ends with a tool result, so deriving the prompt from
+  /// `lastActivity` would make the Vibe-style conversation row disappear mid-turn.
+  static func lastPrompt(in url: URL, tailBytes: Int = 128 * 1024) -> String? {
+    let fileSize = (try? FileHandle(forReadingFrom: url).seekToEnd()) ?? 0
+    let cached = promptCacheLock.withLock { promptCache[url.path] }
+    // Vibe Island already maintains a tiny local bridge for its desktop threads. When it
+    // is present, use the exact latest human message instead of making Perch parse a huge
+    // rollout on launch. This is optional; the rollout scan below remains the standalone
+    // path when Vibe is not installed or has no entry for this thread.
+    if cached == nil, let companion = companionPrompt(for: url) {
+      promptCacheLock.withLock {
+        promptCache[url.path] = PromptCacheEntry(fileSize: fileSize, prompt: companion)
+      }
+      return companion
+    }
+    // A desktop thread can emit many tool calls after a human message. The latest prompt
+    // may therefore be far outside a small tail, while rescanning a 180 MB rollout every
+    // refresh would make the notch itself stutter. Scan the complete file once, then only
+    // inspect bytes appended since that proven prompt.
+    let bytes: Int
+    if let cached {
+      let appended = fileSize > cached.fileSize ? fileSize - cached.fileSize : 0
+      bytes = Int(min(max(appended + UInt64(tailBytes), UInt64(tailBytes)), 4 * 1024 * 1024))
+    } else {
+      bytes = Int(min(fileSize, UInt64(256 * 1024 * 1024)))
+    }
+
+    var found: String?
+    for line in Transcript.tail(path: url.path, maximumBytes: bytes).reversed() {
+      guard let object = try? JSONSerialization.jsonObject(with: line) as? [String: Any],
+        let payload = object["payload"] as? [String: Any],
+        payload["type"] as? String == "user_message",
+        let message = payload["message"] as? String
+      else { continue }
+      let summary = condense(message)
+      guard !summary.isEmpty else { continue }
+      // Codex Desktop rollouts also contain the orchestration messages emitted by
+      // Computer Use. Those are implementation details, never a human prompt for the
+      // card. Keep the conversation row useful without leaking control code into it.
+      let lowercased = summary.lowercased()
+      if lowercased.hasPrefix("code=")
+        || lowercased.contains("await ")
+        || lowercased.contains("const ")
+        || lowercased.contains("var ")
+        || lowercased.contains("let ")
+        || lowercased.contains("node:")
+        || lowercased.contains("title=")
+        || lowercased.contains("get_app_state")
+        || lowercased.contains("element_index")
+        || lowercased.contains("disablediff")
+        || lowercased.contains("node repl")
+        || lowercased.contains("noderepl")
+        || lowercased.contains("sky.")
+        || lowercased.contains("tools.")
+      {
+        continue
+      }
+      found = summary
+      break
+    }
+
+    let result = found ?? cached?.prompt
+    promptCacheLock.withLock {
+      promptCache[url.path] = PromptCacheEntry(fileSize: fileSize, prompt: result)
+    }
+    return result
+  }
+
+  private static func companionPrompt(for rollout: URL) -> String? {
+    let path = URL(fileURLWithPath: NSHomeDirectory())
+      .appendingPathComponent("Library/Application Support/vibe-island/session-terminals.json")
+    guard let data = try? Data(contentsOf: path),
+      let entries = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+    else { return nil }
+
+    for value in entries.values {
+      guard let entry = value as? [String: Any],
+        entry["codexRolloutPath"] as? String == rollout.path,
+        let message = entry["lastUserMessage"] as? String
+      else { continue }
+      let summary = condense(message)
+      guard !summary.isEmpty else { return nil }
+      let lowercased = summary.lowercased()
+      guard !lowercased.hasPrefix("code=") && !lowercased.contains("get_app_state")
+        && !lowercased.contains("element_index") && !lowercased.contains("noderepl")
+        && !lowercased.contains("sky.") && !lowercased.contains("tools.")
+      else { return nil }
+      return summary
+    }
+    return nil
+  }
+
+  /// The most recent Codex plan, decoded from either a direct `update_plan` tool call or
+  /// the JavaScript wrapper used by the desktop app's composite `exec` tool.
+  private struct PlanCacheEntry {
+    var fileSize: UInt64
+    var board: TaskBoard
+  }
+
+  nonisolated(unsafe) private static var planCache: [String: PlanCacheEntry] = [:]
+  private static let planCacheLock = NSLock()
+
+  static func lastPlan(in url: URL) -> TaskBoard {
+    let fileSize = (try? FileHandle(forReadingFrom: url).seekToEnd()) ?? 0
+    let cached = planCacheLock.withLock { planCache[url.path] }
+    // First sighting may be a long-running desktop thread whose plan was emitted many
+    // megabytes ago. Later sightings only need the newly appended tail plus one line of
+    // overlap; the last proven board remains valid until another update_plan replaces it.
+    let bytes: Int
+    if let cached {
+      let appended = fileSize > cached.fileSize ? fileSize - cached.fileSize : 0
+      bytes = Int(min(max(appended + 128 * 1024, 256 * 1024), 4 * 1024 * 1024))
+    } else {
+      bytes = Int(min(fileSize, 64 * 1024 * 1024))
+    }
+
+    for line in Transcript.tail(path: url.path, maximumBytes: bytes).reversed() {
+      guard let object = try? JSONSerialization.jsonObject(with: line) as? [String: Any],
+        let payload = object["payload"] as? [String: Any],
+        payload["type"] as? String == "custom_tool_call",
+        let name = payload["name"] as? String,
+        let input = payload["input"] as? String,
+        let board = planBoard(toolName: name, input: input)
+      else { continue }
+      planCacheLock.withLock {
+        planCache[url.path] = PlanCacheEntry(fileSize: fileSize, board: board)
+      }
+      return board
+    }
+    let board = cached?.board ?? .empty
+    planCacheLock.withLock {
+      planCache[url.path] = PlanCacheEntry(fileSize: fileSize, board: board)
+    }
+    return board
+  }
+
+  static func planBoard(toolName: String, input: String) -> TaskBoard? {
+    let direct = toolName == "update_plan" || toolName == "codex.update_plan"
+    let markerRange =
+      input.range(of: "tools.update_plan(", options: .backwards)
+      ?? input.range(of: "update_plan(", options: .backwards)
+    guard direct || markerRange != nil else { return nil }
+
+    let searchStart = markerRange?.upperBound ?? input.startIndex
+    guard let opening = input[searchStart...].firstIndex(of: "{"),
+      let json = balancedJSONObject(in: input, from: opening),
+      let data = quoteJavaScriptObjectKeys(json).data(using: .utf8),
+      let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+      let plan = object["plan"] as? [[String: Any]]
+    else { return nil }
+
+    let tasks: [AgentTask] = plan.enumerated().compactMap { index, entry in
+      guard let step = entry["step"] as? String, !step.isEmpty,
+        let rawStatus = entry["status"] as? String
+      else { return nil }
+      let status: AgentTask.Status
+      switch rawStatus {
+      case "completed": status = .completed
+      case "in_progress": status = .inProgress
+      case "pending": status = .pending
+      default: return nil
+      }
+      return AgentTask(id: String(index + 1), subject: step, status: status)
+    }
+    guard tasks.count == plan.count else { return nil }
+    let running = tasks.filter { $0.status == .inProgress }
+    let pending = tasks.filter { $0.status == .pending }
+    let completed = tasks.filter { $0.status == .completed }
+    return TaskBoard(
+      tasks: running + pending + completed,
+      completed: completed.count,
+      inProgress: running.count,
+      open: pending.count)
+  }
+
+  /// Composite Codex calls are JavaScript, not JSON: their object keys are commonly
+  /// unquoted (`{plan:[{step:"…"}]}`). Values still use JSON strings, so quoting those
+  /// identifier keys is enough to decode the proven structure.
+  static func quoteJavaScriptObjectKeys(_ text: String) -> String {
+    text.replacingOccurrences(
+      of: #"([\{,])\s*([A-Za-z_][A-Za-z0-9_]*)\s*:"#,
+      with: #"$1"$2":"#,
+      options: .regularExpression)
+  }
+
+  /// Returns the first complete JSON object beginning at `opening` without being fooled
+  /// by braces inside quoted plan text.
+  static func balancedJSONObject(in text: String, from opening: String.Index) -> String? {
+    var depth = 0
+    var isQuoted = false
+    var isEscaped = false
+    var index = opening
+    while index < text.endIndex {
+      let character = text[index]
+      if isQuoted {
+        if isEscaped {
+          isEscaped = false
+        } else if character == "\\" {
+          isEscaped = true
+        } else if character == "\"" {
+          isQuoted = false
         }
-        let summary = condense(trimmed)
-        return summary.isEmpty ? name : "\(name): \(summary)"
-    }
-
-    /// `"cmd":"npm test"` out of any text, without insisting the whole thing is JSON —
-    /// most of these inputs are code with an object somewhere inside them.
-    static func firstJSONString(forKey key: String, in text: String) -> String? {
-        let pattern = "\"\(key)\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\""
-        guard let match = text.range(of: pattern, options: .regularExpression) else { return nil }
-        let fragment = String(text[match])
-        guard let colon = fragment.firstIndex(of: ":") else { return nil }
-        let quoted = fragment[fragment.index(after: colon)...]
-            .trimmingCharacters(in: .whitespaces)
-        guard quoted.count >= 2 else { return nil }
-        let body = String(quoted.dropFirst().dropLast())
-        // The value is a JSON string, so its escapes are JSON's.
-        return
-            body
-            .replacingOccurrences(of: "\\n", with: " ")
-            .replacingOccurrences(of: "\\t", with: " ")
-            .replacingOccurrences(of: "\\\"", with: "\"")
-            .replacingOccurrences(of: "\\\\", with: "\\")
-    }
-
-    /// One line, short enough for a card.
-    ///
-    /// Codex wraps some of what it sends in blocks nobody typed — the desktop app posts an
-    /// `<in-app-browser-context>` preamble on ambient turns — and showing those back would
-    /// be showing the plumbing, the same reason `Transcript.clean` exists on the Claude side.
-    static func condense(_ text: String, limit: Int = 120) -> String {
-        var result = text.replacingOccurrences(
-            of: "<[a-z-]+ [^>]*>[\\s\\S]*?</[a-z-]+>", with: "", options: .regularExpression)
-        result = result.replacingOccurrences(
-            of: "<[a-z-]+>[\\s\\S]*?</[a-z-]+>", with: "", options: .regularExpression)
-        result = result.replacingOccurrences(of: "\n", with: " ")
-        while result.contains("  ") {
-            result = result.replacingOccurrences(of: "  ", with: " ")
+      } else {
+        switch character {
+        case "\"": isQuoted = true
+        case "{": depth += 1
+        case "}":
+          depth -= 1
+          if depth == 0 {
+            return String(text[opening...index])
+          }
+        default: break
         }
-        let trimmed = result.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.count > limit ? String(trimmed.prefix(limit)) + "…" : trimmed
+      }
+      index = text.index(after: index)
     }
+    return nil
+  }
 
-    // MARK: - Names
-
-    /// `session_index.jsonl`, one `{id, thread_name, updated_at}` per line.
-    ///
-    /// The whole file, because it is a few kilobytes and there is no order to exploit: the
-    /// newest name for a thread is its last line, so the map is built by letting later
-    /// lines overwrite earlier ones.
-    static func threadNames(index: URL) -> [String: String] {
-        guard let data = try? Data(contentsOf: index) else { return [:] }
-        var names: [String: String] = [:]
-        for line in data.split(separator: UInt8(0x0A), omittingEmptySubsequences: true) {
-            guard
-                let object = try? JSONSerialization.jsonObject(with: Data(line))
-                    as? [String: Any],
-                let id = object["id"] as? String,
-                let name = object["thread_name"] as? String, !name.isEmpty
-            else { continue }
-            names[id] = name
-        }
-        return names
+  /// What a tool call reads as on a card.
+  ///
+  /// Codex does not hand a tool a tidy argument list. The desktop app writes a fragment of
+  /// JavaScript — `const r = await tools.exec_command({"cmd":"npm test"})` — and other
+  /// calls arrive as a bare JSON object. Printed as they are, a card shows
+  /// `wait: {"cell_id":"37","yield_time_ms":20000}`, which is the plumbing rather than the
+  /// work.
+  ///
+  /// So the one field that is about the work is preferred when it is there, and when it is
+  /// not, the tool's own name is a better answer than its arguments. Matched on the shape
+  /// rather than on a list of tools, because the list is not ours and grows without saying.
+  static func toolSummary(name: String, input: String) -> String {
+    for key in ["cmd", "command", "query", "path", "file_path", "url"] {
+      if let value = firstJSONString(forKey: key, in: input), !value.isEmpty {
+        return "\(name): \(condense(value))"
+      }
     }
+    // Nothing worth reading inside: an object, or code wrapping one. The name alone.
+    let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
+    if trimmed.isEmpty || trimmed.hasPrefix("{") || trimmed.contains("await tools.") {
+      return name
+    }
+    let summary = condense(trimmed)
+    return summary.isEmpty ? name : "\(name): \(summary)"
+  }
+
+  /// `"cmd":"npm test"` out of any text, without insisting the whole thing is JSON —
+  /// most of these inputs are code with an object somewhere inside them.
+  static func firstJSONString(forKey key: String, in text: String) -> String? {
+    let pattern = "\"\(key)\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\""
+    guard let match = text.range(of: pattern, options: .regularExpression) else { return nil }
+    let fragment = String(text[match])
+    guard let colon = fragment.firstIndex(of: ":") else { return nil }
+    let quoted = fragment[fragment.index(after: colon)...]
+      .trimmingCharacters(in: .whitespaces)
+    guard quoted.count >= 2 else { return nil }
+    let body = String(quoted.dropFirst().dropLast())
+    // The value is a JSON string, so its escapes are JSON's.
+    return
+      body
+      .replacingOccurrences(of: "\\n", with: " ")
+      .replacingOccurrences(of: "\\t", with: " ")
+      .replacingOccurrences(of: "\\\"", with: "\"")
+      .replacingOccurrences(of: "\\\\", with: "\\")
+  }
+
+  /// One line, short enough for a card.
+  ///
+  /// Codex wraps some of what it sends in blocks nobody typed — the desktop app posts an
+  /// `<in-app-browser-context>` preamble on ambient turns — and showing those back would
+  /// be showing the plumbing, the same reason `Transcript.clean` exists on the Claude side.
+  static func condense(_ text: String, limit: Int = 120) -> String {
+    var result = text.replacingOccurrences(
+      of: "<[a-z-]+ [^>]*>[\\s\\S]*?</[a-z-]+>", with: "", options: .regularExpression)
+    result = result.replacingOccurrences(
+      of: "<[a-z-]+>[\\s\\S]*?</[a-z-]+>", with: "", options: .regularExpression)
+    result = result.replacingOccurrences(of: "\n", with: " ")
+    while result.contains("  ") {
+      result = result.replacingOccurrences(of: "  ", with: " ")
+    }
+    let trimmed = result.trimmingCharacters(in: .whitespacesAndNewlines)
+    return trimmed.count > limit ? String(trimmed.prefix(limit)) + "…" : trimmed
+  }
+
+  // MARK: - Names
+
+  /// `session_index.jsonl`, one `{id, thread_name, updated_at}` per line.
+  ///
+  /// The whole file, because it is a few kilobytes and there is no order to exploit: the
+  /// newest name for a thread is its last line, so the map is built by letting later
+  /// lines overwrite earlier ones.
+  static func threadNames(index: URL) -> [String: String] {
+    guard let data = try? Data(contentsOf: index) else { return [:] }
+    var names: [String: String] = [:]
+    for line in data.split(separator: UInt8(0x0A), omittingEmptySubsequences: true) {
+      guard
+        let object = try? JSONSerialization.jsonObject(with: Data(line))
+          as? [String: Any],
+        let id = object["id"] as? String,
+        let name = object["thread_name"] as? String, !name.isEmpty
+      else { continue }
+      names[id] = name
+    }
+    return names
+  }
 }

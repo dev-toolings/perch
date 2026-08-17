@@ -1,0 +1,32 @@
+Window: "Perch Settings", App: Perch.
+0 fenêtre standard Perch Settings, Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton À propos
+		15 diviseur (disabled, settable, float) 196
+		16 container
+			17 image flask.fill
+			18 texte Labs
+			19 zone de défilement
+				20 texte Mises à jour bêta
+				21 commutateur Recevoir les versions bêta, Value: off
+				22 bouton Copier le rapport de diagnostic
+				23 text Les chemins sont raccourcis, les projets anonymisés, et aucune commande ni aucun prompt n'est inclus. Accède aux nouveautés plus tôt. Les versions bêta peuvent être moins stables.
+	24 barre d’outils
+		25 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	26 Bouton de fermeture
+	27 Bouton de réduction ou d’agrandissement
+	28 bouton de minimisation
+
+The focused UI element is 0 fenêtre standard Perch Settings, Secondary Actions: Raise

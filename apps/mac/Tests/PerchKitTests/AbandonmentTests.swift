@@ -114,3 +114,41 @@ private let plan = RequestKind.plan(PlanApprovalRequest(plan: "Do the thing"))
             eventSessionId: "s1", eventAgentId: nil,
             eventDuplicateKey: "PermissionRequest:def", eventAt: .now))
 }
+
+/// The allowlist is the whole policy, and the tests above only ever exercise three of its
+/// entries — so dropping any of the other four would have gone unnoticed. Membership is
+/// asserted here directly, in both directions: what is in the list must kill, and the
+/// events argued about at length in `provingEvents` must not.
+@Test func everyProvingEventKillsAndEveryExcludedOneDoesNot() {
+    func kills(_ event: String) -> Bool {
+        Abandonment.isAbandoned(
+            kind: question, queuedAt: .distantPast, sessionId: "s1", agentId: nil,
+            duplicateKey: "pending", event: event, eventSessionId: "s1", eventAgentId: nil,
+            eventDuplicateKey: "later", eventAt: .now)
+    }
+
+    for event in [
+        "PreToolUse", "PostToolUse", "PostToolUseFailure", "Stop", "StopFailure",
+        "UserPromptSubmit", "PermissionRequest",
+    ] {
+        #expect(kills(event), "\(event) should prove the loop moved on")
+    }
+
+    for event in [
+        "Notification", "SubagentStart", "SubagentStop", "SessionStart", "SessionEnd",
+        "PreCompact", "PermissionDenied",
+    ] {
+        #expect(!kills(event), "\(event) proves nothing and must not drop a live card")
+    }
+}
+
+/// An event landing at the same instant the request was queued is the request's own arrival
+/// seen twice, not the loop moving past it — which is why the comparison is strict.
+@Test func anEventAtTheSameInstantDoesNotKillIt() {
+    let queuedAt = Date()
+    #expect(
+        !Abandonment.isAbandoned(
+            kind: question, queuedAt: queuedAt, sessionId: "s1", agentId: nil,
+            duplicateKey: "pending", event: "PostToolUse", eventSessionId: "s1",
+            eventAgentId: nil, eventDuplicateKey: "later", eventAt: queuedAt))
+}

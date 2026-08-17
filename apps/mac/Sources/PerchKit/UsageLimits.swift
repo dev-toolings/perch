@@ -68,6 +68,19 @@ public struct NamedWindow: Sendable, Equatable, Identifiable {
         self.title = title
         self.window = window
     }
+
+    /// Provider keys such as `codex_primary` are storage identities, not interface copy.
+    /// Vibe keeps the canonical Claude windows compact and uses the provider's human title
+    /// for every dynamic window (for example Codex's `7d`).
+    public var shortLabel: String {
+        switch id {
+        case "five_hour": return "5h"
+        case "seven_day": return "7d"
+        case "seven_day_opus": return "7d opus"
+        case "seven_day_sonnet": return "7d sonnet"
+        default: return title
+        }
+    }
 }
 
 public struct RateLimits: Sendable, Equatable {

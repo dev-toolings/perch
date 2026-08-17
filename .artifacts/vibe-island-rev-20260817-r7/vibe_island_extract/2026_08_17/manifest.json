@@ -1,0 +1,7 @@
+{
+  "name": "Vibe Island",
+  "slug": "vibe_island",
+  "path": "/Applications/Vibe Island.app",
+  "kind": "macos-native",
+  "heuristic": "macOS bundle without app.asar (native binary)"
+}

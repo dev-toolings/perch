@@ -1,0 +1,2 @@
+/* InfoPlist.strings (繁體中文) */
+"NSAppleEventsUsageDescription" = "Vibe Island 需要控制終端機 App（iTerm2、終端機）以便在你點按通知時跳轉到正確的視窗、標籤頁與工作階段。";

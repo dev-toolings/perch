@@ -1,0 +1,64 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image gearshape.fill
+		3 texte Général
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+			19 en-tête Système
+			20 container
+				21 commutateur Ouvrir à l'ouverture de session, Value: off
+				22 bouton de menu local Langue de l'app, Value: Langue du système
+			23 en-tête Déploiement
+			24 container
+				25 commutateur Déplier le notch au survol, Value: on
+				26 text Délai de survol 0.15s
+				27 commutateur Suppression intelligente, Value: on
+				28 texte Ne pas déplier automatiquement lorsque l'onglet du terminal de l'agent est au premier plan
+			29 en-tête Visibilité
+			30 container
+				31 commutateur Masquer en plein écran, Value: on
+				32 commutateur Masquer automatiquement en l'absence de session active, Value: off
+			33 en-tête Fermeture
+			34 container
+				35 commutateur Replier automatiquement à la sortie de la souris, Value: on
+				36 bouton de menu local Durée de l'affichage automatique, Value: 5s
+				37 texte Durée pendant laquelle le panneau reste ouvert pour les notifications de fin et d'avertissement. Appuyez sur Échap pour fermer plus tôt.
+				38 commutateur Fermer l'affichage automatique par clic extérieur, Value: off
+				39 texte Cliquer n'importe où en dehors du panneau ferme immédiatement les notifications de fin et d'avertissement, en ignorant le temps restant.
+				40 bouton de menu local Nettoyage des sessions inactives, Value: 2 heures (par défaut)
+				41 texte Ne s'applique qu'aux sessions sans signal de fermeture clair (Codex, OpenCode, Cursor).
+			42 en-tête Interaction
+			43 container
+				44 commutateur Désactiver le saut au clic, Value: off
+				45 texte Lorsque cette option est activée, cliquer sur une session ne bascule pas vers son terminal ou son IDE.
+			46 barre de défilement (settable, float) 0
+				47 indicateur de valeur (settable, float) 0
+				48 Flèche d’augmentation
+				49 Flèche de diminution
+				50 Bouton d’augmentation de page
+				51 Bouton de diminution de page
+	52 Bouton de fermeture
+	53 Bouton de réduction ou d’agrandissement (disabled)
+	54 bouton de minimisation
+55 menu bar
+	56 Vibe Island
+	57 Édition
+	58 Présentation
+	59 Fenêtre
+	60 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

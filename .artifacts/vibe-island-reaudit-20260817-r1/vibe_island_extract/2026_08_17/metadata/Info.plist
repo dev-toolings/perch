@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ATSApplicationFontsPath</key>
+	<string>Fonts</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Vibe Island</string>
+	<key>CFBundleExecutable</key>
+	<string>vibe-island</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIdentifier</key>
+	<string>app.vibeisland.macos</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>zh-Hans</string>
+		<string>ja</string>
+		<string>ko</string>
+		<string>fr</string>
+		<string>pt-BR</string>
+		<string>ru</string>
+		<string>zh-Hant</string>
+		<string>de</string>
+		<string>he</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>Vibe Island</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.44</string>
+	<key>CFBundleVersion</key>
+	<string>1.0.44</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Vibe Island needs to control terminal apps (iTerm2, Terminal) to jump to the correct window, tab, and session when you click a notification.</string>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://updates.vibeisland.app/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>azV825pZzQ22VWTfgzGCfTM4KwNYZuzGUIcQ01+5aIE=</string>
+	<key>SUScheduledCheckInterval</key>
+	<integer>21600</integer>
+	<key>VibeIslandBuildCommit</key>
+	<string>44eb7db9bcfb</string>
+	<key>VibeIslandBuildTree</key>
+	<string>a1aa911c4926836c300f8cc4c9ee3ca30647b65b</string>
+	<key>VibeIslandUsageEnabled</key>
+	<true/>
+</dict>
+</plist>

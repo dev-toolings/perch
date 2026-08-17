@@ -11,6 +11,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// weakly, and a router that deallocates turns every notification click into nothing.
     private let notifications = NotificationRouter()
 
+    @objc func openSettingsFromMenu() {
+        _ = model.showSettings()
+    }
+
+    @objc func quitFromMenu() {
+        NSApp.terminate(nil)
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         // The one line that has to be there whether or not anything goes wrong.
         //
@@ -77,8 +85,16 @@ if CommandLine.arguments.contains("--reveal") {
     exit(Diagnostics.reveal())
 }
 
+if CommandLine.arguments.contains("--expand") {
+    exit(Diagnostics.expand())
+}
+
 if CommandLine.arguments.contains("--settings") {
     exit(Diagnostics.settings())
+}
+
+if CommandLine.arguments.contains("--onboarding") {
+    exit(Diagnostics.onboarding())
 }
 
 if CommandLine.arguments.contains("--forget-login-item") {
@@ -130,6 +146,50 @@ if let index = CommandLine.arguments.firstIndex(of: "--decide") {
 
 let delegate = AppDelegate()
 application.delegate = delegate
-// No Dock icon, no menu bar: Perch lives in the notch only.
+application.mainMenu = makeMainMenu(delegate: delegate)
+// No Dock icon: Perch lives in the notch. Like Vibe Island, it still exposes the normal
+// macOS menu while one of its windows is active.
 application.setActivationPolicy(.accessory)
 application.run()
+
+@MainActor
+private func makeMainMenu(delegate: AppDelegate) -> NSMenu {
+    let main = NSMenu()
+
+    let appItem = NSMenuItem()
+    let appMenu = NSMenu(title: "Perch")
+    let settings = NSMenuItem(
+        title: t("Settings…"), action: #selector(AppDelegate.openSettingsFromMenu),
+        keyEquivalent: ",")
+    settings.target = delegate
+    appMenu.addItem(settings)
+    appMenu.addItem(.separator())
+    let quit = NSMenuItem(
+        title: t("Quit Perch"), action: #selector(AppDelegate.quitFromMenu), keyEquivalent: "q")
+    quit.target = delegate
+    appMenu.addItem(quit)
+    appItem.submenu = appMenu
+    main.addItem(appItem)
+
+    let editItem = NSMenuItem()
+    let editMenu = NSMenu(title: t("Edit"))
+    for (title, action, key) in [
+        (t("Undo"), Selector(("undo:")), "z"),
+        (t("Redo"), Selector(("redo:")), "Z"),
+        (t("Cut"), #selector(NSText.cut(_:)), "x"),
+        (t("Copy"), #selector(NSText.copy(_:)), "c"),
+        (t("Paste"), #selector(NSText.paste(_:)), "v"),
+        (t("Select All"), #selector(NSText.selectAll(_:)), "a"),
+    ] {
+        editMenu.addItem(withTitle: title, action: action, keyEquivalent: key)
+    }
+    editItem.submenu = editMenu
+    main.addItem(editItem)
+
+    for title in [t("View"), t("Window"), t("Help")] {
+        let item = NSMenuItem()
+        item.submenu = NSMenu(title: title)
+        main.addItem(item)
+    }
+    return main
+}

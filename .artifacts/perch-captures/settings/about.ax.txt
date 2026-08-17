@@ -1,0 +1,33 @@
+Window: "Perch Settings", App: Perch.
+0 fenêtre standard Perch Settings, Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton À propos
+		15 diviseur (disabled, settable, float) 196
+		16 container
+			17 image Description: Informations, ID: info.circle.fill
+			18 texte À propos
+			19 zone de défilement
+				20 image
+				21 text Perch v0.4.4 Perch Approuver les outils de code IA depuis l'encoche Rejoindre directement la bonne session de terminal Suivre les jetons, les coûts et les limites d'abonnement Les réglages sont stockés localement dans ~/.perch. Maintenance
+				22 bouton Copier le rapport de diagnostic
+				23 bouton Désinstaller Perch…
+				24 texte Retire les hooks, restaure ta statusline et supprime Perch. Mettre l'app à la corbeille ne fait rien de tout ça.
+	25 barre d’outils
+		26 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	27 Bouton de fermeture
+	28 Bouton de réduction ou d’agrandissement
+	29 bouton de minimisation
+
+The focused UI element is 0 fenêtre standard Perch Settings, Secondary Actions: Raise

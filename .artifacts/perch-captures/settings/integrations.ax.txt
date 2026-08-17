@@ -1,0 +1,35 @@
+Window: "Perch Settings", App: Perch.
+0 fenêtre standard Perch Settings, Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton À propos
+		15 diviseur (disabled, settable, float) 196
+		16 container
+			17 image puzzlepiece.extension.fill
+			18 texte Intégrations
+			19 zone de défilement
+				20 texte Hooks
+				21 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				22 text Claude Code (global) 15 events /Users/<username>/.claude/settings.json
+				23 image (selected) Description: Sélectionné, ID: checkmark.circle.fill
+				24 text Codex 14 events /Users/<username>/.codex/hooks.json Installe avec ./scripts/install-hooks.sh <projet> ou --codex. Les hooks sont lus au démarrage d'une session. Redémarre les sessions existantes après la configuration. Confiance Codex
+				25 image Description: Avertissement, ID: exclamationmark.triangle.fill
+				26 text 10 of 14 hooks trusted Lance /hooks dans Codex et approuve les entrées Perch. Perch lit l'état de confiance Codex sans modifier son registre de sécurité.
+	27 barre d’outils
+		28 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	29 Bouton de fermeture
+	30 Bouton de réduction ou d’agrandissement
+	31 bouton de minimisation
+
+The focused UI element is 0 fenêtre standard Perch Settings, Secondary Actions: Raise

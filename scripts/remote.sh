@@ -74,20 +74,15 @@ cmd_deploy() {
   ssh $opts "$target" "mkdir -p ~/$REMOTE_HOME && chmod 700 ~/$REMOTE_HOME" \
     || fail "could not reach $target over SSH"
 
-  # Someone may have put the file there by hand already — see `remote.sh manual`, which
-  # exists because corporate networks block scp far more often than they block ssh.
+  # Stream the managed hook through the SSH channel itself. Reconfiguration must replace
+  # an older Perch hook (protocol and metadata evolve), and this avoids the SFTP subsystem
+  # that corporate networks commonly disable.
+  info "installing the current hook on ${target}…"
   # shellcheck disable=SC2086
-  if ssh $opts "$target" "[ -s ~/$REMOTE_HOME/perch-remote-hook.sh ]" 2>/dev/null; then
-    ok "hook already present — skipping the upload"
-  else
-    info "uploading the hook to ${target}…"
-    # shellcheck disable=SC2086
-    scp $opts -q "$HOOK_SRC" "$target:~/$REMOTE_HOME/perch-remote-hook.sh" \
-      || fail "upload failed — many networks block scp while leaving ssh open.
-   Run: ./scripts/remote.sh manual   then paste the file and re-run deploy."
-  fi
-  # shellcheck disable=SC2086
-  ssh $opts "$target" "chmod 700 ~/$REMOTE_HOME/perch-remote-hook.sh"
+  ssh $opts "$target" "umask 077; cat > ~/$REMOTE_HOME/perch-remote-hook.sh.tmp && \
+    chmod 700 ~/$REMOTE_HOME/perch-remote-hook.sh.tmp && \
+    mv ~/$REMOTE_HOME/perch-remote-hook.sh.tmp ~/$REMOTE_HOME/perch-remote-hook.sh" \
+    < "$HOOK_SRC" || fail "could not install the hook over SSH"
 
   info "wiring the remote's Claude Code hooks…"
   # The remote may not have jq, so the settings file is rewritten with a here-doc-driven
@@ -143,9 +138,10 @@ cmd_connect() {
 
   local runtime="$PERCH_HOME/runtime.json"
   [ -f "$runtime" ] || fail "Perch is not running — start it first"
-  local port token
+  local port token alias_b64
   port="$(jq -r '.port' "$runtime")"
   token="$(jq -r '.token' "$runtime")"
+  alias_b64="$(printf '%s' "$alias" | base64 | tr -d '\n')"
   [ -n "$port" ] && [ -n "$token" ] || fail "could not read the runtime handshake"
 
   # Both change on every launch, so they are pushed at connect time rather than at deploy
@@ -153,7 +149,7 @@ cmd_connect() {
   info "pushing the current token…"
   # shellcheck disable=SC2086,SC2029
   ssh $opts "$target" "umask 077; mkdir -p ~/$REMOTE_HOME; \
-    printf 'PERCH_PORT=%s\nPERCH_TOKEN=%s\n' '$REMOTE_PORT' '$token' > ~/$REMOTE_HOME/config"
+    printf 'PERCH_PORT=%s\nPERCH_TOKEN=%s\nPERCH_HOST_ALIAS_B64=%s\n' '$REMOTE_PORT' '$token' '$alias_b64' > ~/$REMOTE_HOME/config"
 
   ok "tunnel: remote 127.0.0.1:$REMOTE_PORT → this Mac's Perch on $port"
   info "leave this running; Ctrl-C closes the tunnel"
@@ -268,6 +264,205 @@ REMOTE
   info "the quota shows up in Perch once the remote renders a statusline"
 }
 
+# Vibe discovers Paperclip-managed Codex homes before asking which ones to wire. The
+# remote prints only base64 paths in a small tagged protocol: no remote jq dependency,
+# no word-splitting of paths, and a hard result cap before Swift sees the response.
+cmd_codex_roots() {
+  local alias="${1:-}" target output count line encoded decoded
+  target="$(require_host "$alias")"
+  local opts; opts="$(host_options "$alias")"
+
+  # shellcheck disable=SC2086
+  output="$(ssh $opts "$target" /bin/sh -s <<'REMOTE'
+count=0
+paperclip_root=$(CDPATH= cd "$HOME/.paperclip/instances" 2>/dev/null && pwd -P) || exit 0
+for path in \
+  "$HOME"/.paperclip/instances/*/companies/*/codex-home \
+  "$HOME"/.paperclip/instances/*/companies/*/agents/*/codex-home
+do
+  test -d "$path" || continue
+  canonical=$(CDPATH= cd "$path" 2>/dev/null && pwd -P) || continue
+  case "$canonical" in "$paperclip_root"/*) ;; *) continue ;; esac
+  encoded=$(printf '%s' "$canonical" | base64 | tr -d '\r\n')
+  printf 'PAPERCLIP\t%s\n' "$encoded"
+  count=$((count + 1))
+  test "$count" -ge 129 && break
+done
+REMOTE
+  )" || fail "Could not scan remote Codex directories."
+
+  count=0
+  printf '[]' >"$PERCH_HOME/codex-roots.$$.json"
+  while IFS=$'\t' read -r line encoded; do
+    [ -n "$line$encoded" ] || continue
+    [ "$line" = "PAPERCLIP" ] && [ -n "$encoded" ] \
+      || fail "The remote Codex directory scan returned invalid data."
+    count=$((count + 1))
+    [ "$count" -le 128 ] \
+      || fail "The remote Codex directory scan returned too many results."
+    decoded="$(printf '%s' "$encoded" | base64 -D 2>/dev/null)" \
+      || fail "The remote Codex directory scan returned invalid data."
+    case "$decoded" in /*) ;; *) fail "The remote Codex directory scan returned invalid data." ;; esac
+    jq --arg p "$decoded" '. + [{path: $p, source: "paperclip"}]' \
+      "$PERCH_HOME/codex-roots.$$.json" >"$PERCH_HOME/codex-roots.$$.tmp"
+    mv "$PERCH_HOME/codex-roots.$$.tmp" "$PERCH_HOME/codex-roots.$$.json"
+  done <<<"$output"
+  cat "$PERCH_HOME/codex-roots.$$.json"
+  rm -f "$PERCH_HOME/codex-roots.$$.json" "$PERCH_HOME/codex-roots.$$.tmp"
+}
+
+# Installs the remote forwarding hook into every Codex home selected in the app. Roots are
+# base64 arguments so spaces and shell metacharacters never become part of the SSH command.
+# The remote already needs Python for the Claude setup above; use the same dependency to
+# preserve foreign JSON and replace only Perch-owned entries.
+cmd_codex_setup() {
+  local alias="${1:-}" target
+  shift || true
+  target="$(require_host "$alias")"
+  local opts; opts="$(host_options "$alias")"
+  [ "$#" -gt 0 ] || fail "No Codex directories were selected."
+
+  # shellcheck disable=SC2086
+  ssh $opts "$target" /bin/bash -s -- "$@" <<'REMOTE'
+set -euo pipefail
+HOOK="$HOME/.perch-remote/perch-remote-hook.sh"
+[ -x "$HOOK" ] || { echo "Remote hook is missing — run Configure first." >&2; exit 1; }
+
+python3 - "$HOOK" "$@" <<'PY'
+import base64, json, os, sys, tempfile
+
+hook = sys.argv[1]
+encoded_roots = sys.argv[2:]
+events = {
+    "PermissionRequest": 86400,
+    "PreToolUse": 5,
+    "PostToolUse": 5,
+    "UserPromptSubmit": 5,
+    "Stop": 5,
+    "SubagentStart": 5,
+    "SubagentStop": 5,
+    "PreCompact": 5,
+    "SessionStart": 5,
+    "SessionEnd": 3,
+}
+
+def decode_root(encoded):
+    try:
+        value = base64.b64decode(encoded, validate=True).decode("utf-8")
+    except Exception as error:
+        raise ValueError("invalid encoded Codex directory") from error
+    if value == "~/.codex":
+        return os.path.join(os.path.expanduser("~"), ".codex")
+    if not os.path.isabs(value):
+        raise ValueError(f"Codex directory is not absolute: {value}")
+    return os.path.normpath(value)
+
+failed = []
+configured = []
+for encoded in encoded_roots:
+    try:
+        root = decode_root(encoded)
+    except ValueError as error:
+        print(str(error), file=sys.stderr)
+        raise SystemExit(1)
+    if not os.path.isdir(root):
+        failed.append(root)
+        continue
+
+    path = os.path.join(root, "hooks.json")
+    try:
+        with open(path, encoding="utf-8") as source:
+            document = json.load(source)
+    except FileNotFoundError:
+        document = {}
+    except Exception as error:
+        print(f"Could not read {path}: {error}", file=sys.stderr)
+        raise SystemExit(1)
+    if not isinstance(document, dict):
+        print(f"Codex hooks file is not an object: {path}", file=sys.stderr)
+        raise SystemExit(1)
+
+    hooks = document.get("hooks")
+    if not isinstance(hooks, dict):
+        hooks = {}
+    for event, matchers in list(hooks.items()):
+        if not isinstance(matchers, list):
+            continue
+        kept_matchers = []
+        for matcher in matchers:
+            if not isinstance(matcher, dict):
+                kept_matchers.append(matcher)
+                continue
+            entries = matcher.get("hooks")
+            if not isinstance(entries, list):
+                kept_matchers.append(matcher)
+                continue
+            kept_entries = [
+                entry for entry in entries
+                if not isinstance(entry, dict)
+                or "perch-remote-hook" not in str(entry.get("command", ""))
+            ]
+            if kept_entries:
+                copy = dict(matcher)
+                copy["hooks"] = kept_entries
+                kept_matchers.append(copy)
+        if kept_matchers:
+            hooks[event] = kept_matchers
+        else:
+            hooks.pop(event, None)
+
+    for event, timeout in events.items():
+        entry = {
+            "hooks": [{
+                "type": "command",
+                "command": f"{hook} {event} --source codex",
+                "timeout": timeout,
+            }]
+        }
+        hooks.setdefault(event, []).append(entry)
+    document["hooks"] = hooks
+
+    os.makedirs(root, mode=0o700, exist_ok=True)
+    if os.path.exists(path) and not os.path.exists(path + ".perch-backup"):
+        with open(path, "rb") as source, open(path + ".perch-backup", "wb") as backup:
+            backup.write(source.read())
+    descriptor, temporary = tempfile.mkstemp(prefix=".perch-hooks.", dir=root)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as output:
+            json.dump(document, output, indent=2)
+            output.write("\n")
+        os.chmod(temporary, 0o600)
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+    configured.append(root)
+
+if failed:
+    print("Some Codex directories were not connected: " + ", ".join(failed), file=sys.stderr)
+    print("Re-run Configure after those directories exist.", file=sys.stderr)
+    raise SystemExit(1)
+
+for root in configured:
+    print(f"  Codex hooks written to {root}/hooks.json")
+PY
+REMOTE
+}
+
+# Internal stdio bridge used by the app's read-only trust probe. The root is base64 and
+# the command itself is fixed; no selected path is evaluated by a shell. Keeping stdin and
+# stdout attached lets Swift speak Codex app-server's JSON-RPC protocol through SSH.
+cmd_codex_app_server() {
+  local alias="${1:-}" encoded_root="${2:-}" target remote_command
+  [ -n "$encoded_root" ] || fail "Missing encoded Codex directory."
+  target="$(require_host "$alias")"
+  local opts; opts="$(host_options "$alias")"
+
+  remote_command="codex_root=\$(printf '%s' '$encoded_root' | base64 -d 2>/dev/null || printf '%s' '$encoded_root' | base64 -D 2>/dev/null); test \"\$codex_root\" = '~/.codex' && codex_root=\"\$HOME/.codex\"; test -d \"\$codex_root\" || exit 126; export CODEX_HOME=\"\$codex_root\"; exec \"\${SHELL:-/bin/sh}\" -lc 'command -v codex >/dev/null 2>&1 || exit 127; exec codex app-server --listen stdio://'"
+  # shellcheck disable=SC2086
+  exec ssh $opts "$target" "$remote_command"
+}
+
 cmd_status() {
   local count
   count="$(hosts_read | jq 'length')"
@@ -332,7 +527,10 @@ case "${1:-status}" in
   docker) cmd_docker ;;
   manual) cmd_manual ;;
   usage) shift; cmd_usage "$@" ;;
+  codex-roots) shift; cmd_codex_roots "$@" ;;
+  codex-setup) shift; cmd_codex_setup "$@" ;;
+  codex-app-server) shift; cmd_codex_app_server "$@" ;;
   status) cmd_status ;;
   remove) shift; cmd_remove "$@" ;;
-  *) fail "usage: remote.sh [add|list|deploy|connect|usage|docker|manual|status|remove]" ;;
+  *) fail "usage: remote.sh [add|list|deploy|connect|usage|codex-roots|codex-setup|codex-app-server|docker|manual|status|remove]" ;;
 esac

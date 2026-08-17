@@ -45,6 +45,110 @@ private func write(_ text: String, to url: URL) {
     try? FileManager.default.removeItem(at: root)
 }
 
+@Test func kimiVariantsAreDetectedFromTheirOfficialConfigDirectories() throws {
+    let root = home { dir in
+        write("default_model = \"kimi-for-coding\"", to: dir.appendingPathComponent(".kimi/config.toml"))
+        write(
+            "command = \"/x/perch-hook Stop --source kimicode\"",
+            to: dir.appendingPathComponent(".kimi-code/config.toml"))
+    }
+
+    let agents = EnvironmentScan.run(home: root.path).filter { $0.kind == .agent }
+    let kimi = try #require(agents.first { $0.name == "Kimi" })
+    let kimiCode = try #require(agents.first { $0.name == "Kimi Code" })
+    #expect(kimi.isConfigured == false)
+    #expect(kimiCode.isConfigured == true)
+
+    try? FileManager.default.removeItem(at: root)
+}
+
+@Test func mistralVibeIsDetectedFromItsOfficialHooksFile() throws {
+    let root = home { dir in
+        write(
+            "command = \"/x/perch-hook Stop --source mistralvibe\"",
+            to: dir.appendingPathComponent(".vibe/hooks.toml"))
+    }
+
+    let agent = try #require(
+        EnvironmentScan.run(home: root.path).first { $0.name == "Mistral Vibe" })
+    #expect(agent.isConfigured == true)
+
+    try? FileManager.default.removeItem(at: root)
+}
+
+@Test func deepSeekTUIIsDetectedFromItsLegacyOfficialConfig() throws {
+    let root = home { dir in
+        write(
+            "command = \"/x/perch-hook Stop --source deepseek\"",
+            to: dir.appendingPathComponent(".deepseek/config.toml"))
+    }
+
+    let agent = try #require(
+        EnvironmentScan.run(home: root.path).first { $0.name == "DeepSeek TUI" })
+    #expect(agent.isConfigured == true)
+
+    try? FileManager.default.removeItem(at: root)
+}
+
+@Test func codeWhaleIsDetectedFromItsCurrentOfficialConfig() throws {
+    let root = home { dir in
+        write(
+            "command = \"/x/perch-hook Stop --source deepseek\"",
+            to: dir.appendingPathComponent(".codewhale/config.toml"))
+    }
+
+    let agent = try #require(
+        EnvironmentScan.run(home: root.path).first { $0.name == "CodeWhale" })
+    #expect(agent.isConfigured == true)
+
+    try? FileManager.default.removeItem(at: root)
+}
+
+@Test func buddyVariantsUseThePathsEmbeddedByVibeIsland() throws {
+    let root = home { dir in
+        write(
+            "{\"hooks\":{\"Stop\":[{\"hooks\":[{\"command\":\"/x/perch-hook Stop --source workbuddy\"}]}]}}",
+            to: dir.appendingPathComponent(".workbuddy/settings.json"))
+        write(
+            "{\"hooks\":{\"Stop\":[{\"hooks\":[{\"command\":\"/x/perch-hook Stop --source codebuddy\"}]}]}}",
+            to: dir.appendingPathComponent(".codebuddy/settings.json"))
+    }
+
+    let agents = EnvironmentScan.run(home: root.path)
+    #expect(agents.first { $0.name == "WorkBuddy" }?.isConfigured == true)
+    #expect(agents.first { $0.name == "CodeBuddy" }?.isConfigured == true)
+
+    try? FileManager.default.removeItem(at: root)
+}
+
+@Test func antigravityUsesItsCurrentSharedHooksPath() throws {
+    let root = home { dir in
+        write(
+            "{\"perch\":{\"Stop\":[{\"command\":\"/x/perch-hook Stop --source antigravity\"}]}}",
+            to: dir.appendingPathComponent(".gemini/config/hooks.json"))
+        try? FileManager.default.createDirectory(
+            at: dir.appendingPathComponent(".gemini/antigravity-cli"),
+            withIntermediateDirectories: true)
+    }
+
+    let agent = try #require(
+        EnvironmentScan.run(home: root.path).first { $0.name == "Antigravity CLI" })
+    #expect(agent.isConfigured == true)
+    try? FileManager.default.removeItem(at: root)
+}
+
+@Test func copilotUsesTheDedicatedHookFileObservedInVibeIsland() throws {
+    let root = home { dir in
+        write(
+            "{\"version\":1,\"hooks\":{\"Stop\":[{\"bash\":\"/x/perch-hook Stop --source copilot\"}]}}",
+            to: dir.appendingPathComponent(".copilot/hooks/perch.json"))
+    }
+    let agent = try #require(
+        EnvironmentScan.run(home: root.path).first { $0.name == "GitHub Copilot CLI" })
+    #expect(agent.isConfigured == true)
+    try? FileManager.default.removeItem(at: root)
+}
+
 /// A directory that is not there is a tool that is not installed — not a tool that needs
 /// configuring.
 @Test func absentToolsAreNotReported() throws {

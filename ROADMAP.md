@@ -142,11 +142,13 @@ switching to the terminal. This is that gap, closed.
 - [x] Statusline bridge — reversible, replays stdin untouched, timestamped backups,
       `--status` and `--remove`, and reversed by `remove.sh`
 - [x] Tolerant parsing of both live payload spellings
-- [ ] ~~`api.anthropic.com/api/oauth/usage` as a second source.~~ **Dropped.** It worked,
-      and it was opt-in — but it only worked by reading another app's credential out of the
-      login Keychain, which puts a password dialog on screen and makes Perch a program that
-      handles a secret. No quota number is worth that. The statusline bridge stays the only
-      source; someone with their statusline off has no quota, and that is the honest answer.
+- [x] **Direct Anthropic OAuth usage, with the Status Line bridge as fallback.** The access
+      token is read from Claude Code's own credential file or login-Keychain item, used only
+      in the `Authorization` header for `api.anthropic.com/api/oauth/usage`, and never copied
+      into Perch's cache or diagnostics. The cache contains only the usage response. Unknown
+      model-scoped windows are preserved so a server-side addition does not require an app
+      update. On machines without Claude OAuth credentials, the existing bridge remains the
+      source and no credential prompt is forced.
       Perch links no `Security` framework and holds no credential path.
 - [x] **A threshold that reveals the notch, and used/remaining.** Nobody watches a
       percentage climb; they discover it when the next turn is refused. The peek fires once
@@ -338,7 +340,41 @@ switching to the terminal. This is that gap, closed.
       approved. It deliberately does **not** write there: the hash is over a canonical form
       Codex does not document, and forging an entry in a security store to save one command
       is the wrong trade even if the guess were right.
-- [ ] Gemini, Cursor, OpenCode shims
+- [x] **Gemini, Cursor, OpenCode, Droid, Pi and Amp adapters.** Each keeps its own source
+      identity and uses its native configuration shape: Gemini's mapped event names and
+      millisecond timeouts, Cursor's flat hook rows, OpenCode/Amp plugins, and Pi's
+      extension API.
+- [x] **Kimi and Kimi Code TOML hooks.** Both official config roots are detected and get
+      one delimited `[[hooks]]` block that preserves user providers, models, and foreign
+      hooks. Reinstalling is idempotent, the original file is backed up, incomplete markers
+      fail explicitly, and both uninstallers remove only the managed block. Kimi documents
+      `PermissionRequest` as observation-only, so Perch records it without holding the CLI
+      or pretending its answer can replace Kimi's own prompt.
+- [x] **Mistral Vibe stable TOML hooks.** Perch writes named `pre_tool`, `post_tool`, and
+      `post_agent` rows to `~/.vibe/hooks.toml`, maps them onto its existing lifecycle,
+      and owns only a delimited block. Foreign hooks survive reinstall and uninstall;
+      malformed managed markers stop the write rather than consuming the rest of the file.
+- [x] **DeepSeek TUI observer hooks.** Perch writes the documented nested
+      `[[hooks.hooks]]` entries to `~/.deepseek/config.toml` and the current
+      `~/.codewhale/config.toml`, maps session, turn, tool,
+      error, and subagent events, and normalizes only documented `DEEPSEEK_*` context.
+      The managed block is idempotent, backed up, and reversible; Perch never fabricates
+      steering output for DeepSeek's observer protocol.
+- [x] **WorkBuddy and CodeBuddy hooks.** Their Vibe-observed global paths
+      (`~/.workbuddy/settings.json` and `~/.codebuddy/settings.json`) receive the
+      documented Claude-compatible JSON hook family with distinct source identity.
+      Existing hooks are preserved, backups are retained, and both uninstallers remove
+      only commands that invoke `perch-hook`.
+- [x] **Antigravity CLI hooks.** Perch owns one `perch` namespace in the documented
+      `~/.gemini/config/hooks.json`, observes `PreToolUse`, `PostToolUse`, and `Stop`,
+      and normalizes Antigravity's camelCase session/workspace/tool payload. Reinstall
+      preserves every foreign named hook; uninstall removes only Perch's namespace.
+      Perch emits no allow/deny/continue decision, leaving Antigravity authoritative.
+- [x] **GitHub Copilot CLI hooks.** A dedicated version-1 file at
+      `~/.copilot/hooks/perch.json` uses Copilot's documented PascalCase compatibility
+      payload for thirteen lifecycle events. Foreign entries survive reinstall, the file
+      is backed up, and uninstall removes only this Perch-owned file. Permission telemetry
+      remains read-only because Copilot's decision schema is not Claude's.
 
 ### M11 — remote
 
@@ -438,4 +474,3 @@ Approve a session running on a build server from the notch on your desk.
 - [ ] Opt-in diagnostics export (system info + anonymized logs)
 - [ ] Memory watchdog: relaunch only when memory stays high and all sessions are idle
 - [ ] Bundle integrity check
-

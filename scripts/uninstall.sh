@@ -128,6 +128,8 @@ elif mode == "statusline":
         root["statusLine"] = original
     else:
         root.pop("statusLine", None)
+elif mode == "antigravity":
+    root.pop("perch", None)
 
 with open(path + ".perch-tmp", "w") as handle:
     json.dump(root, handle, indent=2)
@@ -156,6 +158,8 @@ edit_json() {
           | if (.hooks | length) == 0 then del(.hooks) else . end
         else . end
       ' "$file" >"$tmp"
+    elif [ "$mode" = "antigravity" ]; then
+      jq 'del(.perch)' "$file" >"$tmp"
     else
       if [ -s "$ORIGINAL_STATUSLINE" ] &&
         [ -n "$(jq -r '.command // empty' "$ORIGINAL_STATUSLINE" 2>/dev/null)" ]; then
@@ -229,6 +233,8 @@ except Exception: pass' "$PERCH_HOME/hook-sites.json" 2>/dev/null || true
     echo "$HOME/.claude/settings.json"
     echo "$HOME/.claude/settings.local.json"
     echo "${CODEX_HOME:-$HOME/.codex}/hooks.json"
+    echo "$HOME/.workbuddy/settings.json"
+    echo "$HOME/.codebuddy/settings.json"
   } | sort -u
 }
 
@@ -250,6 +256,129 @@ while IFS= read -r settings; do
 done < <(hook_sites)
 
 [ "$FOUND_HOOKS" -eq 0 ] && ok "no Perch hooks in any settings file"
+
+ANTIGRAVITY_HOOKS="$HOME/.gemini/config/hooks.json"
+if grep -q '"perch"' "$ANTIGRAVITY_HOOKS" 2>/dev/null &&
+  grep -q 'perch-hook.*--source antigravity' "$ANTIGRAVITY_HOOKS" 2>/dev/null; then
+  if act "remove Perch's named Antigravity hook from $ANTIGRAVITY_HOOKS (backup: $ANTIGRAVITY_HOOKS.perch-backup)"; then
+    if [ -z "$JSON_TOOL" ]; then
+      warn "neither jq nor python3 is available — remove the root perch object from $ANTIGRAVITY_HOOKS by hand"
+    elif edit_json "$ANTIGRAVITY_HOOKS" antigravity; then
+      ok "cleaned $ANTIGRAVITY_HOOKS"
+    else
+      warn "skipped $ANTIGRAVITY_HOOKS — result was not valid JSON, original left in place"
+    fi
+  fi
+else
+  ok "no Perch Antigravity hook installed"
+fi
+
+COPILOT_HOOKS="$HOME/.copilot/hooks/perch.json"
+if grep -q 'perch-hook.*--source copilot' "$COPILOT_HOOKS" 2>/dev/null; then
+  if act "remove Perch's dedicated Copilot hook file $COPILOT_HOOKS (backup: $COPILOT_HOOKS.perch-backup)"; then
+    cp "$COPILOT_HOOKS" "$COPILOT_HOOKS.perch-backup"
+    rm -f "$COPILOT_HOOKS"
+    ok "removed $COPILOT_HOOKS"
+  fi
+else
+  ok "no Perch Copilot hook installed"
+fi
+
+# --- 2b. Kimi TOML hooks ---------------------------------------------------------
+#
+# Kimi and Kimi Code keep hooks in TOML rather than JSON. Perch owns one delimited
+# block, so the uninstaller removes exactly that block and refuses an incomplete marker
+# pair instead of deleting the rest of the user's configuration.
+
+KIMI_START="# --- perch Kimi hooks START"
+KIMI_END="# --- perch Kimi hooks END ---"
+KIMI_HOOKS_FOUND=0
+for config in "$HOME/.kimi/config.toml" "$HOME/.kimi-code/config.toml"; do
+  [ -f "$config" ] || continue
+  grep -qF "$KIMI_START" "$config" 2>/dev/null || continue
+  KIMI_HOOKS_FOUND=1
+  start_count="$(grep -cF "$KIMI_START" "$config" || true)"
+  end_count="$(grep -cF "$KIMI_END" "$config" || true)"
+  if [ "$start_count" -ne 1 ] || [ "$end_count" -ne 1 ]; then
+    warn "skipped $config — Perch hook markers are incomplete or duplicated"
+    continue
+  fi
+  if act "remove Perch's Kimi hook block from $config (backup: $config.perch-backup)"; then
+    awk -v start="$KIMI_START" -v end="$KIMI_END" '
+      index($0, start) { skip = 1; next }
+      index($0, end) { skip = 0; next }
+      !skip { print }
+    ' "$config" >"$config.perch-tmp"
+    if grep -qF "$KIMI_START" "$config.perch-tmp" 2>/dev/null ||
+      grep -qF "$KIMI_END" "$config.perch-tmp" 2>/dev/null; then
+      rm -f "$config.perch-tmp"
+      warn "skipped $config — managed markers remain, original left in place"
+      continue
+    fi
+    cp "$config" "$config.perch-backup"
+    mv "$config.perch-tmp" "$config"
+    ok "cleaned $config"
+  fi
+done
+[ "$KIMI_HOOKS_FOUND" -eq 0 ] && ok "no Perch Kimi hooks installed"
+
+MISTRAL_CONFIG="$HOME/.vibe/hooks.toml"
+MISTRAL_START="# --- perch Mistral Vibe hooks START"
+MISTRAL_END="# --- perch Mistral Vibe hooks END ---"
+if grep -qF "$MISTRAL_START" "$MISTRAL_CONFIG" 2>/dev/null; then
+  start_count="$(grep -cF "$MISTRAL_START" "$MISTRAL_CONFIG" || true)"
+  end_count="$(grep -cF "$MISTRAL_END" "$MISTRAL_CONFIG" || true)"
+  if [ "$start_count" -ne 1 ] || [ "$end_count" -ne 1 ]; then
+    warn "skipped $MISTRAL_CONFIG — Perch hook markers are incomplete or duplicated"
+  elif act "remove Perch's Mistral Vibe hook block from $MISTRAL_CONFIG (backup: $MISTRAL_CONFIG.perch-backup)"; then
+    awk -v start="$MISTRAL_START" -v end="$MISTRAL_END" '
+      index($0, start) { skip = 1; next }
+      index($0, end) { skip = 0; next }
+      !skip { print }
+    ' "$MISTRAL_CONFIG" >"$MISTRAL_CONFIG.perch-tmp"
+    if grep -qF "$MISTRAL_START" "$MISTRAL_CONFIG.perch-tmp" 2>/dev/null ||
+      grep -qF "$MISTRAL_END" "$MISTRAL_CONFIG.perch-tmp" 2>/dev/null; then
+      rm -f "$MISTRAL_CONFIG.perch-tmp"
+      warn "skipped $MISTRAL_CONFIG — managed markers remain, original left in place"
+    else
+      cp "$MISTRAL_CONFIG" "$MISTRAL_CONFIG.perch-backup"
+      mv "$MISTRAL_CONFIG.perch-tmp" "$MISTRAL_CONFIG"
+      ok "cleaned $MISTRAL_CONFIG"
+    fi
+  fi
+else
+  ok "no Perch Mistral Vibe hooks installed"
+fi
+
+DEEPSEEK_START="# --- perch DeepSeek hooks START"
+DEEPSEEK_END="# --- perch DeepSeek hooks END ---"
+DEEPSEEK_HOOKS_FOUND=0
+for DEEPSEEK_CONFIG in "$HOME/.deepseek/config.toml" "$HOME/.codewhale/config.toml"; do
+  [ -f "$DEEPSEEK_CONFIG" ] || continue
+  grep -qF "$DEEPSEEK_START" "$DEEPSEEK_CONFIG" 2>/dev/null || continue
+  DEEPSEEK_HOOKS_FOUND=1
+  start_count="$(grep -cF "$DEEPSEEK_START" "$DEEPSEEK_CONFIG" || true)"
+  end_count="$(grep -cF "$DEEPSEEK_END" "$DEEPSEEK_CONFIG" || true)"
+  if [ "$start_count" -ne 1 ] || [ "$end_count" -ne 1 ]; then
+    warn "skipped $DEEPSEEK_CONFIG — Perch hook markers are incomplete or duplicated"
+  elif act "remove Perch's DeepSeek hook block from $DEEPSEEK_CONFIG (backup: $DEEPSEEK_CONFIG.perch-backup)"; then
+    awk -v start="$DEEPSEEK_START" -v end="$DEEPSEEK_END" '
+      index($0, start) { skip = 1; next }
+      index($0, end) { skip = 0; next }
+      !skip { print }
+    ' "$DEEPSEEK_CONFIG" >"$DEEPSEEK_CONFIG.perch-tmp"
+    if grep -qF "$DEEPSEEK_START" "$DEEPSEEK_CONFIG.perch-tmp" 2>/dev/null ||
+      grep -qF "$DEEPSEEK_END" "$DEEPSEEK_CONFIG.perch-tmp" 2>/dev/null; then
+      rm -f "$DEEPSEEK_CONFIG.perch-tmp"
+      warn "skipped $DEEPSEEK_CONFIG — managed markers remain, original left in place"
+    else
+      cp "$DEEPSEEK_CONFIG" "$DEEPSEEK_CONFIG.perch-backup"
+      mv "$DEEPSEEK_CONFIG.perch-tmp" "$DEEPSEEK_CONFIG"
+      ok "cleaned $DEEPSEEK_CONFIG"
+    fi
+  fi
+done
+[ "$DEEPSEEK_HOOKS_FOUND" -eq 0 ] && ok "no Perch DeepSeek or CodeWhale hooks installed"
 
 # --- 3. Statusline bridge --------------------------------------------------------
 #
@@ -414,6 +543,9 @@ BACKUPS="$(
     ls -1 "$HOME"/.claude/settings*.perch-backup 2>/dev/null || true
     ls -1 "$HOME"/.claude/settings*.perch-statusline-backup.* 2>/dev/null || true
     ls -1 "${CODEX_HOME:-$HOME/.codex}"/hooks.json.perch-backup 2>/dev/null || true
+    ls -1 "$HOME"/.kimi/config.toml.perch-backup 2>/dev/null || true
+    ls -1 "$HOME"/.kimi-code/config.toml.perch-backup 2>/dev/null || true
+    ls -1 "$HOME"/.vibe/hooks.toml.perch-backup 2>/dev/null || true
   } | sort -u
 )"
 
@@ -437,7 +569,7 @@ if [ "$APPLY" -eq 1 ]; then
   # Hooks are read once, at session start. Until a session restarts it keeps calling a
   # binary that is no longer there — which is harmless, because every hook fails open,
   # but it is worth saying rather than leaving someone to wonder.
-  warn "restart any open Claude Code or Codex session — hooks are read at session start"
+  warn "restart any open Claude Code, Codex, Kimi, Kimi Code, Mistral Vibe, or DeepSeek TUI session — hooks are read at session start"
 else
   warn "dry run finished — re-run with --yes to apply"
 fi

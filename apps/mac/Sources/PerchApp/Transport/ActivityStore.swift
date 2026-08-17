@@ -50,6 +50,8 @@ final class ActivityStore {
     /// Once a session is silenced it stays silenced: the prompt that identified it as
     /// background noise only arrives once, and every later event lacks it.
     private var silenced: Set<String> = []
+    /// Explicitly archived rows stay hidden until that session starts another turn.
+    private var archived: Set<String> = []
 
     var sessions: [String: SessionSnapshot] { tracker.sessions }
 
@@ -83,7 +85,9 @@ final class ActivityStore {
     /// rollout, which knows a second later. The hook wins on the sessions it covers.
     func applyCodex(_ sessions: [CodexSessions.Live], now: Date = .now) {
         for session in sessions {
-            guard !isSilenced(directory: session.cwd) else { continue }
+            guard !archived.contains(session.id), !isSilenced(directory: session.cwd) else {
+                continue
+            }
             // The hook wins on everything that *moves*, and on nothing else.
             //
             // It knows the moment a tool starts, which the rollout only learns a second
@@ -96,7 +100,9 @@ final class ActivityStore {
             // so exactly when Perch restarted under a session that was already running.
             if hookFed.contains(session.id) {
                 tracker.identify(
-                    id: session.id, aiTitle: session.title, client: session.client)
+                    id: session.id, aiTitle: session.title, client: session.client,
+                    model: session.model, reasoningEffort: session.reasoningEffort,
+                    gitBranch: session.gitBranch, prompt: session.prompt)
                 continue
             }
             // Silence is the only end-of-turn signal a rollout has, so a session that has
@@ -110,12 +116,16 @@ final class ActivityStore {
                 status: status,
                 cwd: session.cwd,
                 detail: session.detail,
+                prompt: session.prompt,
                 agent: .codex,
                 aiTitle: session.title,
                 // The desktop app runs no hook, so nothing else will ever say where this
                 // session lives — but the rollout names its own writer, and that is enough
                 // to send a click back to the thread it came from.
                 client: session.client,
+                model: session.model,
+                reasoningEffort: session.reasoningEffort,
+                gitBranch: session.gitBranch,
                 at: session.updatedAt)
         }
     }
@@ -166,6 +176,11 @@ final class ActivityStore {
         tracker.answered(id: sessionId)
     }
 
+    func archive(sessionId: String) {
+        archived.insert(sessionId)
+        tracker.archive(id: sessionId)
+    }
+
     func record(_ request: PerchRequest) {
         let event = ActivityEvent(request: request)
 
@@ -183,6 +198,7 @@ final class ActivityStore {
         }
 
         if let id = event.sessionId {
+            if event.kind == "UserPromptSubmit" { archived.remove(id) }
             if tracker.sessions[id] == nil { sessionsEverSeen += 1 }
             // Claimed by the hook path, so the rollout reader stays off this card.
             hookFed.insert(id)

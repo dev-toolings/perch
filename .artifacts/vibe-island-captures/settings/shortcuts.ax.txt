@@ -1,0 +1,67 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image keyboard.fill
+		3 texte Raccourcis
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+			19 en-tête Touche modificateur
+			20 bouton de menu local Touche modificateur, Value: ⌃ Control
+			21 en-tête Raccourcis globaux
+			22 container
+				23 text Activer les raccourcis clavier Désactive tous les raccourcis Vibe Island sans effacer vos raccourcis configurés.
+				24 bouton de basculement on
+				25 text Ouvrir le sélecteur Appui court : ouvrir et choisir avec ↑↓ + Entrée (style Alfred). Maintenir et appuyer à nouveau : faire défiler les sessions, relâcher le modificateur pour rejoindre (style ⌘Tab).
+				26 bouton ⌃G
+				27 bouton Description: Fermer, ID: xmark.circle.fill
+				28 text Sélecteur inverse ⌃⇧G Ajoute Maj + le raccourci du sélecteur pour défiler à l'envers. Actif uniquement lorsque le panneau du sélecteur est ouvert, conflits avec d'autres applications très rares.
+				29 bouton de basculement on
+				30 text Replier le panneau Actif uniquement lorsque le panneau est déplié.
+				31 bouton esc
+			32 en-tête Raccourcis du panneau
+			33 container
+				34 text Approuver ⌃ +
+				35 bouton Y
+				36 text Refuser ⌃ +
+				37 bouton N
+				38 text Toujours autoriser ⌃ +
+				39 bouton A
+				40 text Bypass des autorisations ⌃ +
+				41 bouton B
+				42 text Rejoindre le terminal ⌃ +
+				43 bouton T
+			44 container
+				45 text Sélectionner l'option ⌃ + 1–9 Envoyer la sélection multiple ⌃ + ↵
+			46 container
+				47 text Naviguer entre les sessions ↑ ↓
+			48 texte Tous les raccourcis ci-dessous sont actifs lorsque le panneau est déplié. Maintenez votre touche modificateur pour afficher les indices sur chaque bouton — pratique pour les raccourcis oubliés.
+			49 barre de défilement (settable, float) 0
+				50 indicateur de valeur (settable, float) 0
+				51 Flèche d’augmentation
+				52 Flèche de diminution
+				53 Bouton d’augmentation de page
+				54 Bouton de diminution de page
+	55 Bouton de fermeture
+	56 Bouton de réduction ou d’agrandissement (disabled)
+	57 bouton de minimisation
+58 menu bar
+	59 Vibe Island
+	60 Édition
+	61 Présentation
+	62 Fenêtre
+	63 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

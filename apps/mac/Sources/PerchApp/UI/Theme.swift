@@ -34,66 +34,30 @@ enum Theme {
 
     // MARK: - Type
     //
-    // One typeface, everywhere. The content is commands, paths and numbers, and a fixed
-    // advance keeps a live-updating token counter from shifting the layout on every tick —
-    // but the reason it is *this* face rather than SF Mono is that a panel hanging off a
-    // physical cutout reads as hardware, and a bitmap face reads that way where a humanist
-    // one reads as a document. It is also the one thing that makes two lines of unrelated
-    // content look like they belong to the same instrument.
-    //
-    // Departure Mono, by Helena Zhang, SIL Open Font License 1.1 — bundled under
-    // `Resources/Fonts` and registered for this process alone.
+    // Vibe uses SwiftUI's platform designs rather than a bundled typeface: monospaced for
+    // commands and counters, rounded/default for the session chrome and prose. Keeping
+    // these tokens system-backed also preserves the same hinting and weight interpolation
+    // on Retina and non-Retina displays.
 
-    private static let family = "DepartureMono-Regular"
-
-    /// False in a `swift run` build, which has no bundle to register the font from. The
-    /// check is done once: `NSFont(name:)` misses are not cheap, and this is on the path
-    /// of every label in a view that redraws on every hook event.
-    private static let isBundled = NSFont(name: family, size: 12) != nil
-
-    /// What `--diagnose` reports, so a bundle that failed to register its font says so.
-    static var resolvedTypefaceName: String {
-        isBundled ? family : "\(family) NOT REGISTERED — falling back to the system face"
-    }
+    /// What `--diagnose` reports for the active island typography.
+    static var resolvedTypefaceName: String { "system (monospaced/default/rounded)" }
 
     /// How wide a run of monospaced text will actually be.
-    ///
-    /// The resting strip is a fixed-width window sized before it draws, so a guess at the
-    /// advance is a guess at whether the last character is clipped by the edge it is meant
-    /// to sit inside — which is how the session count lost a digit once already.
     static func monoWidth(_ text: String, size: CGFloat) -> CGFloat {
-        let font =
-            (isBundled ? NSFont(name: family, size: size) : nil)
-            ?? .monospacedSystemFont(ofSize: size, weight: .regular)
+        let font = NSFont.monospacedSystemFont(ofSize: size, weight: .regular)
         return (text as NSString).size(withAttributes: [.font: font]).width
     }
 
     static func mono(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
-        guard isBundled else { return .system(size: size, weight: weight, design: .monospaced) }
-        // Departure Mono ships one weight. Emphasis has to come from colour and from the
-        // pill backgrounds, which is how the panel was already built.
-        return .custom(family, fixedSize: size)
+        .system(size: size, weight: weight, design: .monospaced)
     }
 
-    /// Kept as a separate call site because the two are not interchangeable in intent —
-    /// `mono` is for content, `label` is for chrome — even though they now resolve to the
-    /// same face.
+    /// Chrome uses Vibe's rounded system design, distinct from command text.
     static func label(_ size: CGFloat, _ weight: Font.Weight = .medium) -> Font {
-        guard isBundled else { return .system(size: size, weight: weight, design: .rounded) }
-        return .custom(family, fixedSize: size)
+        .system(size: size, weight: weight, design: .rounded)
     }
 
-    /// Sentences, in a face built for sentences.
-    ///
-    /// Everything used to be Departure Mono, which is right for the things this panel was
-    /// built around — commands, paths, token counts, a live-updating number whose fixed
-    /// advance stops the layout shifting on every tick. It is wrong for a paragraph. A
-    /// bitmap face at 9pt with a uniform advance gives a reply the texture of a terminal
-    /// dump: even colour, no word shapes, nothing for the eye to land on. The panel read as
-    /// output rather than as an answer, and that was the whole complaint.
-    ///
-    /// So prose gets the system face and the machine keeps the pixels. A code block inside
-    /// a reply stays monospaced, because there it is doing the job it is for.
+    /// Prose uses Vibe's default system design; code blocks call `mono` explicitly.
     static func prose(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
         .system(size: size, weight: weight, design: .default)
     }

@@ -1,0 +1,34 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image wallet.bifold.fill
+		3 texte Pass
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement
+			19 image wallet.bifold
+			20 texte Activez une licence pour débloquer votre Pass
+			21 bouton Activer
+	22 Bouton de fermeture
+	23 Bouton de réduction ou d’agrandissement (disabled)
+	24 bouton de minimisation
+25 menu bar
+	26 Vibe Island
+	27 Édition
+	28 Présentation
+	29 Fenêtre
+	30 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

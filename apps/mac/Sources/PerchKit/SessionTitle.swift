@@ -32,7 +32,8 @@ public enum SessionTitle {
                 let title = object["aiTitle"] as? String,
                 !title.isEmpty
             else { continue }
-            return clean(title)
+            let cleaned = clean(title)
+            if !cleaned.isEmpty { return cleaned }
         }
         return nil
     }
@@ -41,6 +42,12 @@ public enum SessionTitle {
     /// `limit-active-sessions-10` are both real. The card reads better with one shape.
     static func clean(_ title: String) -> String {
         let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let injected = [
+            "<command-name", "<command-message", "<command-args",
+            "<local-command-stdout", "<system-reminder", "<task-notification",
+            "<teammate-message", "<user-prompt-submit-hook",
+        ]
+        guard !injected.contains(where: trimmed.hasPrefix) else { return "" }
         guard !trimmed.contains(" "), trimmed.contains("-") else { return trimmed }
 
         let words = trimmed.split(separator: "-").map(String.init)

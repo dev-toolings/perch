@@ -1,0 +1,79 @@
+Window: "", App: Perch.
+0 fenêtre standard Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton Pass
+			15 bouton À propos
+		16 diviseur (disabled, settable, float) 188
+		17 container
+			18 image Description: Changer La Taille Du Texte, ID: textformat.size
+			19 texte Affichage
+			20 zone de défilement Secondary Actions: Scroll Up, Scroll Down
+				21 text Encoche ▥▥ AskUserQuestion…
+				22 image Description: Avertissement, ID: exclamationmark.triangle.fill
+				23 texte 3
+				24 bouton Épuré, Plus de place pour la barre de menus
+				25 bouton Détaillé, Titres et statuts visibles d'un coup d'œil
+				26 texte Écran
+				27 bouton de menu local Description: Écran, Value: Écran principal
+				28 text Taille du panneau Taille de police du contenu
+				29 bouton de menu local Description: Taille de police du contenu, Value: 11pt (Par défaut)
+				30 text Hauteur de la carte de fin 90pt
+				31 curseur Value: 90, Secondary Actions: Increment, Decrement
+					32 indicateur de valeur 90
+				33 text Hauteur maximale du panneau 560pt
+				34 curseur Value: 560, Secondary Actions: Increment, Decrement
+					35 indicateur de valeur 560
+				36 text Largeur maximale du panneau 640pt
+				37 curseur Value: 640, Secondary Actions: Increment, Decrement
+					38 indicateur de valeur 640
+				39 texte Carte de session
+				40 bouton de basculement Description: Afficher le nom du projet, Value: on
+				41 bouton de basculement Description: Afficher l'arbre de travail, Value: on
+				42 bouton de basculement Description: Afficher le modèle d'IA, Value: off
+				43 bouton de basculement Description: Afficher l’effort de raisonnement, Value: off
+				44 bouton de basculement Description: Afficher les tâches, Value: on
+				45 texte Affiche la liste des tâches dans chaque carte de session.
+				46 bouton de basculement Description: Afficher les sous-agents, Value: on
+				47 texte Affiche le détail des sous-agents dans les cartes de session. Une fois masqué, un compteur d'agents actifs les remplace ; les approbations et les questions restent visibles.
+				48 bouton de basculement Description: Afficher les détails d'activité de l'agent, Value: on
+				49 text vibe-island  ⎇  chat-ui chat-ui · Refactor auth flow 2 agents Ghostty
+				50 bouton Description: ⌃G ↗, Help: Close, ID: session.jump.settings-preview
+				51 text Help: Close, Value: Vous : extract chatEndpoint into a transport-agnostic layer Editing chatEndpoint.ts · 12s └ subagent 1 <1m └ subagent 2 <1m Ajustement
+				52 curseur Largeur de l'encoche  0 pt, Value: 0, Secondary Actions: Increment, Decrement
+					53 indicateur de valeur 0
+				54 curseur Hauteur de l'encoche  0 pt, Value: 0, Secondary Actions: Increment, Decrement
+					55 indicateur de valeur 0
+				56 bouton Revenir à ce que macOS annonce
+				57 bouton de basculement Description: Afficher le forfait à côté de l'encoche quand rien ne tourne, Value: on
+				58 texte Ajuste uniquement si le panneau ne se place pas exactement sur l'encoche. Zéro utilise les dimensions détectées par macOS.
+				59 barre de défilement (settable, float) 0
+					60 indicateur de valeur (settable, float) 0
+					61 Flèche d’augmentation
+					62 Flèche de diminution
+					63 Bouton d’augmentation de page
+					64 Bouton de diminution de page
+	65 barre d’outils
+		66 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	67 Bouton de fermeture
+	68 Bouton de réduction ou d’agrandissement (disabled)
+	69 bouton de minimisation
+70 menu bar
+	71 Perch
+	72 Édition
+	73 Présentation
+	74 Fenêtre
+	75 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

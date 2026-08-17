@@ -1,0 +1,2 @@
+/* InfoPlist.strings (Deutsch) */
+"NSAppleEventsUsageDescription" = "Vibe Island muss Terminal-Apps (iTerm2, Terminal) steuern, um beim Klick auf eine Benachrichtigung zum richtigen Fenster, Tab und zur richtigen Sitzung zu wechseln.";

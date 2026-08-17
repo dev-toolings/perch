@@ -1,4 +1,5 @@
 import AppKit
+import CoreGraphics
 import Foundation
 import Observation
 import PerchKit
@@ -75,6 +76,34 @@ final class SceneMonitor {
         scene.isScreenShared = Self.isScreenBeingCaptured()
         scene.isFocusActive = Self.isFocusActive()
         scene.frontmostBundleId = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+    }
+
+    /// Whether the frontmost app owns a normal window that fills a display exactly.
+    /// Maximised windows leave room for the menu bar or Dock; native fullscreen windows
+    /// cover the display frame, so this does not mistake one for the other.
+    static func frontmostAppIsFullscreen() -> Bool {
+        guard
+            let processId = NSWorkspace.shared.frontmostApplication?.processIdentifier,
+            let windows = CGWindowListCopyWindowInfo(
+                [.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID)
+                as? [[String: Any]]
+        else { return false }
+
+        return windows.contains { window in
+            guard
+                (window[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value == processId,
+                (window[kCGWindowLayer as String] as? NSNumber)?.intValue == 0,
+                let bounds = window[kCGWindowBounds as String] as? [String: Any],
+                let frame = CGRect(dictionaryRepresentation: bounds as CFDictionary)
+            else { return false }
+
+            return NSScreen.screens.contains { screen in
+                abs(frame.origin.x - screen.frame.origin.x) <= 2
+                    && abs(frame.origin.y - screen.frame.origin.y) <= 2
+                    && abs(frame.width - screen.frame.width) <= 2
+                    && abs(frame.height - screen.frame.height) <= 2
+            }
+        }
     }
 
     /// `NSScreen.isCaptured` is the only public signal for "someone else is seeing this",

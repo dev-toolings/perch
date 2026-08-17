@@ -23,11 +23,20 @@ final class SettingsWindowController {
         }
 
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 720, height: 500),
+            contentRect: NSRect(x: 0, y: 0, width: 620, height: 680),
             styleMask: [.titled, .closable, .miniaturizable, .resizable],
             backing: .buffered,
             defer: false)
-        window.title = "Perch Settings"
+        // Vibe's settings window has no accessible or visible title; the selected pane
+        // supplies the heading inside the content instead.
+        window.title = ""
+        window.titleVisibility = .hidden
+        window.titlebarAppearsTransparent = true
+        window.styleMask.insert(.fullSizeContentView)
+        // Vibe keeps the native traffic lights over its full-size sidebar. The zoom
+        // control is visible but disabled; close and minimise remain ordinary controls.
+        window.standardWindowButton(.zoomButton)?.isEnabled = false
+        window.minSize = NSSize(width: 620, height: 620)
         window.contentView = NSHostingView(rootView: SettingsView(model: model))
         window.isReleasedWhenClosed = false
         window.center()

@@ -140,9 +140,9 @@ public enum QuestionCard {
     /// Free-text field: 34pt of box plus the spacing above it.
     private static let otherField: CGFloat = 43
 
-    /// Rough width of one character, per font size. Departure Mono is what the card draws
-    /// in and it is monospaced at roughly 0.6em; the labels are proportional and narrower
-    /// per character, which the same factor over-estimates in the safe direction.
+    /// Rough width of one character, per font size. The card uses the system monospaced
+    /// design at roughly 0.6em; labels are proportional and narrower per character, which
+    /// the same factor over-estimates in the safe direction.
     private static func lines(_ text: String, size: CGFloat, width: CGFloat) -> CGFloat {
         guard !text.isEmpty else { return 0 }
         let perCharacter = size * 0.6

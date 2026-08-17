@@ -14,33 +14,46 @@ import PerchKit
 @MainActor
 @Observable
 final class TaskStore {
-    private var boards: [String: TaskBoard] = [:]
+  private var boards: [String: TaskBoard] = [:]
+  /// Explicit render signal for callers that derive geometry from several boards.
+  /// Method calls are not observation key paths, so the panel height watches this value.
+  private(set) var revision = 0
 
-    func board(for sessionId: String?) -> TaskBoard {
-        sessionId.flatMap { boards[$0] } ?? .empty
-    }
+  func board(for sessionId: String?) -> TaskBoard {
+    sessionId.flatMap { boards[$0] } ?? .empty
+  }
 
-    func refresh(_ sessionId: String?) {
-        guard let sessionId, !sessionId.isEmpty else { return }
-        let next = TaskReader.board(for: sessionId)
-        guard next != boards[sessionId] else { return }
-        boards[sessionId] = next
-    }
+  func refresh(_ sessionId: String?) {
+    guard let sessionId, !sessionId.isEmpty else { return }
+    let next = TaskReader.board(for: sessionId)
+    guard next != boards[sessionId] else { return }
+    boards[sessionId] = next
+    revision &+= 1
+  }
 
-    /// Reads every session at once.
-    ///
-    /// Refreshing on hook events alone leaves a hole: a session that was already running
-    /// when Perch restarted, and has been quiet since, has no board until it next moves —
-    /// so the panel would open on a plan that exists on disk and is not shown. Opening the
-    /// panel is a deliberate act and a rare one, which makes it the right moment to pay
-    /// for a handful of directory reads.
-    func refreshAll(_ sessionIds: [String]) {
-        for id in sessionIds { refresh(id) }
-    }
+  /// Reads every session at once.
+  ///
+  /// Refreshing on hook events alone leaves a hole: a session that was already running
+  /// when Perch restarted, and has been quiet since, has no board until it next moves —
+  /// so the panel would open on a plan that exists on disk and is not shown. Opening the
+  /// panel is a deliberate act and a rare one, which makes it the right moment to pay
+  /// for a handful of directory reads.
+  func refreshAll(_ sessions: [SessionSnapshot]) {
+    for session in sessions where session.agent != .codex { refresh(session.id) }
+  }
 
-    /// Sessions that ended keep their files on disk long after the panel stops showing
-    /// them, so the cache is trimmed to what is still on screen.
-    func forget(keeping live: Set<String>) {
-        boards = boards.filter { live.contains($0.key) }
+  /// Codex plans are rollout snapshots rather than Claude task-directory files.
+  func applyCodex(_ sessions: [CodexSessions.Live]) {
+    for session in sessions {
+      guard boards[session.id] != session.tasks else { continue }
+      boards[session.id] = session.tasks
+      revision &+= 1
     }
+  }
+
+  /// Sessions that ended keep their files on disk long after the panel stops showing
+  /// them, so the cache is trimmed to what is still on screen.
+  func forget(keeping live: Set<String>) {
+    boards = boards.filter { live.contains($0.key) }
+  }
 }

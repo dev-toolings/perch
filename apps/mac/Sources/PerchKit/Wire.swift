@@ -21,6 +21,72 @@ public enum Wire {
     public static let usageEvent = "__usage"
 }
 
+/// Whether a hook event can carry a decision back through that CLI's hook protocol.
+///
+/// Kimi emits `PermissionRequest`, but documents it as observation-only. Waiting for a
+/// decision there would delay Kimi's own approval prompt without giving Perch's answer any
+/// effect, so it is forwarded as telemetry and never held open.
+public enum HookBehavior {
+    public static func resolvedEvent(
+        argument: String, payloadEvent: String?, source: String?
+    ) -> String {
+        switch source?.lowercased() {
+        case "cursor", "gemini", "mistralvibe", "deepseek", "antigravity": return argument
+        default: return payloadEvent ?? argument
+        }
+    }
+
+    public static func wantsDecision(event: String, source: String?) -> Bool {
+        guard event == "PermissionRequest" else { return false }
+        switch source?.lowercased() {
+        case "kimi", "kimicode", "copilot": return false
+        default: return true
+        }
+    }
+
+    /// DeepSeek TUI exposes its hook context through documented `DEEPSEEK_*`
+    /// variables. Normalize those values into Perch's shared payload without copying
+    /// unrelated environment variables or inventing a decision protocol.
+    public static func normalizedPayload(
+        _ input: ClaudeHookPayload, source: String?, environment: [String: String]
+    ) -> ClaudeHookPayload {
+        guard source?.lowercased() == "deepseek" else { return input }
+        var payload = input
+        payload.sessionId = payload.sessionId ?? environment["DEEPSEEK_SESSION_ID"]
+        payload.cwd = payload.cwd ?? environment["DEEPSEEK_WORKSPACE"]
+        payload.toolName = payload.toolName ?? environment["DEEPSEEK_TOOL_NAME"]
+        payload.prompt = payload.prompt ?? environment["DEEPSEEK_MESSAGE"]
+        payload.message = payload.message
+            ?? environment["DEEPSEEK_TOOL_RESULT"]
+            ?? environment["DEEPSEEK_ERROR"]
+        if payload.toolInput == nil,
+            let arguments = environment["DEEPSEEK_TOOL_ARGS"],
+            let data = arguments.data(using: .utf8)
+        {
+            payload.toolInput = try? JSONDecoder().decode(JSONValue.self, from: data)
+        }
+        return payload
+    }
+
+    public static func normalizedPayload(
+        _ input: ClaudeHookPayload, source: String?, json: JSONValue
+    ) -> ClaudeHookPayload {
+        guard source?.lowercased() == "antigravity" else { return input }
+        var payload = input
+        payload.sessionId = payload.sessionId ?? json["conversationId"]?.stringValue
+        payload.transcriptPath = payload.transcriptPath ?? json["transcriptPath"]?.stringValue
+        if payload.cwd == nil, case .array(let paths) = json["workspacePaths"] {
+            payload.cwd = paths.first?.stringValue
+        }
+        payload.toolName = payload.toolName ?? json["toolCall"]?["name"]?.stringValue
+        payload.toolInput = payload.toolInput ?? json["toolCall"]?["args"]
+        payload.message = payload.message
+            ?? json["error"]?.stringValue
+            ?? json["terminationReason"]?.stringValue
+        return payload
+    }
+}
+
 /// One piece of work a session carries on with after its turn has ended.
 ///
 /// Claude Code puts the live list on every `Stop`, and it is the only place it says out
@@ -89,6 +155,11 @@ public struct ClaudeHookPayload: Codable, Sendable {
     public var hookEventName: String?
     public var toolName: String?
     public var toolInput: JSONValue?
+    /// Stable identity for one tool request when the client exposes it. Vibe uses this
+    /// together with the runtime instance to keep question drafts attached to the exact
+    /// card rather than to matching question text.
+    public var toolUseId: String?
+    public var runtimeInstanceId: String?
     /// `tool_response` is deliberately absent.
     ///
     /// It was modelled here, decoded into a tree, carried across the socket and decoded
@@ -124,6 +195,8 @@ public struct ClaudeHookPayload: Codable, Sendable {
         case hookEventName = "hook_event_name"
         case toolName = "tool_name"
         case toolInput = "tool_input"
+        case toolUseId = "tool_use_id"
+        case runtimeInstanceId = "runtime_instance_id"
         case message
         case prompt
         case permissionMode = "permission_mode"
@@ -145,10 +218,29 @@ public enum Agent: String, Codable, Sendable, CaseIterable {
     case codex
     case gemini
     case opencode
+    case cursor
+    case droid
+    case pi
+    case amp
+    case kimi
+    case deepseek
+    case mistralVibe = "mistralvibe"
+    case workbuddy
+    case codebuddy
+    case antigravity
+    case copilot
     case unknown
 
     public init(source: String?) {
-        self = Agent(rawValue: source?.lowercased() ?? "") ?? .claude
+        guard let source = source?.lowercased(), !source.isEmpty else {
+            self = .claude
+            return
+        }
+        switch source {
+        case "kimi", "kimicode": self = .kimi
+        case "mistral-vibe", "mistralvibe": self = .mistralVibe
+        default: self = Agent(rawValue: source) ?? .unknown
+        }
     }
 
     public var displayName: String {
@@ -157,6 +249,17 @@ public enum Agent: String, Codable, Sendable, CaseIterable {
         case .codex: return "Codex"
         case .gemini: return "Gemini"
         case .opencode: return "opencode"
+        case .cursor: return "Cursor"
+        case .droid: return "Droid"
+        case .pi: return "Pi"
+        case .amp: return "Amp"
+        case .kimi: return "Kimi Code"
+        case .deepseek: return "DeepSeek"
+        case .mistralVibe: return "Mistral Vibe"
+        case .workbuddy: return "WorkBuddy"
+        case .codebuddy: return "CodeBuddy"
+        case .antigravity: return "Antigravity"
+        case .copilot: return "Copilot"
         case .unknown: return "Agent"
         }
     }
@@ -317,6 +420,9 @@ public struct PerchRequest: Codable, Sendable {
     /// Which CLI sent this. Absent means Claude Code, which is what every hook installed
     /// before `--source` existed will send.
     public var agent: Agent?
+    /// Alias of the configured SSH host that forwarded this event. Local hooks leave it
+    /// nil; the remote bridge reads it from its mode-600 runtime config.
+    public var remoteHost: String?
     /// Set by clients that cannot parse JSON — the remote hook is a shell script with no
     /// dependencies. The app then answers with the exact bytes to print on stdout, so the
     /// schema is built once, in Swift, where it is tested.
@@ -330,6 +436,7 @@ public struct PerchRequest: Codable, Sendable {
         raw: JSONValue? = nil,
         client: ClientInfo? = nil,
         agent: Agent? = nil,
+        remoteHost: String? = nil,
         rawOutput: Bool? = nil
     ) {
         self.v = Wire.protocolVersion
@@ -340,6 +447,7 @@ public struct PerchRequest: Codable, Sendable {
         self.raw = raw
         self.client = client
         self.agent = agent
+        self.remoteHost = remoteHost
         self.rawOutput = rawOutput
     }
 }

@@ -180,6 +180,8 @@ private func specific(of output: HookOutput) throws -> [String: Any] {
           "cwd": "/Users/kevin/lab",
           "hook_event_name": "PermissionRequest",
           "tool_name": "Bash",
+          "tool_use_id": "tool-42",
+          "runtime_instance_id": "runtime-7",
           "tool_input": {"command": "rm -rf ./dist", "description": "clean"}
         }
         """.data(using: .utf8)!
@@ -189,6 +191,8 @@ private func specific(of output: HookOutput) throws -> [String: Any] {
     #expect(payload.sessionId == "abc123")
     #expect(payload.toolName == "Bash")
     #expect(payload.cwd == "/Users/kevin/lab")
+    #expect(payload.toolUseId == "tool-42")
+    #expect(payload.runtimeInstanceId == "runtime-7")
     #expect(payload.toolInput?["command"]?.stringValue == "rm -rf ./dist")
 }
 
@@ -305,4 +309,83 @@ private func specific(of output: HookOutput) throws -> [String: Any] {
 @Test func opencodeIsRecognisedFromItsOwnSourceLabel() {
     #expect(Agent(source: "opencode") == .opencode)
     #expect(Agent.opencode.displayName == "opencode")
+}
+
+@Test func everyVibeAgentSourceKeepsItsIdentity() {
+    #expect(Agent(source: "cursor") == .cursor)
+    #expect(Agent(source: "droid") == .droid)
+    #expect(Agent(source: "pi") == .pi)
+    #expect(Agent(source: "amp") == .amp)
+    #expect(Agent(source: "kimicode") == .kimi)
+    #expect(Agent(source: "deepseek") == .deepseek)
+    #expect(Agent(source: "mistralvibe") == .mistralVibe)
+    #expect(Agent(source: "workbuddy") == .workbuddy)
+    #expect(Agent(source: "codebuddy") == .codebuddy)
+}
+
+@Test func unknownAgentSourcesStayUnknown() {
+    #expect(Agent(source: "future-agent") == .unknown)
+    #expect(Agent(source: nil) == .claude)
+}
+
+@Test func observationOnlyKimiPermissionsNeverHoldTheCLI() {
+    #expect(!HookBehavior.wantsDecision(event: "PermissionRequest", source: "kimi"))
+    #expect(!HookBehavior.wantsDecision(event: "PermissionRequest", source: "kimicode"))
+    #expect(HookBehavior.wantsDecision(event: "PermissionRequest", source: "claude"))
+    #expect(!HookBehavior.wantsDecision(event: "PostToolUse", source: "claude"))
+}
+
+@Test func copilotPermissionsRemainOwnedByCopilot() {
+    #expect(!HookBehavior.wantsDecision(event: "PermissionRequest", source: "copilot"))
+}
+
+@Test func mistralVibeUsesTheMappedEventInsteadOfItsNativeType() {
+    #expect(
+        HookBehavior.resolvedEvent(
+            argument: "PreToolUse", payloadEvent: "pre_tool", source: "mistralvibe")
+            == "PreToolUse")
+    #expect(
+        HookBehavior.resolvedEvent(
+            argument: "Stop", payloadEvent: "StopFailure", source: "claude")
+            == "StopFailure")
+}
+
+@Test func deepSeekEnvironmentBecomesTheSharedHookPayload() {
+    let payload = HookBehavior.normalizedPayload(
+        ClaudeHookPayload(), source: "deepseek",
+        environment: [
+            "DEEPSEEK_SESSION_ID": "sess_1234",
+            "DEEPSEEK_WORKSPACE": "/work/tree",
+            "DEEPSEEK_TOOL_NAME": "exec_shell",
+            "DEEPSEEK_TOOL_ARGS": #"{"command":"swift test"}"#,
+            "DEEPSEEK_MESSAGE": "run the tests",
+            "DEEPSEEK_TOOL_RESULT": "passed",
+        ])
+
+    #expect(payload.sessionId == "sess_1234")
+    #expect(payload.cwd == "/work/tree")
+    #expect(payload.toolName == "exec_shell")
+    #expect(payload.toolInput?["command"]?.stringValue == "swift test")
+    #expect(payload.prompt == "run the tests")
+    #expect(payload.message == "passed")
+    #expect(
+        HookBehavior.resolvedEvent(
+            argument: "PostToolUse", payloadEvent: nil, source: "deepseek")
+            == "PostToolUse")
+}
+
+@Test func antigravityCamelCaseBecomesTheSharedHookPayload() throws {
+    let json = try JSONDecoder().decode(
+        JSONValue.self,
+        from: Data(
+            #"{"conversationId":"ag_1","workspacePaths":["/work"],"transcriptPath":"/log.jsonl","toolCall":{"name":"run_command","args":{"CommandLine":"swift test"}},"error":"exit 1"}"#.utf8))
+    let payload = HookBehavior.normalizedPayload(
+        ClaudeHookPayload(), source: "antigravity", json: json)
+
+    #expect(payload.sessionId == "ag_1")
+    #expect(payload.cwd == "/work")
+    #expect(payload.transcriptPath == "/log.jsonl")
+    #expect(payload.toolName == "run_command")
+    #expect(payload.toolInput?["CommandLine"]?.stringValue == "swift test")
+    #expect(payload.message == "exit 1")
 }

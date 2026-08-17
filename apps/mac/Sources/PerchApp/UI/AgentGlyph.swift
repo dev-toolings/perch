@@ -108,7 +108,8 @@ struct AgentGlyph: View {
             )
         // Anything Perch has not met. Deliberately not a creature: an unrecognised agent
         // should look unrecognised rather than borrow one of the three identities.
-        case .unknown:
+        case .cursor, .droid, .pi, .amp, .kimi, .deepseek, .mistralVibe, .workbuddy,
+            .codebuddy, .antigravity, .copilot, .unknown:
             return (
                 [
                     "..........",

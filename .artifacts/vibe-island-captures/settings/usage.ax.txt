@@ -1,0 +1,43 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image gauge.with.dots.needle.67percent
+		3 texte Utilisation
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement
+			19 en-tête Limites d'utilisation
+			20 container
+				21 commutateur Afficher les limites d'utilisation, Value: on
+				22 texte Afficher les limites d'utilisation de l'abonnement dans l'en-tête du panneau
+				23 bouton de menu local Valeur affichée, Value: Utilisée
+				24 bouton de menu local Fournisseur préféré, Value: Auto (suit la session)
+				25 commutateur Afficher les Reset Cards, Value: on
+				26 texte Afficher les Reset Cards Codex disponibles et la prochaine expiration dans l'en-tête d'utilisation.
+			27 en-tête Passerelle d’usage Claude
+			28 container
+				29 texte Vibe Island ajoute une petite passerelle à votre configuration Status Line existante pour lire les données d’usage Claude. L’affichage visible de votre Status Line reste inchangé.
+				30 bouton Connecter l’usage
+	31 Bouton de fermeture
+	32 Bouton de réduction ou d’agrandissement (disabled)
+	33 bouton de minimisation
+34 menu bar
+	35 Vibe Island
+	36 Édition
+	37 Présentation
+	38 Fenêtre
+	39 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

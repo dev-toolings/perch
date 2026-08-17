@@ -125,6 +125,23 @@ struct TranscriptTests {
         #expect(turn?.reply == "Two files.\n\nThe subagent finished.")
     }
 
+    @Test("a teammate transport message is not the user's prompt")
+    func teammateMessagesAreNotPrompts() {
+        let turn = Transcript.turn(in: [
+            user("finish the parity audit"),
+            assistant([["type": "text", "text": "Continuing."]]),
+            user("""
+                Another Claude session sent a message:
+                <teammate-message teammate_id="reviewer" summary="done">
+                Internal transport payload.
+                </teammate-message>
+                """),
+        ])
+
+        #expect(turn?.prompt == "finish the parity audit")
+        #expect(turn?.reply == "Continuing.")
+    }
+
     @Test("a tool writing into the conversation is not a person typing")
     func machineWrittenMessages() {
         // Both of these were on screen as the user's own question: a multiplexer feeding

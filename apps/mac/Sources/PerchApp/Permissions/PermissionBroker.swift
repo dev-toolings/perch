@@ -9,7 +9,8 @@ import PerchKit
 @MainActor
 @Observable
 final class PermissionBroker {
-    /// Oldest first: whoever has been blocked longest gets answered first.
+    /// Oldest first: whoever has been blocked longest gets answered first — until someone
+    /// skips one, which sends it to the back and is the only thing that reorders this.
     private(set) var queue: [PendingPermission] = []
 
     /// Called for every request that leaves the queue, however it leaves it.

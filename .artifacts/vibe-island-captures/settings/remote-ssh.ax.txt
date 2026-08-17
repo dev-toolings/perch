@@ -1,0 +1,47 @@
+Window: "", App: Vibe Island.
+0 fenêtre standard Secondary Actions: Raise
+	1 container
+		2 image network
+		3 texte SSH distant
+		4 zone de défilement
+			5 bouton Général
+			6 bouton Intégrations
+			7 bouton Notifications
+			8 bouton Affichage
+			9 bouton Son
+			10 bouton Utilisation
+			11 texte Avancé
+			12 bouton Raccourcis
+			13 bouton SSH distant
+			14 bouton Labs
+			15 texte Vibe Island
+			16 bouton Pass
+			17 bouton À propos
+		18 zone de défilement
+			19 container
+				20 text Surveillez et approuvez les sessions CLI IA distantes depuis votre encoche. Ajoutez un hôte → Configurez → Connectez. Nécessite l'authentification SSH par clé publique (ou ControlMaster pour la MFA).
+			21 en-tête Hôtes
+			22 container
+				23 image network
+				24 texte Aucun hôte configuré pour l'instant
+				25 bouton Ajouter un hôte
+				26 texte Port TCP
+					27 champ de texte (settable) 17891
+					28 texte redémarrer pour appliquer
+			29 Triangle d’expansion Description: Conteneur Docker, Value: off
+				30 image Description: Boîte, ID: shippingbox
+				31 texte Conteneur Docker
+			32 Triangle d’expansion Description: Installation manuelle (réseaux restreints), Value: off
+				33 image lock.shield
+				34 texte Installation manuelle (réseaux restreints)
+	35 Bouton de fermeture
+	36 Bouton de réduction ou d’agrandissement (disabled)
+	37 bouton de minimisation
+38 menu bar
+	39 Vibe Island
+	40 Édition
+	41 Présentation
+	42 Fenêtre
+	43 Aide
+
+The focused UI element is 0 fenêtre standard Secondary Actions: Raise

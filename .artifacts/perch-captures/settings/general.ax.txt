@@ -1,0 +1,39 @@
+Window: "Perch Settings", App: Perch.
+0 fenêtre standard Perch Settings, Secondary Actions: Raise
+	1 diviser groupe
+		2 zone de défilement
+			3 bouton Général
+			4 bouton Intégrations
+			5 bouton Notifications
+			6 bouton Affichage
+			7 bouton Son
+			8 bouton Utilisation
+			9 texte Avancé
+			10 bouton Raccourcis
+			11 bouton SSH distant
+			12 bouton Labs
+			13 texte Perch
+			14 bouton À propos
+		15 diviseur (disabled, settable, float) 196
+		16 container
+			17 image gearshape.fill
+			18 texte Général
+			19 zone de défilement
+				20 texte Langue
+				21 Langue
+					22 bouton radio Description: English, Value: 0
+					23 bouton radio Description: Français, Value: 0
+					24 bouton radio Description: Système, Value: 1
+				25 bouton Relancer Perch
+				26 text Un changement de langue prend effet au démarrage de Perch. Anglais par défaut, quelle que soit la langue du Mac : l'agent qu'il surveille parle anglais, et une fenêtre en deux langues se lit moins bien que dans l'une ou l'autre. Démarrage
+				27 commutateur Ouvrir Perch à l'ouverture de session, Value: on
+				28 text Perch n'a ni icône dans le Dock ni élément de barre de menus : une install qui a cessé de tourner après un redémarrage ressemble à une install qui marche. macOS la liste dans Réglages Système › Général › Ouverture. Sessions inactives
+				29 bouton de menu local Oublier une session silencieuse après, Value: 30 minutes
+				30 texte Ne concerne que les CLI qui se ferment sans signal clair. Claude Code envoie toujours SessionEnd.
+	31 barre d’outils
+		32 bouton Description: Masquer la barre latérale, Secondary Actions: Increment, Decrement, Delete, Cancel
+	33 Bouton de fermeture
+	34 Bouton de réduction ou d’agrandissement
+	35 bouton de minimisation
+
+The focused UI element is 0 fenêtre standard Perch Settings, Secondary Actions: Raise
