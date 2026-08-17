@@ -38,6 +38,56 @@ struct FeaturedSessionSelectionTests {
         #expect(featured.id == "working")
     }
 
+    @Test func theStripSpeaksForTheWorkingSessionNotTheOneThatJustFinished() throws {
+        // The finished turn is the newer event — `Stop` always is — and it still loses.
+        var finished = session("finished", status: .idle)
+        finished.lastEvent = epoch.addingTimeInterval(60)
+        finished.prompt = "Donc la fait moi le grand résumé"
+        // Just started, no tool yet: the strip falls back to the project's name.
+        let working = session("working", status: .working)
+
+        let priority = try #require(
+            SessionDisplaySelection.priority(in: [finished, working]))
+
+        #expect(priority.id == "working")
+        #expect(SessionDisplaySelection.compactSummary(for: priority) == "working")
+    }
+
+    @Test func aRequestBlockedOnAPersonOutranksAFinishedTurn() throws {
+        let sessions = [session("finished", status: .idle), session("asking", status: .needsApproval)]
+
+        #expect(try #require(SessionDisplaySelection.priority(in: sessions)).id == "asking")
+    }
+
+    @Test func aFinishedTurnIsStillNamedWhenNothingElseIsRunning() throws {
+        var finished = session("finished", status: .idle)
+        finished.lastDetail = "Bash: swift test"
+        finished.prompt = "Recopier la vibe Island dans Perch"
+
+        let priority = try #require(SessionDisplaySelection.priority(in: [finished]))
+
+        // Vibe's idle pill shows the session title, never the last tool.
+        #expect(
+            SessionDisplaySelection.compactSummary(for: priority)
+                == "Recopier la vibe Island dans Perch")
+    }
+
+    @Test func aWorkingSessionIsNamedByWhatItRuns() {
+        var working = session("working", status: .runningTool)
+        working.lastTool = "Bash"
+        working.lastDetail = "swift test"
+        working.prompt = "Recopier la vibe Island dans Perch"
+
+        #expect(SessionDisplaySelection.compactSummary(for: working) == "Bash: swift test")
+
+        // A command with no tool recorded is a line of shell with nothing to introduce
+        // it: the title says more.
+        working.lastTool = nil
+        #expect(
+            SessionDisplaySelection.compactSummary(for: working)
+                == "Recopier la vibe Island dans Perch")
+    }
+
     @Test func showingAllPreservesTheStableSessionOrder() {
         let sessions = [session("first", status: .working), session("second", status: .idle)]
 
@@ -49,6 +99,16 @@ struct FeaturedSessionSelectionTests {
             SessionDisplaySelection.additionalCount(
                 in: sessions, focusedSessionId: "second", showsAll: true) == 0)
     }
+}
+
+@Test func aSessionIsNotDescribedByTheHookThatCreatedIt() {
+    var tracker = SessionTracker()
+    tracker.record(id: "s1", kind: "SessionStart", cwd: "/lab/perch", detail: "SessionStart", at: epoch)
+    #expect(tracker.sessions["s1"]?.lastDetail == "")
+
+    tracker.record(id: "s1", kind: "PreToolUse", detail: "swift test", tool: "Bash", at: epoch)
+    #expect(tracker.sessions["s1"]?.lastDetail == "swift test")
+    #expect(tracker.sessions["s1"]?.lastTool == "Bash")
 }
 
 @Test func stopMakesASessionIdleWithoutRemovingIt() {

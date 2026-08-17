@@ -350,70 +350,100 @@ struct ShoulderButton: View {
 ///
 /// With nothing running this draws nothing at all and the cutout looks exactly like the
 /// hardware. The moment an agent is working there is something worth seeing without
-/// hovering, and the menu bar beside the cutout is the only place to put it — so one
-/// ambient preset goes on the left and the count on the right, with the physical notch
+/// hovering, and the menu bar beside the cutout is the only place to put it — so Vibe's
+/// status sprite goes on the left and the count on the right, with the physical notch
 /// left untouched between them.
 struct IdleReading: Equatable {
-  /// One entry per live session, priority first. The compact strip draws one ambient
-  /// preset, but the underlying sessions still drive its count and active state.
+  /// One entry per live session, in the panel's order — working first. Nothing draws
+  /// them one by one any more; they still drive the count and the active state.
   var agents: [(agent: Agent, isWorking: Bool)] = []
   var count = 0
   /// Whether any of them is blocked on a person.
   var needsYou = false
-  /// The newest useful line of work, formatted for the compact island.
+  /// What the priority session is doing, formatted for the compact island.
   var summary = ""
+  /// The state of the session the strip speaks for. It tints the sprite: blue while a
+  /// harness works, amber when it waits on you, green once the turn is over.
+  var status: SessionStatus?
 
   static func == (a: Self, b: Self) -> Bool {
     a.count == b.count && a.needsYou == b.needsYou
-      && a.summary == b.summary
+      && a.summary == b.summary && a.status == b.status
       && a.agents.map(\.agent) == b.agents.map(\.agent)
       && a.agents.map(\.isWorking) == b.agents.map(\.isWorking)
   }
 
-  /// Live, not *working*. This counted working sessions until it was pointed out that a
-  /// CLI waiting for an answer is exactly the one you want to see from across the room —
-  /// and it was invisible: the moment a permission card went up, the session left the
-  /// strip and the count went down. "How many agents do I have running" is the question
-  /// this bar exists to answer, and a session waiting on you is running.
+  /// Every session the panel draws, working or not. This counted working sessions until
+  /// it was pointed out that a CLI waiting for an answer is exactly the one you want to
+  /// see from across the room — and it was invisible: the moment a permission card went
+  /// up, the session left the strip and the count went down. Finished turns stay on the
+  /// panel now, so they stay in the count too: the strip counts the same list the panel
+  /// draws, and Vibe's pill says `2` over a green sprite for the same reason.
   ///
-  /// A session whose turn has *ended* is the one case that is not: it counts nothing,
-  /// which is why the strip counts the same list the panel draws.
+  /// The label and the sprite, though, belong to one session — and it is the one still
+  /// working, not the one that most recently said something. A turn ending is always the
+  /// newest event, and picking by recency put a finished session's title next to a
+  /// running mark while another harness was actually at work.
   @MainActor
   init(_ activity: ActivityStore) {
     let sessions = activity.visibleSessions
-    for session in sessions.sorted(by: { $0.lastEvent > $1.lastEvent }) {
+    for session in sessions {
       agents.append((session.agent, session.isWorking))
     }
     count = sessions.count
     needsYou = sessions.contains { $0.status.needsYou }
 
-    // Vibe's `priorityCompactTitle` is the short name of work in flight (`exec`,
-    // `Bash`, `Read`), not the session title and not its command arguments. When a
-    // session is between tools, Vibe keeps the compact island useful with its short
-    // project/session title instead of leaving an unexplained empty gap.
-    if let session = sessions.max(by: { $0.lastEvent < $1.lastEvent }) {
-      summary = session.isWorking
-        ? (CompactActivityLabel.name(from: session.lastDetail)
-          ?? session.title)
-        : session.title
+    if let session = SessionDisplaySelection.priority(in: sessions) {
+      summary = SessionDisplaySelection.compactSummary(for: session)
+      status = session.status
     }
   }
 
   /// For the off-screen preview, which has no store to read.
   init(
     agents: [(agent: Agent, isWorking: Bool)], count: Int, needsYou: Bool,
-    summary: String = "Bash: swift test"
+    summary: String = "Bash: swift test", status: SessionStatus? = nil
   ) {
     self.agents = agents
     self.count = count
     self.needsYou = needsYou
     self.summary = summary
+    self.status =
+      status
+      ?? (count == 0
+        ? nil
+        : needsYou ? .needsApproval : (agents.contains { $0.isWorking } ? .runningTool : .idle))
   }
 }
 
-/// Vibe Island's collapsed status sprites, reconstructed from the 1.0.44 render and the
-/// reflected `PixelStatusIconCompact` / `PixelSessionIcon` view types. The priority session
-/// gets the 20 x 14 sprite; every additional session gets the 11 x 11 companion.
+/// Vibe Island's collapsed status sprite, as its `PixelStatusIconCompact(status:)` draws
+/// it: one 20 x 14 invader tinted by the priority session's state, and — only while that
+/// session works — an 11 x 11 companion trailing it. Green once the turn is over, blue
+/// while a harness works, amber when it waits on you.
+///
+/// This is what the strip shows in place of the resting creature as soon as anything is
+/// running: the creature says "nothing here", and an animated one next to a live count
+/// said the opposite of what the panel underneath it did.
+struct CompactStatusSprites: View {
+  let status: SessionStatus?
+
+  private var isWorking: Bool {
+    status == .working || status == .runningTool || status == .compacting
+      || status == .background
+  }
+
+  var body: some View {
+    HStack(spacing: 4) {
+      PixelStatusIconCompact(
+        isPrimary: true, isWorking: isWorking, needsYou: status?.needsYou == true)
+      if isWorking {
+        PixelStatusIconCompact(isPrimary: false, isWorking: true, needsYou: false)
+      }
+    }
+    .accessibilityHidden(true)
+  }
+}
+
 /// The small Space-Invader status mark used by Vibe in the collapsed island.
 ///
 /// The rows are reconstructed from the 1.0.44 idle and working captures at the
@@ -547,7 +577,7 @@ struct IdleView: View {
         }
       } else if count > 0 {
         HStack(spacing: 10) {
-          IslandPresetSprite(side: 22)
+          CompactStatusSprites(status: reading.status)
 
           Spacer(minLength: 6)
 
@@ -1156,10 +1186,11 @@ private struct UsageProviderBadge: View {
   }
 }
 
-/// The expanded island gets one ambient preset, not one creature per session. The
-/// installed `idle.png` sheet is Mewtwo and already survives app updates in
-/// `~/.perch/sprites`; playing that single sheet keeps the header alive without bringing
-/// back the many independent animation clocks that previously saturated the main thread.
+/// The creature beside the plan when nothing is running. The installed `idle.png` sheet
+/// is Mewtwo and already survives app updates in `~/.perch/sprites`; it is one animation
+/// clock, not one per session, which is what previously saturated the main thread. It
+/// leaves the strip the moment a harness runs — Vibe's status sprite takes its place,
+/// because a creature that means "idle" has no business next to a live count.
 private struct IslandPresetSprite: View {
   let side: CGFloat
 

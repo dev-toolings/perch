@@ -122,6 +122,10 @@ public struct SessionSnapshot: Sendable, Equatable {
     public var cwd: String?
     public var lastEvent: Date
     public var lastDetail: String
+    /// The tool the detail belongs to — `Bash`, `Read`, `exec`. The detail alone is only
+    /// the arguments, which is what the card wants; the compact strip wants both, the way
+    /// Vibe's pill says `Bash: sed -n 206,…`.
+    public var lastTool: String?
     public var status: SessionStatus
     /// Subagents observed during the current turn — fan-out `Task` calls and Agent Team
     /// members both report through `SubagentStart` / `SubagentStop`.
@@ -274,6 +278,30 @@ public enum SessionDisplaySelection {
         max(0, sessions.count - shown(
             in: sessions, focusedSessionId: focusedSessionId, showsAll: showsAll
         ).count)
+    }
+
+    /// The session the compact strip speaks for — Vibe's priority session.
+    ///
+    /// This was the most recently touched session, which is the wrong one the moment a
+    /// turn ends: `Stop` is the newest event by definition, so the strip named the
+    /// session that had just *finished* while another was still working — an animated
+    /// mark next to the title of something at rest. Work in flight outranks a request
+    /// blocked on a person, which outranks a finished turn; inside a group the stable
+    /// list order holds, so the label does not flicker between peers.
+    public static func priority(in sessions: [SessionSnapshot]) -> SessionSnapshot? {
+        sessions.first(where: \.isWorking)
+            ?? sessions.first(where: \.status.needsYou)
+            ?? sessions.first
+    }
+
+    /// What the strip says about that session. Vibe's `priorityCompactTitle` is the
+    /// work in flight — the tool and the start of its arguments, `Bash: sed -n 206,…` —
+    /// while a harness works, and the session's own title once the turn is over or when
+    /// nothing says what the work is.
+    public static func compactSummary(for session: SessionSnapshot) -> String {
+        guard session.isWorking else { return session.title }
+        return CompactActivityLabel.line(tool: session.lastTool, detail: session.lastDetail)
+            ?? session.title
     }
 }
 
@@ -449,10 +477,14 @@ public struct SessionTracker: Sendable {
         let belongsToSubagent = agentId != nil && !Self.subagentLifecycle.contains(kind)
 
         let previousStatus = sessions[id]?.status
+        // Born blank, and given its detail by the same rule as every later event. The
+        // first event of a session is almost always `SessionStart`, and seeding the row
+        // with its detail printed the hook's own name — "SessionStart" — as what the
+        // session was doing, right up to the first tool call.
         var session =
             sessions[id]
             ?? SessionSnapshot(
-                id: id, cwd: cwd, lastEvent: date, lastDetail: detail,
+                id: id, cwd: cwd, lastEvent: date, lastDetail: "",
                 status: .working, subagents: 0, startedAt: date)
 
         session.cwd = cwd ?? session.cwd
@@ -461,6 +493,7 @@ public struct SessionTracker: Sendable {
         // "SubagentStart" on the card where the file being edited belongs.
         if !detail.isEmpty, !Self.lifecycleKinds.contains(kind), !belongsToSubagent {
             session.lastDetail = detail
+            session.lastTool = tool.flatMap { $0.isEmpty ? nil : $0 }
         }
         // A new prompt replaces the old one: the card should describe the current task,
         // not the one it opened with.
