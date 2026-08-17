@@ -7,9 +7,8 @@ import Foundation
 /// "leave me alone", this is "fit my machine".
 /// How much of each session the panel spells out.
 ///
-/// Two densities rather than a pile of toggles. The panel hangs off the menu bar, so the
-/// real constraint is how many sessions fit before it stops being glanceable — and the
-/// answer differs between someone running one agent and someone running six.
+/// Two densities rather than a pile of toggles. They control how much the collapsed strip
+/// says; the expanded panel keeps the prompt and plan in either mode.
 public enum PanelLayout: String, Codable, Sendable, CaseIterable {
   /// Project, title, and what it is doing. One line of chrome per session.
   case clean
@@ -23,9 +22,12 @@ public enum PanelLayout: String, Codable, Sendable, CaseIterable {
     }
   }
 
-  /// Clean drops what you already know — you wrote the prompt — and keeps what changed.
-  public var showsPrompt: Bool { self == .detailed }
-  public var showsTasks: Bool { self == .detailed }
+  /// Expanded content is independent from the compact-strip density.
+  public var showsPrompt: Bool { true }
+  public var showsTasks: Bool { true }
+
+  /// Detailed adds the current title/activity between the status sprites and count.
+  public var showsCompactDetails: Bool { self == .detailed }
 }
 
 /// What language Perch speaks, which is not the same question as what language the Mac is
@@ -240,9 +242,9 @@ public struct Preferences: Codable, Sendable, Equatable {
   /// through a whole session and you conclude the hooks broke.
   public var launchAtLogin: Bool
 
-  /// Open the compact island when the pointer rests over it.
+  /// Open the full island as soon as the pointer enters it.
   public var expandsOnHover: Bool
-  /// Delay before hover expansion. A short pause prevents accidental flyovers.
+  /// Legacy persisted value retained for decoding compatibility. Hover is immediate.
   public var hoverDelay: TimeInterval
   /// Return to the compact island after the pointer leaves the panel.
   public var collapsesOnHoverExit: Bool
@@ -308,7 +310,7 @@ public struct Preferences: Codable, Sendable, Equatable {
     restingQuota: Bool = true,
     launchAtLogin: Bool = false,
     expandsOnHover: Bool = true,
-    hoverDelay: TimeInterval = 0.15,
+    hoverDelay: TimeInterval = 0,
     collapsesOnHoverExit: Bool = true,
     hidesWhenNoSessions: Bool = false,
     disablesSessionJump: Bool = false,
@@ -597,7 +599,7 @@ public struct Preferences: Codable, Sendable, Equatable {
     if quotaWarningThreshold != 0 {
       copy.quotaWarningThreshold = min(max(quotaWarningThreshold, 50), 100)
     }
-    copy.hoverDelay = min(max(hoverDelay, 0), 1)
+    copy.hoverDelay = 0
     copy.panelMaximumWidth = min(max(panelMaximumWidth, 440), 680)
     copy.panelMaximumHeight = min(max(panelMaximumHeight, 360), 620)
     copy.autoDisplayDuration = min(max(autoDisplayDuration, 1), 15)

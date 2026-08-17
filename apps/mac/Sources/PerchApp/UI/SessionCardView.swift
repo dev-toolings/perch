@@ -11,8 +11,7 @@ struct SessionCardView: View {
   let session: SessionSnapshot
   /// The session's plan, empty for the many sessions that never use the task tool.
   var tasks: TaskBoard = .empty
-  /// How much of the session to spell out. Clean keeps one line of chrome per card so
-  /// six agents still fit on screen.
+  /// The compact-strip density. Expanded cards keep their prompt and plan in both modes.
   var layout: PanelLayout = .detailed
   var allowsJump = true
   var contentFontSize: Double = 11
@@ -68,8 +67,8 @@ struct SessionCardView: View {
   /// Whether opening this card would show anything that closing it does not.
   ///
   /// Often it would not: a session with no turn read yet, no prompt, no subagents and no
-  /// plan has nothing under its headline, and in `clean` layout no card has anything at
-  /// all. Clicking one of those toggled a disclosure arrow over an unchanged row, which
+  /// plan has nothing under its headline. Clicking one of those toggled a disclosure arrow
+  /// over an unchanged row, which
   /// reads as a card that is broken rather than as a card that is empty.
   private var hasDetail: Bool {
     if layout.showsPrompt, session.turn?.isEmpty == false { return true }
@@ -144,71 +143,65 @@ struct SessionCardView: View {
   }
 
   private var card: some View {
-    HStack(alignment: .top, spacing: 28) {
-      // Vibe reuses its primary status sprite and compact session sprite here.
-      // The old creature asset was a Perch invention and made the products visibly
-      // unrelated before any text could be read.
-      PixelSessionIcon(status: session.status)
-      .frame(width: 20, alignment: .leading)
-      .padding(.top, 2)
+    VStack(alignment: .leading, spacing: 0) {
+      HStack(alignment: .top, spacing: 28) {
+        AgentGlyph(
+          agent: session.agent, pixel: 2,
+          isBreathing: session.isWorking, isFighting: false)
+          .frame(width: 20, alignment: .leading)
+          .padding(.top, 2)
 
-      VStack(alignment: .leading, spacing: 2) {
-        headline
+        VStack(alignment: .leading, spacing: 2) {
+          headline
 
-        if layout.showsPrompt, let turn = session.turn, !turn.isEmpty {
-          conversationSummary(turn)
-            .padding(.top, 3)
-        } else if layout.showsPrompt, let prompt = visiblePrompt {
-          Text(t("You: %@", prompt))
-            .font(Theme.prose(contentFontSize))
-            .foregroundStyle(Theme.secondary)
-            .lineLimit(1)
-            .truncationMode(.tail)
-            .padding(.top, 3)
-        }
+          if layout.showsPrompt, let turn = session.turn, !turn.isEmpty {
+            conversationSummary(turn)
+              .padding(.top, 3)
+          } else if layout.showsPrompt, let prompt = visiblePrompt {
+            Text(t("You: %@", prompt))
+              .font(Theme.prose(contentFontSize + 1))
+              .foregroundStyle(Theme.secondary)
+              .lineLimit(1)
+              .truncationMode(.tail)
+              .padding(.top, 3)
+          }
 
         // Vibe keeps the glanceable exchange above the expanded card. Opening a
         // session adds the readable transcript; it does not replace its summary.
-        if isOpen, layout.showsPrompt, let turn = session.turn, !turn.isEmpty {
-          TranscriptView(
-            turn: turn,
-            fallbackPrompt: visiblePrompt,
-            isFinished: !session.isWorking
-          )
-          .padding(.top, 3)
-          .padding(.bottom, 1)
-        }
+          if isOpen, layout.showsPrompt, let turn = session.turn, !turn.isEmpty {
+            TranscriptView(
+              turn: turn,
+              fallbackPrompt: visiblePrompt,
+              isFinished: !session.isWorking
+            )
+            .padding(.top, 3)
+            .padding(.bottom, 1)
+          }
 
         // A finished expanded transcript carries "Done" in its own header, as in
         // Vibe. Repeating it under the card turns one state into a stray extra row.
-        if showsActivityDetails,
-          (tasks.isEmpty || (isOpen && visiblePrompt == nil && session.turn?.isEmpty != false)),
-          !(isOpen && session.status == .idle && session.turn?.isEmpty == false)
-        {
-          activityLine
-        }
+          if showsActivityDetails,
+            !(isOpen && session.status == .idle && session.turn?.isEmpty == false)
+          {
+            activityLine
+          }
 
         // Vibe gives delegated work its own bounded card. Keeping the rows inside one
         // surface makes the parent/child relationship legible without widening the
         // island or turning every agent into another top-level session.
-        if isOpen, layout.showsTasks, showsSubagents, !session.children.isEmpty {
-          ChildAgentsSection(children: session.children, fontSize: contentFontSize)
-            .padding(.top, 4)
+          if isOpen, layout.showsTasks, showsSubagents, !session.children.isEmpty {
+            ChildAgentsSection(children: session.children, fontSize: contentFontSize)
+              .padding(.top, 4)
+          }
         }
 
-        if isOpen, layout.showsTasks, showsTasks, !tasks.isEmpty {
-          TaskBoardView(board: tasks)
-            // Vibe separates the glanceable exchange from the plan with a deliberate
-            // quiet band. Without it the task heading reads like a third title line.
-            .padding(.top, 32)
-            // Vibe's task list spans the card rather than inheriting the title's
-            // icon column. Pull the list back to the panel gutter.
-            .padding(.leading, -42)
-            .padding(.trailing, -42)
-        }
+        Spacer(minLength: 0)
       }
 
-      Spacer(minLength: 0)
+      if isOpen, layout.showsTasks, showsTasks, !tasks.isEmpty {
+        TaskBoardView(board: tasks)
+          .padding(.top, 10)
+      }
     }
     .padding(.vertical, 6)
     .padding(.horizontal, 0)
@@ -315,14 +308,14 @@ struct SessionCardView: View {
   private func conversationSummary(_ turn: TranscriptTurn) -> some View {
     if let prompt = displayableConversation(turn.prompt ?? visiblePrompt) {
       Text(t("You: %@", prompt))
-        .font(Theme.prose(contentFontSize))
+        .font(Theme.prose(contentFontSize + 1))
         .foregroundStyle(Theme.secondary)
         .lineLimit(1)
         .truncationMode(.tail)
     }
     if let reply = displayableConversation(turn.reply) {
       Text(reply)
-        .font(Theme.prose(contentFontSize))
+        .font(Theme.prose(contentFontSize + 1))
         .foregroundStyle(Theme.secondary)
         .lineLimit(1)
         .truncationMode(.tail)
@@ -362,7 +355,7 @@ struct SessionCardView: View {
         summary.isEmpty
           ? (session.isWorking ? t("Working…") : t("Waiting"))
           : summary)
-        .font(Theme.mono(contentFontSize - 1))
+        .font(Theme.prose(contentFontSize))
         .foregroundStyle(session.activitySummary.tint)
         .lineLimit(1)
         .truncationMode(.middle)
@@ -560,7 +553,7 @@ struct SessionCardTitleParts<SessionContent: View>: View {
         .lineLimit(1)
         .truncationMode(.tail)
     }
-    .font(Theme.label(fontSize + 1, .semibold))
+    .font(Theme.label(fontSize + 2, .semibold))
     .foregroundStyle(Theme.primary)
     .lineLimit(1)
   }
@@ -765,13 +758,14 @@ struct TagPill: View {
           .font(.system(size: 7, weight: .semibold))
       }
     }
-    .font(Theme.mono(9, .medium))
+    .font(Theme.label(10.5, .medium))
     .foregroundStyle(brandColor ?? Theme.secondary)
     .padding(.horizontal, 4)
     .padding(.vertical, 1.5)
     .frame(minWidth: minWidth)
     .background(
-      Capsule().fill((brandColor ?? Color.white).opacity(backgroundOpacity))
+      RoundedRectangle(cornerRadius: 4)
+        .fill((brandColor ?? Color.white).opacity(backgroundOpacity))
     )
     .opacity(opacity)
     .fixedSize()

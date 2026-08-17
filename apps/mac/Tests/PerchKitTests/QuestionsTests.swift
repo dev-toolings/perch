@@ -19,6 +19,14 @@ private let askInput = toolInput(
     ]}
     """)
 
+private let codexAskInput = toolInput(
+    """
+    {"questions": [
+      {"id": "database", "question": "Which database?", "header": "Database",
+       "options": [{"label": "Postgres", "description": "Relational"}]}
+    ]}
+    """)
+
 @Test func parsesTheQuestionsAndTheirOptions() throws {
     let request = try #require(AskUserQuestionRequest.parse(askInput))
 
@@ -41,6 +49,17 @@ private let askInput = toolInput(
     #expect(updated["answers"]?["Which features?"]?.stringValue == "Auth, Billing")
     // The original input has to survive: the tool still needs its questions.
     #expect(updated["questions"] != nil)
+}
+
+/// Codex names the same interaction `request_user_input` and identifies answers with the
+/// stable question id rather than the displayed sentence.
+@Test func codexQuestionIdsArePreservedWhenEncodingAnswers() throws {
+    let request = try #require(AskUserQuestionRequest.parse(codexAskInput))
+    let updated = request.updatedInput(
+        original: codexAskInput, answers: ["Which database?": ["Postgres"]])
+
+    #expect(request.questions[0].answerKey == "database")
+    #expect(updated["answers"]?["database"]?.stringValue == "Postgres")
 }
 
 @Test func everyQuestionMustBeAnsweredBeforeSubmitting() throws {
@@ -89,10 +108,29 @@ private let askInput = toolInput(
     }
 
     #expect(RequestKind.of(request("AskUserQuestion", askInput)) != .permission)
+    #expect(RequestKind.of(request("ask", askInput)) != .permission)
+    #expect(RequestKind.of(request("request_user_input", codexAskInput)) != .permission)
+    #expect(RequestKind.of(request("functions.request_user_input", codexAskInput)) != .permission)
     #expect(RequestKind.of(request("ExitPlanMode", toolInput(#"{"plan": "x"}"#))) != .permission)
     #expect(RequestKind.of(request("Bash", toolInput(#"{"command": "ls"}"#))) == .permission)
     // Right tool, unusable input: still answerable as a plain permission.
     #expect(RequestKind.of(request("AskUserQuestion", toolInput(#"{}"#))) == .permission)
+}
+
+@Test func observationOnlyQuestionsStillNeedAReadOnlyCard() {
+    var payload = ClaudeHookPayload()
+    payload.toolName = "AskUserQuestion"
+    payload.toolInput = askInput
+
+    let question = PerchRequest(
+        token: "t", event: "PermissionRequest", wantsDecision: false,
+        payload: payload, agent: .copilot)
+    let ordinaryEvent = PerchRequest(
+        token: "t", event: "PostToolUse", wantsDecision: false,
+        payload: payload, agent: .copilot)
+
+    #expect(question.presentsReadOnlyQuestion)
+    #expect(!ordinaryEvent.presentsReadOnlyQuestion)
 }
 
 /// The answer travels inside the decision, not beside it.

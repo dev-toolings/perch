@@ -347,3 +347,32 @@ public struct UsageLimitsReader: Sendable {
         }
     }
 }
+
+public enum UsageReadingSelection {
+    public static func newest(
+        _ first: UsageLimitsReader.Reading?, _ second: UsageLimitsReader.Reading?
+    ) -> UsageLimitsReader.Reading? {
+        guard let first else { return second }
+        guard let second else { return first }
+        switch (first.updatedAt, second.updatedAt) {
+        case let (firstDate?, secondDate?): return firstDate >= secondDate ? first : second
+        case (.some, nil): return first
+        case (nil, .some): return second
+        case (nil, nil): return first
+        }
+    }
+}
+
+/// Manual provider selection for the expanded usage header.
+///
+/// The header is a control, not a slideshow: a click advances exactly once, and a
+/// provider disappearing between refreshes recovers to the first available reading.
+public enum UsageProviderCycle {
+    public static func next(
+        after current: UsageStore.Agent?, in available: [UsageStore.Agent]
+    ) -> UsageStore.Agent? {
+        guard let first = available.first else { return nil }
+        guard let current, let index = available.firstIndex(of: current) else { return first }
+        return available[(index + 1) % available.count]
+    }
+}

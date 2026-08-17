@@ -101,6 +101,11 @@ final class AppModel {
       // second is still on screen draws a blocked session as working, which turns off
       // the one signal that says it needs you.
       guard !permissions.queue.contains(where: { $0.sessionId == session }) else { return }
+      guard !pending.isObservationOnly else {
+        cancelFollowUp(kind: "approval", sessionId: session)
+        pushDedup.endEpisode(for: session)
+        return
+      }
       activity.answered(sessionId: session)
       cancelFollowUp(kind: "approval", sessionId: session)
       // The session stopped waiting — the next time it blocks is a new episode,
@@ -339,6 +344,7 @@ final class AppModel {
       if isVisible {
         panelReadGeneration += 1
         transcripts.start { [weak self] in await self?.refreshTranscripts() }
+        usage.reloadLimits(forceNetwork: true)
         // The quota was only ever re-read when a hook fired, so a panel opened on a
         // quiet machine showed whatever the last tool call left behind — minutes
         // old, and looking live. It moves while nothing here is running, so it is
@@ -387,14 +393,6 @@ final class AppModel {
       width: preferences.notchWidthAdjustment,
       height: preferences.notchHeightAdjustment)
     notch.applyInteractionPreferences(preferences)
-    notch.shouldSuppressHover = { [weak self] in
-      guard let self, quiet.smartSuppression else { return false }
-      scenes.refresh()
-      guard let frontmost = scenes.scene.frontmostBundleId else { return false }
-      return activity.visibleSessions.contains {
-        TerminalJump.bundleId(for: $0.client) == frontmost
-      }
-    }
     notch.frontmostAppIsFullscreen = {
       SceneMonitor.frontmostAppIsFullscreen()
     }
@@ -691,6 +689,24 @@ final class AppModel {
     // swept is not a second chance to open the notch over someone's full screen.
     if !abandoned.isEmpty, notch.state == .alert {
       refreshAlertPresentation()
+    }
+
+    if request.presentsReadOnlyQuestion {
+      if !permissions.hasPending(matching: request) {
+        let requestKind = RequestKind.of(request)
+        permissions.observe(request)
+        if announce(.questionAsked, client: request.client) == .full {
+          notch.showAlert(
+            true, extraHeight: extraHeight(for: requestKind),
+            extraWidth: extraWidth(for: requestKind),
+            sessionId: request.payload.sessionId, kind: .question)
+        } else {
+          notch.flashActivity()
+        }
+        maybePush(.questionAsked, requestKind: requestKind, for: request)
+        scheduleBlockingFollowUp(kind: .questionAsked, for: request)
+      }
+      return PerchResponse()
     }
 
     guard request.wantsDecision else { return PerchResponse() }
@@ -1244,7 +1260,7 @@ final class AppModel {
       let plan =
         board.isEmpty
         ? ""
-        : "  · tasks \(board.completed)/\(board.tasks.count) done, \(board.inProgress) running"
+        : "  · tasks \(board.completed)/\(board.total) done, \(board.inProgress) running"
       lines.append(
         "  \(session.id.prefix(8))  \(session.agent.displayName)\(mode)  \(project)  [\(session.status.rawValue)]  “\(session.title)”  \(session.lastDetail)\(subagents)\(plan)  · \(jump)"
       )

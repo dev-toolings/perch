@@ -13,6 +13,18 @@ import Testing
   #expect(preferences.sanitised.notchHeightAdjustment == -12)
 }
 
+/// Hover activation is deliberately immediate, including for settings written by an
+/// older build that persisted the former flyover delay.
+@Test func hoverDelayIsAlwaysRemoved() {
+  var preferences = Preferences(hoverDelay: 0.75)
+
+  #expect(Preferences().hoverDelay == 0)
+  #expect(preferences.sanitised.hoverDelay == 0)
+
+  preferences.hoverDelay = 0.25
+  #expect(preferences.sanitised.hoverDelay == 0)
+}
+
 /// A ten-second timeout would hide every session almost immediately.
 @Test func idleTimeoutIsClampedButNeverStillMeansNever() {
   var preferences = Preferences()
@@ -219,10 +231,12 @@ import Testing
   #expect(try !JSONDecoder().decode(Preferences.self, from: off).launchAtLogin)
 }
 
-@Test func cleanDropsWhatYouAlreadyKnowAndKeepsWhatChanged() {
-  #expect(!PanelLayout.clean.showsPrompt)
-  #expect(!PanelLayout.clean.showsTasks)
+@Test func panelDensityControlsTheCompactStripRatherThanExpandedContent() {
+  #expect(PanelLayout.clean.showsPrompt)
+  #expect(PanelLayout.clean.showsTasks)
   #expect(PanelLayout.detailed.showsPrompt)
   #expect(PanelLayout.detailed.showsTasks)
+  #expect(!PanelLayout.clean.showsCompactDetails)
+  #expect(PanelLayout.detailed.showsCompactDetails)
   #expect(Preferences().layout == .clean)
 }

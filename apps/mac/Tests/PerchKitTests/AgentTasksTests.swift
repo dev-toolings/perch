@@ -11,7 +11,7 @@ private func file(_ id: String, _ subject: String, _ status: String) -> Data {
         """.utf8)
 }
 
-@Test func aBoardReadsWhatIsHappeningFirstAndWhatIsDoneLast() {
+@Test func aBoardKeepsOnlyUnfinishedTasksVisible() {
     let board = TaskBoard.make(from: [
         file("0", "Safe defaults", "completed"),
         file("4", "Writes plus human approval", "in_progress"),
@@ -20,11 +20,24 @@ private func file(_ id: String, _ subject: String, _ status: String) -> Data {
         file("6", "Project registry", "pending"),
     ])
 
-    #expect(board.tasks.map(\.id) == ["4", "5", "6", "0", "1"])
+    #expect(board.tasks.map(\.id) == ["4", "5", "6"])
     #expect(board.inProgress == 1)
     #expect(board.open == 2)
     #expect(board.completed == 2)
+    #expect(board.total == 5)
     #expect(board.current?.subject == "Writes plus human approval")
+}
+
+@Test func anEntirelyCompletedBoardHasNoVisibleRows() {
+    let board = TaskBoard.make(from: [
+        file("1", "First", "completed"),
+        file("2", "Second", "completed"),
+    ])
+
+    #expect(board.tasks.isEmpty)
+    #expect(board.isEmpty)
+    #expect(board.completed == 2)
+    #expect(board.total == 2)
 }
 
 /// Ids are strings on disk but numbers in meaning. Sorted as text, step 10 lands between
@@ -43,7 +56,7 @@ private func file(_ id: String, _ subject: String, _ status: String) -> Data {
         file("3", "Also fine", "pending"),
     ])
 
-    #expect(board.tasks.map(\.id) == ["3", "1"])
+    #expect(board.tasks.map(\.id) == ["3"])
 }
 
 /// A status this version has never seen is still a task on the list.
@@ -77,6 +90,7 @@ private func file(_ id: String, _ subject: String, _ status: String) -> Data {
     try Data("7".utf8).write(to: directory.appendingPathComponent(".highwatermark"))
 
     let board = TaskReader.board(for: session, root: root)
-    #expect(board.tasks.map(\.id) == ["2", "1"])
+    #expect(board.tasks.map(\.id) == ["2"])
     #expect(board.completed == 1)
+    #expect(board.total == 2)
 }

@@ -37,17 +37,17 @@ import Testing
     #expect(!rule.matches(directory: "/lab/memory-service", prompt: nil))
 }
 
-@Test func presetsShipDisabled() {
+@Test func presetsShipEnabledLikeVibeIsland() {
     let policy = AdmissionPolicy()
     #expect(!policy.presetRules.isEmpty)
-    #expect(policy.presetRules.allSatisfy { !$0.enabled })
-    #expect(!policy.isSilenced(directory: "/lab/x", prompt: "## Memory Writing Agent"))
+    #expect(policy.presetRules.allSatisfy { $0.enabled })
+    #expect(policy.isSilenced(directory: "/lab/x", prompt: "## Memory Writing Agent"))
 }
 
-@Test func enablingAPresetSilencesIt() {
+@Test func disablingAPresetAdmitsIt() {
     var policy = AdmissionPolicy()
-    policy.setEnabled(true, id: "preset.claude-mem")
-    #expect(policy.isSilenced(directory: "/lab/x", prompt: "## Memory Writing Agent\ngo"))
+    policy.setEnabled(false, id: "preset.claude-mem")
+    #expect(!policy.isSilenced(directory: "/lab/x", prompt: "## Memory Writing Agent\ngo"))
     #expect(!policy.isSilenced(directory: "/lab/x", prompt: "fix the auth bug"))
 }
 

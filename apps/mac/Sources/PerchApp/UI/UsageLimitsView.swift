@@ -151,6 +151,9 @@ struct UsageLimitsStrip: View {
     /// hardware in between means one view cannot draw them all.
     var dropFirst = 0
     var maximum = 2
+    /// The menu-bar strip stays compact and monospaced; the expanded header uses SF.
+    var fontSize: CGFloat = 9
+    var usesSystemFont = false
     /// Whether to say when the window turns over.
     ///
     /// Off beside the cutout. `5h 2% 4h41m` is eleven characters of menu bar per window,
@@ -170,13 +173,13 @@ struct UsageLimitsStrip: View {
                 ForEach(windows) { window in
                     HStack(spacing: Self.spacing) {
                         Text(window.shortLabel)
-                            .font(Theme.mono(9))
+                            .font(textFont())
                             .foregroundStyle(Theme.tertiary)
                         // The colour always follows what is *spent*, whichever number is
                         // printed: red has one meaning here, and it is not "12". A stale
                         // window has no colour to earn — there is no number under it.
                         Text(percentage(window.window))
-                            .font(Theme.mono(9, .semibold))
+                            .font(textFont(.semibold))
                             .foregroundStyle(
                                 window.window.isStale()
                                     ? Theme.tertiary : tint(window.window.utilization ?? 0))
@@ -185,7 +188,7 @@ struct UsageLimitsStrip: View {
                         // actually have at 90%, which is "how long until it comes back".
                         if showsReset, let left = window.window.timeLeft() {
                             Text(left)
-                                .font(Theme.mono(9))
+                                .font(textFont())
                                 .foregroundStyle(Theme.tertiary)
                                 .monospacedDigit()
                         }
@@ -249,10 +252,14 @@ struct UsageLimitsStrip: View {
     /// measurement, so the two cannot disagree.
     static let spacing: CGFloat = 3
 
+    private func textFont(_ weight: Font.Weight = .regular) -> Font {
+        usesSystemFont ? Theme.prose(fontSize, weight) : Theme.mono(fontSize, weight)
+    }
+
     private func tint(_ used: Double) -> Color {
         switch used {
         case ..<75: return Theme.active
-        case ..<95: return Theme.warning
+        case ..<88: return Theme.warning
         default: return Theme.danger
         }
     }

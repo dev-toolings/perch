@@ -45,15 +45,17 @@ extension AgentTask: Decodable {
     }
 }
 
-/// A session's task list, ordered the way it is read rather than the way it is stored.
+/// A session's unfinished task list and progress counts.
 public struct TaskBoard: Sendable, Equatable {
-    /// Display order: what is happening now, then what is next, then what is done.
+    /// Display order: what is happening now, then what is next. Completed tasks are
+    /// counted but removed from the island once they are done.
     public var tasks: [AgentTask]
     public var completed: Int
     public var inProgress: Int
     public var open: Int
 
     public var isEmpty: Bool { tasks.isEmpty }
+    public var total: Int { completed + inProgress + open }
     /// The task the agent says it is on, which is the one line worth showing collapsed.
     public var current: AgentTask? { tasks.first { $0.status == .inProgress } }
 
@@ -88,7 +90,7 @@ public struct TaskBoard: Sendable, Equatable {
         let done = inStatus(.completed)
 
         return TaskBoard(
-            tasks: running + pending + done,
+            tasks: running + pending,
             completed: done.count,
             inProgress: running.count,
             open: pending.count)

@@ -62,6 +62,15 @@ final class PermissionBroker {
         }
     }
 
+    /// Displays a question whose harness owns the answer. There is deliberately no
+    /// continuation: dismissing the card only returns the user to that harness.
+    func observe(_ request: PerchRequest) {
+        guard !hasPending(matching: request) else { return }
+        let pending = PendingPermission(observing: request)
+        queue.append(pending)
+        scheduleExpiry(for: pending)
+    }
+
     func resolve(
         _ pending: PendingPermission,
         with decision: PermissionDecision,

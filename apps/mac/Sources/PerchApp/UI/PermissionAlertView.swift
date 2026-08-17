@@ -154,7 +154,7 @@ struct PermissionAlertView: View {
                 ) {
                     decide(.allow, .session)
                 }
-                .help("Allows \(rule) for the rest of this conversation")
+                .help(t("Allows %@ for the rest of this conversation", rule))
 
                 ApprovalButton(
                     label: t("Always"), foreground: Theme.active.opacity(0.75),
@@ -163,7 +163,7 @@ struct PermissionAlertView: View {
                 ) {
                     decide(.allow, .localSettings)
                 }
-                .help("Adds \(rule) to this project's .claude/settings.local.json")
+                .help(t("Adds %@ to this project's .claude/settings.local.json", rule))
             }
 
             ApprovalButton(

@@ -1,0 +1,1051 @@
+/* ============================================================
+   Localizable.strings (繁體中文)
+   Vibe Island — macOS Notch 狀態面板
+   ============================================================ */
+
+/* 引導頁 */
+"onboarding.tagline" = "為你的 AI 程式設計工具打造的動態島";
+"onboarding.feature.permissions" = "權限一目了然";
+"onboarding.feature.jump" = "點按即可跳轉到正確的視窗";
+"onboarding.feature.zeroConfig" = "零設定，開箱即用";
+"onboarding.start" = "開始使用";
+"onboarding.contextSwitches" = "上下文切換";
+"onboarding.agentsRunning" = "你有 4 個 Agent 正在執行。";
+"onboarding.oneWaiting" = "其中一個一直在等你。";
+"onboarding.15hours" = "那是每週 15 小時。";
+"onboarding.next" = "下一步";
+"onboarding.hooksHint" = "你可以在設定中管理各個 CLI 的 Hooks。";
+"onboarding.everythingOneGlance" = "一切，盡收眼底。";
+"onboarding.approveWithout" = "無需切換即可核准。";
+"onboarding.jumpToTab" = "精確跳轉到目標標籤頁。";
+"onboarding.yourEnvironment" = "你的環境";
+"onboarding.agents" = "AI Agent";
+"onboarding.terminals" = "終端機與 IDE";
+"onboarding.detected" = "已偵測";
+"onboarding.allConfigured" = "一切都已設定完成，無需任何操作。";
+"onboarding.allSet" = "全部就緒";
+"onboarding.autoConfigured" = "Vibe Island 已自動偵測並設定你的工具。";
+"onboarding.launchAtLoginSubtitle" = "登入時自動啟動";
+"onboarding.chooseVibe" = "選擇你的風格";
+"onboarding.readyToLand" = "準備登島了嗎？";
+"onboarding.purchaseNoSubscriptions" = "單次購買 · 無訂閱";
+"onboarding.paywallFeature.permission" = "再也不錯過任何權限請求";
+"onboarding.paywallFeature.jump" = "一鍵跳轉到任何終端機";
+"onboarding.paywallFeature.agents" = "所有 Agent，盡在瀏海";
+"onboarding.welcomeAboard" = "歡迎登島";
+"onboarding.startVibing" = "開始使用";
+"onboarding.readyRestartHint" = "重新啟動任何執行中的 session，或開啟一個新的。";
+"onboarding.startTrial" = "開始 2 天免費試用";
+"onboarding.getEarlyBird" = "取得早鳥價 — %@";
+"onboarding.alreadyHaveKey" = "已經有授權碼了嗎？";
+"onboarding.checkEmail" = "請查看電子郵件中的授權碼";
+"onboarding.pasteKey" = "貼上授權碼";
+"onboarding.reopenCheckout" = "重新開啟結帳";
+"onboarding.startTrialInstead" = "改為開始試用";
+
+/* 付費牆共享 (Onboarding + LicenseWindow) */
+"paywall.tier.1Mac" = "1 部 Mac";
+"paywall.tier.2Macs" = "2 部 Mac";
+"paywall.tier.3Macs" = "3 部 Mac";
+"paywall.earlyBird.banner" = "早鳥 · 限時";
+"paywall.earlyBird.locked" = "早鳥價已鎖定於你的安裝";
+"paywall.earlyAdopterPriceLockedPrefix" = "已為你鎖定早期採用者價格：";
+"paywall.getLicense.withPrice" = "取得授權 · %@";
+
+/* LicenseWindow V3 購買為主 */
+"paywall.chooseYourPlan" = "選擇你的方案";
+"paywall.chooseYourPlan.desc" = "單次購買，含 1 年更新。App 永久可用。早鳥折扣已鎖定於你的安裝。";
+
+/* LicenseWindow V4 啟用為主（結帳後） */
+"paywall.badge.awaitingKey" = "等待授權碼";
+"paywall.pasteYourKey" = "貼上你的授權碼";
+"paywall.pasteYourKey.desc" = "結帳後我們已將授權碼寄到你的電子郵件。請貼到下方以完成啟用。";
+"paywall.yourPlan" = "你的方案";
+"paywall.changePlan" = "變更";
+"paywall.resendEmail" = "沒收到電子郵件？重新開啟結帳";
+"paywall.browsePlans" = "重新瀏覽方案";
+
+/* 權限核准 */
+"approval.operateInTerminal" = "在終端機中繼續";
+"approval.goToTerminal" = "前往終端機";
+"approval.continueInApp" = "在 %@ 中繼續";
+"approval.reviewInTerminal" = "在終端機中審核";
+"approval.reviewInApp" = "在 %@ 中審核";
+"approval.goToApp" = "前往 %@";
+"approval.deny" = "拒絕";
+"approval.denyAll" = "全部拒絕";
+"approval.allow" = "允許一次";
+"codex.approval.allowThisConversation" = "允許此對話";
+"codex.approval.allowForAllSites" = "允許所有網站";
+"approval.always" = "永遠允許";
+"approval.allowAll" = "全部允許";
+"approval.pendingCount" = "%lld 個待處理";
+"approval.bypass" = "Bypass";
+"approval.autoMode" = "Auto";
+"codex.approval.bypassThisTurn" = "略過本輪審批";
+"codex.turnBypass.active" = "BYPASS";
+"codex.turnBypass.approvalFailed" = "Bypass 未能核准下一個請求，請在 Codex 中繼續。";
+"codex.turnBypass.verificationFailed" = "下一個請求的狀態不確定，請在 Codex 中確認。";
+"bypass.active.label" = "BYPASS";
+"approval.detailsUnavailable" = "（%@ - 詳情不可用）";
+"approval.detail.moreLines" = "+%lld 行";
+"approval.detail.newFile" = "新檔案";
+
+/* 問答 / AskUserQuestion */
+"question.waiting.agent" = "%@ 正在等待回答";
+"question.answerInTerminal" = "請在終端機中回答";
+"question.agentQuestion" = "%@ 的提問";
+"question.count" = "（%lld 個問題）";
+"question.multiSelect" = "多選";
+"question.confirmSelection" = "確認選擇（%lld）";
+"question.submitAll" = "送出所有回答";
+"question.answerAllWarning" = "請回答所有問題";
+"question.wizard.progress" = "第 %lld / %lld 題";
+"question.wizard.previous" = "上一題";
+"question.wizard.next" = "下一題";
+"question.wizard.submit" = "送出";
+"question.custom.placeholder" = "輸入或貼上回答...";
+"question.custom.submit" = "送出回答";
+
+/* 退出計畫模式 */
+"exitPlan.title" = "退出計畫模式";
+"exitPlan.tag" = "計畫";
+"exitPlan.bypass" = "Bypass 權限";
+"exitPlan.bypassDesc" = "略過所有權限提示";
+"exitPlan.autoMode" = "自動模式";
+"exitPlan.autoModeDesc" = "Claude 評估每個操作";
+"exitPlan.manualApprove" = "手動核准";
+"exitPlan.manualApproveDesc" = "逐一審核每個操作 · 最安全";
+"exitPlan.feedbackPlaceholder" = "告訴 %@ 要修改什麼…";
+"exitPlan.requestedPermissions" = "請求的權限：";
+
+/* 設定選單 */
+"menu.launchAtLogin" = "登入時啟動";
+"menu.display" = "顯示器";
+"menu.mainDisplay" = "主顯示器";
+"menu.followFocus" = "跟隨焦點";
+"menu.auto" = "自動";
+"menu.builtIn" = "內建";
+"menu.main" = "主螢幕";
+"menu.layout" = "版面配置";
+"layout.clean" = "簡潔";
+"layout.detailed" = "詳細";
+"layout.cleanDesc" = "為選單列騰出更多空間";
+"layout.detailedDesc" = "session 標題與狀態一目了然";
+"menu.modifierKey" = "輔助按鍵";
+"menu.labs" = "實驗室";
+"menu.labs.warpTabJump" = "Warp 標籤頁跳轉";
+"menu.helpImprove" = "協助改進 Vibe Island";
+"menu.exportDiagnostics" = "匯出診斷報告";
+"menu.exportDiagnosticsSaveTitle" = "儲存診斷報告";
+"menu.exportDiagnosticsFooter" = "包含系統資訊與診斷記錄。部分路徑和已識別的敏感欄位會被遮蔽；仍可能保留少量事件或指令片段。分享前請檢查內容。";
+"menu.settings" = "設定…";
+"menu.checkUpdates" = "檢查更新";
+"settings.releaseNotes.title" = "更新日誌";
+"settings.releaseNotes.subtitle" = "重新查看此版本的更新內容";
+"releaseNotes.viewAllVersions" = "查看所有版本";
+"releaseNotes.loadError" = "無法載入更新日誌";
+"settings.autoChecks.title" = "自動檢查更新";
+"settings.autoChecks.subtitle" = "關閉後，只有手動「檢查更新」才會尋找新版本";
+"settings.autoInstall.title" = "自動安裝更新";
+"settings.autoInstall.subtitle" = "關閉後，更新就緒時面板上會顯示 ↑ 按鈕";
+"update.pill.label" = "更新";
+"menu.creator" = "開發者";
+"menu.testSentry" = "測試 Sentry";
+"menu.testSentryDetail" = "傳送測試事件";
+"menu.debugLayout" = "偵錯版面配置";
+"menu.quit" = "結束 Vibe Island";
+"settings.removeAutoConfig" = "移除所有自動設定";
+"settings.removeAutoConfigMessage" = "這會移除所有 CLI 工具中的 Hooks、解除安裝 IDE 擴充功能並刪除執行時檔案。你的 CLI 工具會回復為預設狀態。";
+"settings.removeAutoConfigDone" = "所有自動設定已移除。你現在可以結束並刪除 App。";
+"menu.sentryTestTitle" = "Sentry 測試";
+"menu.sentryTestMessage" = "測試事件已傳送！請稍後查看你的 Sentry 儀表板。";
+"menu.ok" = "好";
+
+/* Session */
+"session.showAll" = "顯示全部 %lld 個 session";
+"session.you" = "你：";
+"session.restartForLive" = "重新啟動 session 以啟用即時追蹤";
+"session.restartBannerTitle" = "重新啟動你的 session";
+"session.restartBannerSubtitle" = "Hooks 剛安裝完成 — 重新啟動執行中的 session 以連線";
+"session.codexHookTrustBannerTitle" = "Codex 已更新 — 請確認授權";
+"session.codexHookTrustBannerSubtitle" = "Codex 更新了安全機制。請確認信任 Vibe Island 一次，即可繼續進行 session 追蹤與核准。";
+"session.codexHookTrustBannerAuthorizing" = "正在確認授權…";
+"session.codexHookTrustBannerFailed" = "無法自動確認。請打開設定手動授權。";
+"session.codexHookTrustBannerManualTitle" = "Codex 需要手動信任";
+"session.codexHookTrustBannerManualSubtitle" = "• Codex CLI：執行 /hooks → 信任 Vibe Island\n• Codex Desktop：設定 → Hooks → 信任 Vibe Island";
+"session.codexHookTrustBannerManualConfirm" = "知道了";
+"settings.codex.trust.manualStatus" = "需要手動信任";
+"settings.codex.trust.manualTooltip" = "Codex 需要手動信任。\n• Codex CLI：執行 /hooks → 信任 Vibe Island\n• Codex Desktop：設定 → Hooks → 信任 Vibe Island\nVibe Island 會自動偵測。";
+"session.ideExtensionBannerTitle" = "安裝 %@ 擴充功能？";
+"session.ideExtensionBannerSubtitle" = "啟用精確的終端機標籤頁跳轉";
+"session.kittyConfigBannerTitle" = "為 Kitty 啟用精確跳轉";
+"session.kittyConfigBannerSubtitle" = "在 kitty.conf 中加入 2 行 — 重新啟動 Kitty 以套用";
+"session.kittyConfigRestartHint" = "Kitty 設定已更新 — 按 Cmd+Q 結束 Kitty 以套用";
+"session.interrupted" = "已中斷";
+"session.doneTag" = "完成";
+"session.statusWarning.title" = "需要注意";
+"paseo.syncFailed.title" = "Paseo 仍需處理";
+"paseo.syncFailed.detail" = "Paseo 未能確認此請求。請在 Paseo 中完成處理。";
+"codex.usageLimit.atTime" = "你已達到使用上限。請前往 chatgpt.com/codex/settings/usage 購買更多額度，或在 %@ 後再試。";
+"codex.usageLimit.later" = "你已達到使用上限。請前往 chatgpt.com/codex/settings/usage 購買更多額度，或稍後再試。";
+"session.ready" = "就緒";
+"session.mayNeedAttention" = "可能需要注意";
+"session.subagents" = "子 Agent";
+"session.subagentMore.running" = "%lld 個執行中";
+"session.subagentMore.done" = "%lld 個完成";
+"child_agents.running_%d" = "執行 %d 個 Agent";
+"child_agents.running_one" = "執行 1 個 Agent";
+"child_agents.requester_from" = "來自 %@";
+"child_agents.generic_requester" = "子 Agent";
+"session.compacting" = "壓縮上下文中…";
+"session.compactingWithElapsed" = "壓縮中 · %@";
+"session.compactComplete" = "對話已壓縮";
+"session.waitingForSession" = "等待 session";
+"session.emptyFirstInstall" = "小島等待中";
+"session.emptyFirstInstallHint" = "重新啟動終端機或開啟新的 session";
+"session.hideFromPanel" = "從面板隱藏此 session";
+
+/* 任務 */
+"tasks.title" = "任務";
+"tasks.stats" = "（%lld 個完成，%lld 個進行中，%lld 個待處理）";
+"tasks.hiddenCompleted" = "… +%lld 個已完成";
+"tasks.hiddenActive" = "… +%lld 個未完成";
+
+/* 內容（Header） */
+"content.session" = "個 session";
+"content.sessions" = "個 session";
+"content.sessionCount.one" = "%lld 個 session";
+"content.sessionCount.other" = "%lld 個 session";
+
+/* 測試版過期 */
+"beta.expiredTitle" = "測試版已過期";
+"beta.expiredMessage" = "此測試版已於 %@ 過期。\n\n請點按「檢查更新」以取得最新版本。";
+"beta.checkUpdate" = "檢查更新";
+"beta.quit" = "結束";
+
+/* 授權 */
+"menu.license" = "授權";
+"payment.trouble.hint" = "付款遇到問題？請點按聯絡支援";
+"license.trial" = "試用";
+"license.trialDays" = "試用中（剩餘 %lld 天）";
+"license.trialEnded" = "試用已結束";
+"license.issue" = "授權異常";
+"license.expired" = "已過期";
+"license.licensed" = "已授權";
+"license.activateTitle" = "啟用 Vibe Island";
+"license.activateDesc" = "輸入購買確認電子郵件中的授權碼：";
+"license.activeTitle" = "授權已啟用";
+"license.activeDesc" = "感謝你支持 Vibe Island！";
+"license.autoCleanedHint" = "你先前的裝置已自動釋出。";
+"license.getLicense" = "取得授權…";
+"license.activate" = "啟用";
+"license.unlockFullControl" = "解鎖完整控制";
+"license.unlockDetail" = "跳轉、核准與快速鍵";
+"license.unlockDetailWithSessions" = "跳轉、核准、快速鍵，外加 +%lld 個 session";
+"license.lockedSessionsSummary" = "取得授權後可多 +%lld 個 session";
+"license.deactivate" = "停用授權";
+"license.manageDevices" = "管理裝置";
+"license.limitTitle" = "已達啟用上限";
+"license.limitDesc" = "你的授權名額已全部使用中。為這部 Mac 加購一個名額，或停用一部不再使用的裝置以釋出名額。";
+"license.useDifferentKey" = "改用其他授權碼";
+"license.reactivateTitle" = "重新啟用你的授權";
+"license.reactivateDesc" = "重新輸入授權碼即可在這部 Mac 上重新啟用 Vibe Island。你可以在購買確認電子郵件中找到它。";
+"license.devices.title" = "裝置";
+"license.devices.used" = "已使用 %1$d / %2$d";
+"license.devices.thisMac" = "本機";
+"license.devices.deactivate" = "停用";
+"license.devices.retry" = "重試";
+"license.devices.loadFailed" = "無法載入裝置";
+"license.devices.slotFreed" = "已釋出 1 個名額 — 請重新啟用";
+"license.devices.addMac" = "再加一台 Mac";
+"license.devices.addMacFailed" = "無法開啟結帳頁，請重試。";
+"license.devices.confirmTitle" = "要停用這部裝置嗎？";
+"license.deactivateConfirm.title" = "要停用這部 Mac 嗎？";
+"license.deactivateConfirm.body" = "名額將被釋放，可用於另一部 Mac。";
+"license.deactivateConfirm.keyHint" = "請先保存 —— 之後不再顯示";
+"license.deactivateConfirm.purchasedWith" = "購買信箱 %@";
+"license.deactivateConfirm.copyAction" = "複製並停用";
+"license.deactivateConfirm.copyFailed" = "無法複製授權碼。請重試，或用其他方式保存後再繼續。";
+"license.deactivateConfirm.withoutCopyingAction" = "不複製，仍然停用";
+"license.deactivateConfirm.plainAction" = "停用";
+"license.deactivateConfirm.cancel" = "取消";
+"license.buyButton" = "購買授權 — $19.99";
+"license.keyPlaceholder" = "輸入授權碼";
+"license.activating" = "啟用中…";
+"license.error.invalidKey" = "無效的授權碼";
+"license.error.network" = "網路錯誤，請再試一次";
+"license.error.persistence" = "遠端啟用已成功，但 Vibe Island 無法在這部 Mac 上儲存啟用狀態。請重試或重新安裝 App。";
+"license.error.keychainLocked" = "啟用已成功，但登入鑰匙圈已鎖定，Vibe Island 無法儲存啟用狀態。請重新開機後重新啟用；若仍不行，開啟「鑰匙圈存取」解鎖「登入」鑰匙圈。";
+"license.error.wrongProduct" = "此授權碼對應的是其他產品";
+"license.error.activationLimit" = "已達啟用上限。請先停用另一部裝置。";
+"license.error.disabled" = "此授權碼已被停用";
+"license.expiredBanner" = "試用已過期";
+"license.expiredBannerSub" = "啟用授權以繼續使用";
+
+/* Edition 彩蛋 — 標題在所有語言皆保留英文 */
+"edition.title.founder" = "FOUNDER";
+"edition.title.pioneer" = "PIONEER";
+"edition.title.explorer" = "EXPLORER";
+"edition.title.voyager" = "VOYAGER";
+"edition.title.islander" = "ISLANDER";
+
+/* 設定 - 行為 */
+"settings.autoCollapseOnLeave" = "滑鼠離開時自動收合";
+"settings.taskCompleteDwell" = "自動顯示停留時間";
+"settings.taskCompleteDwell.help" = "面板為完成與警告顯示保持開啟的時間長度。按 ESC 可提早關閉。";
+"settings.dismissOnOutsideClick" = "點按面板外時收起自動顯示";
+"settings.dismissOnOutsideClick.help" = "在瀏海面板外點按任何位置，會立即關閉完成與警告顯示，忽略剩餘的停留時間。";
+"settings.autoExpandOnAgentTeamComplete" = "Agent Team 成員完成時自動展開面板";
+"settings.autoExpandOnAgentTeamComplete.help" = "預設關閉 — 隊友與子 Agent 完成時不會將面板帶到前景，也不會播放完成音效。";
+"settings.childAgentNotificationTiming" = "Subagent 與 Agent Team 通知";
+"settings.childAgentNotificationTiming.rootResponses" = "當主 Agent 回覆時";
+"settings.childAgentNotificationTiming.allFinished" = "所有 Subagent 與隊友完成後";
+"settings.childAgentNotificationTiming.everyCompletion" = "每個 Subagent 或隊友完成時";
+"settings.notifications.completion" = "完成通知";
+"settings.notificationCompletion.footer" = "核准與提問一律立即顯示。";
+"settings.autoExpandOnTaskComplete" = "為完成通知展開面板";
+"settings.autoExpandOnTaskComplete.help" = "關閉後面板保持收合，改為顯示微微發光。";
+"settings.attentionReminder.section" = "後續提醒";
+"settings.attentionReminder.delay" = "再次提醒";
+"settings.attentionReminder.help" = "在所選延遲後再次提醒一次。狀態變更會取消；已在對應工作階段前景時保持安靜。";
+"settings.attentionReminder.include" = "啟用時包括";
+"settings.attentionReminder.needsResponse" = "需要你回應";
+"settings.attentionReminder.needsResponseHelp" = "核准與問題";
+"settings.attentionReminder.completedTasks" = "已完成任務";
+"settings.attentionReminder.completedTasksHelp" = "僅在結果仍未讀時";
+"settings.attentionReminder.off" = "關閉";
+"settings.attentionReminder.10min" = "10 分鐘後";
+"settings.attentionReminder.30min" = "30 分鐘後";
+"settings.attentionReminder.1hour" = "1 小時後";
+"settings.quietDuringFocus" = "專注模式";
+"settings.quietScenes.section" = "靜音情境";
+"settings.quietScenes.intro" = "只要下列任一情境啟用就保持安靜 — 不自動展開、不出聲，核准也包含在內。完成時仍會以小圓點標示。";
+"settings.quiet.screenObscured" = "螢幕鎖定或睡眠";
+"settings.quiet.screenCapture" = "螢幕錄製或共享";
+"focusMode.doNotDisturb" = "勿擾模式";
+"focusMode.personal" = "個人";
+"focusMode.work" = "工作";
+"focusMode.sleep" = "睡眠";
+"focusMode.reduceInterruptions" = "減少干擾";
+"focusMode.reading" = "閱讀";
+"focusMode.gaming" = "遊戲";
+"focusMode.driving" = "開車";
+"focusMode.custom" = "自訂專注模式";
+"settings.behaviour.interaction" = "互動";
+"settings.disableClickToJump" = "停用點按跳轉";
+"settings.disableClickToJump.help" = "啟用後，點按 session 不會切換到對應的終端機或 IDE。";
+
+/* 設定 - 用量 */
+"settings.usage" = "用量";
+"settings.usage.section" = "用量限額";
+
+/* 設定 - 顯示 */
+"settings.display" = "顯示";
+"settings.contentFontSize" = "內容字型大小";
+"settings.maxPanelHeight" = "面板最大高度";
+"settings.completionHeight" = "完成卡片高度";
+"settings.maxPanelWidth" = "面板最大寬度";
+"settings.tuning" = "微調";
+"settings.notchHeight" = "瀏海高度";
+"settings.notchWidth" = "瀏海寬度";
+"settings.tuning.help" = "如果你的機器貼合不完美，可在此微調瀏海尺寸。0 表示使用 macOS API 的數值。";
+"settings.showTasks" = "顯示任務清單";
+"settings.showTasks.help" = "在每張工作階段卡片中顯示任務清單。";
+"settings.preview.task.active" = "審查驗證流程";
+"settings.preview.task.pending" = "補上回歸測試";
+"settings.preview.task.done" = "整理工作階段狀態";
+"settings.showSubagents" = "顯示子 Agent";
+"settings.showSubagents.help" = "在工作階段卡片中顯示子 Agent 明細。關閉後改為顯示執行中數量；審批與提問始終可見。";
+"settings.showAgentDetail" = "顯示 Agent 活動詳情";
+"settings.showModel" = "顯示 AI 模型";
+"settings.showReasoningEffort" = "顯示推理強度";
+"settings.showWorktree" = "顯示 Worktree";
+"settings.showProjectName" = "顯示專案名稱";
+
+/* 通行證 */
+"pass.copyImage" = "複製圖片";
+"pass.saveImage" = "儲存圖片";
+"pass.licenseDevices" = "授權與裝置";
+
+/* session 狀態 */
+"status.waitingForInput" = "等待輸入";
+"status.processing" = "處理中";
+"status.thinking" = "思考中";
+"status.runningTool" = "執行工具中";
+"status.waitingForApproval" = "需要核准";
+"status.question" = "等待回答";
+"status.compacting" = "壓縮中";
+"status.ended" = "已結束";
+"status.unknown" = "未知";
+
+/* 工具顯示 */
+"tool.thinkingEllipsis" = "思考中…";
+"tool.thinkingDetail" = "思考中：%@";
+"tool.workingEllipsis" = "工作中…";
+"tool.allowPrefix" = "允許 %@";
+"tool.runningSkill" = "執行技能中";
+"tool.editing" = "編輯中";
+"tool.reading" = "讀取中";
+"tool.writing" = "寫入中";
+"tool.running" = "執行中";
+"tool.searching" = "搜尋中";
+"tool.finding" = "尋找中";
+"tool.tasking" = "任務中";
+"tool.fetching" = "擷取中";
+
+/* Update */
+"update.checking" = "正在檢查更新…";
+"update.install" = "安裝";
+"update.installRelaunch" = "安裝並重新啟動";
+"update.remindLater" = "稍後提醒…";
+"update.skipVersion" = "略過此版本";
+"update.downloading" = "正在下載…";
+"update.extracting" = "正在準備更新…";
+"update.installing" = "正在安裝…";
+"update.upToDate" = "已是最新版本！";
+"update.upToDateDesc" = "Vibe Island %@ 已是最新版本。";
+"update.error" = "更新錯誤";
+"update.errorHint" = "重新啟動 App 或再次檢查以完成更新。";
+"update.retry" = "再次檢查";
+"update.dismiss" = "關閉";
+
+/* 設定：聲音與進階 */
+"settings.sound" = "聲音";
+"settings.advanced" = "進階";
+
+/* 設定：快速鍵 */
+"settings.globalShortcuts" = "全域快速鍵";
+"settings.keyboardShortcutsEnabled" = "啟用鍵盤快速鍵";
+"settings.keyboardShortcutsEnabledDesc" = "關閉所有 Vibe Island 快速鍵，但保留你設定的鍵位。";
+"settings.togglePanel" = "打開切換器";
+"settings.togglePanelDesc" = "輕按一下：打開後用 ↑↓ 選擇，按 Enter 跳轉（Alfred 風格）。按住後再按一下：在 session 間循環切換，放開輔助按鍵即跳轉（⌘Tab 風格）。";
+"settings.reverseSwitcherEnabled" = "反向切換器";
+"settings.reverseSwitcherEnabledDesc" = "加入 Shift + 切換器組合鍵以反向循環。只在切換器面板開啟時生效，因此很少與其他 App 的快速鍵衝突。";
+"settings.recordShortcut" = "錄製快速鍵";
+"settings.panelShortcuts" = "面板快速鍵";
+"settings.shortcut.approve" = "核准";
+"settings.shortcut.deny" = "拒絕";
+"settings.shortcut.alwaysAllow" = "永遠允許";
+"settings.shortcut.bypass" = "Bypass 權限";
+"settings.shortcut.terminal" = "跳轉到終端機";
+"settings.shortcut.selectOption" = "選取選項";
+"settings.shortcut.submitMulti" = "送出多選";
+"settings.shortcut.navigate" = "切換 session";
+"settings.shortcut.collapse" = "收合面板";
+"settings.shortcut.collapseDesc" = "僅在面板展開時生效。";
+"settings.shortcut.footer" = "下方所有快速鍵在面板展開時生效。按住輔助按鍵可在每個按鈕上顯示提示 — 忘記快速鍵時很方便。";
+"settings.shortcut.resetDefaults" = "重設為預設值";
+
+/* 設定：側邊欄 */
+"settings.general" = "一般";
+"settings.integrations" = "整合";
+"settings.shortcuts" = "快速鍵";
+"settings.labs" = "實驗室";
+"settings.pass" = "通行證";
+"settings.about" = "關於";
+"settings.developer" = "開發者";
+"settings.customJumpRules" = "自訂跳轉規則";
+"settings.customJumpRules.footer" = "第三方終端機開發者可註冊 URL scheme 以啟用精確的 session 跳轉。";
+"settings.kiro.configure" = "設定";
+"settings.hermes.activate" = "啟用";
+"settings.hermes.activate.help" = "Hermes 2026-04+ 要求外掛需主動啟用。點按以執行 `hermes plugins enable vibe-island`。";
+"settings.codex.hooks.disabled" = "已由設定停用";
+"settings.codex.hooks.enable" = "啟用";
+"settings.codex.hooks.needsTrust" = "需要信任";
+"settings.codex.hooks.trustAction" = "修復";
+"settings.codex.hooks.trustTitle" = "授權 Codex Hooks";
+"settings.codex.hooks.trustMessage" = "Vibe Island 可以透過 Codex 自己的設定 API 授權其 Codex Hooks。若失敗，請在 Codex 中執行 /hooks 作為備援。";
+"settings.codex.trust.required" = "需要授權";
+"settings.codex.trust.authorize" = "授權";
+"settings.codex.trust.help" = "透過 Codex 自己的設定 API 授權 Vibe Island Hooks。";
+"settings.codex.trust.verify_failed" = "部分 Hooks 無法授權。請在 Codex 中執行 /hooks 手動信任。";
+
+/* 設定：區段標題與選項 */
+"settings.behaviour" = "行為";
+"settings.version" = "版本";
+"settings.experiments" = "實驗功能";
+"settings.noExperiments" = "目前沒有可用的實驗功能";
+"settings.behaviour.expansion" = "展開";
+"settings.behaviour.visibility" = "顯示";
+"settings.behaviour.dismissal" = "收起";
+"settings.expandOnHover" = "滑鼠停留時展開瀏海";
+"settings.hoverDuration" = "停留時間";
+"settings.hideInFullscreen" = "全螢幕時隱藏";
+"settings.smartSuppression" = "智慧抑制";
+"settings.smartSuppression.help" = "當 Agent 的終端機標籤頁位於焦點時不自動展開";
+
+/* 授權：網路錯誤提示 */
+"license.error.timeout" = "連線逾時 — 請檢查你的網路後重試";
+"license.error.noInternet" = "沒有網際網路連線";
+"license.error.server" = "伺服器錯誤，請稍後再試";
+"license.error.tls" = "安全連線失敗 — 請嘗試關閉代理/VPN，或切換網路";
+"license.error.trustChain" = "授權回應驗證失敗 — 請重試，若持續發生請聯絡支援";
+"license.verifying" = "正在驗證授權…";
+"license.startingTrial" = "正在開始你的試用…";
+"license.connectToStartTrial" = "連線一次即可開始試用";
+
+/* 設定：Agent / IDE */
+"settings.agents.footer" = "管理 Vibe Island 與每個 Agent 的連接方式。";
+"settings.agents.autoConfigureNewAgents" = "自動設定新的 Agent";
+"settings.agents.autoConfigureNewAgents.help" = "自動設定新偵測到的受支援 Agent。";
+"settings.ideExtensions" = "IDE";
+"settings.ideExtensions.footer" = "安裝擴充功能即可直接跳轉到 IDE 中正確的終端機標籤頁。";
+"settings.antigravity.subtitle" = "支援桌面與終端機 Agent";
+"settings.status.installed" = "已安裝";
+"settings.status.cliNotFound" = "找不到 CLI";
+"settings.status.active" = "使用中";
+"settings.trae.hooks.enablePath" = "Trae 設定 → Hooks → Global";
+"settings.trae.hooks.fileReady" = "Hook 檔案已就緒";
+"settings.trae.hooks.enableHelp" = "Vibe Island 已寫入 Trae 的 hooks.json。請在 Trae 中打開 設定 → Hooks → Global，然後開啟 Configured Hooks。建議保持 Run in Sandbox。";
+"settings.status.notInstalled" = "未安裝";
+"settings.status.denied" = "已拒絕";
+"settings.status.needsAccess" = "需要授權";
+
+/* 設定：權限恢復 */
+"settings.permissions" = "權限";
+"settings.permissions.footer" = "開啟缺少的權限，以精確跳轉至對應視窗與 session。";
+"settings.permission.accessibility" = "輔助使用";
+"settings.permission.automation" = "%@ 自動化";
+"settings.fixInSettings" = "開啟系統設定";
+
+/* 設定：自動隱藏 */
+"settings.autoHideWhenIdle" = "沒有使用中的 session 時自動隱藏";
+
+/* 設定：按鈕 */
+"settings.install" = "安裝";
+"settings.enable" = "啟用";
+"settings.uninstall" = "解除安裝";
+"settings.repair" = "修復";
+"settings.retry" = "重試";
+"settings.hookRepair.invalidConfiguration" = "無法讀取 %@ 的設定檔 %@。請修正設定或還原備份後重試。";
+"settings.hookRepair.pathNotWritable" = "Vibe Island 無法寫入 %@。請允許寫入此路徑後重試。";
+"settings.hookRepair.unmanagedRoot" = "%@ 正在使用 %@，Vibe Island 尚未管理此目錄。請在上方加入此設定目錄。";
+"settings.hookRepair.externallyOverwritten" = "其他工具持續覆寫 %@。請檢查 CC Switch 或類似的設定管理工具後重試。";
+"settings.hookRepair.diagnosticRequired" = "Vibe Island 無法修復 %@。請匯出診斷報告以便繼續排查。";
+"settings.hookRepair.exportReport" = "匯出報告";
+"settings.hookRepair.preparingReport" = "準備中…";
+"settings.hookRepair.reportSaved" = "診斷報告已儲存";
+"settings.hookRepair.retryExport" = "重試匯出";
+"settings.cancel" = "取消";
+"settings.add" = "加入";
+"settings.addCLIBranch" = "加入 CLI 分支…";
+
+/* 設定：自訂 CLI 設定路徑 */
+"settings.addClaudeFork" = "加入 Claude Code 設定…";
+"settings.addCodexBranch" = "加入 Codex 分支…";
+"settings.customPath.placeholder" = "~/.xxx/engine/cc";
+"settings.customPath.codexPlaceholder" = "~/.internal-codex";
+"settings.customPath.help" = "輸入另一個帳號或分支版本使用的 Claude Code 設定目錄（需包含或將自動建立 settings.json）";
+"settings.customPath.codexHelp" = "輸入你的 Codex 分支版本使用的設定目錄（包含 config.toml、hooks.json 與 sessions/）";
+"settings.customPath.invalid" = "目錄不存在";
+"settings.customPath.duplicate" = "此路徑已設定";
+"settings.customPath.remove" = "移除此自訂路徑";
+
+/* 設定：終端機區段 */
+"settings.terminal" = "終端機";
+"settings.manageTerminalTitles" = "自訂 Ghostty 標題以精確跳轉";
+"settings.manageTerminalTitles.description" = "加入工作階段標記，讓 Vibe Island 能返回正確的工作階段。";
+"settings.terminalTitleFormat" = "標題格式";
+"settings.terminalTitleFormat.project" = "專案";
+"settings.terminalTitleFormat.projectAndPrompt" = "專案 + 提示詞";
+"settings.terminalTitleFormat.prompt" = "提示詞";
+
+/* 設定：Display 區段標題 */
+"settings.display.system" = "系統";
+"settings.display.notch" = "瀏海";
+"settings.display.panel" = "面板尺寸";
+"settings.display.sessionCard" = "session 卡片";
+"settings.picker.default" = "（預設）";
+"settings.priceLocked" = "你的專屬價格已鎖定 %@ · 點按購買";
+
+/* 設定：通行證 */
+"settings.pass.placeholder" = "啟用授權以解鎖你的通行證";
+
+/* 設定：關於 */
+"settings.website" = "網站";
+"settings.joinCommunity" = "加入社群";
+"settings.reportBug" = "回報 Bug";
+"settings.sendFeedback" = "傳送回饋";
+"settings.acknowledgements" = "致謝";
+"settings.slider.default" = "· 預設";
+"settings.slider.reset" = "重設為預設值";
+"settings.slider.auto" = "自動";
+
+/* 微信社群彈窗 */
+"wechat.community.title" = "👾 Vibe Island 社群";
+"wechat.scanToJoin" = "用微信掃描加入";
+"wechat.close" = "關閉";
+
+/* 聲音設定 */
+"sound.enable" = "啟用音效";
+"sound.volume" = "音量";
+"sound.section.session" = "session";
+"sound.section.interactions" = "互動";
+"sound.section.system" = "系統";
+"sound.section.filters" = "篩選";
+"sound.autoDetectProbes" = "自動偵測探測 session";
+"sound.autoDetectProbes.help" = "自動將健康檢查 session 靜音（例如 CodexBar ClaudeProbe）";
+"sound.preview" = "試聽";
+
+/* 靜音時段 */
+"sound.quietHours.section" = "靜音時段";
+"sound.quietHours.enable" = "在靜音時段內靜音";
+"sound.quietHours.start" = "從";
+"sound.quietHours.end" = "至";
+"sound.quietHours.help" = "在選定的時間範圍內將所有聲音靜音（若結束時間早於開始時間則跨越午夜）。適合 Agent 整夜執行時使用。";
+"sound.quietHours.activeNow" = "目前處於靜音時段 — 聲音已靜音";
+
+/* 聲音類別 */
+"sound.cat.sessionStart" = "session 開始";
+"sound.cat.taskAcknowledge" = "任務確認";
+"sound.cat.taskComplete" = "任務完成";
+"sound.cat.taskError" = "任務錯誤";
+"sound.cat.inputRequired" = "需要核准";
+"sound.cat.resourceLimit" = "上下文限制";
+"sound.cat.idleReminder" = "閒置提醒";
+"sound.cat.userSpam" = "洗版偵測";
+"sound.cat.usageWarning" = "用量即將用盡";
+"sound.cat.usageReset" = "用量已刷新";
+
+/* 聲音類別描述 */
+"sound.desc.sessionStart" = "新的 Claude / Codex / Gemini session";
+"sound.desc.taskAcknowledge" = "你送出了一則提示";
+"sound.desc.taskComplete" = "AI 完成了這一輪";
+"sound.desc.taskError" = "工具失敗或 API 錯誤";
+"sound.desc.inputRequired" = "有權限或問題待處理";
+"sound.desc.resourceLimit" = "上下文視窗即將占滿";
+"sound.desc.idleReminder" = "AI 正在等待你的輸入";
+"sound.desc.userSpam" = "10 秒內送出 3 則以上提示";
+"sound.desc.usageWarning" = "訂閱額度接近上限";
+"sound.desc.usageReset" = "用量視窗重設，額度已刷新";
+
+/* 音效來源選擇器（每事件 source） */
+"settings.sound.mySounds" = "我的音效";
+"settings.sound.noCustomSounds" = "尚未匯入任何音效。";
+"settings.sound.addSound" = "加入音效…";
+"settings.sound.importNew" = "匯入音效…";
+"settings.sound.deleteCustom" = "刪除音效";
+"settings.sound.source.off" = "關閉";
+"settings.sound.source.builtin" = "Vibe Island";
+"settings.sound.source.appleHeader" = "Apple 系統";
+"settings.sound.source.appleMore" = "更多 Apple 音效";
+"settings.sound.source.appleLabel" = "Apple — %@";
+"settings.sound.source.customLabel" = "自訂 — %@";
+"settings.sound.source.customMissing" = "自訂 —（檔案遺失）";
+
+/* Hook 檔案監聽 */
+"hookWatcher.restored" = "Hooks 已還原 — 你的 CLI Hooks 被其他工具修改了。";
+"hookWatcher.rateLimited" = "Hooks 一直被移除。請打開 設定 → 整合 → CLI Hooks 進行管理。";
+"cliDiscovery.configured" = "已為 %@ 設定 Vibe Island。請重新啟動執行中的 session 以套用。";
+
+/* 用量 */
+"usage.activate" = "顯示用量限額";
+"usage.activate.tip" = "點按以查看用量限額";
+"usage.activate.loading" = "正在載入用量限額…";
+"settings.showUsage" = "顯示用量限額";
+"settings.showUsageHelp" = "在瀏海面板頂端顯示訂閱用量限額";
+"settings.showCodexResetCards" = "顯示 Reset Card";
+"settings.showCodexResetCardsHelp" = "在用量頂端顯示可用的 Codex Reset Card 和最早到期時間。";
+"settings.usageValueMode" = "顯示數值";
+"settings.usageValueMode.used" = "已使用";
+"settings.usageValueMode.remaining" = "剩餘";
+"settings.usageThresholdAlert" = "用量限額提醒";
+"settings.usageThresholdAlertHelp" = "當任一用量視窗超過所選的已使用百分比時，輕量提示一次。";
+"settings.usageThresholdPercent" = "提醒門檻";
+"usage.bridgeHint.enable" = "連接 Claude 用量";
+"usage.bridgeHint.restore" = "連接 Claude 用量";
+"usage.bridgeHint.repair" = "連接 Claude 用量";
+"usage.bridgeHint.dismiss" = "稍後提醒我";
+"usage.waitingForProvider" = "等待 %@ 活動";
+"usage.peek.limitReached" = "%@ 限額已用盡";
+"usage.peek.thresholdReached" = "%@ 用量接近上限";
+"usage.peek.windowUsed" = "%@ 視窗已使用 %d%%";
+"usage.peek.limitReset" = "%@ 限額已重設";
+"usage.peek.windowAvailable" = "%@ 視窗已恢復可用";
+"usage.peek.windowsAvailable" = "%@ 視窗已恢復可用";
+"usage.peek.resetCreditAdded.one" = "已新增 Codex 重置卡";
+"usage.peek.resetCreditAdded.many" = "已新增 %d 張 Codex 重置卡";
+"usage.peek.resetCreditsAvailable" = "%d 張可用";
+"usage.peek.resetCreditsAvailableExpires" = "%d 張可用 · %@ 到期";
+"usage.resetCards.available" = "可用 Codex Reset Card：%d 張";
+"usage.resetCards.availableEarliestExpiry" = "可用 Codex Reset Card：%d 張；最早一張將在 %@ 後到期。";
+"usage.peek.codexCapacityRestored" = "Codex 容量已恢復至 100%";
+"usage.peek.codexResetProbable" = "Tibo 可能會重置 Codex";
+"usage.peek.codexResetProbableDetail" = "有公開貼文顯示可能即將重置";
+"usage.peek.codexResetAnnounced" = "Codex 重置已公布";
+"usage.peek.codexResetAnnouncedDetail" = "Tibo 表示重置即將到來";
+"usage.peek.openSource" = "查看來源貼文";
+"usage.window.fiveHourTitle" = "5 小時 session";
+"usage.window.sevenDayTitle" = "7 天週限額";
+"usage.window.monthlyShort" = "月";
+"usage.window.monthlyTitle" = "每月額度";
+"usage.window.monthlyToolsTitle" = "每月工具";
+"usage.resetsIn" = "%@ 後重設";
+"usage.updatedAt" = "%@ 前更新";
+"settings.usageProvider" = "偏好供應商";
+"settings.usageProvider.auto" = "自動（跟隨 session）";
+
+/* Beta Updates */
+"settings.betaUpdates" = "測試版更新";
+"settings.betaUpdates.help" = "搶先體驗新功能。測試版可能較不穩定。";
+"settings.labs.autoMode" = "以 Auto 模式取代 Bypass";
+"settings.labs.autoMode.help" = "以 Auto 模式取代 Bypass。由 Claude Code 自行判斷每個操作是否安全。";
+"settings.labs.cursorApproval" = "Cursor 沙箱核准";
+"settings.labs.cursorApproval.help" = "自動讀取 Cursor 的 YOLO 設定來判斷。";
+"settings.labs.cursorApproval.auto" = "自動偵測";
+"settings.labs.cursorApproval.always" = "一律在瀏海中";
+"settings.labs.cursorApproval.never" = "永不（僅觀察）";
+"settings.labs.codexApprovalTarget" = "Codex 核准對象";
+"settings.labs.codexApprovalTarget.help" = "智慧：在你正在檢視的終端機標籤頁中核准；否則在瀏海中。";
+"settings.labs.codexApprovalTarget.smart" = "智慧（依焦點）";
+"settings.labs.codexApprovalTarget.notch" = "一律在瀏海中";
+"settings.labs.codexApprovalTarget.terminal" = "一律在終端機中";
+"settings.labs.codexAppServerJump" = "在 Codex 應用程式中開啟 app-server 工作階段";
+"settings.labs.codexAppServerJump.help" = "點擊透過 codex app-server 執行的工作階段時，改為在 Codex 應用程式中開啟對應對話，而非跳回終端機。若工具使用獨立後端，對話可能不會出現在 Codex 應用程式中。";
+"settings.labs.codexApprovalMode" = "當 Codex 需要你核准時";
+"settings.labs.codexApprovalMode.help" = "經 Auto Review 的請求一律靜默";
+"settings.labs.codexApprovalMode.approveHere" = "跟隨焦點";
+"settings.labs.codexApprovalMode.remind" = "通知我";
+"settings.labs.codexApprovalMode.hide" = "保持靜默";
+"settings.labs.section.claude" = "Claude Code";
+"settings.labs.section.codex" = "Codex";
+"settings.labs.section.otherCLIs" = "其他 CLI";
+"settings.labs.section.terminal" = "終端機";
+"settings.labs.nativeCodexApprovals" = "使用 Codex 原生核准";
+"settings.labs.nativeCodexApprovals.help" = "跳過 Vibe Island 的核准卡與核准通知；讓 Codex 或 AutoReview 在終端機中決定。";
+"settings.labs.nativeClaudeApprovals" = "使用 Claude Code 原生核准";
+"settings.labs.nativeClaudeApprovals.help" = "跳過 Vibe Island 的核准卡與核准通知；讓 Claude Code 在終端機中處理核准。";
+"settings.labs.codexApproval" = "Codex Desktop 核准提醒";
+"settings.labs.codexApproval.help" = "透過輔助使用掃描偵測核准請求。若 Codex 當機請停用。";
+"settings.labs.kiroHints" = "Kiro 權限提示";
+"settings.labs.kiroHints.help" = "選擇 Kiro 工具需執行多久後，Vibe Island 才顯示可能需要核准的提示。";
+"settings.labs.kiroHints.off" = "關閉";
+"settings.labs.kiroHints.seconds" = "%d 秒";
+"settings.labs.section.stability" = "穩定性";
+"settings.labs.memoryRestart" = "記憶體過高時重新啟動";
+"settings.labs.memoryRestart.help" = "選用的安全網。只有在記憶體持續偏高且所有 session 都閒置時才會重新啟動。";
+"settings.labs.aiNaming.section" = "AI session 命名（實驗性）";
+"settings.labs.aiNaming" = "自動命名 session";
+"settings.labs.aiNaming.help" = "Codex 會為每個 session 命名為「目標｜進度」，並隨進展刷新。僅限 Claude Code。";
+"settings.labs.aiNaming.terminal" = "同步到終端機標籤頁";
+"settings.labs.aiNaming.writeback" = "寫回 Claude session";
+"settings.labs.aiNaming.writeback.help" = "也會顯示在 claude --resume 中。會寫入 Claude 自己的資料檔案；預設關閉。";
+"settings.labs.aiNaming.footer" = "標題由你 Mac 上的 Codex 產生，使用你 ChatGPT 方案的獨立額度 — 不會動用你的 Claude 用量。";
+"settings.appLanguage" = "App 語言";
+"settings.appLanguage.system" = "跟隨系統";
+"settings.appLanguage.relaunch" = "立即重新啟動";
+"settings.behaviour.idleTimeout" = "閒置 session 清理";
+"settings.behaviour.idleTimeout.help" = "僅適用於沒有明確關閉訊號的 session（Codex、OpenCode、Cursor）。";
+"settings.behaviour.idleTimeout.never" = "永不";
+"settings.behaviour.idleTimeout.30m" = "30 分鐘";
+"settings.behaviour.idleTimeout.1h" = "1 小時";
+"settings.behaviour.idleTimeout.2h" = "2 小時（預設）";
+"settings.behaviour.idleTimeout.4h" = "4 小時";
+"settings.behaviour.idleTimeout.8h" = "8 小時";
+"settings.behaviour.idleTimeout.24h" = "24 小時";
+
+/* Common buttons */
+"common.cancel" = "取消";
+"common.remove" = "移除";
+"common.ok" = "好";
+"common.done" = "完成";
+"common.retry" = "重試";
+"common.install" = "安裝";
+"common.openInBrowser" = "在瀏覽器中打開";
+"common.reveal" = "在 Finder 中顯示";
+"common.copy" = "複製";
+"common.copied" = "已複製";
+
+/* Integrations / Display section headers */
+"settings.integrations.agentsSection" = "Agent";
+"settings.display.agentsSection" = "Agent";
+
+/* Sound Packs (v2) */
+"settings.sound.theme" = "聲音主題";
+"settings.sound.themePicker" = "主題";
+"settings.sound.builtin" = "內建 8-bit";
+"settings.sound.editorPicks" = "編輯精選";
+"settings.sound.loadFailed" = "無法載入聲音包清單";
+"settings.sound.filter" = "篩選…";
+"settings.sound.import" = "匯入聲音包…";
+"settings.sound.uninstallPack" = "解除安裝 %@";
+"settings.sound.allPacks" = "全部 %lld 個聲音包";
+"settings.sound.noMatches" = "沒有符合「%@」的聲音包";
+"settings.sound.moreTypeToFilter" = "還有 %lld 個 — 輸入以篩選";
+"settings.sound.poweredBy" = "由 [PeonPing Registry](https://github.com/PeonPing/registry) 提供";
+"settings.sound.importDialog.message" = "選擇 CESP 聲音包資料夾或 .zip 檔案";
+"settings.sound.importDialog.prompt" = "匯入";
+
+/* Screen Switch Tip */
+"screen.switchTip" = "主顯示器為 %@， ";
+"screen.switchAction" = "切換到該顯示器";
+
+/* SSH Remote */
+"sshRemote" = "SSH 遠端";
+"sshRemote.intro" = "在你的瀏海面板中監控並核准遠端 AI CLI session。";
+"sshRemote.introHint" = "加入主機 → 設定 → 連線。需要 SSH 公鑰驗證（或使用 ControlMaster 進行 MFA）。";
+"sshRemote.setupPrompt.title" = "要設定遠端監控嗎？";
+"sshRemote.setupPrompt.message" = "這會上傳一個小型二進位檔到遠端伺服器，並設定你的 CLI 工具（Claude Code、Codex 等）將事件轉發回 Vibe Island。";
+"sshRemote.setupNow" = "立即設定";
+"sshRemote.setupLater" = "稍後";
+"sshRemote.codexRoots.title" = "Codex 目錄";
+"sshRemote.codexRoots.subtitle" = "選擇要在 %@ 上連接的 Codex 設定。";
+"sshRemote.codexRoots.default" = "預設";
+"sshRemote.codexRoots.detectedPaperclip" = "從 Paperclip 偵測到";
+"sshRemote.codexRoots.previouslySelected" = "先前已選擇";
+"sshRemote.codexRoots.manual" = "手動加入";
+"sshRemote.codexRoots.pathPlaceholder" = "/遠端絕對路徑/codex-home";
+"sshRemote.codexRoots.addPath" = "加入 Codex 目錄";
+"sshRemote.codexRoots.invalidPath" = "請輸入遠端絕對路徑。";
+"sshRemote.codexRoots.setUpSelected" = "設定所選目錄";
+"sshRemote.codexRoots.configure" = "設定 Codex 目錄";
+"sshRemote.hosts" = "主機";
+"sshRemote.noHosts" = "尚未設定任何主機";
+"sshRemote.addHost" = "加入主機";
+"sshRemote.usage.title" = "遠端用量（選用）";
+"sshRemote.usage.claude" = "Claude";
+"sshRemote.usage.claude.help" = "從這台遠端主機的 statusline 轉發 Claude 限額。";
+"sshRemote.usage.codex" = "Codex";
+"sshRemote.usage.codex.help" = "只有偵測到 Codex 活動時，才探測這台遠端主機上的 Codex 帳號。";
+"sshRemote.usage.hint" = "當 Claude 或 Codex 登入在遠端主機而非這部 Mac 時使用。";
+"sshRemote.usage.status" = "用量：%@";
+"sshRemote.advancedConnection.title" = "進階連線";
+"sshRemote.manualConnectionOnly" = "僅手動連線";
+"sshRemote.manualConnectionOnly.description" = "適用於會開啟瀏覽器或需要企業 SSO 的 SSH 登入。只有點按「連線」時才會發起連線。";
+"sshRemote.autoUpdateHooks" = "保持遠端 hook 自動更新";
+"sshRemote.autoUpdateHooks.description" = "App 更新後，下次通道連上時自動在這台伺服器重新部署 hook。關閉後只有點按「重新設定」才會更新。";
+"sshRemote.portConflict.title" = "遠端連接埠已被占用";
+"sshRemote.portConflict.message" = "另一個 SSH session 已經在轉發到這台伺服器的這個連接埠。如果你在另一部連到同一台伺服器的 Mac 上執行 Vibe Island，請把這部 Mac 下方的 TCP 連接埠改為不同的值（例如 17892）——不同的連接埠可讓兩部 Mac 透過 fan-out 同時接收事件。如果這是先前 session 殘留的監聽器，請等待 60 秒後再試。\n\n受影響：";
+"sshRemote.stalePort.title" = "遠端連接埠被殘留的隧道占用";
+"sshRemote.stalePort.message" = "這部 Mac 先前的一條隧道仍占用著遠端連接埠（通常發生在切換 VPN／網路之後）。自動清理會持續重試；點按「連線」可立即執行一次帶驗證的清理。受影響：";
+"sshRemote.deploy" = "設定";
+"sshRemote.redeploy" = "重新設定";
+"sshRemote.connect" = "連線";
+"sshRemote.disconnect" = "中斷連線";
+"sshRemote.codexTrust.required" = "Codex hooks 需要信任";
+"sshRemote.codexTrust.unverified" = "無法驗證 Codex hook 信任狀態";
+"sshRemote.qoder.upgradeRequired" = "⚠️ 遠端 Qoder CLI %@ 低於要求的 %@。Vibe Island 未設定其管理的 Qoder hooks；請升級 Qoder CLI 後重新執行設定。";
+"sshRemote.qoder.versionUnverified" = "⚠️ 無法驗證遠端 Qoder CLI 版本（最低要求 %@）。Vibe Island 未設定其管理的 Qoder hooks；請升級 Qoder CLI 後重新執行設定。";
+"sshRemote.codexTrust.guidance" = "在 %@ 上開啟 Codex，執行 /hooks，信任 Vibe Island hooks，然後再次檢查。";
+"sshRemote.codexTrust.checkAgain" = "再次檢查";
+"sshRemote.edit" = "編輯";
+"sshRemote.manual" = "手動";
+"sshRemote.uninstall" = "移除";
+"sshRemote.deploySuccess" = "設定成功";
+"sshRemote.deployFailed" = "設定失敗";
+"sshRemote.uninstallConfirm" = "要移除遠端設定嗎？";
+"sshRemote.uninstallMessage" = "這會從 %@ 移除 Vibe Island 檔案與 CLI 設定。";
+"sshRemote.uninstallResult" = "移除結果";
+"sshRemote.tunnel.disconnected" = "隧道：未連線 — 點按「連線」以開始";
+"sshRemote.notDeployed" = "尚未設定 — 點按「設定」以設定遠端";
+"sshRemote.tunnel.connecting" = "隧道：連線中…";
+"sshRemote.tunnel.connected" = "隧道：已連線";
+"sshRemote.tunnel.connectedAgo" = "隧道：已連線（%@）";
+"sshRemote.tunnel.reconnecting" = "隧道：重新連線中（第 %lld 次）…";
+"sshRemote.tunnel.error" = "隧道：錯誤 — %@";
+"sshRemote.addHostTitle" = "加入 SSH 主機";
+"sshRemote.editHostTitle" = "編輯 SSH 主機";
+"sshRemote.field.host" = "主機";
+"sshRemote.field.user" = "使用者";
+"sshRemote.field.hostPlaceholder" = "server.example.com 或 10.0.0.5";
+"sshRemote.field.userPlaceholder" = "deploy";
+"sshRemote.disclosure.docker" = "Docker 容器";
+"sshRemote.disclosure.manual" = "手動安裝（適用於受限網路）";
+"sshRemote.manual.scpBlocked" = "企業防火牆常會封鎖 scp（sftp-server 子系統），但保留 ssh 與 HTTPS。透過任何管道安裝 Hook 二進位檔即可；Vibe Island 會在下次設定時偵測到並跳過上傳。";
+"sshRemote.manual.pickPlatform" = "選擇遠端平台：";
+"sshRemote.manual.runOnRemote" = "在遠端執行（於 SSH session 內）：";
+"sshRemote.manual.clickDeploy" = "接著點按上方的「設定」，或開啟遠端用量開關。我們會偵測到二進位檔、跳過上傳，並只設定 Hooks。";
+"sshRemote.manual.airgapIntro" = "如果遠端也無法連上 GitHub（完全隔離的網路），請手動複製二進位檔：";
+"sshRemote.manual.transport" = "透過 AirDrop／電子郵件／USB／rsync 傳輸，放到遠端的 ~/ 中。";
+"sshRemote.manual.thenOnRemote" = "然後在遠端執行：";
+"sshRemote.manual.airgapFallback" = "離線／隔離網路備援";
+"sshRemote.docker.intro" = "請選擇容器執行的位置。本機容器會自動設定；SSH 伺服器上的容器需要可連線的中繼。";
+"sshRemote.docker.location" = "容器執行於：";
+"sshRemote.docker.location.local" = "這台 Mac";
+"sshRemote.docker.location.remote" = "SSH 伺服器";
+"sshRemote.docker.platform" = "容器平台：";
+"sshRemote.docker.local.automatic" = "容器主機位址會自動偵測。";
+"sshRemote.docker.remote.noHosts" = "請先在上方新增並設定一台 SSH 主機。";
+"sshRemote.docker.remote.host" = "SSH 主機：";
+"sshRemote.docker.remote.setupHostFirst" = "請先在上方設定這台 SSH 主機，再使用遠端 Docker。";
+"sshRemote.docker.remote.connectHostFirst" = "請先在上方連線這台 SSH 主機，再執行指令。";
+"sshRemote.docker.remote.relayAddress" = "中繼位址：";
+"sshRemote.docker.remote.relayPlaceholder" = "172.17.0.1 或 host.docker.internal";
+"sshRemote.docker.remote.relayTarget" = "在 SSH 伺服器上使用連接埠 %@，並將它轉送到 %@。";
+"sshRemote.docker.remote.relayNotManaged" = "Vibe Island 會填入隧道連接埠，但不會替你建立中繼。";
+"sshRemote.docker.remote.enterRelay" = "請先輸入中繼位址再複製。";
+"sshRemote.docker.pasteInContainer" = "貼到你的容器內：";
+"sshRemote.docker.rerun" = "容器重建後需重新執行。若需持久化設定，請改用 volume 掛載二進位檔。";
+"sshRemote.hookUpdateAvailable" = "遠端 Hook 有可用更新";
+"sshRemote.hookUpdateNow" = "立即更新";
+"sshRemote.field.alias" = "別名";
+"sshRemote.field.sshOptions" = "SSH 選項";
+"sshRemote.commonOptions" = "常用選項：";
+"sshRemote.option.port" = "非標準 SSH 連接埠";
+"sshRemote.option.key" = "指定 SSH 金鑰";
+"sshRemote.option.jump" = "透過堡壘主機跳轉";
+"sshRemote.option.mfa" = "MFA / Duo（重複使用終端機 session）";
+"sshRemote.option.proxyCommand" = "ProxyCommand（需加引號；透過堡壘主機建立隧道）";
+"sshRemote.formFooter" = "需要 SSH 公鑰驗證（或使用 ControlMaster 進行 MFA）";
+"sshRemote.add" = "加入";
+"sshRemote.save" = "儲存";
+"sshRemote.tcpPort" = "TCP 連接埠";
+"sshRemote.restartToApply" = "重新啟動以套用";
+"sshRemote.tunnelKind.tcp" = "TCP（通用）";
+"sshRemote.tunnelKind.uds" = "Unix Socket（僅限命令列 SSH）";
+"sshRemote.tunnelKind.tcp.desc" = "支援 Termius、Prompt 等 GUI SSH 用戶端";
+"sshRemote.tunnelKind.uds.desc" = "僅限命令列 ssh，需要 OpenSSH 6.7+";
+
+/* Usage — Claude 用量橋接 */
+"settings.usage.bridge.section" = "Claude 用量橋接";
+"settings.usage.bridge.description" = "Claude 的訂閱用量限額會透過 Claude Code 的 Status Line 提供。Vibe Island 可以加上一個可還原的小型橋接來讀取這些資料，同時保持你現有的 Status Line 輸出不變。";
+"settings.usage.bridge.guidance.title.shell" = "安全片段安裝";
+"settings.usage.bridge.guidance.title.claudeHud" = "相容 Claude HUD";
+"settings.usage.bridge.guidance.title.wrapper" = "連接 Claude 用量";
+"settings.usage.bridge.guidance.title.installed" = "Claude 用量橋接已啟用";
+"settings.usage.bridge.guidance.title.missing" = "需要手動修復";
+"settings.usage.bridge.guidance.shell" = "這看起來是一般的 shell statusline。Vibe Island 會在讀取 stdin 的那一行之後加入一個帶標記的區塊，並保持指令碼其餘部分不變。";
+"settings.usage.bridge.guidance.claudeHud" = "偵測到 Claude HUD。Vibe Island 不會編輯 Claude HUD 的檔案或設定；它只會包住產生的指令、快取 rate_limits，然後把同一份 stdin 傳給 HUD，因此 /claude-hud:configure 仍可正常運作。";
+"settings.usage.bridge.guidance.opaque" = "Vibe Island 會在你現有的 Status Line 設定上加入一個小型橋接，以便讀取 Claude 用量資料。你可見的 Status Line 輸出維持不變。";
+"settings.usage.bridge.guidance.snippetInstalled" = "橋接已經安裝。移除時只會刪除 Vibe Island 帶標記的區塊，並保留你原本的 statusline 指令碼。";
+"settings.usage.bridge.guidance.chainInstalled" = "Vibe Island 正在從 Status Line 的輸入讀取 Claude 用量。你現有的 Status Line 顯示維持不變；移除橋接只會移除 Vibe Island 的連接。";
+"settings.usage.bridge.guidance.claudeHudInstalled" = "Claude HUD 仍然控制可見的 HUD，而 /claude-hud:configure 也能繼續變更 HUD 偏好。如果之後 /claude-hud:setup 重新寫入 statusLine，請回到這裡再次啟用橋接。";
+"settings.usage.bridge.guidance.missing" = "Claude settings 指向的指令碼已不存在，因此 Vibe Island 不會自動變更它。請先修復或移除那條 statusLine 指令。";
+"settings.usage.bridge.enable" = "連接用量";
+"settings.usage.bridge.remove" = "移除橋接";
+"settings.usage.bridge.preview" = "顯示預覽";
+"settings.usage.bridge.status.installed" = "橋接已安裝";
+"settings.usage.bridge.status.snippetReady" = "偵測到 shell statusline。Vibe Island 可以在你讀取 stdin 的那一行之後加入一個可移除的小型橋接。";
+"settings.usage.bridge.status.chainReady" = "偵測到自訂 Status Line。Vibe Island 可以加入一個小型橋接來追蹤用量，同時不改變其可見輸出。";
+"settings.usage.bridge.status.chainInstalled" = "Claude 用量橋接已安裝。你現有的 Status Line 仍然控制可見輸出。";
+"settings.usage.bridge.status.scriptMissing" = "找不到 statusline 指令碼 — 請檢查 ~/.claude/settings.json";
+"settings.usage.bridge.preview.caption" = "在任何變更前都會儲存帶時間戳記的備份。移除橋接時會還原你原本的 Status Line 設定。";
+"settings.usage.bridge.error.title" = "無法更新 statusline";
+
+/* Notifications — 頂層 pane（前身 Silence）。目前包含 Filters section，未來擴充 Quiet Mode 等 */
+"settings.notifications" = "通知";
+"settings.silence" = "靜默";
+"silence.builtIn.section" = "內建篩選器";
+"silence.builtIn.footnote" = "預設的目錄與提示詞篩選器會顯示在下方對應的區段中。";
+"silence.preset.chip" = "預設";
+"silence.builtIn.codexInternalWorkers" = "Codex 內部背景工作";
+"silence.builtIn.codexInternalWorkers.help" = "隱藏沒有可見提示詞前綴的 Codex 背景 reviewer 與 memory consolidation 工作。";
+"silence.preset.info.accessibilityLabel" = "預設篩選器詳情";
+"silence.preset.match.prefix" = "前綴";
+"silence.preset.match.contains" = "包含";
+"silence.preset.match.equals" = "等於";
+"admission.appBundle.section" = "已封鎖的啟動器 App";
+"admission.appBundle.description" = "由選定 App 啟動的 session 會在出現於 Vibe Island 前被丟棄。";
+"admission.appBundle.addButton" = "加入 App…";
+"admission.appBundle.empty" = "尚未封鎖任何自訂啟動器 App。";
+"admission.appBundle.footnote" = "適合用於背景探測與輔助 App。一般的專案篩選請使用「目錄」或「第一則提示詞」。";
+"admission.appBundle.picker.title" = "選擇要封鎖的 App";
+"admission.appBundle.picker.prompt" = "選擇";
+"admission.appBundle.added.format" = "已加入 %@。";
+"admission.appBundle.reenabled.format" = "已重新啟用 %@。";
+"admission.appBundle.exists.format" = "%@ 已在封鎖清單中。";
+"admission.appBundle.unreadable" = "無法讀取該 App 的 Bundle ID。";
+"admission.appBundle.saveFailed" = "無法儲存規則。";
+"silence.custom.section" = "自訂篩選器";
+"silence.custom.description" = "隱藏工作目錄包含以下內容的任何 session：";
+"silence.custom.placeholder" = "例如 /chronicle/dev-experiments";
+"silence.custom.hint" = "提示：在 session 卡片上按右鍵，即可將其目錄加為篩選器。";
+"silence.addPattern.button" = "加入規則";
+"silence.contextMenu.hide" = "隱藏此目錄中的 session";
+"silence.contextMenu.hidePrompt" = "靜默以此開頭的提示詞…";
+"silence.custom.kind.directory" = "目錄";
+"silence.custom.kind.prompt" = "提示詞";
+"silence.custom.prompt.placeholder" = "例如 ## Memory Writing Agent";
+"silence.custom.prompt.description" = "隱藏第一則使用者提示詞以此開頭的任何 session：";
+"silence.custom.prompt.description.contains" = "隱藏第一則使用者提示詞包含此內容的任何 session：";
+"silence.matchType.prefix" = "開頭為";
+"silence.matchType.contains" = "包含";
+"silence.matchType.label" = "比對方式";
+"silence.custom.section.directory" = "自訂篩選器：目錄";
+"silence.custom.section.prompt" = "自訂篩選器：第一則提示詞";
+"silence.custom.prompt.hint" = "提示：在 session 卡片上按右鍵，即可將其第一則提示詞加為篩選器。";
+"silence.custom.empty" = "尚無自訂篩選器。";
+"silence.livePreview.noMatch" = "0 個符合";
+"silence.livePreview.matchCountFormat" = "%d 個符合";
+"silence.livePreview.tooltip" = "此規則會將目前多少個 session 靜音";
+"silence.livePreview.idleHint" = "輸入規則以預覽符合項目";
+"silence.builtIn.memoryConsolidation" = "Codex Memory Consolidation";
+"silence.builtIn.memoryWriterCwd" = "Codex Memory Writer（依 cwd）";
+"silence.builtIn.memoryWriterPrompt" = "Codex Memory Writer（依 prompt 前綴）";
+"silence.builtIn.guardian" = "Codex Guardian / AutoReview Agent";
+"silence.builtIn.chronicle" = "Codex Chronicle Memory Summary";
+"silence.builtIn.codexAppSuggestions" = "Codex App 建議提示詞";
+"silence.builtIn.codexAppGitHelper" = "Codex App Git 輔助提示詞";
+"silence.builtIn.claudeMem" = "Claude-Mem 外掛背景 session";
+"silence.builtIn.craftTitle" = "Craft Agent 標題產生器";
+"silence.preset.help.memoryWriterCwd" = "用於儲存在 ~/.codex/memories 下的 Codex 記憶寫入 session。";
+"silence.preset.help.memoryWriterPrompt" = "用於以固定記憶寫入提示詞啟動的 Codex 記憶寫入 session。";
+"silence.preset.help.chronicle" = "用於 Codex Desktop 螢幕錄製記憶摘要 session。";
+"silence.preset.help.codexAppSuggestions" = "用於 Codex App 產生其主畫面上顯示的建議提示詞。";
+"silence.preset.help.codexAppGitHelper" = "用於 Codex App 的 Commit 或 push 輔助功能產生 Git 訊息建議。";
+"silence.preset.help.claudeMem" = "用於 Claude-Mem 外掛的背景壓縮 session。";
+"silence.preset.help.craftTitle" = "用於 Craft Agent 為 GUI 託管的對話產生簡短標題。";
+
+"cowork.option.count" = "%lld 個選項";
+
+/* Integrity reinstall nudge (SUP-352) */
+"integrity.reinstallTitle" = "建議重新安裝";
+"integrity.reinstallSubtitle" = "你的 App 檔案看起來已損毀。請從 vibeisland.app 重新安裝以恢復完整性。";
+"integrity.reinstallCTA" = "重新安裝";
+
+/* Bark 行動通知（SUP-1190） */
+"settings.bark.section" = "行動通知";
+"settings.bark.enabled" = "通知我的 iPhone";
+"settings.bark.enabledHelp" = "需要在 iPhone 上安裝免費的 Bark App。";
+"settings.bark.connection" = "連線";
+"settings.bark.configure" = "設定…";
+"settings.bark.status.notConfigured" = "尚未設定";
+"settings.bark.status.needsAttention" = "需要重新連線";
+"settings.bark.setup.title" = "設定 Bark";
+"settings.bark.setup.subtitle" = "連接 Bark、測試傳送，並視需要加密通知文字。";
+"settings.bark.destination" = "傳送目標";
+"settings.bark.server" = "伺服器";
+"settings.bark.server.public" = "Bark 公共服務";
+"settings.bark.server.selfHosted" = "自行託管";
+"settings.bark.server.selfHostedHelp" = "使用 HTTPS Bark 伺服器。Vibe Island 會向其 /push 端點傳送通知。";
+"settings.bark.deviceKey" = "裝置密鑰";
+"settings.bark.sendTest" = "傳送測試";
+"settings.bark.deviceKeyHelp" = "在 iPhone 的 Bark App 中複製";
+"settings.bark.getBark" = "還沒有 Bark App？";
+"settings.bark.getBarkHelp" = "用 iPhone 相機掃描，從 App Store 取得 Bark。";
+"settings.bark.awayOnly" = "僅在離開這台 Mac 時通知";
+"settings.bark.awayOnlyHelp" = "螢幕鎖定、關閉或 Mac 閒置 2 分鐘即視為離開。";
+"settings.bark.events" = "通知事件";
+"settings.bark.event.approvals" = "審批請求";
+"settings.bark.event.questions" = "提問";
+"settings.bark.event.completions" = "已完成任務";
+"settings.bark.event.warnings" = "警告";
+"settings.bark.encryption" = "加密通知內容";
+"settings.bark.encryptionHelp" = "標題、正文和群組會在這台 Mac 上加密。Bark 伺服器仍可看到裝置密鑰和傳送中繼資料。";
+"settings.bark.encryptionSetup" = "在 Bark 中開啟「設定 > 推送加密」，選擇 AES256、GCM 和 NoPadding，然後貼上下面的 Key 與 IV。";
+"settings.bark.encryptionFailure" = "無法建立加密設定";
+"settings.bark.copyEncryptionKey" = "複製 Key";
+"settings.bark.copyEncryptionIV" = "複製 IV";
+"settings.bark.copied" = "已複製";
+"settings.bark.contentPreviews" = "包含對話詳情";
+"settings.bark.contentPreviewsHelp" = "加入經過本機清理的對話標題，以及回覆、問題或警告的前 240 個字元。";
+"settings.bark.privacy" = "隱私";
+"settings.bark.privacyDetails" = "通知隱私如何運作";
+"settings.bark.plaintextExplanation" = "未啟用加密時，通知文字會以可讀形式經過你選擇的 Bark 伺服器。它只會傳送到你設定的裝置密鑰，不會公開發布，但伺服器營運者可能讀取這些內容。";
+"settings.bark.detailedUnencrypted.title" = "不加密傳送詳細內容？";
+"settings.bark.detailedUnencrypted.message" = "對話標題和內容片段會以可讀形式經過你選擇的 Bark 伺服器。它們不會公開發布，但伺服器營運者可能讀取這些內容。";
+"settings.bark.detailedUnencrypted.confirm" = "不加密傳送";
+"settings.bark.save" = "儲存";
+"settings.bark.saveFailure" = "無法儲存 Bark 設定";
+"settings.bark.notificationOnlyHelp" = "通知可鏡像到已配對的 Apple Watch；審批和回覆仍在 Mac 完成。";
+"settings.bark.testSuccess" = "Bark 已接受，請檢查裝置。";
+"settings.bark.testFailure" = "無法傳送測試通知";
+"notification.bark.testBody" = "Vibe Island 可以向這部裝置傳送 Bark 通知。";
+"notification.bark.approvalTitle" = "需要審批";
+"notification.bark.questionTitle" = "有問題等待回答";
+"notification.bark.warningTitle" = "任務需要注意";
+"notification.bark.approveOnMac" = "請回到 Mac 批准或拒絕。";
+"notification.bark.answerOnMac" = "請回到 Mac 回答。";
+"notification.bark.openResponseOnMac" = "請在 Mac 上開啟 Vibe Island 查看回覆。";
+"notification.bark.openDetailsOnMac" = "請在 Mac 上開啟 Vibe Island 查看詳情。";

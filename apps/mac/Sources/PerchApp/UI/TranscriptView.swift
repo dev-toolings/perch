@@ -37,24 +37,19 @@ struct TranscriptView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if let prompt {
+            if prompt != nil {
                 HStack(alignment: .top, spacing: 6) {
                     Text(t("You:"))
-                        .font(Theme.mono(9, .semibold))
-                        .foregroundStyle(Theme.tertiary)
-                    Text(prompt)
-                        .font(Theme.prose(11))
-                        .foregroundStyle(Theme.primary)
-                        .lineLimit(2)
-                        .truncationMode(.tail)
+                        .font(Theme.label(11.5))
+                        .foregroundStyle(Theme.secondary)
                     Spacer(minLength: 6)
                     Text(isFinished ? t("Done") : t("Writing…"))
-                        .font(Theme.mono(9))
+                        .font(Theme.label(11.5))
                         .foregroundStyle(isFinished ? Theme.tertiary : Theme.active)
                 }
                 .padding(.horizontal, 9)
                 .padding(.vertical, 7)
-                .background(Theme.hairline.opacity(0.5))
+                .background(Theme.raised.opacity(0.85))
             }
 
             if !turn.reply.isEmpty && !turn.reply.lowercased().contains("get_app_state") {
@@ -63,7 +58,11 @@ struct TranscriptView: View {
                 // a reply — and the panel is the thing being scrolled. The bounded height
                 // and the fade say "there is more" without competing for the gesture; the
                 // card is one click from the terminal that has all of it.
-                MarkdownText(turn.reply)
+                Text(turn.reply)
+                    .font(Theme.mono(11))
+                    .foregroundStyle(Theme.primary.opacity(0.90))
+                    .lineSpacing(3)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, 9)
                     .padding(.vertical, 8)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -83,9 +82,9 @@ struct TranscriptView: View {
                         ], startPoint: .top, endPoint: .bottom))
             }
         }
-        .background(Theme.surface.opacity(0.55))
-        .clipShape(RoundedRectangle(cornerRadius: 6))
-        .overlay(RoundedRectangle(cornerRadius: 6).stroke(Theme.hairline, lineWidth: 1))
+        .background(Color.white.opacity(0.045))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Theme.hairline, lineWidth: 1))
     }
 }
 

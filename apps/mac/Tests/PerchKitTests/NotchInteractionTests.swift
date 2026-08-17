@@ -13,7 +13,6 @@ import Testing
 @Test func expandedPanelClosesWhenTheCursorLeaves() {
     var notch = NotchInteraction()
     notch.handle(.hoverEntered)
-    notch.handle(.tappedNotch)
     #expect(notch.state == .expanded)
 
     let effects = notch.handle(.hoverExited)
@@ -29,7 +28,6 @@ import Testing
 @Test func clickingInsideTheExpandedPanelDoesNotCloseIt() {
     var notch = NotchInteraction()
     notch.handle(.hoverEntered)
-    notch.handle(.tappedNotch)
     #expect(notch.state == .expanded)
 
     #expect(notch.handle(.tappedBody).isEmpty)
@@ -39,8 +37,7 @@ import Testing
 /// BUG: after the fix above, the peek became a dead end — its body was inert and the only
 /// way in was a 32pt strip. A peek has no controls, so its whole surface opens the panel.
 @Test func clickingThePeekBodyOpensThePanel() {
-    var notch = NotchInteraction()
-    notch.handle(.hoverEntered)
+    var notch = NotchInteraction(state: .peek)
     #expect(notch.state == .peek)
 
     notch.handle(.tappedBody)
@@ -73,14 +70,22 @@ import Testing
     }
 }
 
-/// Vibe Island 1.0.44 renders a 198 x 30 px active pill on the reference display. The
-/// shoulders add one pixel per side and the rasterized edge adds two rows, so its SwiftUI
-/// frame is 196 x 28 pt.
+/// Vibe Island 1.0.44 renders a 196 x 30 pt active pill on the reference display.
 @Test func activeIdleFrameMatchesTheVibeIslandReferenceCapture() {
     let notch = CGSize(width: 190, height: 32)
     let size = NotchState.idle.size(notch: notch, flank: 3)
 
-    #expect(size == CGSize(width: 196, height: 28))
+    #expect(size == CGSize(width: 196, height: 30))
+}
+
+@Test func expandedPanelStartsLargeEnoughForTheFeaturedCard() {
+    let notch = CGSize(width: 190, height: 32)
+
+    #expect(NotchState.expanded.size(notch: notch).height == 448)
+    #expect(NotchState.expandedHeight(contentHeight: 180, maximumHeight: 560) == 448)
+    #expect(NotchState.expandedHeight(contentHeight: 440, maximumHeight: 560) == 448)
+    #expect(NotchState.expandedHeight(contentHeight: 500, maximumHeight: 560) == 500)
+    #expect(NotchState.expandedHeight(contentHeight: 640, maximumHeight: 560) == 560)
 }
 
 /// The window is set to this once and never resized, so anything it fails to contain is
@@ -142,12 +147,12 @@ import Testing
     }
 }
 
-@Test func reachingForAFlashOpensThePeekAndKillsItsTimer() {
+@Test func reachingForAFlashOpensTheFullPanelAndKillsItsTimer() {
     var notch = NotchInteraction(state: .flash)
     let effects = notch.handle(.hoverEntered)
 
-    #expect(notch.state == .peek)
-    // Without this the peek someone just opened closes under the cursor two seconds later.
+    #expect(notch.state == .expanded)
+    // Without this the panel someone just opened closes under the cursor two seconds later.
     #expect(effects == [.cancelCollapse])
 }
 
@@ -166,15 +171,14 @@ import Testing
 
 // MARK: - Hover
 
-@Test func hoveringTheNotchOpensThePeek() {
+@Test func hoveringTheNotchOpensTheFullPanelImmediately() {
     var notch = NotchInteraction()
     notch.handle(.hoverEntered)
-    #expect(notch.state == .peek)
+    #expect(notch.state == .expanded)
 }
 
 @Test func peekClosesAfterTheGracePeriod() {
-    var notch = NotchInteraction()
-    notch.handle(.hoverEntered)
+    var notch = NotchInteraction(state: .peek)
 
     let effects = notch.handle(.hoverExited)
     #expect(effects == [.scheduleCollapse(milliseconds: NotchInteraction.peekGrace)])
@@ -192,12 +196,12 @@ import Testing
     notch.handle(.hoverExited)
 
     #expect(notch.handle(.hoverEntered) == [.cancelCollapse])
-    #expect(notch.state == .peek)
+    #expect(notch.state == .expanded)
 
     // A timer that fires after re-entry was cancelled, but prove the state survives even
     // if a stale one slips through: it must not close while the cursor is inside.
     notch.handle(.hoverEntered)
-    #expect(notch.state == .peek)
+    #expect(notch.state == .expanded)
 }
 
 @Test func collapseTimerIsIgnoredWhenAlreadyIdle() {
@@ -219,14 +223,14 @@ import Testing
     #expect(notch.state == .idle)
 }
 
-/// Hovering during a reveal cancels its exit — the peek belongs to the cursor from then on.
-@Test func aRevealUnderTheCursorStaysUntilTheCursorLeaves() {
+/// Hovering during a reveal promotes it to the full panel and cancels its transient exit.
+@Test func hoveringARevealPromotesItToTheFullPanel() {
     var notch = NotchInteraction()
     notch.handle(.revealRequested)
 
     #expect(notch.handle(.hoverEntered) == [.cancelCollapse])
-    #expect(notch.state == .peek)
-    #expect(notch.handle(.hoverExited) == [.scheduleCollapse(milliseconds: NotchInteraction.peekGrace)])
+    #expect(notch.state == .expanded)
+    #expect(notch.handle(.hoverExited) == [.scheduleCollapse(milliseconds: NotchInteraction.expandedGrace)])
 }
 
 /// It never interrupts. A panel someone opened, or a card waiting for an answer, outranks

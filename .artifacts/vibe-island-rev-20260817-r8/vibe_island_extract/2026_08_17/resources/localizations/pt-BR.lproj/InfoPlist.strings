@@ -1,0 +1,2 @@
+/* InfoPlist.strings (Português do Brasil) */
+"NSAppleEventsUsageDescription" = "O Vibe Island precisa controlar aplicativos de terminal (iTerm2, Terminal) para ir até a janela, aba e sessão corretas quando você clica em uma notificação.";

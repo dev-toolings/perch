@@ -195,7 +195,7 @@ private struct VibeToggleStyle: ToggleStyle {
           Capsule()
             .fill(
               configuration.isOn
-                ? Color(hex: 0x0A84FF)
+                ? Color.white.opacity(0.18)
                 : Color.white.opacity(0.11))
           Circle()
             .fill(Color.white.opacity(0.94))
@@ -290,32 +290,6 @@ private struct GeneralPane: View {
 
         Section(t("Deployment"), note: nil, verticalPadding: 13) {
           Toggle(t("Expand notch on hover"), isOn: expandsOnHover)
-          VStack(alignment: .leading, spacing: 5) {
-            HStack {
-              Text(t("Hover delay"))
-              Spacer()
-              Text(String(format: "%.2fs", model.preferences.hoverDelay))
-                .font(Theme.mono(10))
-                .foregroundStyle(.secondary)
-                .padding(.horizontal, 7)
-                .padding(.vertical, 3)
-                .background(
-                  RoundedRectangle(cornerRadius: 6)
-                    .fill(Color.black.opacity(0.18)))
-            }
-            Slider(value: hoverDelay, in: 0...1, step: 0.05)
-              .disabled(!model.preferences.expandsOnHover)
-              .vibeSliderTrack(value: model.preferences.hoverDelay, in: 0...1)
-          }
-          Divider().overlay(Color.white.opacity(0.07))
-          Toggle(t("Smart suppression"), isOn: binding(\.smartSuppression))
-          Text(
-            t(
-              "Do not expand automatically when the agent's terminal tab is in front")
-          )
-          .font(.caption)
-          .foregroundStyle(.secondary)
-          .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.bottom, 14)
 
@@ -935,16 +909,6 @@ private struct GeneralPane: View {
 
   private var expandsOnHover: Binding<Bool> {
     preferenceBinding(\.expandsOnHover)
-  }
-
-  private var hoverDelay: Binding<Double> {
-    Binding(
-      get: { model.preferences.hoverDelay },
-      set: { value in
-        var next = model.preferences
-        next.hoverDelay = value
-        model.updatePreferences(next)
-      })
   }
 
   private var collapsesOnHoverExit: Binding<Bool> {

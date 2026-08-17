@@ -16,9 +16,23 @@ public struct AskQuestion: Sendable, Equatable, Identifiable {
     /// The question text is the key answers are recorded under, so it is the identity.
     public var id: String { question }
     public var question: String
+    /// Harnesses such as Codex give questions a stable machine id. The UI remains keyed
+    /// by the readable sentence, while the response goes back under this protocol key.
+    public var answerKey: String
     public var header: String
     public var multiSelect: Bool
     public var options: [Option]
+
+    public init(
+        question: String, answerKey: String? = nil, header: String,
+        multiSelect: Bool, options: [Option]
+    ) {
+        self.question = question
+        self.answerKey = answerKey ?? question
+        self.header = header
+        self.multiSelect = multiSelect
+        self.options = options
+    }
 }
 
 public struct AskUserQuestionRequest: Sendable, Equatable {
@@ -47,6 +61,7 @@ public struct AskUserQuestionRequest: Sendable, Equatable {
 
             return AskQuestion(
                 question: question,
+                answerKey: entry["id"]?.stringValue,
                 header: entry["header"]?.stringValue ?? "",
                 multiSelect: multiSelect,
                 options: options)
@@ -69,7 +84,7 @@ public struct AskUserQuestionRequest: Sendable, Equatable {
         var encoded: [String: JSONValue] = [:]
         for question in questions {
             guard let chosen = answers[question.question], !chosen.isEmpty else { continue }
-            encoded[question.question] = .string(chosen.joined(separator: ", "))
+            encoded[question.answerKey] = .string(chosen.joined(separator: ", "))
         }
         root["answers"] = .object(encoded)
         return .object(root)
@@ -222,7 +237,7 @@ public enum RequestKind: Sendable, Equatable {
 
     public static func of(_ request: PerchRequest) -> RequestKind {
         switch request.payload.toolName {
-        case "AskUserQuestion":
+        case "AskUserQuestion", "ask", "request_user_input", "functions.request_user_input":
             if let parsed = AskUserQuestionRequest.parse(request.payload.toolInput) {
                 return .question(parsed)
             }
@@ -234,5 +249,16 @@ public enum RequestKind: Sendable, Equatable {
             break
         }
         return .permission
+    }
+}
+
+extension PerchRequest {
+    /// Some harnesses report a question but keep ownership of the answer in their own
+    /// terminal. Perch still presents the question; it just must not pretend its controls
+    /// can send a decision the harness will consume.
+    public var presentsReadOnlyQuestion: Bool {
+        guard event == "PermissionRequest", !wantsDecision else { return false }
+        if case .question = RequestKind.of(self) { return true }
+        return false
     }
 }

@@ -22,8 +22,8 @@ actor AnthropicUsageClient {
     self.session = session
   }
 
-  func fetch(now: Date = .now) async -> UsageLimitsReader.Reading? {
-    if let lastAttempt, now.timeIntervalSince(lastAttempt) < 60 {
+  func fetch(now: Date = .now, force: Bool = false) async -> UsageLimitsReader.Reading? {
+    if !UsageNetworkRefresh.shouldFetch(lastAttempt: lastAttempt, now: now, force: force) {
       return lastReading ?? cached()
     }
     lastAttempt = now

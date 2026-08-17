@@ -211,6 +211,14 @@ public struct SessionSnapshot: Sendable, Equatable {
             || status == .background
     }
 
+    /// Working harnesses belong at the top of every session surface. Requests blocked on
+    /// a person follow them, and completed or failed turns stay readable at the bottom.
+    var listPriority: Int {
+        if isWorking { return 0 }
+        if status.needsYou { return 1 }
+        return 2
+    }
+
     /// Work still going with nothing left to announce it.
     ///
     /// A session whose only sign of life is a twenty-minute agent emits no hooks of its
@@ -228,6 +236,37 @@ public struct SessionSnapshot: Sendable, Equatable {
         if let aiTitle, !aiTitle.isEmpty { return aiTitle }
         if let prompt, !prompt.isEmpty { return prompt }
         return projectName ?? "session"
+    }
+}
+
+/// Chooses the session that owns the featured card without reordering the underlying
+/// stable list. Vibe keeps the last consulted session through a collapse; if that focus
+/// is gone, active work is the only useful fallback.
+public enum SessionDisplaySelection {
+    public static func featured(
+        in sessions: [SessionSnapshot], focusedSessionId: String?
+    ) -> SessionSnapshot? {
+        if let focusedSessionId,
+            let focused = sessions.first(where: { $0.id == focusedSessionId })
+        {
+            return focused
+        }
+        return sessions.first(where: \.isWorking) ?? sessions.first
+    }
+
+    public static func shown(
+        in sessions: [SessionSnapshot], focusedSessionId: String?, showsAll: Bool
+    ) -> [SessionSnapshot] {
+        if showsAll { return sessions }
+        return featured(in: sessions, focusedSessionId: focusedSessionId).map { [$0] } ?? []
+    }
+
+    public static func additionalCount(
+        in sessions: [SessionSnapshot], focusedSessionId: String?, showsAll: Bool
+    ) -> Int {
+        max(0, sessions.count - shown(
+            in: sessions, focusedSessionId: focusedSessionId, showsAll: showsAll
+        ).count)
     }
 }
 
@@ -530,7 +569,10 @@ public struct SessionTracker: Sendable {
 
     /// The two tools whose permission prompt is really a question. Approving the *asking*
     /// of a question was never the point — the answer is.
-    static let answerTools: Set<String> = ["AskUserQuestion", "ExitPlanMode"]
+    static let answerTools: Set<String> = [
+        "AskUserQuestion", "ask", "request_user_input", "functions.request_user_input",
+        "ExitPlanMode",
+    ]
 
     /// Matched on substance rather than on the exact sentence: the wording of this
     /// notification has changed between Claude Code releases, and a card that silently
@@ -693,7 +735,7 @@ public struct SessionTracker: Sendable {
         session.isCompletionUnread = !holdsSteady
     }
 
-    /// Every live session, in an order that does not move.
+    /// Every live session, grouped by what deserves attention now.
     ///
     /// This was `lastEvent` descending — most recently active first — which sounds right
     /// and is unusable the moment more than one agent is running. Every tool call in any
@@ -703,19 +745,18 @@ public struct SessionTracker: Sendable {
     /// cycles in a different order on every press because the switcher indexes into this
     /// array.
     ///
-    /// A session's start time never changes, so this order never changes — and it is the
-    /// order they arrived in, oldest first, so a session starting *appends* rather than
-    /// inserting. Newest-first was the first attempt and it moves the whole list down by a
-    /// card every time you open a terminal.
-    ///
-    /// Which one is busy, and which one wants you, is the dot's job — it was never the
-    /// row's.
+    /// Working sessions come first, then sessions waiting on a person, then finished
+    /// sessions. Inside each group the start time never changes, so ordinary hook traffic
+    /// cannot reshuffle peers under the cursor.
     ///
     /// The id breaks ties: two sessions started in the same instant would otherwise be
     /// ordered by whatever the dictionary felt like, which is the same bug in miniature.
     public var active: [SessionSnapshot] {
         sessions.values.sorted {
-            ($0.startedAt, $0.id) < ($1.startedAt, $1.id)
+            if $0.listPriority != $1.listPriority {
+                return $0.listPriority < $1.listPriority
+            }
+            return ($0.startedAt, $0.id) < ($1.startedAt, $1.id)
         }
     }
 

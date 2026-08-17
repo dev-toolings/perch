@@ -5,6 +5,52 @@ import Testing
 
 private let epoch = Date(timeIntervalSince1970: 1_700_000_000)
 
+@Suite("Featured session selection")
+struct FeaturedSessionSelectionTests {
+    private func session(_ id: String, status: SessionStatus) -> SessionSnapshot {
+        SessionSnapshot(
+            id: id, cwd: "/lab/\(id)", lastEvent: epoch, lastDetail: "",
+            status: status, subagents: 0, startedAt: epoch)
+    }
+
+    @Test func aFocusedSessionWinsEvenWhenItIsNotFirst() throws {
+        let sessions = [session("working", status: .working), session("focused", status: .idle)]
+
+        let featured = try #require(
+            SessionDisplaySelection.featured(in: sessions, focusedSessionId: "focused"))
+
+        #expect(featured.id == "focused")
+        #expect(
+            SessionDisplaySelection.shown(
+                in: sessions, focusedSessionId: "focused", showsAll: false
+            ).map(\.id) == ["focused"])
+        #expect(
+            SessionDisplaySelection.additionalCount(
+                in: sessions, focusedSessionId: "focused", showsAll: false) == 1)
+    }
+
+    @Test func aMissingFocusFallsBackToTheFirstWorkingSession() throws {
+        let sessions = [session("idle", status: .idle), session("working", status: .working)]
+
+        let featured = try #require(
+            SessionDisplaySelection.featured(in: sessions, focusedSessionId: "missing"))
+
+        #expect(featured.id == "working")
+    }
+
+    @Test func showingAllPreservesTheStableSessionOrder() {
+        let sessions = [session("first", status: .working), session("second", status: .idle)]
+
+        #expect(
+            SessionDisplaySelection.shown(
+                in: sessions, focusedSessionId: "second", showsAll: true
+            ).map(\.id) == ["first", "second"])
+        #expect(
+            SessionDisplaySelection.additionalCount(
+                in: sessions, focusedSessionId: "second", showsAll: true) == 0)
+    }
+}
+
 @Test func stopMakesASessionIdleWithoutRemovingIt() {
     var tracker = SessionTracker()
     tracker.record(id: "s1", kind: "PreToolUse", cwd: "/lab/perch", at: epoch)
@@ -152,6 +198,28 @@ struct CompletionReadStateTests {
 
     tracker.record(id: "s2", kind: "PermissionRequest", tool: "ExitPlanMode", at: epoch)
     #expect(tracker.sessions["s2"]?.status == .waitingForAnswer)
+
+    tracker.record(id: "s3", kind: "PermissionRequest", tool: "request_user_input", at: epoch)
+    #expect(tracker.sessions["s3"]?.status == .waitingForAnswer)
+
+    tracker.record(id: "s4", kind: "PermissionRequest", tool: "ask", at: epoch)
+    #expect(tracker.sessions["s4"]?.status == .waitingForAnswer)
+}
+
+@Test func aQuestionReplyReturnsToWorkThenStopsCleanly() {
+    var tracker = SessionTracker()
+
+    tracker.record(
+        id: "opencode-s1", kind: "PermissionRequest", tool: "AskUserQuestion", at: epoch)
+    #expect(tracker.sessions["opencode-s1"]?.status == .waitingForAnswer)
+
+    tracker.record(
+        id: "opencode-s1", kind: "PostToolUse", tool: "AskUserQuestion",
+        at: epoch.addingTimeInterval(1))
+    #expect(tracker.sessions["opencode-s1"]?.status == .working)
+
+    tracker.record(id: "opencode-s1", kind: "Stop", at: epoch.addingTimeInterval(2))
+    #expect(tracker.sessions["opencode-s1"]?.status == .idle)
 }
 
 /// A card said "waiting for you" until the *next* hook arrived — and for a request nobody
@@ -538,25 +606,31 @@ struct AnsweredTests {
     #expect(!session.permissionIsPermissive)
 }
 
-/// The panel is a list you read while it updates, so its order has to be one that does not
-/// move. Sorting by the last event meant every tool call in any session promoted that card
-/// to the top — six agents reshuffled the list several times a second.
-@Test func theOrderDoesNotMoveWhenSomethingHappens() {
+/// Active work must never be buried under completed sessions. Within each state group the
+/// start order stays stable, so ordinary tool calls do not reshuffle cards under the cursor.
+@Test func workingSessionsStayAboveWaitingAndCompletedSessions() {
     var tracker = SessionTracker()
-    tracker.record(id: "first", kind: "SessionStart", at: epoch)
-    tracker.record(id: "second", kind: "SessionStart", at: epoch.addingTimeInterval(60))
-    tracker.record(id: "third", kind: "SessionStart", at: epoch.addingTimeInterval(120))
+    tracker.record(id: "completed", kind: "Stop", at: epoch)
+    tracker.record(id: "working-first", kind: "PreToolUse", at: epoch.addingTimeInterval(60))
+    tracker.record(id: "working-second", kind: "UserPromptSubmit", at: epoch.addingTimeInterval(120))
+    tracker.record(
+        id: "waiting", kind: "PermissionRequest", tool: "Bash",
+        at: epoch.addingTimeInterval(180))
 
-    let order = tracker.active.map(\.id)
-    #expect(order == ["first", "second", "third"])
+    #expect(
+        tracker.active.map(\.id)
+            == ["working-first", "working-second", "waiting", "completed"])
 
-    // The oldest session does something. It stays exactly where it was.
-    tracker.record(id: "first", kind: "PreToolUse", at: epoch.addingTimeInterval(300))
-    #expect(tracker.active.map(\.id) == order)
+    tracker.record(
+        id: "working-first", kind: "PostToolUse", at: epoch.addingTimeInterval(300))
+    #expect(
+        tracker.active.map(\.id)
+            == ["working-first", "working-second", "waiting", "completed"])
 
-    // So does a turn ending, which is the other event that used to move a card.
-    tracker.record(id: "third", kind: "Stop", at: epoch.addingTimeInterval(360))
-    #expect(tracker.active.map(\.id) == order)
+    tracker.record(id: "working-first", kind: "Stop", at: epoch.addingTimeInterval(360))
+    #expect(
+        tracker.active.map(\.id)
+            == ["working-second", "waiting", "completed", "working-first"])
 }
 
 /// Two sessions started in the same instant would otherwise be ordered by whatever the
@@ -619,8 +693,8 @@ struct AnsweredTests {
     #expect(tracker.visible.map(\.id) == ["a", "b"])
 
     tracker.record(id: "a", kind: "Stop", at: epoch.addingTimeInterval(120))
-    #expect(tracker.visible.map(\.id) == ["a", "b"])
-    #expect(tracker.active.map(\.id) == ["a", "b"])
+    #expect(tracker.visible.map(\.id) == ["b", "a"])
+    #expect(tracker.active.map(\.id) == ["b", "a"])
     #expect(tracker.sessions.count == 2)
 }
 
@@ -630,7 +704,7 @@ struct AnsweredTests {
     tracker.record(id: "a", kind: "UserPromptSubmit", prompt: "fix the bridge", at: epoch)
     tracker.record(id: "b", kind: "PreToolUse", at: epoch.addingTimeInterval(60))
     tracker.record(id: "a", kind: "Stop", at: epoch.addingTimeInterval(120))
-    #expect(tracker.visible.map(\.id) == ["a", "b"])
+    #expect(tracker.visible.map(\.id) == ["b", "a"])
 
     tracker.record(id: "a", kind: "UserPromptSubmit", at: epoch.addingTimeInterval(180))
     #expect(tracker.visible.map(\.id) == ["a", "b"])

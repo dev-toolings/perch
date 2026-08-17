@@ -1,0 +1,120 @@
+--- func 0x1008809e0..0x100880d9c (depth 0)
+  880b14  []  -> static SwiftUI.HorizontalAlignment.leading.getter : SwiftUI.HorizontalAlignment
+  880b48  []  -> static SwiftUI.Alignment.leading.getter : SwiftUI.Alignment
+  880b8c  [mov w9, #0x1 | mov w1, #0x1 | mov w3, #0x1 | mov w5, #0x0 | mov w7, #0x1]  -> SwiftUI._FlexFrameLayout.init(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, maxWidth: Co
+  880bdc  []  -> static SwiftUI.Edge.Set.vertical.getter : SwiftUI.Edge.Set
+  880be8  [fmov d0, #10.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  880c30  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  880c3c  [fmov d0, #12.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  880ca8  []  -> type metadata accessor for SwiftUI.RoundedRectangle
+  880cc0  []  -> type metadata accessor for SwiftUI.RoundedCornerStyle
+  880ce4  [fmov.2d v0, #8.00000000]  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  880cf4  [d0=const 0.02]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  880d2c  [mov w9, #0x100]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+--- func 0x100880d9c..0x1008819b8 (depth 0)
+  880f88  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  881030  []  -> static SwiftUI.Edge.Set.bottom.getter : SwiftUI.Edge.Set
+  88103c  [fmov d0, #3.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  881120  []  -> (extension in SwiftUI):SwiftUI.ForEach< where C: SwiftUI.View>.init(_: A, id: Swift.KeyPath<A.Element, B>, con
+  8811b4  []  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+  881378  []  -> (extension in SwiftUI):SwiftUI.ForEach< where C: SwiftUI.View>.init(_: A, id: Swift.KeyPath<A.Element, B>, con
+  88141c  []  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+--- func 0x1008819b8..0x100881e54 (depth 0)
+  881b08  []  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+  881b3c  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  881b50  []  -> static SwiftUI.Font.Weight.medium.getter : SwiftUI.Font.Weight
+  881b5c  []  -> type metadata accessor for SwiftUI.Font.Design
+  881b90  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #11.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  881bc4  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  881bf8  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  881c04  [fmov d0, #0.50000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  881c28  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+  881c78  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  881cb0  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.00000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  881ce4  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  881d18  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  881d2c  [d0=0.35]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  881d50  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+--- func 0x100881e54..0x1008824f0 (depth 0)
+--- func 0x1008824f0..0x1008824f8 (depth 0)
+--- func 0x1008824f8..0x100882500 (depth 0)
+--- func 0x100882500..0x100882614 (depth 0)
+--- func 0x100882614..0x100882854 (depth 0)
+  8826b0  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  8826c8  []  -> type metadata accessor for SwiftUI.Font.Design
+  8826f8  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.00000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  882724  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  882758  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  88276c  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  882790  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+  8827c4  []  -> static SwiftUI.Edge.Set.leading.getter : SwiftUI.Edge.Set
+  8827d0  [fmov d0, #16.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  8827f0  []  -> static SwiftUI.Edge.Set.top.getter : SwiftUI.Edge.Set
+  8827fc  [fmov d0, #2.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+--- func 0x100882854..0x10088285c (depth 0)
+--- func 0x10088285c..0x100882d48 (depth 0)
+  8829a8  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  8829c8  [x0=dbl 12.0 | mov w1, #0x0 | x2=dbl 12.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  882a14  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  882a2c  []  -> type metadata accessor for SwiftUI.Font.Design
+  882a5c  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #11.00000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  882a90  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  882ac4  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  882ae0  []  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  882b04  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+  882bcc  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  882bdc  [d0=const 0.2]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  882c04  []  -> SwiftUI.Text.strikethrough(_: Swift.Bool, color: SwiftUI.Color?) -> SwiftUI.Text
+--- func 0x100882d48..0x1008833f8 (depth 0)
+  882d74  []  -> type metadata accessor for SwiftUI.RoundedRectangle
+  882e78  []  -> static SwiftUI.Color.blue.getter : SwiftUI.Color
+  882e8c  [d0=0.7]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  882e9c  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  882ebc  [x0=dbl 7.0 | mov w1, #0x0 | x2=dbl 7.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  882f88  [mov w8, #0x100 | mov w8, #0x1]  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  882ff0  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  883018  []  -> type metadata accessor for SwiftUI.RoundedCornerStyle
+  88303c  [fmov.2d v0, #2.00000000]  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  883048  [fmov d0, #0.25000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  883078  [fmov d0, #1.00000000 | fmov d1, #10.00000000 | mov w0, #0x0 | mov w1, #0x0]  -> SwiftUI.StrokeStyle.init(lineWidth: CoreGraphics.CGFloat, lineCap: __C.CGLineCap, lineJoin: __C.CGLineJoin, mi
+  8830e8  [mov w9, #0x100]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  883120  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  883140  [x0=dbl 9.0 | mov w1, #0x0 | x2=dbl 9.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  8831d0  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  883200  [add x8, x8, #0xf0 ; literal pool for: "checkmark.square.fill"]  -> SwiftUI.Image.init(systemName: Swift.String) -> SwiftUI.Image
+  88320c  []  -> type metadata accessor for SwiftUI.Font.Design
+  88323c  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.00000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  88326c  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  883280  [d0=0.35]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  883344  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  8833ac  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+--- func 0x1008833f8..0x1008834c4 (depth 0)
+  88342c  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  883460  []  -> static SwiftUI.Edge.Set.vertical.getter : SwiftUI.Edge.Set
+  88346c  [fmov d0, #2.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+--- func 0x1008834c4..0x100883608 (depth 0)
+  883500  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  883524  [mov w1, #0x0 | x2=dbl 24.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  883548  []  -> static SwiftUI.Color.gray.getter : SwiftUI.Color
+  88355c  []  -> static SwiftUI.Color.green.getter : SwiftUI.Color
+  88356c  []  -> static SwiftUI.Color.purple.getter : SwiftUI.Color
+  883574  []  -> static SwiftUI.Color.blue.getter : SwiftUI.Color
+  883580  []  -> static SwiftUI.Color.orange.getter : SwiftUI.Color
+  8835b0  [d0=0.7 | d1=const 0.4 | fmov d1, #3.00000000 | fmov d2, #2.00000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+--- func 0x100883608..0x100883624 (depth 0)
+--- func 0x100883624..0x100883b48 (depth 0)
+  883660  []  -> type metadata accessor for SwiftUI.RoundedRectangle
+  883760  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  883798  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  8837a4  [fmov d0, #12.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  8837e4  []  -> static SwiftUI.Edge.Set.vertical.getter : SwiftUI.Edge.Set
+  8837f0  [fmov d0, #10.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  88380c  []  -> static SwiftUI.Alignment.leading.getter : SwiftUI.Alignment
+  883850  [mov w9, #0x1 | mov w1, #0x1 | mov w3, #0x1 | mov w5, #0x0 | mov w7, #0x1]  -> SwiftUI._FlexFrameLayout.init(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, maxWidth: Co
+  8838c4  []  -> type metadata accessor for SwiftUI.RoundedCornerStyle
+  883918  [fmov.2d v0, #10.00000000 | d0=const 0.08]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  883948  [mov w9, #0x100]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  8839cc  [d0=0.15]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  8839f4  [fmov d0, #1.00000000 | fmov d1, #10.00000000 | mov w0, #0x0 | mov w1, #0x0]  -> SwiftUI.StrokeStyle.init(lineWidth: CoreGraphics.CGFloat, lineCap: __C.CGLineCap, lineJoin: __C.CGLineJoin, mi
+  883a88  [mov w9, #0x100]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  883ac0  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment

@@ -13,7 +13,7 @@ public enum NotchState: String, Equatable, Sendable, CaseIterable {
   case flash
   /// Hover preview: sessions, tokens today.
   case peek
-  /// Full panel with tabs.
+  /// Full activity panel.
   case expanded
   /// A tool call is waiting on the user. Takes priority over everything else.
   case alert
@@ -49,9 +49,8 @@ public enum NotchState: String, Equatable, Sendable, CaseIterable {
       // glued to the notch instead of as one shape wrapped around it.
       if flank > 0 {
         // Reference: Vibe Island 1.0.44 on the 190 pt fallback cutout renders a
-        // 198 x 30 px active pill. The inverse shoulders contribute one pixel per
-        // side and the rasterized edge adds two rows, so the frame is 196 x 28 pt.
-        return CGSize(width: notch.width + flank * 2, height: 28)
+        // 196 x 30 pt active pill.
+        return CGSize(width: notch.width + flank * 2, height: 30)
       }
       return CGSize(width: notch.width, height: notch.height + 6)
     case .flash:
@@ -68,7 +67,7 @@ public enum NotchState: String, Equatable, Sendable, CaseIterable {
     case .expanded:
       // Vibe's 640 pt content lane is wrapped by roughly 8 pt of curved shoulder
       // on either side in the rendered panel.
-      return CGSize(width: 650, height: 270)
+      return CGSize(width: 650, height: Self.expandedInitialHeight)
     case .alert:
       return CGSize(width: Self.alertWidth, height: notch.height + Self.bodyInset + 148)
     }
@@ -78,6 +77,17 @@ public enum NotchState: String, Equatable, Sendable, CaseIterable {
   /// `AppModel.extraWidth`. Named because the card that measures itself has to measure
   /// against the same number the panel is drawn at.
   public static let alertWidth: CGFloat = 516
+
+  /// The first expanded frame appears before SwiftUI can measure its session card.
+  /// Reserve enough room for Vibe's featured transcript instead of flashing a clipped
+  /// 270 pt panel and growing it a frame later.
+  public static let expandedInitialHeight: CGFloat = 448
+
+  public static func expandedHeight(
+    contentHeight: CGFloat, maximumHeight: CGFloat
+  ) -> CGFloat {
+    min(max(contentHeight, expandedInitialHeight), maximumHeight)
+  }
 
   /// How far the inverse curve on each shoulder reaches *past* the panel's own edge.
   ///

@@ -24,19 +24,15 @@ final class NotchController {
   @ObservationIgnored private var mouseMonitors: [Any] = []
   @ObservationIgnored private var cursorTimer: Timer?
   @ObservationIgnored private var isHovering = false
-  @ObservationIgnored private var hoverTask: Task<Void, Never>?
   @ObservationIgnored private var expandsOnHover = true
-  @ObservationIgnored private var hoverDelay: TimeInterval = 0.15
   @ObservationIgnored private var collapsesOnHoverExit = true
   @ObservationIgnored private var panelMaximumWidth: CGFloat = 640
   @ObservationIgnored private var panelMaximumHeight: CGFloat = 560
-  private var expandedContentHeight: CGFloat = 270
+  private var expandedContentHeight: CGFloat = NotchState.expandedInitialHeight
   @ObservationIgnored private var completionCardHeight: CGFloat = 90
   @ObservationIgnored private var hidesInFullscreen = true
   @ObservationIgnored private var closesAutoDisplayOnOutsideClick = false
 
-  /// Supplied by the model because only it knows which terminal owns each session.
-  @ObservationIgnored var shouldSuppressHover: () -> Bool = { false }
   /// Supplied by the scene monitor so the panel stays independent of window discovery.
   @ObservationIgnored var frontmostAppIsFullscreen: () -> Bool = { false }
 
@@ -67,7 +63,6 @@ final class NotchController {
       .adjusted(width: tuning.width, height: tuning.height)
     pinCanvas()
     expandsOnHover = preferences.expandsOnHover
-    hoverDelay = preferences.hoverDelay
     collapsesOnHoverExit = preferences.collapsesOnHoverExit
     panelMaximumWidth = preferences.panelMaximumWidth
     panelMaximumHeight = preferences.panelMaximumHeight
@@ -75,10 +70,6 @@ final class NotchController {
     hidesInFullscreen = preferences.hidesInFullscreen
     closesAutoDisplayOnOutsideClick = preferences.closesAutoDisplayOnOutsideClick
     interaction.autoDisplayMilliseconds = Int(preferences.autoDisplayDuration * 1_000)
-    if !expandsOnHover {
-      hoverTask?.cancel()
-      hoverTask = nil
-    }
   }
 
   func start(content: some View) {
@@ -165,8 +156,6 @@ final class NotchController {
     if hidesInFullscreen, frontmostAppIsFullscreen() {
       window.alphaValue = 0
       window.isInteractive = false
-      hoverTask?.cancel()
-      hoverTask = nil
       return
     }
     window.alphaValue = 1
@@ -201,20 +190,11 @@ final class NotchController {
     isHovering = inside
 
     if inside {
-      guard expandsOnHover, !shouldSuppressHover() else { return }
-      hoverTask?.cancel()
-      let delay = hoverDelay
-      hoverTask = Task { [weak self] in
-        if delay > 0 { try? await Task.sleep(for: .seconds(delay)) }
-        guard !Task.isCancelled, let self, self.isHovering else { return }
-        self.send(.hoverEntered)
-        self.hoverTask = nil
-      }
+      guard expandsOnHover else { return }
+      send(.hoverEntered)
       return
     }
 
-    hoverTask?.cancel()
-    hoverTask = nil
     if collapsesOnHoverExit { send(.hoverExited) }
   }
 
@@ -389,9 +369,17 @@ final class NotchController {
   }
 
   func setExpandedContentHeight(_ height: CGFloat) {
-    let clamped = min(max(height, 150), panelMaximumHeight)
+    let clamped = NotchState.expandedHeight(
+      contentHeight: height, maximumHeight: panelMaximumHeight)
     guard clamped != expandedContentHeight else { return }
     expandedContentHeight = clamped
+  }
+
+  /// Remembers the session the person actually opened. Collapsing the island keeps this
+  /// focus, so the next hover returns to the same card instead of jumping to the first
+  /// working harness.
+  func focus(sessionId: String) {
+    send(.pin(sessionId: sessionId))
   }
 
   /// What the panel measures right now. The only thing the view animates.

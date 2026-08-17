@@ -1,6 +1,16 @@
 import Foundation
 import Security
 
+public enum UsageNetworkRefresh {
+  public static let minimumInterval: TimeInterval = 60
+
+  public static func shouldFetch(
+    lastAttempt: Date?, now: Date, force: Bool
+  ) -> Bool {
+    force || lastAttempt.map { now.timeIntervalSince($0) >= minimumInterval } ?? true
+  }
+}
+
 public enum AnthropicOAuthUsageError: Error, Equatable, LocalizedError {
   case invalidCredentialsFile
   case missingAccessToken

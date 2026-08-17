@@ -96,8 +96,8 @@ Perch source + tests + installed app ───────┘    green / partial
   corrected from those captures.
 - Admission settings now expose Vibe's seven observed built-in directory and
   first-prompt filters, with live match previews, launcher-app blocking, and
-  separate custom directory/prompt sections. Presets remain disabled by
-  default and preserve their enabled state across metadata migrations.
+  separate custom directory/prompt sections. Presets follow Vibe's enabled
+  default and preserve their explicit state across metadata migrations.
 - The latest local build is installed at `/Applications/Perch.app`; the prior
   bundle is recoverable at `/Applications/Perch.app.backup-20260816-225329`.
 - Vibe's main panel can no longer be recaptured because its legitimate UI is

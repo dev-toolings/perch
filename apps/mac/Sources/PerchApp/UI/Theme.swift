@@ -4,7 +4,7 @@ import SwiftUI
 /// Design tokens for the notch UI.
 ///
 /// The direction is the one the category has converged on and that reads well against a
-/// physically black cutout: near-black surfaces, hairline white borders, monospaced text,
+/// physically black cutout: near-black surfaces, hairline white borders, system text,
 /// and one saturated accent per state. Colours are stated as hex so the palette is
 /// auditable in one place rather than scattered through the views.
 enum Theme {
@@ -12,14 +12,15 @@ enum Theme {
 
     static let surface = Color.black
     static let raised = Color(hex: 0x1A1A1A)
+    static let neutral = Color(hex: 0x262626)
     static let hairline = Color.white.opacity(0.08)
     static let hairlineStrong = Color.white.opacity(0.14)
 
     // MARK: - Text
 
     static let primary = Color.white
-    static let secondary = Color.white.opacity(0.62)
-    static let tertiary = Color.white.opacity(0.38)
+    static let secondary = Color.white.opacity(0.70)
+    static let tertiary = Color.white.opacity(0.45)
 
     // MARK: - Accents
 
@@ -40,7 +41,7 @@ enum Theme {
     // on Retina and non-Retina displays.
 
     /// What `--diagnose` reports for the active island typography.
-    static var resolvedTypefaceName: String { "system (monospaced/default/rounded)" }
+    static var resolvedTypefaceName: String { "system (monospaced/default)" }
 
     /// How wide a run of monospaced text will actually be.
     static func monoWidth(_ text: String, size: CGFloat) -> CGFloat {
@@ -52,9 +53,9 @@ enum Theme {
         .system(size: size, weight: weight, design: .monospaced)
     }
 
-    /// Chrome uses Vibe's rounded system design, distinct from command text.
+    /// Chrome uses the platform default system design; command text stays monospaced.
     static func label(_ size: CGFloat, _ weight: Font.Weight = .medium) -> Font {
-        .system(size: size, weight: weight, design: .rounded)
+        .system(size: size, weight: weight, design: .default)
     }
 
     /// Prose uses Vibe's default system design; code blocks call `mono` explicitly.

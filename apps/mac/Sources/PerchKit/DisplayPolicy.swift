@@ -161,7 +161,7 @@ public struct DisplayPolicy: Sendable, Equatable {
           timer: .cancel, reason: "blocking question refreshed")
       case .collapse(.system):
         return accept(
-          .closed, sessionId: nil, expansion: .collapse, timer: .cancel,
+          .closed, sessionId: activeSessionId, expansion: .collapse, timer: .cancel,
           reason: "blocking request resolved")
       default:
         return reject("blocking request owns the display")
@@ -182,7 +182,7 @@ public struct DisplayPolicy: Sendable, Equatable {
     case .collapse:
       guard state != .closed else { return reject("display already closed") }
       return accept(
-        .closed, sessionId: nil, expansion: .collapse, timer: .cancel,
+        .closed, sessionId: activeSessionId, expansion: .collapse, timer: .cancel,
         reason: "collapse accepted")
 
     case .manualExpand(let sessionId):
@@ -203,7 +203,7 @@ public struct DisplayPolicy: Sendable, Equatable {
     case .hoverExpand:
       guard state == .closed else { return reject("display already visible") }
       return accept(
-        .peek, sessionId: activeSessionId, expansion: .peek, timer: .cancel,
+        .manualExpanded, sessionId: activeSessionId, expansion: .expand, timer: .cancel,
         reason: "hover expansion")
 
     case .peek(let sessionId), .tabMismatch(let sessionId):
@@ -241,8 +241,13 @@ public struct DisplayPolicy: Sendable, Equatable {
         return reject("snapshot carries no focus")
       }
       if !snapshot.sessionExists || snapshot.isHidden {
-        guard activeSessionId == focused, state != .closed else {
+        guard activeSessionId == focused else {
           return reject("snapshot does not affect active display")
+        }
+        if state == .closed {
+          return accept(
+            .closed, sessionId: nil, expansion: .none, timer: .unchanged,
+            reason: "closed focus disappeared")
         }
         return accept(
           .closed, sessionId: nil, expansion: .collapse, timer: .cancel,

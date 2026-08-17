@@ -1,0 +1,26 @@
+--- func 0x1008834c4..0x100883608 (depth 0)
+  883500  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  883524  [mov w1, #0x0 | x2=dbl 24.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  883548  []  -> static SwiftUI.Color.gray.getter : SwiftUI.Color
+  88355c  []  -> static SwiftUI.Color.green.getter : SwiftUI.Color
+  88356c  []  -> static SwiftUI.Color.purple.getter : SwiftUI.Color
+  883574  []  -> static SwiftUI.Color.blue.getter : SwiftUI.Color
+  883580  []  -> static SwiftUI.Color.orange.getter : SwiftUI.Color
+  8835b0  [d0=0.7 | d1=const 0.4 | fmov d1, #3.00000000 | fmov d2, #2.00000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+--- func 0x100883608..0x100883624 (depth 0)
+--- func 0x100883624..0x100883b48 (depth 0)
+  883660  []  -> type metadata accessor for SwiftUI.RoundedRectangle
+  883760  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  883798  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  8837a4  [fmov d0, #12.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  8837e4  []  -> static SwiftUI.Edge.Set.vertical.getter : SwiftUI.Edge.Set
+  8837f0  [fmov d0, #10.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  88380c  []  -> static SwiftUI.Alignment.leading.getter : SwiftUI.Alignment
+  883850  [mov w9, #0x1 | mov w1, #0x1 | mov w3, #0x1 | mov w5, #0x0 | mov w7, #0x1]  -> SwiftUI._FlexFrameLayout.init(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, maxWidth: Co
+  8838c4  []  -> type metadata accessor for SwiftUI.RoundedCornerStyle
+  883918  [fmov.2d v0, #10.00000000 | d0=const 0.08]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  883948  [mov w9, #0x100]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  8839cc  [d0=0.15]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  8839f4  [fmov d0, #1.00000000 | fmov d1, #10.00000000 | mov w0, #0x0 | mov w1, #0x0]  -> SwiftUI.StrokeStyle.init(lineWidth: CoreGraphics.CGFloat, lineCap: __C.CGLineCap, lineJoin: __C.CGLineJoin, mi
+  883a88  [mov w9, #0x100]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  883ac0  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment

@@ -168,6 +168,7 @@ struct NotchRootView: View {
         reading: IdleReading(model.activity),
         notchWidth: controller.geometry.size.width,
         notchHeight: controller.geometry.size.height,
+        showsDetails: model.preferences.layout.showsCompactDetails,
         waiting: model.permissions.waitingCount,
         quota: restingQuota,
         showsRemaining: model.preferences.showsRemainingQuota)
@@ -187,6 +188,7 @@ struct NotchRootView: View {
         notch: controller.geometry.size, model: model,
         focusedSessionId: controller.activeSessionId,
         onHeightChange: { controller.setExpandedContentHeight($0) },
+        onFocusChange: { controller.focus(sessionId: $0) },
         onClose: { controller.dismiss() })
     case .alert:
       alertContent
@@ -243,7 +245,7 @@ struct NotchRootView: View {
         request: request,
         draftID: pending.questionDraftID,
         drafts: model.questionDrafts,
-        isReadOnly: pending.agent == .copilot,
+        isReadOnly: pending.isObservationOnly,
         submit: { model.answer($0) },
         // Staying silent hands the question back to Claude Code's own prompt.
         cancel: { model.decide(.ask) }
@@ -335,7 +337,7 @@ struct ShoulderButton: View {
   var body: some View {
     Button(action: action) {
       Image(systemName: symbol)
-        .font(.system(size: 12, weight: .semibold))
+        .font(.system(size: 13, weight: .semibold))
         .foregroundStyle(tint)
         .frame(width: 20, height: 20)
     }
@@ -348,12 +350,12 @@ struct ShoulderButton: View {
 ///
 /// With nothing running this draws nothing at all and the cutout looks exactly like the
 /// hardware. The moment an agent is working there is something worth seeing without
-/// hovering, and the menu bar beside the cutout is the only place to put it — so a glyph
-/// per agent goes on the left and the count on the right, with the physical notch left
-/// untouched between them.
+/// hovering, and the menu bar beside the cutout is the only place to put it — so one
+/// ambient preset goes on the left and the count on the right, with the physical notch
+/// left untouched between them.
 struct IdleReading: Equatable {
-  /// One entry per live session, priority first. Vibe's compact strip uses one large
-  /// status sprite followed by smaller session sprites; it does not deduplicate sources.
+  /// One entry per live session, priority first. The compact strip draws one ambient
+  /// preset, but the underlying sessions still drive its count and active state.
   var agents: [(agent: Agent, isWorking: Bool)] = []
   var count = 0
   /// Whether any of them is blocked on a person.
@@ -425,24 +427,27 @@ struct PixelStatusIconCompact: View {
   private var rows: [String] {
     if isPrimary {
       return [
-        "..x...x..",
-        "...x.x...",
-        "..xxxxx..",
-        ".xx.x.xx.",
-        "xxxxxxxxx",
-        "x.xxxxx.x",
-        "x.x...x.x",
+        "..x....x..",
+        "...x..x...",
+        "..xxxxxx..",
+        ".xx.oo.xx.",
+        "xxxxxxxxxx",
+        "x.xxxxxx.x",
+        ".x......x.",
       ]
     }
     return [
-      "...x.....",
-      "..xxx....",
-      ".xxxxx...",
-      "xxxxxxx..",
-      "xx.x.xxx.",
-      "xxxxxxx..",
-      ".xx.xx...",
-      "..x.x....",
+      "...x...x...",
+      "....x.x....",
+      "...xxxxx...",
+      "..xx.o.xx..",
+      ".xxxxxxxxx.",
+      ".x.xxxxx.x.",
+      "...x...x...",
+      "..x.....x..",
+      ".x.......x.",
+      "...........",
+      "...........",
     ]
   }
 
@@ -470,7 +475,7 @@ struct PixelStatusIconCompact: View {
 
   private func colour(_ cell: Character) -> Color {
     switch cell {
-    case "x": return tint.opacity(0.72)
+    case "x": return tint.opacity(isPrimary ? 0.90 : 0.68)
     case "o": return tint
     default: return .clear
     }
@@ -509,6 +514,7 @@ struct IdleView: View {
   let reading: IdleReading
   let notchWidth: CGFloat
   let notchHeight: CGFloat
+  let showsDetails: Bool
   /// How many requests are held. Distinct from the amber pill, which says *that* someone
   /// is waiting: this says how many, and four queued approvals is a different afternoon
   /// from one.
@@ -518,6 +524,7 @@ struct IdleView: View {
   /// clock — so it is what the bar carries while it has no agent to draw.
   var quota: UsageLimitsReader.Reading?
   var showsRemaining = false
+  var summaryMaximumWidth: CGFloat = 116
 
   private var count: Int { reading.count }
   /// The pill changes colour rather than growing a second badge — at 32pt there is room
@@ -533,38 +540,25 @@ struct IdleView: View {
     Group {
       if showsQuota {
         HStack(spacing: 5) {
-          AgentGlyph(
-            agent: .claude, pixel: IdleView.compactGlyphPixel,
-            isBreathing: false, isFighting: false)
+          IslandPresetSprite(side: 18)
           UsageLimitsStrip(
             reading: quota, showsRemaining: showsRemaining, maximum: 2,
             showsReset: false)
         }
       } else if count > 0 {
         HStack(spacing: 10) {
-          HStack(spacing: 3) {
-            ForEach(
-              Array(reading.agents.prefix(3).enumerated()),
-              id: \.offset
-            ) { index, entry in
-              PixelStatusIconCompact(
-                isPrimary: index == 0, isWorking: entry.isWorking,
-                needsYou: needsYou)
-            }
-          }
+          IslandPresetSprite(side: 22)
 
-          if !reading.summary.isEmpty {
+          Spacer(minLength: 6)
+
+          if showsDetails, !reading.summary.isEmpty {
             Text(reading.summary)
-              .font(Theme.mono(9))
-              .foregroundStyle(Theme.secondary)
+              .font(Theme.mono(11, .bold))
+              .foregroundStyle(Theme.primary)
               .lineLimit(1)
               .truncationMode(.tail)
-              .frame(maxWidth: 102, alignment: .leading)
+              .frame(maxWidth: summaryMaximumWidth, alignment: .trailing)
           }
-
-          // In Vibe the label follows the icons; only the space before the trailing
-          // counter stretches. Centering it in the full island leaves a conspicuous gap.
-          Spacer(minLength: 0)
 
           if waiting > 0 || needsYou {
             Image(systemName: "exclamationmark.triangle.fill")
@@ -573,16 +567,14 @@ struct IdleView: View {
           }
 
           Text("\(count)")
-            .font(Theme.mono(10))
+            .font(Theme.mono(11, .bold))
             .foregroundStyle(Theme.primary)
             .monospacedDigit()
         }
       }
     }
     .padding(.horizontal, 10)
-    // The content owns the same 29 pt frame as the shape. Keeping the old 40 pt child
-    // inside a 29 pt panel let SwiftUI draw eight pixels past the intended silhouette.
-    .frame(height: 28, alignment: .center)
+    .frame(height: 30, alignment: .center)
   }
 
   /// Gap between the content and the cutout, on each side.
@@ -591,7 +583,6 @@ struct IdleView: View {
   /// How big a sprite the resting strip carries. Two thirds of the 32pt band: at 20pt a
   /// creature reads as a mark, and at 24 it reads as itself.
   static let glyphPixel: CGFloat = 2.4
-  static let compactGlyphPixel: CGFloat = 1.15
   /// Between the resting creature and the window beside it.
   static let spriteGap: CGFloat = 4
 
@@ -790,7 +781,9 @@ struct PeekRow: View {
 
   var body: some View {
     HStack(spacing: 6) {
-      PixelSessionIcon(status: session.status)
+      AgentGlyph(
+        agent: session.agent, pixel: 1.4,
+        isBreathing: session.isWorking, isFighting: false)
 
       Text(session.projectName ?? t("session"))
         .font(Theme.mono(10))
@@ -817,24 +810,101 @@ struct PeekRow: View {
 
 // MARK: - Expanded
 
+/// The menu-bar band stays alive while the panel is expanded. Quota owns the left
+/// shoulder, the same compact session reading stays centred over the hardware, and the
+/// controls own the right shoulder.
+struct ExpandedPanelHeader<Leading: View, Trailing: View>: View {
+  private static var panelWidth: CGFloat { 650 }
+
+  let notch: CGSize
+  let reading: IdleReading
+  let waiting: Int
+  @ViewBuilder let leading: Leading
+  @ViewBuilder let trailing: Trailing
+
+  private var shoulderWidth: CGFloat {
+    max(0, (Self.panelWidth - 40 - notch.width - 12) / 2)
+  }
+
+  var body: some View {
+    ZStack {
+      HStack(spacing: 0) {
+        leading
+          .fixedSize(horizontal: true, vertical: true)
+          .frame(width: shoulderWidth, alignment: .leading)
+          .clipped()
+
+        Color.clear
+          .frame(width: notch.width + 12)
+
+        trailing
+          .frame(width: shoulderWidth, alignment: .trailing)
+      }
+      .padding(.horizontal, 20)
+
+      IdleView(
+        reading: reading,
+        notchWidth: notch.width,
+        notchHeight: notch.height,
+        showsDetails: true,
+        waiting: waiting,
+        quota: nil,
+        showsRemaining: false,
+        summaryMaximumWidth: 92)
+        .frame(width: notch.width + 6)
+    }
+    .frame(height: 36)
+  }
+}
+
 private struct ExpandedView: View {
   let notch: CGSize
   let model: AppModel
   let focusedSessionId: String?
   let onHeightChange: (CGFloat) -> Void
+  let onFocusChange: (String) -> Void
   let onClose: () -> Void
   @State private var openedSessionId: String?
   @State private var showsAllSessions = false
 
+  init(
+    notch: CGSize, model: AppModel, focusedSessionId: String?,
+    onHeightChange: @escaping (CGFloat) -> Void,
+    onFocusChange: @escaping (String) -> Void,
+    onClose: @escaping () -> Void
+  ) {
+    self.notch = notch
+    self.model = model
+    self.focusedSessionId = focusedSessionId
+    self.onHeightChange = onHeightChange
+    self.onFocusChange = onFocusChange
+    self.onClose = onClose
+    let visible = model.activity.visibleSessions
+    let initiallyOpened = SessionDisplaySelection.featured(
+      in: visible, focusedSessionId: focusedSessionId)?.id
+    _openedSessionId = State(initialValue: initiallyOpened)
+  }
+
+  private var selectedSessionId: String? { openedSessionId ?? focusedSessionId }
+
+  private var displayedSessions: [SessionSnapshot] {
+    SessionDisplaySelection.shown(
+      in: model.activity.visibleSessions,
+      focusedSessionId: selectedSessionId,
+      showsAll: showsAllSessions)
+  }
+
+  private var additionalSessionCount: Int {
+    SessionDisplaySelection.additionalCount(
+      in: model.activity.visibleSessions,
+      focusedSessionId: selectedSessionId,
+      showsAll: showsAllSessions)
+  }
+
   private var contentHeight: CGFloat {
-    let rows = model.activity.visibleSessions.enumerated().reduce(CGFloat.zero) { total, item in
-      let position = item.offset
-      let session = item.element
+    let rows = displayedSessions.reduce(CGFloat.zero) { total, session in
       let isOpen = openedSessionId == session.id
       let hasConversation = session.turn?.isEmpty == false || session.prompt?.isEmpty == false
-      // The first session is Vibe's featured card. Other sessions are represented by a
-      // single compact row until the user explicitly asks to see them all.
-      guard position == 0 else { return total + (showsAllSessions ? 34 : 0) }
       let revealsConversation =
         isOpen && model.preferences.layout.showsPrompt && hasConversation
       let summarySpacing: CGFloat =
@@ -846,11 +916,12 @@ private struct ExpandedView: View {
         !isOpen || board.isEmpty || !model.preferences.layout.showsTasks
           || !model.preferences.showsTasks
           ? 0
-          : 40 + CGFloat(visibleTaskRows) * 19
-      return total + 34 + summarySpacing + (revealsConversation ? 30 : 0) + taskHeight
+          : 34 + CGFloat(visibleTaskRows) * 22
+      return total + 34 + summarySpacing + (revealsConversation ? 166 : 0) + taskHeight
     }
-    return notch.height + NotchState.bodyInset + 40
-      + min(max(rows, 48), 452) + 8
+    let footerHeight: CGFloat = additionalSessionCount > 0 ? 80 : 0
+    return notch.height + NotchState.bodyInset + 36
+      + min(max(rows + footerHeight, 96), 452) + 20
   }
 
   private var sessionGeometrySignature: [String] {
@@ -861,16 +932,19 @@ private struct ExpandedView: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
-      HStack(spacing: 10) {
+      ExpandedPanelHeader(
+        notch: notch,
+        reading: IdleReading(model.activity),
+        waiting: model.permissions.waitingCount
+      ) {
         if model.preferences.showsUsageLimits {
           UsageHeaderCycle(
             usage: model.usage,
             showsRemaining: model.preferences.showsRemainingQuota,
             showsReset: model.preferences.showsResetCards)
         }
-
-        Spacer(minLength: 12)
-
+      } trailing: {
+        HStack(spacing: 10) {
         if model.preferences.showsUpdateIndicator, let update = model.updates.available {
           ShoulderButton(
             symbol: "arrow.up.circle.fill", tint: Theme.info,
@@ -884,25 +958,31 @@ private struct ExpandedView: View {
         // never the moment to go and find a settings window.
         ShoulderButton(
           symbol: model.sounds.enabled ? "speaker.wave.2" : "speaker.slash",
-          tint: model.sounds.enabled ? Theme.tertiary : Theme.warning,
+          tint: Theme.tertiary,
           help: model.sounds.enabled ? t("Mute sounds") : t("Unmute sounds")
         ) { model.updateSounds(model.sounds.toggledEnabled) }
 
         // With no Dock icon and no menu bar item, this is the only way in.
-        ShoulderButton(symbol: "gearshape", help: t("Settings")) {
+        ShoulderButton(symbol: "gearshape.fill", help: t("Settings")) {
           model.showSettings()
         }
+        }
       }
-      .padding(.horizontal, 20)
-      .frame(height: 40)
 
       ActivityList(
-        model: model, opened: $openedSessionId, showsAllSessions: $showsAllSessions)
+        model: model,
+        focusedSessionId: focusedSessionId,
+        opened: $openedSessionId,
+        showsAllSessions: $showsAllSessions,
+        onFocusChange: onFocusChange)
         .padding(.horizontal, 20)
-        .padding(.bottom, 12)
+        .padding(.bottom, 20)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .onAppear { onHeightChange(contentHeight) }
+    .onAppear {
+      if let openedSessionId { onFocusChange(openedSessionId) }
+      onHeightChange(contentHeight)
+    }
     .onChange(of: model.tasks.revision) { _, _ in
       if openedSessionId == nil,
         let planned = model.activity.visibleSessions.first(where: {
@@ -914,7 +994,10 @@ private struct ExpandedView: View {
       onHeightChange(contentHeight)
     }
     .onChange(of: sessionGeometrySignature) { _, _ in onHeightChange(contentHeight) }
-    .onChange(of: openedSessionId) { _, _ in onHeightChange(contentHeight) }
+    .onChange(of: openedSessionId) { _, sessionId in
+      if let sessionId { onFocusChange(sessionId) }
+      onHeightChange(contentHeight)
+    }
     .onChange(of: showsAllSessions) { _, _ in onHeightChange(contentHeight) }
     .onChange(of: model.preferences.layout) { _, _ in onHeightChange(contentHeight) }
     .onChange(of: focusedSessionId) { _, sessionId in
@@ -928,11 +1011,6 @@ private struct ExpandedView: View {
     // Reading transcripts on the frame the morph starts is work competing with the
     // spring for the same 0.38s.
     .task {
-      let visible = model.activity.visibleSessions
-      openedSessionId =
-        focusedSessionId.flatMap { id in visible.contains(where: { $0.id == id }) ? id : nil }
-        ?? visible.first(where: \.isWorking)?.id
-        ?? visible.first?.id
       try? await Task.sleep(for: .milliseconds(420))
       guard !Task.isCancelled else { return }
       model.tasks.refreshAll(model.activity.activeSessions)
@@ -946,6 +1024,7 @@ private struct UsageHeaderCycle: View {
   let usage: UsageModel
   let showsRemaining: Bool
   let showsReset: Bool
+  @State private var selectedProvider: UsageStore.Agent?
 
   private struct Entry: Identifiable {
     let id: UsageStore.Agent
@@ -955,23 +1034,41 @@ private struct UsageHeaderCycle: View {
   private var entries: [Entry] {
     var result: [Entry] = []
     if let reading = usage.codexLimits { result.append(Entry(id: .codex, reading: reading)) }
-    if let reading = usage.bridgeLimits { result.append(Entry(id: .claude, reading: reading)) }
+    if let reading = usage.claudeLimits { result.append(Entry(id: .claude, reading: reading)) }
     return result
   }
 
+  private var selectedEntry: Entry? {
+    selectedProvider.flatMap { provider in entries.first { $0.id == provider } }
+      ?? entries.first
+  }
+
   var body: some View {
-    TimelineView(.periodic(from: .now, by: 3.5)) { context in
-      if !entries.isEmpty {
-        let step = Int(context.date.timeIntervalSinceReferenceDate / 3.5)
-        let entry = entries[abs(step) % entries.count]
+    if let entry = selectedEntry {
+      Button {
+        selectedProvider = UsageProviderCycle.next(
+          after: entry.id, in: entries.map(\.id))
+      } label: {
         HStack(spacing: 5) {
           UsageProviderBadge(provider: entry.id)
           UsageLimitsStrip(
             reading: entry.reading, showsRemaining: showsRemaining,
-            maximum: 3, showsReset: showsReset)
+            maximum: 2, fontSize: 10, usesSystemFont: true,
+            showsReset: showsReset)
         }
-        .accessibilityElement(children: .combine)
-        .accessibilityValue(entry.id == .codex ? "Codex" : "Claude")
+      }
+      .buttonStyle(.plain)
+      .contentShape(Rectangle())
+      .help(t("Switch usage provider"))
+      .accessibilityElement(children: .combine)
+      .accessibilityLabel(t("Usage limits"))
+      .accessibilityValue(entry.id == .codex ? "Codex" : "Claude")
+      .onAppear { selectedProvider = entry.id }
+      .onChange(of: entries.map(\.id)) { _, providers in
+        guard let selectedProvider, providers.contains(selectedProvider) else {
+          self.selectedProvider = providers.first
+          return
+        }
       }
     }
   }
@@ -981,7 +1078,7 @@ private struct UsageProviderBadge: View {
   let provider: UsageStore.Agent
 
   var body: some View {
-    RoundedRectangle(cornerRadius: 3)
+    Circle()
       .fill(provider == .codex ? Color.white.opacity(0.45) : Color(hex: 0xF06C5E))
       .frame(width: 12, height: 12)
       .overlay {
@@ -993,12 +1090,28 @@ private struct UsageProviderBadge: View {
   }
 }
 
+/// The expanded island gets one ambient preset, not one creature per session. The
+/// installed `idle.png` sheet is Mewtwo and already survives app updates in
+/// `~/.perch/sprites`; playing that single sheet keeps the header alive without bringing
+/// back the many independent animation clocks that previously saturated the main thread.
+private struct IslandPresetSprite: View {
+  let side: CGFloat
+
+  var body: some View {
+    if let sheet = IdleSprite.sheet {
+      AnimatedSprite(sheet: sheet, side: side, isPlaying: true)
+        .accessibilityHidden(true)
+    }
+  }
+}
+
 /// Sessions first, then the tool feed underneath.
 ///
 /// The feed alone answered "what just happened"; the cards answer "what are my agents
 /// doing", which is the reason to open the notch at all.
 private struct ActivityList: View {
   let model: AppModel
+  let focusedSessionId: String?
 
   /// The one row that is open, if any.
   ///
@@ -1006,10 +1119,21 @@ private struct ActivityList: View {
   /// of scrolling, and a panel you have to scroll is a panel you do not glance at.
   @Binding var opened: String?
   @Binding var showsAllSessions: Bool
+  let onFocusChange: (String) -> Void
 
   private var activity: ActivityStore { model.activity }
+  private var selectedSessionId: String? { opened ?? focusedSessionId }
   private var shownSessions: [SessionSnapshot] {
-    showsAllSessions ? activity.visibleSessions : Array(activity.visibleSessions.prefix(1))
+    SessionDisplaySelection.shown(
+      in: activity.visibleSessions,
+      focusedSessionId: selectedSessionId,
+      showsAll: showsAllSessions)
+  }
+  private var additionalSessionCount: Int {
+    SessionDisplaySelection.additionalCount(
+      in: activity.visibleSessions,
+      focusedSessionId: selectedSessionId,
+      showsAll: showsAllSessions)
   }
 
   var body: some View {
@@ -1018,104 +1142,139 @@ private struct ActivityList: View {
       EmptyStateView(health: activity.health)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     } else {
-      ScrollView {
-        // Cycling past the fold used to move a selection nobody could see. The
-        // reader is only ever driven by the switcher — scrolling the panel while
-        // someone is reading it would be the opposite of helpful.
-        ScrollViewReader { scroller in
-          LazyVStack(alignment: .leading, spacing: Theme.rowSpacing) {
-            HealthBanner(advice: activity.health.advice())
+      VStack(alignment: .leading, spacing: Theme.rowSpacing) {
+        ScrollView {
+          // Cycling past the fold used to move a selection nobody could see. The
+          // reader is only ever driven by the switcher — scrolling the panel while
+          // someone is reading it would be the opposite of helpful.
+          ScrollViewReader { scroller in
+            LazyVStack(alignment: .leading, spacing: Theme.rowSpacing) {
+              HealthBanner(advice: activity.health.advice())
 
-            ForEach(
-              Array(shownSessions.enumerated()), id: \.element.id
-            ) { position, session in
-              SessionCardView(
-                session: session,
-                tasks: model.tasks.board(for: session.id),
-                layout: model.preferences.layout,
-                allowsJump: !model.preferences.disablesSessionJump,
-                contentFontSize: model.preferences.contentFontSize,
-                showsProjectName: model.preferences.showsProjectName,
-                showsWorktree: model.preferences.showsWorktree,
-                showsAIModel: model.preferences.showsAIModel,
-                showsReasoningEffort: model.preferences.showsReasoningEffort,
-                showsTasks: model.preferences.showsTasks,
-                showsSubagents: model.preferences.showsSubagents,
-                showsActivityDetails: model.preferences.showsActivityDetails,
-                jumpLabel: ShortcutFormatter.describe(
-                  keyCode: model.preferences.switcherKeyCode,
-                  modifiers: model.preferences.switcherModifiers) + " ↗",
-                isActive: session.isWorking,
-                isFocused: model.switcher.isOpen && model.switcher.index == position,
-                isCollapsed: opened != session.id,
-                onToggle: {
-                  opened = opened == session.id ? nil : session.id
-                },
-                onJump: { TerminalJumper.jump(to: session.client) },
-                onArchive: { model.archiveSession(session.id) },
-                onSilence: { rule in
-                  var policy = activity.admission
-                  policy.add(rule)
-                  activity.updateAdmission(policy)
-                }
-              )
+              ForEach(
+                Array(shownSessions.enumerated()), id: \.element.id
+              ) { position, session in
+                SessionCardView(
+                  session: session,
+                  tasks: model.tasks.board(for: session.id),
+                  layout: model.preferences.layout,
+                  allowsJump: !model.preferences.disablesSessionJump,
+                  contentFontSize: model.preferences.contentFontSize,
+                  showsProjectName: model.preferences.showsProjectName,
+                  showsWorktree: model.preferences.showsWorktree,
+                  showsAIModel: model.preferences.showsAIModel,
+                  showsReasoningEffort: model.preferences.showsReasoningEffort,
+                  showsTasks: model.preferences.showsTasks,
+                  showsSubagents: model.preferences.showsSubagents,
+                  showsActivityDetails: model.preferences.showsActivityDetails,
+                  jumpLabel: ShortcutFormatter.describe(
+                    keyCode: model.preferences.switcherKeyCode,
+                    modifiers: model.preferences.switcherModifiers) + " ↗",
+                  isActive: session.isWorking,
+                  isFocused: model.switcher.isOpen && model.switcher.index == position,
+                  isCollapsed: opened != session.id,
+                  onToggle: {
+                    let next = opened == session.id ? nil : session.id
+                    opened = next
+                    if let next { onFocusChange(next) }
+                  },
+                  onJump: { TerminalJumper.jump(to: session.client) },
+                  onArchive: { model.archiveSession(session.id) },
+                  onSilence: { rule in
+                    var policy = activity.admission
+                    policy.add(rule)
+                    activity.updateAdmission(policy)
+                  }
+                )
+              }
             }
-
-            if !showsAllSessions, activity.visibleSessions.count > shownSessions.count {
-              ShowAllSessionsButton(count: activity.visibleSessions.count - shownSessions.count) {
-                showsAllSessions = true
+            .onChange(
+              of: activity.visibleSessions.map { "\($0.id):\($0.status.rawValue)" }
+            ) { _, _ in
+              guard
+                let completed = shownSessions.last(where: {
+                  $0.status == .idle
+                    && ($0.turn?.isEmpty == false || $0.prompt?.isEmpty == false)
+                })
+              else { return }
+              opened = completed.id
+            }
+            .onChange(of: model.switcher.index) { _, index in
+              guard model.switcher.isOpen,
+                activity.visibleSessions.indices.contains(index)
+              else { return }
+              if index >= shownSessions.count { showsAllSessions = true }
+              withAnimation(.easeOut(duration: 0.12)) {
+                scroller.scrollTo(activity.visibleSessions[index].id, anchor: .center)
               }
             }
           }
-          .onAppear {
-            if opened == nil {
-              opened =
-                shownSessions.first {
-                  !$0.isWorking && ($0.turn?.isEmpty == false || $0.prompt?.isEmpty == false)
-                }?.id
-            }
-          }
-          .onChange(
-            of: activity.visibleSessions.map { "\($0.id):\($0.status.rawValue)" }
-          ) { _, _ in
-            guard
-              let completed = shownSessions.last(where: {
-                $0.status == .idle
-                  && ($0.turn?.isEmpty == false || $0.prompt?.isEmpty == false)
-              })
-            else { return }
-            opened = completed.id
-          }
-          .onChange(of: model.switcher.index) { _, index in
-            guard model.switcher.isOpen,
-              activity.visibleSessions.indices.contains(index)
-            else { return }
-            if index >= shownSessions.count { showsAllSessions = true }
-            withAnimation(.easeOut(duration: 0.12)) {
-              scroller.scrollTo(activity.visibleSessions[index].id, anchor: .center)
-            }
+        }
+        .scrollIndicators(.never)
+
+        if additionalSessionCount > 0 {
+          ShowAllSessionsButton(count: additionalSessionCount) {
+            showsAllSessions = true
           }
         }
       }
-      .scrollIndicators(.never)
     }
   }
 }
 
-private struct ShowAllSessionsButton: View {
+struct ShowAllSessionsButton: View {
   let count: Int
   let action: () -> Void
+  @State private var isHovered = false
 
   var body: some View {
-    Button(action: action) {
+    VStack(spacing: 7) {
+      Button(action: action) {
+        HStack(spacing: 10) {
+          ZStack {
+            Circle()
+              .fill(Color.white.opacity(0.09))
+            Image(systemName: "rectangle.stack.fill")
+              .font(.system(size: 11, weight: .semibold))
+              .foregroundStyle(Theme.primary)
+          }
+          .frame(width: 28, height: 28)
+
+          VStack(alignment: .leading, spacing: 1) {
+            Text(t("Show all %lld sessions", count + 1))
+              .font(Theme.label(12, .semibold))
+              .foregroundStyle(Theme.primary)
+            Text(t("Agents, tasks, and answers in progress"))
+              .font(Theme.prose(10))
+              .foregroundStyle(Theme.secondary)
+          }
+
+          Spacer(minLength: 8)
+
+          Image(systemName: "arrow.up.right")
+            .font(.system(size: 11, weight: .semibold))
+            .foregroundStyle(isHovered ? Theme.primary : Theme.tertiary)
+        }
+        .padding(.horizontal, 12)
+        .frame(height: 52)
+        .background(
+          RoundedRectangle(cornerRadius: 12, style: .continuous)
+            .fill(isHovered ? Theme.neutral : Theme.raised.opacity(0.72))
+        )
+        .overlay(
+          RoundedRectangle(cornerRadius: 12, style: .continuous)
+            .stroke(Theme.hairline, lineWidth: 1)
+        )
+      }
+      .buttonStyle(.plain)
+      .onHover { isHovered = $0 }
+      .accessibilityIdentifier("sessions.show-all")
+
       Text(t("+%lld additional sessions", count))
         .font(Theme.prose(10))
-      .foregroundStyle(Theme.secondary)
-      .frame(maxWidth: .infinity)
-      .padding(.vertical, 4)
+        .foregroundStyle(Theme.tertiary)
+        .frame(maxWidth: .infinity)
     }
-    .buttonStyle(.plain)
-    .accessibilityIdentifier("sessions.show-all")
   }
 }
 

@@ -1,0 +1,1052 @@
+/* ============================================================
+   Localizable.strings (Português do Brasil)
+   Vibe Island — Painel de Status para o Notch do macOS
+   Tradução: @edneyv (GitHub #169)
+   ============================================================ */
+
+/* Onboarding */
+"onboarding.tagline" = "Uma Dynamic Island para suas ferramentas de código com IA";
+"onboarding.feature.permissions" = "Permissões em um piscar de olhos";
+"onboarding.feature.jump" = "Clique para ir direto pra janela certa";
+"onboarding.feature.zeroConfig" = "Zero configuração, funciona direto da caixa";
+"onboarding.start" = "Começar";
+"onboarding.contextSwitches" = "Trocas de contexto";
+"onboarding.agentsRunning" = "Você tem 4 agentes rodando.";
+"onboarding.oneWaiting" = "Um deles está esperando por você.";
+"onboarding.15hours" = "Isso é 15 horas por semana.";
+"onboarding.next" = "Próximo";
+"onboarding.hooksHint" = "Você pode gerenciar os hooks de cada CLI nas Configurações.";
+"onboarding.everythingOneGlance" = "Tudo. Em um só olhar.";
+"onboarding.approveWithout" = "Aprove sem trocar de janela.";
+"onboarding.jumpToTab" = "Vá direto pra aba certa.";
+"onboarding.yourEnvironment" = "Seu Ambiente";
+"onboarding.agents" = "Agentes de IA";
+"onboarding.terminals" = "Terminais e IDEs";
+"onboarding.detected" = "detectado(s)";
+"onboarding.allConfigured" = "Tudo configurado. Nenhuma ação necessária.";
+"onboarding.allSet" = "Tudo Pronto";
+"onboarding.autoConfigured" = "O Vibe Island detectou e configurou suas ferramentas automaticamente.";
+"onboarding.launchAtLoginSubtitle" = "Iniciar automaticamente ao fazer login";
+"onboarding.chooseVibe" = "Escolha sua vibe";
+"onboarding.readyToLand" = "Pronto pra pousar?";
+"onboarding.purchaseNoSubscriptions" = "Compra única · sem assinaturas";
+"onboarding.paywallFeature.permission" = "Nunca mais perca um pedido de permissão";
+"onboarding.paywallFeature.jump" = "Vá para qualquer terminal com um clique";
+"onboarding.paywallFeature.agents" = "Todos os seus agentes, em um só Notch";
+"onboarding.welcomeAboard" = "Bem-vindo a bordo";
+"onboarding.startVibing" = "Entrar na vibe";
+"onboarding.readyRestartHint" = "Reinicie as sessões em andamento ou comece uma nova.";
+"onboarding.startTrial" = "Iniciar Teste Grátis de 2 Dias";
+"onboarding.getEarlyBird" = "Garanta o Preço Early Bird — %@";
+"onboarding.alreadyHaveKey" = "Já tem uma chave de licença?";
+"onboarding.checkEmail" = "Confira seu e-mail para pegar a chave de licença";
+"onboarding.pasteKey" = "Colar chave de licença";
+"onboarding.reopenCheckout" = "Reabrir checkout";
+"onboarding.startTrialInstead" = "Iniciar teste grátis em vez disso";
+
+/* Paywall shared (Onboarding + LicenseWindow) */
+"paywall.tier.1Mac" = "1 Mac";
+"paywall.tier.2Macs" = "2 Macs";
+"paywall.tier.3Macs" = "3 Macs";
+"paywall.earlyBird.banner" = "Early Bird · Tempo Limitado";
+"paywall.earlyBird.locked" = "Preço Early Bird garantido para esta instalação";
+"paywall.earlyAdopterPriceLockedPrefix" = "Preço de early adopter garantido para você: ";
+"paywall.getLicense.withPrice" = "Obter Licença · %@";
+
+/* LicenseWindow V3 Purchase-primary */
+"paywall.chooseYourPlan" = "Escolha seu plano";
+"paywall.chooseYourPlan.desc" = "Compra única, 1 ano de atualizações. O app continua seu para sempre. Desconto Early Bird garantido para esta instalação.";
+
+/* LicenseWindow V4 Activation-primary (post-checkout) */
+"paywall.badge.awaitingKey" = "Aguardando Chave";
+"paywall.pasteYourKey" = "Cole sua chave de licença";
+"paywall.pasteYourKey.desc" = "Enviamos sua chave por e-mail após o checkout. Cole-a abaixo para concluir a ativação.";
+"paywall.yourPlan" = "Seu plano";
+"paywall.changePlan" = "Alterar";
+"paywall.resendEmail" = "Não recebeu o e-mail? Reabrir checkout";
+"paywall.browsePlans" = "Ver planos novamente";
+
+/* Permission Approval */
+"approval.operateInTerminal" = "Continuar no Terminal";
+"approval.goToTerminal" = "Ir para o Terminal";
+"approval.continueInApp" = "Continuar no %@";
+"approval.reviewInTerminal" = "Revisar no Terminal";
+"approval.reviewInApp" = "Revisar no %@";
+"approval.goToApp" = "Ir para o %@";
+"approval.deny" = "Negar";
+"approval.denyAll" = "Negar Tudo";
+"approval.allow" = "Permitir Uma Vez";
+"codex.approval.allowThisConversation" = "Permitir nesta conversa";
+"codex.approval.allowForAllSites" = "Permitir em todos os sites";
+"approval.always" = "Sempre Permitir";
+"approval.allowAll" = "Permitir Tudo";
+"approval.pendingCount" = "%lld pendente(s)";
+"approval.bypass" = "Bypass";
+"approval.autoMode" = "Auto";
+"codex.approval.bypassThisTurn" = "Ignorar neste turno";
+"codex.turnBypass.active" = "BYPASS";
+"codex.turnBypass.approvalFailed" = "O Bypass não conseguiu aprovar a próxima solicitação. Continue no Codex.";
+"codex.turnBypass.verificationFailed" = "O estado da próxima solicitação é incerto. Verifique no Codex.";
+"bypass.active.label" = "BYPASS";
+"approval.detailsUnavailable" = "(%@ - detalhes indisponíveis)";
+"approval.detail.moreLines" = "+%lld linhas";
+"approval.detail.newFile" = "novo arquivo";
+
+/* Question / AskUserQuestion */
+"question.waiting.agent" = "%@ está esperando uma resposta";
+"question.answerInTerminal" = "Responda pelo terminal";
+"question.agentQuestion" = "Pergunta do %@";
+"question.count" = "(%lld perguntas)";
+"question.multiSelect" = "Seleção múltipla";
+"question.confirmSelection" = "Confirmar Seleção (%lld)";
+"question.submitAll" = "Enviar Todas as Respostas";
+"question.answerAllWarning" = "Responda todas as perguntas";
+"question.wizard.progress" = "Pergunta %lld de %lld";
+"question.wizard.previous" = "Anterior";
+"question.wizard.next" = "Próximo";
+"question.wizard.submit" = "Enviar";
+"question.custom.placeholder" = "Digite ou cole uma resposta...";
+"question.custom.submit" = "Enviar resposta";
+
+/* ExitPlanMode */
+"exitPlan.title" = "Sair do Modo de Planejamento";
+"exitPlan.tag" = "Plano";
+"exitPlan.bypass" = "Bypass de Permissões";
+"exitPlan.bypassDesc" = "Pula todos os pedidos de permissão";
+"exitPlan.autoMode" = "Modo Auto";
+"exitPlan.autoModeDesc" = "Claude avalia cada ação";
+"exitPlan.manualApprove" = "Aprovar Manualmente";
+"exitPlan.manualApproveDesc" = "Revise cada ação · Mais seguro";
+"exitPlan.feedbackPlaceholder" = "Diga ao %@ o que mudar…";
+"exitPlan.requestedPermissions" = "Permissões solicitadas:";
+
+/* Settings Menu */
+"menu.launchAtLogin" = "Iniciar ao Fazer Login";
+"menu.display" = "Tela";
+"menu.mainDisplay" = "Tela Principal";
+"menu.followFocus" = "Seguir Foco";
+"menu.auto" = "Auto";
+"menu.builtIn" = "Integrada";
+"menu.main" = "Principal";
+"menu.layout" = "Layout";
+"layout.clean" = "Limpo";
+"layout.detailed" = "Detalhado";
+"layout.cleanDesc" = "Mais espaço na barra de menus";
+"layout.detailedDesc" = "Títulos de sessão e status em um só olhar";
+"menu.modifierKey" = "Tecla Modificadora";
+"menu.labs" = "Labs";
+"menu.labs.warpTabJump" = "Salto de Aba no Warp";
+"menu.helpImprove" = "Ajude a Melhorar o Vibe Island";
+"menu.exportDiagnostics" = "Exportar Relatório de Diagnóstico";
+"menu.exportDiagnosticsSaveTitle" = "Salvar relatório de diagnóstico";
+"menu.exportDiagnosticsFooter" = "Inclui informações do sistema e logs de diagnóstico. Alguns caminhos e campos sensíveis reconhecidos são ocultados; pequenos trechos de eventos ou comandos podem permanecer. Revise antes de compartilhar.";
+"menu.settings" = "Configurações…";
+"menu.checkUpdates" = "Verificar Atualizações";
+"settings.releaseNotes.title" = "Notas da Versão";
+"settings.releaseNotes.subtitle" = "Reabrir as notas desta versão";
+"releaseNotes.viewAllVersions" = "Ver Todas as Versões";
+"releaseNotes.loadError" = "Não foi possível carregar as notas da versão";
+"settings.autoChecks.title" = "Verificar atualizações automaticamente";
+"settings.autoChecks.subtitle" = "Quando desativado, só a verificação manual busca novas versões";
+"settings.autoInstall.title" = "Instalar atualizações automaticamente";
+"settings.autoInstall.subtitle" = "Quando desativado, um botão ↑ aparece no painel quando há atualização pronta";
+"update.pill.label" = "Atualizar";
+"menu.creator" = "Criador";
+"menu.testSentry" = "Testar Sentry";
+"menu.testSentryDetail" = "Enviar evento de teste";
+"menu.debugLayout" = "Layout de Depuração";
+"menu.quit" = "Sair do Vibe Island";
+"settings.removeAutoConfig" = "Remover Toda a Configuração Automática";
+"settings.removeAutoConfigMessage" = "Isso remove todos os hooks das ferramentas de CLI, desinstala as extensões de IDE e apaga os arquivos de runtime. Suas ferramentas de CLI voltam ao estado padrão.";
+"settings.removeAutoConfigDone" = "Toda a configuração automática foi removida. Agora você já pode fechar e apagar o aplicativo.";
+"menu.sentryTestTitle" = "Teste do Sentry";
+"menu.sentryTestMessage" = "Evento de teste enviado! Confira o painel do Sentry em alguns segundos.";
+"menu.ok" = "OK";
+
+/* Session */
+"session.showAll" = "Mostrar todas as %lld sessões";
+"session.you" = "Você:";
+"session.restartForLive" = "Reinicie a sessão para acompanhamento em tempo real";
+"session.restartBannerTitle" = "Reinicie suas sessões";
+"session.restartBannerSubtitle" = "Hooks acabaram de ser instalados — reinicie as sessões em andamento para conectar";
+"session.codexHookTrustBannerTitle" = "Codex atualizado — confirme a autorização";
+"session.codexHookTrustBannerSubtitle" = "O Codex atualizou o modelo de segurança dele. Confirme o Vibe Island uma vez para manter o acompanhamento de sessões e as aprovações.";
+"session.codexHookTrustBannerAuthorizing" = "Confirmando autorização...";
+"session.codexHookTrustBannerFailed" = "Não foi possível confirmar automaticamente. Abra as Configurações para autorizar manualmente.";
+"session.codexHookTrustBannerManualTitle" = "O Codex precisa de confirmação manual";
+"session.codexHookTrustBannerManualSubtitle" = "• Codex CLI: rode /hooks → confie no Vibe Island\n• Codex Desktop: Configurações → Hooks → confie no Vibe Island";
+"session.codexHookTrustBannerManualConfirm" = "Entendi";
+"settings.codex.trust.manualStatus" = "Precisa de confirmação manual";
+"settings.codex.trust.manualTooltip" = "O Codex precisa ser autorizado manualmente.\n• Codex CLI: rode /hooks → confie no Vibe Island\n• Codex Desktop: Configurações → Hooks → confie no Vibe Island\nO Vibe Island detecta isso automaticamente.";
+"session.ideExtensionBannerTitle" = "Instalar a extensão do %@?";
+"session.ideExtensionBannerSubtitle" = "Permite ir direto para a aba certa do terminal";
+"session.kittyConfigBannerTitle" = "Ativar salto preciso para o Kitty";
+"session.kittyConfigBannerSubtitle" = "Adiciona 2 linhas ao kitty.conf — reinicie o Kitty para aplicar";
+"session.kittyConfigRestartHint" = "Configuração do Kitty atualizada — feche com Cmd+Q para aplicar";
+"session.interrupted" = "Interrompida";
+"session.doneTag" = "Concluída";
+"session.statusWarning.title" = "Precisa de atenção";
+"paseo.syncFailed.title" = "O Paseo ainda precisa de atenção";
+"paseo.syncFailed.detail" = "O Paseo não confirmou esta solicitação. Conclua no Paseo.";
+"codex.usageLimit.atTime" = "Você atingiu seu limite de uso. Acesse chatgpt.com/codex/settings/usage para comprar mais créditos ou tente de novo às %@.";
+"codex.usageLimit.later" = "Você atingiu seu limite de uso. Acesse chatgpt.com/codex/settings/usage para comprar mais créditos ou tente novamente mais tarde.";
+"session.ready" = "Pronta";
+"session.mayNeedAttention" = "Pode precisar de atenção";
+"session.subagents" = "Subagentes";
+"session.subagentMore.running" = "%lld rodando";
+"session.subagentMore.done" = "%lld concluído(s)";
+"child_agents.running_%d" = "Rodando %d agentes";
+"child_agents.running_one" = "Rodando 1 agente";
+"child_agents.requester_from" = "de %@";
+"child_agents.generic_requester" = "Subagente";
+"session.compacting" = "Compactando contexto...";
+"session.compactingWithElapsed" = "Compactando · %@";
+"session.compactComplete" = "Conversa compactada";
+"session.waitingForSession" = "Aguardando sessão";
+"session.emptyFirstInstall" = "A ilha espera por você";
+"session.emptyFirstInstallHint" = "Reinicie seu terminal ou comece uma nova sessão";
+"session.hideFromPanel" = "Ocultar sessão do painel";
+
+/* Tasks */
+"tasks.title" = "Tarefas";
+"tasks.stats" = "(%lld concluídas, %lld em andamento, %lld em aberto)";
+"tasks.hiddenCompleted" = "… +%lld concluídas";
+"tasks.hiddenActive" = "… +%lld ativas";
+
+/* Content (Header) */
+"content.session" = "sessão";
+"content.sessions" = "sessões";
+"content.sessionCount.one" = "%lld sessão";
+"content.sessionCount.other" = "%lld sessões";
+
+/* Beta Expiration */
+"beta.expiredTitle" = "O Beta Expirou";
+"beta.expiredMessage" = "Este beta expirou em %@.\n\nClique em \"Verificar Atualizações\" para obter a versão mais recente.";
+"beta.checkUpdate" = "Verificar Atualizações";
+"beta.quit" = "Sair";
+
+/* License */
+"menu.license" = "Licença";
+"payment.trouble.hint" = "Problema com o pagamento? Clique para falar com o suporte";
+"license.trial" = "Teste";
+"license.trialDays" = "Teste (%lld dias restantes)";
+"license.trialEnded" = "Teste encerrado";
+"license.issue" = "Problema na Licença";
+"license.expired" = "Expirada";
+"license.licensed" = "Licenciado";
+"license.activateTitle" = "Ativar o Vibe Island";
+"license.activateDesc" = "Digite a chave de licença do e-mail de confirmação da compra:";
+"license.activeTitle" = "Licença Ativa";
+"license.activeDesc" = "Obrigado por apoiar o Vibe Island!";
+"license.autoCleanedHint" = "Seu dispositivo anterior foi liberado automaticamente.";
+"license.getLicense" = "Obter uma Licença...";
+"license.activate" = "Ativar";
+"license.unlockFullControl" = "Desbloqueie o controle total";
+"license.unlockDetail" = "Salto, Aprovações e Atalhos";
+"license.unlockDetailWithSessions" = "Salto, Aprovações, Atalhos e mais %lld sessões";
+"license.lockedSessionsSummary" = "+%lld sessões a mais com uma licença";
+"license.deactivate" = "Desativar Licença";
+"license.manageDevices" = "Gerenciar Dispositivos";
+"license.limitTitle" = "Limite de ativações atingido";
+"license.limitDesc" = "Todas as suas vagas de licença estão em uso. Adicione uma vaga para este Mac ou libere uma desativando um dispositivo que você não usa mais.";
+"license.useDifferentKey" = "Usar outra chave de licença";
+"license.reactivateTitle" = "Reative sua licença";
+"license.reactivateDesc" = "Digite novamente sua chave de licença para reativar o Vibe Island neste Mac. Você encontra a chave no e-mail de confirmação da compra.";
+"license.devices.title" = "Dispositivos";
+"license.devices.used" = "%1$d de %2$d usados";
+"license.devices.thisMac" = "ESTE MAC";
+"license.devices.deactivate" = "Desativar";
+"license.devices.retry" = "Tentar Novamente";
+"license.devices.loadFailed" = "Não foi possível carregar os dispositivos";
+"license.devices.slotFreed" = "1 vaga liberada — ative novamente";
+"license.devices.addMac" = "Adicionar um Mac";
+"license.devices.addMacFailed" = "Não foi possível abrir o checkout. Tente novamente.";
+"license.devices.confirmTitle" = "Desativar este dispositivo?";
+"license.deactivateConfirm.title" = "Desativar este Mac?";
+"license.deactivateConfirm.body" = "A licença será liberada para outro Mac.";
+"license.deactivateConfirm.keyHint" = "Salve agora — não será mostrada de novo";
+"license.deactivateConfirm.purchasedWith" = "Comprado com %@";
+"license.deactivateConfirm.copyAction" = "Copiar e desativar";
+"license.deactivateConfirm.copyFailed" = "Não foi possível copiar a chave. Tente novamente ou salve-a de outra forma antes de continuar.";
+"license.deactivateConfirm.withoutCopyingAction" = "Desativar sem copiar";
+"license.deactivateConfirm.plainAction" = "Desativar";
+"license.deactivateConfirm.cancel" = "Cancelar";
+"license.buyButton" = "Comprar Licença — US$ 19,99";
+"license.keyPlaceholder" = "Digite a chave de licença";
+"license.activating" = "Ativando...";
+"license.error.invalidKey" = "Chave de licença inválida";
+"license.error.network" = "Erro de rede, tente novamente";
+"license.error.persistence" = "A ativação deu certo, mas o Vibe Island não conseguiu salvá-la neste Mac. Tente novamente ou reinstale o aplicativo.";
+"license.error.keychainLocked" = "A ativação foi bem-sucedida, mas o chaveiro de login está bloqueado e o Vibe Island não conseguiu salvá-la. Reinicie o Mac e ative novamente. Se ainda falhar, abra o Acesso às Chaves e desbloqueie o chaveiro «login».";
+"license.error.wrongProduct" = "Esta chave é de outro produto";
+"license.error.activationLimit" = "Limite de ativações atingido. Desative outro dispositivo primeiro.";
+"license.error.disabled" = "Esta chave de licença foi desativada";
+"license.expiredBanner" = "Teste Expirado";
+"license.expiredBannerSub" = "Ative uma licença para continuar";
+
+/* Edition (Easter Egg) — titles stay English across all locales */
+"edition.title.founder" = "FOUNDER";
+"edition.title.pioneer" = "PIONEER";
+"edition.title.explorer" = "EXPLORER";
+"edition.title.voyager" = "VOYAGER";
+"edition.title.islander" = "ISLANDER";
+
+/* Settings - Behaviour */
+"settings.autoCollapseOnLeave" = "Recolher automaticamente ao tirar o mouse";
+"settings.taskCompleteDwell" = "Duração da exibição automática";
+"settings.taskCompleteDwell.help" = "Por quanto tempo o painel fica aberto ao exibir conclusões e avisos. Pressione ESC para fechar antes.";
+"settings.dismissOnOutsideClick" = "Fechar exibição automática ao clicar fora";
+"settings.dismissOnOutsideClick.help" = "Clicar em qualquer lugar fora do painel do notch fecha imediatamente as exibições de conclusão e aviso, ignorando o tempo restante.";
+"settings.autoExpandOnAgentTeamComplete" = "Expandir automaticamente quando um membro do Agent Team terminar";
+"settings.autoExpandOnAgentTeamComplete.help" = "Desativado por padrão — conclusões de colegas de equipe e subagentes não trazem o painel para frente nem tocam o som de conclusão.";
+"settings.childAgentNotificationTiming" = "Subagentes e Agent Team";
+"settings.childAgentNotificationTiming.rootResponses" = "Conforme o agente principal responde";
+"settings.childAgentNotificationTiming.allFinished" = "Depois que todos os subagentes e colegas terminarem";
+"settings.childAgentNotificationTiming.everyCompletion" = "A cada conclusão de subagente ou colega";
+"settings.notifications.completion" = "Notificações de conclusão";
+"settings.notificationCompletion.footer" = "Aprovações e perguntas sempre aparecem na hora.";
+"settings.autoExpandOnTaskComplete" = "Expandir o painel para notificações de conclusão";
+"settings.autoExpandOnTaskComplete.help" = "Desative para manter o painel recolhido e mostrar apenas um brilho sutil.";
+"settings.attentionReminder.section" = "Lembretes de acompanhamento";
+"settings.attentionReminder.delay" = "Lembrar novamente";
+"settings.attentionReminder.help" = "Lembra uma vez após o atraso escolhido. Mudanças de estado cancelam; uma sessão em primeiro plano permanece silenciosa.";
+"settings.attentionReminder.include" = "Quando ativado, incluir";
+"settings.attentionReminder.needsResponse" = "Precisa da sua resposta";
+"settings.attentionReminder.needsResponseHelp" = "Aprovações e perguntas";
+"settings.attentionReminder.completedTasks" = "Tarefas concluídas";
+"settings.attentionReminder.completedTasksHelp" = "Somente enquanto o resultado não foi lido";
+"settings.attentionReminder.off" = "Desativado";
+"settings.attentionReminder.10min" = "Após 10 minutos";
+"settings.attentionReminder.30min" = "Após 30 minutos";
+"settings.attentionReminder.1hour" = "Após 1 hora";
+"settings.quietDuringFocus" = "Modo Foco";
+"settings.quietScenes.section" = "Cenários silenciosos";
+"settings.quietScenes.intro" = "Fica em silêncio enquanto qualquer cenário abaixo estiver ativo — sem expansão automática, sem som, incluindo aprovações. Um ponto sutil ainda marca as conclusões.";
+"settings.quiet.screenObscured" = "Tela bloqueada ou em repouso";
+"settings.quiet.screenCapture" = "Gravação ou compartilhamento de tela";
+"focusMode.doNotDisturb" = "Não Perturbe";
+"focusMode.personal" = "Pessoal";
+"focusMode.work" = "Trabalho";
+"focusMode.sleep" = "Sono";
+"focusMode.reduceInterruptions" = "Reduzir Interrupções";
+"focusMode.reading" = "Leitura";
+"focusMode.gaming" = "Jogos";
+"focusMode.driving" = "Dirigir";
+"focusMode.custom" = "Foco Personalizado";
+"settings.behaviour.interaction" = "Interação";
+"settings.disableClickToJump" = "Desativar clique para saltar";
+"settings.disableClickToJump.help" = "Quando ativado, clicar em uma sessão não muda para o terminal ou IDE dela.";
+
+/* Settings - Usage */
+"settings.usage" = "Uso";
+"settings.usage.section" = "Limites de Uso";
+
+/* Settings - Display */
+"settings.display" = "Tela";
+"settings.contentFontSize" = "Tamanho da Fonte do Conteúdo";
+"settings.maxPanelHeight" = "Altura Máxima do Painel";
+"settings.completionHeight" = "Altura do Cartão de Conclusão";
+"settings.maxPanelWidth" = "Largura Máxima do Painel";
+"settings.tuning" = "Ajustes";
+"settings.notchHeight" = "Altura do notch";
+"settings.notchWidth" = "Largura do notch";
+"settings.tuning.help" = "Ajuste fino das dimensões do notch se o seu Mac não encaixar perfeitamente. 0 usa o valor da API do macOS.";
+"settings.showTasks" = "Mostrar Tarefas";
+"settings.showTasks.help" = "Mostra a lista de tarefas em cada cartão de sessão.";
+"settings.preview.task.active" = "Auditar o fluxo de autenticação";
+"settings.preview.task.pending" = "Adicionar testes de regressão";
+"settings.preview.task.done" = "Mapear o estado da sessão";
+"settings.showSubagents" = "Mostrar Subagentes";
+"settings.showSubagents.help" = "Mostra os detalhes dos subagentes nos cartões de sessão. Quando ocultos, uma contagem de execução os substitui; aprovações e perguntas continuam visíveis.";
+"settings.showAgentDetail" = "Mostrar Detalhes da Atividade do Agente";
+"settings.showModel" = "Mostrar Modelo de IA";
+"settings.showReasoningEffort" = "Mostrar esforço de raciocínio";
+"settings.showWorktree" = "Mostrar Worktree";
+"settings.showProjectName" = "Mostrar Nome do Projeto";
+
+/* Pass */
+"pass.copyImage" = "Copiar Imagem";
+"pass.saveImage" = "Salvar Imagem";
+"pass.licenseDevices" = "Licença e Dispositivos";
+
+/* Session Status */
+"status.waitingForInput" = "Aguardando entrada";
+"status.processing" = "Processando";
+"status.thinking" = "Pensando";
+"status.runningTool" = "Executando ferramenta";
+"status.waitingForApproval" = "Precisa de aprovação";
+"status.question" = "Aguardando resposta";
+"status.compacting" = "Compactando";
+"status.ended" = "Encerrada";
+"status.unknown" = "Desconhecida";
+
+/* Tool Display */
+"tool.thinkingEllipsis" = "Pensando...";
+"tool.thinkingDetail" = "Pensando: %@";
+"tool.workingEllipsis" = "Trabalhando...";
+"tool.allowPrefix" = "Permitir %@";
+"tool.runningSkill" = "Executando Skill";
+"tool.editing" = "Editando";
+"tool.reading" = "Lendo";
+"tool.writing" = "Escrevendo";
+"tool.running" = "Executando";
+"tool.searching" = "Pesquisando";
+"tool.finding" = "Localizando";
+"tool.tasking" = "Criando Tarefa";
+"tool.fetching" = "Buscando";
+
+/* Update */
+"update.checking" = "Verificando atualizações...";
+"update.install" = "Instalar";
+"update.installRelaunch" = "Instalar e Reabrir";
+"update.remindLater" = "Lembrar Depois...";
+"update.skipVersion" = "Pular Esta Versão";
+"update.downloading" = "Baixando...";
+"update.extracting" = "Preparando atualização...";
+"update.installing" = "Instalando...";
+"update.upToDate" = "Tudo atualizado!";
+"update.upToDateDesc" = "O Vibe Island %@ é a versão mais recente.";
+"update.error" = "Erro na Atualização";
+"update.errorHint" = "Reinicie o aplicativo ou verifique novamente para concluir a atualização.";
+"update.retry" = "Verificar Novamente";
+"update.dismiss" = "Fechar";
+
+/* Settings: Sound & Advanced */
+"settings.sound" = "Som";
+"settings.advanced" = "Avançado";
+
+/* Settings: Shortcuts */
+"settings.globalShortcuts" = "Atalhos Globais";
+"settings.keyboardShortcutsEnabled" = "Ativar Atalhos de Teclado";
+"settings.keyboardShortcutsEnabledDesc" = "Desativa todos os atalhos do Vibe Island sem apagar suas combinações de teclas.";
+"settings.togglePanel" = "Abrir Alternador";
+"settings.togglePanelDesc" = "Toque rápido para abrir e escolher com ↑↓ + Enter (estilo Alfred). Segure e pressione de novo para alternar entre sessões, solte a tecla modificadora para saltar (estilo ⌘Tab).";
+"settings.reverseSwitcherEnabled" = "Alternador Reverso";
+"settings.reverseSwitcherEnabledDesc" = "Adiciona a combinação Shift + alternador para alternar no sentido inverso. Só fica ativo enquanto o painel do alternador está aberto, então raramente conflita com atalhos de outros aplicativos.";
+"settings.recordShortcut" = "Gravar Atalho";
+"settings.panelShortcuts" = "Atalhos do Painel";
+"settings.shortcut.approve" = "Aprovar";
+"settings.shortcut.deny" = "Negar";
+"settings.shortcut.alwaysAllow" = "Sempre Permitir";
+"settings.shortcut.bypass" = "Bypass de Permissões";
+"settings.shortcut.terminal" = "Ir para o Terminal";
+"settings.shortcut.selectOption" = "Selecionar Opção";
+"settings.shortcut.submitMulti" = "Enviar Seleção Múltipla";
+"settings.shortcut.navigate" = "Navegar Entre Sessões";
+"settings.shortcut.collapse" = "Recolher Painel";
+"settings.shortcut.collapseDesc" = "Ativo somente quando o painel está expandido.";
+"settings.shortcut.footer" = "Todos os atalhos abaixo ficam ativos enquanto o painel está expandido. Segure sua tecla modificadora para revelar dicas em cada botão — útil para atalhos que você esqueceu.";
+"settings.shortcut.resetDefaults" = "Restaurar Padrões";
+
+/* Settings: Sidebar */
+"settings.general" = "Geral";
+"settings.integrations" = "Integrações";
+"settings.shortcuts" = "Atalhos";
+"settings.labs" = "Labs";
+"settings.pass" = "Pass";
+"settings.about" = "Sobre";
+"settings.developer" = "Desenvolvedor";
+"settings.customJumpRules" = "Regras Personalizadas de Salto";
+"settings.customJumpRules.footer" = "Desenvolvedores de terminais de terceiros podem registrar um esquema de URL para permitir o salto preciso entre sessões.";
+"settings.kiro.configure" = "Configurar";
+"settings.hermes.activate" = "Ativar";
+"settings.hermes.activate.help" = "O Hermes 2026-04+ exige que os plugins sejam ativados manualmente. Clique para rodar `hermes plugins enable vibe-island`.";
+"settings.codex.hooks.disabled" = "Desativado pela configuração";
+"settings.codex.hooks.enable" = "Ativar";
+"settings.codex.hooks.needsTrust" = "Precisa de confirmação";
+"settings.codex.hooks.trustAction" = "Corrigir";
+"settings.codex.hooks.trustTitle" = "Autorizar hooks do Codex";
+"settings.codex.hooks.trustMessage" = "O Vibe Island pode autorizar seus hooks do Codex pela própria API de configuração do Codex. Se falhar, rode /hooks no Codex como alternativa.";
+"settings.codex.trust.required" = "Precisa de autorização";
+"settings.codex.trust.authorize" = "Autorizar";
+"settings.codex.trust.help" = "Autorize os hooks do Vibe Island pela própria API de configuração do Codex.";
+"settings.codex.trust.verify_failed" = "Alguns hooks não puderam ser autorizados. Rode /hooks no Codex para confiar manualmente.";
+
+/* Settings: Section Headers & Items */
+"settings.behaviour" = "Comportamento";
+"settings.version" = "Versão";
+"settings.experiments" = "Experimentos";
+"settings.noExperiments" = "Nenhum experimento disponível";
+"settings.behaviour.expansion" = "Expansão";
+"settings.behaviour.visibility" = "Visibilidade";
+"settings.behaviour.dismissal" = "Fechamento";
+"settings.expandOnHover" = "Expandir o notch ao passar o mouse";
+"settings.hoverDuration" = "Duração do hover";
+"settings.hideInFullscreen" = "Ocultar em tela cheia";
+"settings.smartSuppression" = "Supressão inteligente";
+"settings.smartSuppression.help" = "Não expandir automaticamente quando a aba do terminal do agente estiver em foco";
+
+/* License: Network Error Messages */
+"license.error.timeout" = "A conexão expirou — verifique sua rede e tente novamente";
+"license.error.noInternet" = "Sem conexão com a internet";
+"license.error.server" = "Erro no servidor, tente novamente mais tarde";
+"license.error.tls" = "Falha na conexão segura — tente desativar seu proxy/VPN ou trocar de rede";
+"license.error.trustChain" = "A resposta da licença falhou na verificação — tente novamente ou entre em contato com o suporte se persistir";
+"license.verifying" = "Verificando licença...";
+"license.startingTrial" = "Iniciando seu teste...";
+"license.connectToStartTrial" = "Conecte-se uma vez para iniciar seu teste";
+
+/* Settings: Agents / IDEs */
+"settings.agents.footer" = "Gerencie como o Vibe Island se conecta a cada agente.";
+"settings.agents.autoConfigureNewAgents" = "Configurar novos agentes automaticamente";
+"settings.agents.autoConfigureNewAgents.help" = "Configure automaticamente os agentes compatíveis recém-detectados.";
+"settings.ideExtensions" = "IDEs";
+"settings.ideExtensions.footer" = "Instale extensões para ir direto para a aba certa do terminal na sua IDE.";
+"settings.antigravity.subtitle" = "Suporte a agentes de desktop e terminal";
+"settings.status.installed" = "Instalado";
+"settings.status.cliNotFound" = "CLI não encontrada";
+"settings.status.active" = "Ativo";
+"settings.trae.hooks.enablePath" = "Configurações do Trae → Hooks → Global";
+"settings.trae.hooks.fileReady" = "Arquivo de hook pronto";
+"settings.trae.hooks.enableHelp" = "O Vibe Island já escreveu o hooks.json do Trae. No Trae, abra Configurações → Hooks → Global e ative os Hooks Configurados. Recomendamos manter o Run in Sandbox ativado.";
+"settings.status.notInstalled" = "Não instalado";
+"settings.status.denied" = "Negado";
+"settings.status.needsAccess" = "Acesso necessário";
+
+/* Settings: Permission Recovery */
+"settings.permissions" = "Permissões";
+"settings.permissions.footer" = "Ative as permissões ausentes para saltar com precisão entre janelas e sessões.";
+"settings.permission.accessibility" = "Acessibilidade";
+"settings.permission.automation" = "Automação do %@";
+"settings.fixInSettings" = "Abrir Ajustes do Sistema";
+
+/* Settings: Auto-Hide */
+"settings.autoHideWhenIdle" = "Ocultar automaticamente sem sessões ativas";
+
+/* Settings: Buttons */
+"settings.install" = "Instalar";
+"settings.enable" = "Ativar";
+"settings.uninstall" = "Desinstalar";
+"settings.repair" = "Reparar";
+"settings.retry" = "Tentar Novamente";
+"settings.hookRepair.invalidConfiguration" = "Não foi possível ler a configuração de %@ em %@. Corrija-a ou restaure um backup e tente novamente.";
+"settings.hookRepair.pathNotWritable" = "O Vibe Island não pode gravar em %@. Permita a gravação nesse caminho e tente novamente.";
+"settings.hookRepair.unmanagedRoot" = "%@ está usando %@, que ainda não é gerenciado pelo Vibe Island. Adicione esse diretório de configuração acima.";
+"settings.hookRepair.externallyOverwritten" = "Outra ferramenta continua substituindo %@. Verifique o CC Switch ou um gerenciador semelhante e tente novamente.";
+"settings.hookRepair.diagnosticRequired" = "O Vibe Island não conseguiu reparar %@. Exporte um relatório de diagnóstico para continuar.";
+"settings.hookRepair.exportReport" = "Exportar relatório";
+"settings.hookRepair.preparingReport" = "Preparando…";
+"settings.hookRepair.reportSaved" = "Relatório salvo";
+"settings.hookRepair.retryExport" = "Tentar exportar novamente";
+"settings.cancel" = "Cancelar";
+"settings.add" = "Adicionar";
+"settings.addCLIBranch" = "Adicionar Branch de CLI…";
+
+/* Settings: Custom CLI Config Paths */
+"settings.addClaudeFork" = "Adicionar Configuração do Claude Code…";
+"settings.addCodexBranch" = "Adicionar Branch do Codex…";
+"settings.customPath.placeholder" = "~/.xxx/engine/cc";
+"settings.customPath.codexPlaceholder" = "~/.internal-codex";
+"settings.customPath.help" = "Digite o diretório de configuração do Claude Code de outra conta ou fork (precisa conter ou vai criar o settings.json)";
+"settings.customPath.codexHelp" = "Digite o diretório de configuração usado pelo seu branch do Codex (contém config.toml, hooks.json e sessions/)";
+"settings.customPath.invalid" = "O diretório não existe";
+"settings.customPath.duplicate" = "Esse caminho já está configurado";
+"settings.customPath.remove" = "Remover este caminho personalizado";
+
+/* Settings: Terminal Section */
+"settings.terminal" = "Terminal";
+"settings.manageTerminalTitles" = "Personalizar títulos do Ghostty para saltos precisos";
+"settings.manageTerminalTitles.description" = "Adiciona um marcador de sessão para que o Vibe Island possa retornar à sessão correta.";
+"settings.terminalTitleFormat" = "Formato do título";
+"settings.terminalTitleFormat.project" = "Projeto";
+"settings.terminalTitleFormat.projectAndPrompt" = "Projeto + Prompt";
+"settings.terminalTitleFormat.prompt" = "Prompt";
+
+/* Settings: Display Section Headers */
+"settings.display.system" = "Sistema";
+"settings.display.notch" = "Notch";
+"settings.display.panel" = "Tamanho do painel";
+"settings.display.sessionCard" = "Cartão de sessão";
+"settings.picker.default" = "(Padrão)";
+"settings.priceLocked" = "Seu preço garantido em %@ · Clique para comprar";
+
+/* Settings: Pass */
+"settings.pass.placeholder" = "Ative uma licença para desbloquear seu pass";
+
+/* Settings: About */
+"settings.website" = "Site";
+"settings.joinCommunity" = "Entrar na Comunidade";
+"settings.reportBug" = "Relatar um Bug";
+"settings.sendFeedback" = "Enviar Feedback";
+"settings.acknowledgements" = "Agradecimentos";
+"settings.slider.default" = "· Padrão";
+"settings.slider.reset" = "Restaurar padrão";
+"settings.slider.auto" = "Auto";
+
+/* WeChat QR Sheet */
+"wechat.community.title" = "👾 Comunidade Vibe Island";
+"wechat.scanToJoin" = "Escaneie com o WeChat para participar";
+"wechat.close" = "Fechar";
+
+/* Sound Settings */
+"sound.enable" = "Ativar Efeitos Sonoros";
+"sound.volume" = "Volume";
+"sound.section.session" = "Sessão";
+"sound.section.interactions" = "Interações";
+"sound.section.system" = "Sistema";
+"sound.section.filters" = "Filtros";
+"sound.autoDetectProbes" = "Detectar sessões de verificação automaticamente";
+"sound.autoDetectProbes.help" = "Silencia automaticamente sessões de verificação (ex.: CodexBar ClaudeProbe)";
+"sound.preview" = "Prévia";
+
+/* Quiet Hours */
+"sound.quietHours.section" = "Horário Silencioso";
+"sound.quietHours.enable" = "Silenciar durante o horário silencioso";
+"sound.quietHours.start" = "De";
+"sound.quietHours.end" = "Até";
+"sound.quietHours.help" = "Silencia todos os sons durante o período selecionado (passa da meia-noite se o fim for antes do início). Útil quando os agentes rodam durante a noite.";
+"sound.quietHours.activeNow" = "Horário silencioso ativo — sons desativados";
+
+/* Sound Categories */
+"sound.cat.sessionStart" = "Início de Sessão";
+"sound.cat.taskAcknowledge" = "Confirmação de Tarefa";
+"sound.cat.taskComplete" = "Tarefa Concluída";
+"sound.cat.taskError" = "Erro na Tarefa";
+"sound.cat.inputRequired" = "Aprovação Necessária";
+"sound.cat.resourceLimit" = "Limite de Contexto";
+"sound.cat.idleReminder" = "Lembrete de Inatividade";
+"sound.cat.userSpam" = "Detecção de Spam";
+"sound.cat.usageWarning" = "Uso Quase no Limite";
+"sound.cat.usageReset" = "Uso Renovado";
+
+/* Sound Category Descriptions */
+"sound.desc.sessionStart" = "Nova sessão do Claude / Codex / Gemini";
+"sound.desc.taskAcknowledge" = "Você enviou um prompt";
+"sound.desc.taskComplete" = "A IA terminou a vez dela";
+"sound.desc.taskError" = "Falha de ferramenta ou erro de API";
+"sound.desc.inputRequired" = "Permissão ou pergunta pendente";
+"sound.desc.resourceLimit" = "Janela de contexto quase cheia";
+"sound.desc.idleReminder" = "A IA está esperando sua resposta";
+"sound.desc.userSpam" = "3 ou mais prompts em 10 segundos";
+"sound.desc.usageWarning" = "Cota da assinatura perto do limite";
+"sound.desc.usageReset" = "Janela de uso reiniciada, cota renovada";
+
+/* Sound Source Picker (per-event source selection) */
+"settings.sound.mySounds" = "Meus Sons";
+"settings.sound.noCustomSounds" = "Nenhum som importado ainda.";
+"settings.sound.addSound" = "Adicionar Som...";
+"settings.sound.importNew" = "Importar Som...";
+"settings.sound.deleteCustom" = "Excluir som";
+"settings.sound.source.off" = "Desligado";
+"settings.sound.source.builtin" = "Vibe Island";
+"settings.sound.source.appleHeader" = "Sistema Apple";
+"settings.sound.source.appleMore" = "Mais Sons da Apple";
+"settings.sound.source.appleLabel" = "Apple — %@";
+"settings.sound.source.customLabel" = "Personalizado — %@";
+"settings.sound.source.customMissing" = "Personalizado — (arquivo ausente)";
+
+/* Hook Watcher */
+"hookWatcher.restored" = "Hooks restaurados — seus hooks de CLI foram modificados por outra ferramenta.";
+"hookWatcher.rateLimited" = "Os hooks continuam sendo removidos. Abra Configurações → Integrações → Hooks de CLI para gerenciar.";
+"cliDiscovery.configured" = "%@ configurado para o Vibe Island. Reinicie as sessões em andamento para aplicar.";
+
+/* Usage */
+"usage.activate" = "Mostrar Limites de Uso";
+"usage.activate.tip" = "Clique para ver os limites de uso";
+"usage.activate.loading" = "Carregando limites de uso...";
+"settings.showUsage" = "Mostrar Limites de Uso";
+"settings.showUsageHelp" = "Exibe os limites de uso da assinatura no cabeçalho do painel do notch";
+"settings.showCodexResetCards" = "Mostrar Reset Cards";
+"settings.showCodexResetCardsHelp" = "Mostra os Reset Cards do Codex disponíveis e o vencimento mais próximo no cabeçalho de uso.";
+"settings.usageValueMode" = "Valor Exibido";
+"settings.usageValueMode.used" = "Usado";
+"settings.usageValueMode.remaining" = "Restante";
+"settings.usageThresholdAlert" = "Alerta de limite de uso";
+"settings.usageThresholdAlertHelp" = "Mostra um aviso rápido uma vez quando qualquer janela de uso ultrapassar a porcentagem selecionada.";
+"settings.usageThresholdPercent" = "Limite do Alerta";
+"usage.bridgeHint.enable" = "Conectar uso do Claude";
+"usage.bridgeHint.restore" = "Conectar uso do Claude";
+"usage.bridgeHint.repair" = "Conectar uso do Claude";
+"usage.bridgeHint.dismiss" = "Lembrar mais tarde";
+"usage.waitingForProvider" = "Aguardando atividade do %@";
+"usage.peek.limitReached" = "Limite do %@ atingido";
+"usage.peek.thresholdReached" = "Uso do %@ perto do limite";
+"usage.peek.windowUsed" = "A janela %@ está %d%% usada";
+"usage.peek.limitReset" = "Limite do %@ reiniciado";
+"usage.peek.windowAvailable" = "A janela %@ está disponível de novo";
+"usage.peek.windowsAvailable" = "As janelas %@ estão disponíveis de novo";
+"usage.peek.resetCreditAdded.one" = "Cartão de redefinição do Codex adicionado";
+"usage.peek.resetCreditAdded.many" = "%d cartões de redefinição do Codex adicionados";
+"usage.peek.resetCreditsAvailable" = "%d disponíveis";
+"usage.peek.resetCreditsAvailableExpires" = "%d disponíveis · Expiram em %@";
+"usage.resetCards.available" = "%d Reset Cards do Codex disponíveis";
+"usage.resetCards.availableEarliestExpiry" = "%d Reset Cards do Codex disponíveis. O primeiro expira em %@.";
+"usage.peek.codexCapacityRestored" = "Capacidade do Codex restaurada para 100%";
+"usage.peek.codexResetProbable" = "Tibo pode redefinir o Codex";
+"usage.peek.codexResetProbableDetail" = "Uma publicação pública sugere que uma redefinição pode estar próxima";
+"usage.peek.codexResetAnnounced" = "Redefinição do Codex anunciada";
+"usage.peek.codexResetAnnouncedDetail" = "Tibo diz que uma redefinição está a caminho";
+"usage.peek.openSource" = "Ver publicação original";
+"usage.window.fiveHourTitle" = "Sessão de 5h";
+"usage.window.sevenDayTitle" = "Semanal de 7d";
+"usage.window.monthlyShort" = "Mês";
+"usage.window.monthlyTitle" = "Mensal";
+"usage.window.monthlyToolsTitle" = "Ferramentas Mensais";
+"usage.resetsIn" = "reinicia %@";
+"usage.updatedAt" = "Atualizado %@";
+"settings.usageProvider" = "Provedor Preferido";
+"settings.usageProvider.auto" = "Auto (seguir sessão)";
+
+/* Beta Updates */
+"settings.betaUpdates" = "Atualizações Beta";
+"settings.betaUpdates.help" = "Tenha acesso antecipado a novos recursos. Versões beta podem ser menos estáveis.";
+"settings.labs.autoMode" = "Usar Modo Auto em vez de Bypass";
+"settings.labs.autoMode.help" = "Substitui o Bypass pelo Modo Auto. O próprio Claude Code decide a segurança de cada ação.";
+"settings.labs.cursorApproval" = "Aprovação de Sandbox do Cursor";
+"settings.labs.cursorApproval.help" = "O modo Auto lê a configuração YOLO do Cursor para decidir.";
+"settings.labs.cursorApproval.auto" = "Detectar automaticamente";
+"settings.labs.cursorApproval.always" = "Sempre no Notch";
+"settings.labs.cursorApproval.never" = "Nunca (só observar)";
+"settings.labs.codexApprovalTarget" = "Destino de Aprovação do Codex";
+"settings.labs.codexApprovalTarget.help" = "O modo inteligente mantém a aprovação na aba do terminal que você está vendo; caso contrário, vai para o Notch.";
+"settings.labs.codexApprovalTarget.smart" = "Inteligente (por foco)";
+"settings.labs.codexApprovalTarget.notch" = "Sempre no Notch";
+"settings.labs.codexApprovalTarget.terminal" = "Sempre no Terminal";
+"settings.labs.codexAppServerJump" = "Abrir sessões app-server no Codex";
+"settings.labs.codexAppServerJump.help" = "Clicar em uma sessão executada via codex app-server abre a conversa no aplicativo Codex em vez do terminal. A conversa pode não aparecer lá se a ferramenta usar um backend separado.";
+"settings.labs.codexApprovalMode" = "Quando o Codex precisar da sua aprovação";
+"settings.labs.codexApprovalMode.help" = "Solicitações revisadas automaticamente sempre ficam silenciosas";
+"settings.labs.codexApprovalMode.approveHere" = "Seguir foco";
+"settings.labs.codexApprovalMode.remind" = "Notificar-me";
+"settings.labs.codexApprovalMode.hide" = "Ficar em silêncio";
+"settings.labs.section.claude" = "Claude Code";
+"settings.labs.section.codex" = "Codex";
+"settings.labs.section.otherCLIs" = "Outras CLIs";
+"settings.labs.section.terminal" = "Terminal";
+"settings.labs.nativeCodexApprovals" = "Usar Aprovações Nativas do Codex";
+"settings.labs.nativeCodexApprovals.help" = "Pula os cartões e notificações de aprovação do Vibe Island; deixa o Codex ou o AutoReview decidir no terminal.";
+"settings.labs.nativeClaudeApprovals" = "Usar Aprovações Nativas do Claude Code";
+"settings.labs.nativeClaudeApprovals.help" = "Pula os cartões e notificações de aprovação do Vibe Island; deixa o Claude Code cuidar das aprovações no terminal.";
+"settings.labs.codexApproval" = "Alerta de Aprovação do Codex Desktop";
+"settings.labs.codexApproval.help" = "Detecta pedidos de aprovação via varredura de Acessibilidade. Desative se o Codex travar.";
+"settings.labs.kiroHints" = "Dicas de Permissão do Kiro";
+"settings.labs.kiroHints.help" = "Escolha por quanto tempo o Kiro precisa rodar uma ferramenta antes do Vibe Island mostrar uma possível dica de aprovação.";
+"settings.labs.kiroHints.off" = "Desligado";
+"settings.labs.kiroHints.seconds" = "%d segundos";
+"settings.labs.section.stability" = "Estabilidade";
+"settings.labs.memoryRestart" = "Reiniciar quando o uso de memória estiver alto";
+"settings.labs.memoryRestart.help" = "Rede de segurança opcional. Só reinicia quando a memória fica alta e todas as sessões estão inativas.";
+"settings.labs.aiNaming.section" = "Nomeação de Sessões por IA (Experimental)";
+"settings.labs.aiNaming" = "Nomear sessões automaticamente";
+"settings.labs.aiNaming.help" = "O Codex nomeia cada sessão como “objetivo｜progresso”, atualizado conforme evolui. Só para Claude Code.";
+"settings.labs.aiNaming.terminal" = "Sincronizar com a aba do terminal";
+"settings.labs.aiNaming.writeback" = "Gravar de volta nas sessões do Claude";
+"settings.labs.aiNaming.writeback.help" = "Também aparece em claude --resume. Grava nos próprios arquivos de dados do Claude; desativado por padrão.";
+"settings.labs.aiNaming.footer" = "Os títulos são gerados pelo Codex no seu Mac, usando a cota separada do seu plano ChatGPT — seu uso do Claude não é afetado.";
+"settings.appLanguage" = "Idioma do App";
+"settings.appLanguage.system" = "Padrão do Sistema";
+"settings.appLanguage.relaunch" = "Reabrir Agora";
+"settings.behaviour.idleTimeout" = "Limpeza de sessões inativas";
+"settings.behaviour.idleTimeout.help" = "Aplica-se apenas a sessões sem um sinal claro de encerramento (Codex, OpenCode, Cursor).";
+"settings.behaviour.idleTimeout.never" = "Nunca";
+"settings.behaviour.idleTimeout.30m" = "30 minutos";
+"settings.behaviour.idleTimeout.1h" = "1 hora";
+"settings.behaviour.idleTimeout.2h" = "2 horas (padrão)";
+"settings.behaviour.idleTimeout.4h" = "4 horas";
+"settings.behaviour.idleTimeout.8h" = "8 horas";
+"settings.behaviour.idleTimeout.24h" = "24 horas";
+
+/* Common buttons */
+"common.cancel" = "Cancelar";
+"common.remove" = "Remover";
+"common.ok" = "OK";
+"common.done" = "Concluído";
+"common.retry" = "Tentar Novamente";
+"common.install" = "Instalar";
+"common.openInBrowser" = "Abrir no Navegador";
+"common.reveal" = "Mostrar no Finder";
+"common.copy" = "Copiar";
+"common.copied" = "Copiado";
+
+/* Integrations / Display section headers */
+"settings.integrations.agentsSection" = "Agentes";
+"settings.display.agentsSection" = "Agentes";
+
+/* Sound Packs (v2) */
+"settings.sound.theme" = "Tema de Som";
+"settings.sound.themePicker" = "Tema";
+"settings.sound.builtin" = "8-bit Integrado";
+"settings.sound.editorPicks" = "Selecionados pelo Editor";
+"settings.sound.loadFailed" = "Falha ao carregar o registro de pacotes de som";
+"settings.sound.filter" = "Filtrar…";
+"settings.sound.import" = "Importar Pacote de Som…";
+"settings.sound.uninstallPack" = "Desinstalar %@";
+"settings.sound.allPacks" = "Todos os %lld pacotes";
+"settings.sound.noMatches" = "Nenhum pacote corresponde a \"%@\"";
+"settings.sound.moreTypeToFilter" = "Mais %lld — digite para filtrar";
+"settings.sound.poweredBy" = "Com tecnologia de [PeonPing Registry](https://github.com/PeonPing/registry)";
+"settings.sound.importDialog.message" = "Selecione uma pasta de pacote de som CESP ou um arquivo .zip";
+"settings.sound.importDialog.prompt" = "Importar";
+
+/* Screen Switch Tip */
+"screen.switchTip" = "A tela principal é %@, ";
+"screen.switchAction" = "mude para ela";
+
+/* SSH Remote */
+"sshRemote" = "SSH Remoto";
+"sshRemote.intro" = "Monitore e aprove sessões remotas de CLI de IA direto do seu Notch.";
+"sshRemote.introHint" = "Adicionar Host → Configurar → Conectar. Requer autenticação por chave pública SSH (ou ControlMaster para MFA).";
+"sshRemote.setupPrompt.title" = "Configurar Monitoramento Remoto?";
+"sshRemote.setupPrompt.message" = "Isso envia um pequeno binário para o servidor remoto e configura suas ferramentas de CLI (Claude Code, Codex, etc.) para encaminhar eventos de volta para o Vibe Island.";
+"sshRemote.setupNow" = "Configurar Agora";
+"sshRemote.setupLater" = "Depois";
+"sshRemote.codexRoots.title" = "Diretórios do Codex";
+"sshRemote.codexRoots.subtitle" = "Escolha quais configurações do Codex conectar em %@.";
+"sshRemote.codexRoots.default" = "Padrão";
+"sshRemote.codexRoots.detectedPaperclip" = "Detectado pelo Paperclip";
+"sshRemote.codexRoots.previouslySelected" = "Selecionado anteriormente";
+"sshRemote.codexRoots.manual" = "Adicionado manualmente";
+"sshRemote.codexRoots.pathPlaceholder" = "/caminho/absoluto/para/codex-home";
+"sshRemote.codexRoots.addPath" = "Adicionar diretório do Codex";
+"sshRemote.codexRoots.invalidPath" = "Insira um caminho remoto absoluto.";
+"sshRemote.codexRoots.setUpSelected" = "Configurar selecionados";
+"sshRemote.codexRoots.configure" = "Configurar diretórios do Codex";
+"sshRemote.hosts" = "Hosts";
+"sshRemote.noHosts" = "Nenhum host configurado ainda";
+"sshRemote.addHost" = "Adicionar Host";
+"sshRemote.usage.title" = "Uso remoto (opcional)";
+"sshRemote.usage.claude" = "Claude";
+"sshRemote.usage.claude.help" = "Retransmite os limites do Claude a partir da statusline deste host remoto.";
+"sshRemote.usage.codex" = "Codex";
+"sshRemote.usage.codex.help" = "Verifica a conta do Codex deste host remoto somente quando há atividade do Codex.";
+"sshRemote.usage.hint" = "Use isso quando o Claude ou o Codex estiver conectado no host remoto em vez deste Mac.";
+"sshRemote.usage.status" = "Uso: %@";
+"sshRemote.advancedConnection.title" = "Conexão avançada";
+"sshRemote.manualConnectionOnly" = "Somente conexão manual";
+"sshRemote.manualConnectionOnly.description" = "Para logins SSH pelo navegador ou SSO corporativo. O Vibe Island só se conecta quando você clica em Conectar.";
+"sshRemote.autoUpdateHooks" = "Manter os hooks remotos atualizados";
+"sshRemote.autoUpdateHooks.description" = "Após uma atualização do app, o Vibe Island reinstala o hook neste servidor na próxima vez que o túnel conectar. Desative para atualizar apenas ao clicar em Reconfigurar.";
+"sshRemote.portConflict.title" = "Porta remota já está em uso";
+"sshRemote.portConflict.message" = "Outra sessão SSH já está encaminhando para a porta deste servidor. Se você está rodando o Vibe Island em outro Mac conectado ao mesmo servidor, altere a Porta TCP deste Mac abaixo para um valor único (ex.: 17892) — portas diferentes permitem que os dois Macs recebam eventos simultaneamente via fan-out. Se for um listener antigo de uma sessão anterior, espere 60 segundos e tente de novo.\n\nAfetado:";
+"sshRemote.stalePort.title" = "Porta remota ocupada por um túnel antigo";
+"sshRemote.stalePort.message" = "Um túnel anterior deste Mac ainda está ocupando a porta remota (geralmente após trocar de VPN/rede). A limpeza automática continua tentando; clique em Conectar para rodar uma limpeza verificada agora. Afetado:";
+"sshRemote.deploy" = "Configurar";
+"sshRemote.redeploy" = "Reconfigurar";
+"sshRemote.connect" = "Conectar";
+"sshRemote.disconnect" = "Desconectar";
+"sshRemote.codexTrust.required" = "Os hooks do Codex precisam ser autorizados";
+"sshRemote.codexTrust.unverified" = "Não foi possível verificar a confiança dos hooks do Codex";
+"sshRemote.qoder.upgradeRequired" = "⚠️ O Qoder CLI remoto %@ está abaixo da versão necessária %@. O Vibe Island não configurou os hooks gerenciados do Qoder; atualize o Qoder CLI e execute a configuração novamente.";
+"sshRemote.qoder.versionUnverified" = "⚠️ Não foi possível verificar a versão do Qoder CLI remoto (mínimo %@). O Vibe Island não configurou os hooks gerenciados do Qoder; atualize o Qoder CLI e execute a configuração novamente.";
+"sshRemote.codexTrust.guidance" = "Abra o Codex em %@, execute /hooks, autorize os hooks do Vibe Island e verifique novamente.";
+"sshRemote.codexTrust.checkAgain" = "Verificar novamente";
+"sshRemote.edit" = "Editar";
+"sshRemote.manual" = "Manual";
+"sshRemote.uninstall" = "Remover";
+"sshRemote.deploySuccess" = "Configuração Concluída";
+"sshRemote.deployFailed" = "Falha na Configuração";
+"sshRemote.uninstallConfirm" = "Remover Configuração Remota?";
+"sshRemote.uninstallMessage" = "Isso remove os arquivos do Vibe Island e as configurações de CLI de %@.";
+"sshRemote.uninstallResult" = "Resultado da Remoção";
+"sshRemote.tunnel.disconnected" = "Túnel: Não conectado — clique em Conectar para iniciar";
+"sshRemote.notDeployed" = "Não configurado — clique em Configurar para preparar o remoto";
+"sshRemote.tunnel.connecting" = "Túnel: Conectando...";
+"sshRemote.tunnel.connected" = "Túnel: Conectado";
+"sshRemote.tunnel.connectedAgo" = "Túnel: Conectado (%@)";
+"sshRemote.tunnel.reconnecting" = "Túnel: Reconectando (#%lld)...";
+"sshRemote.tunnel.error" = "Túnel: Erro — %@";
+"sshRemote.addHostTitle" = "Adicionar Host SSH";
+"sshRemote.editHostTitle" = "Editar Host SSH";
+"sshRemote.field.host" = "Host";
+"sshRemote.field.user" = "Usuário";
+"sshRemote.field.hostPlaceholder" = "server.example.com ou 10.0.0.5";
+"sshRemote.field.userPlaceholder" = "deploy";
+"sshRemote.disclosure.docker" = "Contêiner Docker";
+"sshRemote.disclosure.manual" = "Instalação manual (para redes restritas)";
+"sshRemote.manual.scpBlocked" = "Firewalls corporativos costumam bloquear o scp (subsistema sftp-server) mas deixam o ssh e o HTTPS liberados. Instale o binário do hook por qualquer canal; o Vibe Island detecta ele na próxima configuração e pula o upload.";
+"sshRemote.manual.pickPlatform" = "Escolha a plataforma remota:";
+"sshRemote.manual.runOnRemote" = "Rode no remoto (dentro de uma sessão SSH):";
+"sshRemote.manual.clickDeploy" = "Depois clique em \"Configurar\" acima, ou ative uma opção de uso remoto. Vamos detectar o binário, pular o upload e configurar só os hooks.";
+"sshRemote.manual.airgapIntro" = "Se o remoto também não conseguir acessar o GitHub (redes totalmente isoladas), copie o binário manualmente:";
+"sshRemote.manual.transport" = "Transporte via AirDrop / e-mail / USB / rsync, e coloque em ~/ no remoto.";
+"sshRemote.manual.thenOnRemote" = "Depois, no remoto:";
+"sshRemote.manual.airgapFallback" = "Alternativa offline / isolada";
+"sshRemote.docker.intro" = "Escolha onde o contêiner roda. Contêineres locais são automáticos; contêineres em um servidor SSH precisam de um relay acessível.";
+"sshRemote.docker.location" = "O contêiner roda em:";
+"sshRemote.docker.location.local" = "Este Mac";
+"sshRemote.docker.location.remote" = "Servidor SSH";
+"sshRemote.docker.platform" = "Plataforma do contêiner:";
+"sshRemote.docker.local.automatic" = "O endereço do host do contêiner é detectado automaticamente.";
+"sshRemote.docker.remote.noHosts" = "Adicione e configure primeiro um host SSH acima.";
+"sshRemote.docker.remote.host" = "Host SSH:";
+"sshRemote.docker.remote.setupHostFirst" = "Configure este host SSH acima antes de usar Docker remoto.";
+"sshRemote.docker.remote.connectHostFirst" = "Conecte este host SSH acima antes de executar o comando.";
+"sshRemote.docker.remote.relayAddress" = "Endereço do relay:";
+"sshRemote.docker.remote.relayPlaceholder" = "172.17.0.1 ou host.docker.internal";
+"sshRemote.docker.remote.relayTarget" = "Use a porta %@ no servidor SSH e encaminhe-a para %@.";
+"sshRemote.docker.remote.relayNotManaged" = "O Vibe Island preenche a porta do túnel, mas não cria o relay.";
+"sshRemote.docker.remote.enterRelay" = "Informe um endereço de relay antes de copiar.";
+"sshRemote.docker.pasteInContainer" = "Cole dentro do seu contêiner:";
+"sshRemote.docker.rerun" = "Rode novamente após reconstruir o contêiner. Para uma configuração persistente, monte o binário como volume.";
+"sshRemote.hookUpdateAvailable" = "Atualização de hook remoto disponível";
+"sshRemote.hookUpdateNow" = "Atualizar Agora";
+"sshRemote.field.alias" = "Apelido";
+"sshRemote.field.sshOptions" = "Opções de SSH";
+"sshRemote.commonOptions" = "Opções comuns:";
+"sshRemote.option.port" = "Porta SSH não padrão";
+"sshRemote.option.key" = "Chave SSH específica";
+"sshRemote.option.jump" = "Saltar por um bastion host";
+"sshRemote.option.mfa" = "MFA / Duo (reutilizar sessão do terminal)";
+"sshRemote.option.proxyCommand" = "ProxyCommand (entre aspas; túnel pelo bastion)";
+"sshRemote.formFooter" = "Requer autenticação por chave pública SSH (ou ControlMaster para MFA)";
+"sshRemote.add" = "Adicionar";
+"sshRemote.save" = "Salvar";
+"sshRemote.tcpPort" = "Porta TCP";
+"sshRemote.restartToApply" = "reinicie para aplicar";
+"sshRemote.tunnelKind.tcp" = "TCP (universal)";
+"sshRemote.tunnelKind.uds" = "Unix Socket (só SSH via CLI)";
+"sshRemote.tunnelKind.tcp.desc" = "Funciona com Termius, Prompt e outros clientes SSH gráficos";
+"sshRemote.tunnelKind.uds.desc" = "Somente ssh via linha de comando, requer OpenSSH 6.7+";
+
+/* Usage — Claude Usage Bridge */
+"settings.usage.bridge.section" = "Ponte de Uso do Claude";
+"settings.usage.bridge.description" = "Os limites de uso do Claude são entregues pela Status Line do Claude Code. O Vibe Island pode adicionar uma pequena ponte reversível para ler esses dados, mantendo a saída da sua Status Line igual.";
+"settings.usage.bridge.guidance.title.shell" = "Instalação segura do trecho";
+"settings.usage.bridge.guidance.title.claudeHud" = "Compatível com Claude HUD";
+"settings.usage.bridge.guidance.title.wrapper" = "Conectar uso do Claude";
+"settings.usage.bridge.guidance.title.installed" = "A ponte de uso do Claude está ativa";
+"settings.usage.bridge.guidance.title.missing" = "Precisa de reparo manual";
+"settings.usage.bridge.guidance.shell" = "Isso parece uma statusline simples em shell. O Vibe Island vai adicionar um bloco marcado logo após a linha de leitura do stdin e deixar o resto do script intacto.";
+"settings.usage.bridge.guidance.claudeHud" = "Claude HUD detectado. O Vibe Island não vai editar os arquivos ou configurações do Claude HUD; ele só encapsula o comando gerado, guarda o cache de rate_limits e depois passa o mesmo stdin para o HUD, então /claude-hud:configure continua funcionando.";
+"settings.usage.bridge.guidance.opaque" = "O Vibe Island vai adicionar uma pequena ponte à sua configuração atual de Status Line para conseguir ler os dados de uso do Claude. A saída visível da sua Status Line continua igual.";
+"settings.usage.bridge.guidance.snippetInstalled" = "A ponte já está instalada. Removê-la só apaga o bloco marcado do Vibe Island e mantém seu script original de statusline no lugar.";
+"settings.usage.bridge.guidance.chainInstalled" = "O Vibe Island está lendo o uso do Claude a partir da entrada da Status Line. A exibição atual da sua Status Line continua igual; remover a ponte só desfaz a conexão do Vibe Island.";
+"settings.usage.bridge.guidance.claudeHudInstalled" = "O Claude HUD continua controlando o HUD visível, e /claude-hud:configure ainda pode mudar as preferências do HUD. Se /claude-hud:setup reescrever a statusLine depois, volte aqui e ative a ponte de novo.";
+"settings.usage.bridge.guidance.missing" = "As configurações do Claude apontam para um script que não existe mais, então o Vibe Island não vai alterá-lo automaticamente. Corrija ou remova esse comando de statusLine primeiro.";
+"settings.usage.bridge.enable" = "Conectar uso";
+"settings.usage.bridge.remove" = "Remover ponte";
+"settings.usage.bridge.preview" = "Mostrar prévia";
+"settings.usage.bridge.status.installed" = "Ponte instalada";
+"settings.usage.bridge.status.snippetReady" = "Statusline em shell detectada. O Vibe Island pode adicionar uma pequena ponte removível após a linha de leitura do stdin.";
+"settings.usage.bridge.status.chainReady" = "Status Line personalizada detectada. O Vibe Island pode adicionar uma pequena ponte para acompanhar o uso sem mudar a saída visível.";
+"settings.usage.bridge.status.chainInstalled" = "Ponte de uso do Claude instalada. Sua Status Line atual continua controlando a saída visível.";
+"settings.usage.bridge.status.scriptMissing" = "Script de statusline não encontrado — verifique ~/.claude/settings.json";
+"settings.usage.bridge.preview.caption" = "Um backup com data e hora é salvo antes de qualquer alteração. Remover a ponte restaura sua configuração original de Status Line.";
+"settings.usage.bridge.error.title" = "Não foi possível atualizar a statusline";
+
+/* Notifications — top-level pane (formerly Silence). Currently contains Filters section, future Quiet Mode etc. */
+"settings.notifications" = "Notificações";
+"settings.silence" = "Silêncio";
+"silence.builtIn.section" = "Filtros Integrados";
+"silence.builtIn.footnote" = "Filtros predefinidos de diretório e prompt aparecem nas seções correspondentes abaixo.";
+"silence.preset.chip" = "Predefinido";
+"silence.builtIn.codexInternalWorkers" = "Processos internos do Codex";
+"silence.builtIn.codexInternalWorkers.help" = "Oculta os processos de revisão em segundo plano e consolidação de memória do Codex que não têm um prefixo de prompt visível.";
+"silence.preset.info.accessibilityLabel" = "Detalhes do filtro predefinido";
+"silence.preset.match.prefix" = "Prefixo";
+"silence.preset.match.contains" = "Contém";
+"silence.preset.match.equals" = "É igual a";
+"admission.appBundle.section" = "Aplicativos Iniciadores Bloqueados";
+"admission.appBundle.description" = "Descarta sessões iniciadas pelos aplicativos selecionados antes que apareçam no Vibe Island.";
+"admission.appBundle.addButton" = "Adicionar Aplicativo…";
+"admission.appBundle.empty" = "Nenhum aplicativo iniciador personalizado bloqueado.";
+"admission.appBundle.footnote" = "Use isso para sondas em segundo plano e aplicativos auxiliares. Filtros normais de projeto pertencem a Diretório ou Primeiro Prompt.";
+"admission.appBundle.picker.title" = "Escolha um Aplicativo para Bloquear";
+"admission.appBundle.picker.prompt" = "Escolher";
+"admission.appBundle.added.format" = "%@ adicionado.";
+"admission.appBundle.reenabled.format" = "%@ reativado.";
+"admission.appBundle.exists.format" = "%@ já está bloqueado.";
+"admission.appBundle.unreadable" = "Não foi possível ler o Bundle ID desse aplicativo.";
+"admission.appBundle.saveFailed" = "Não foi possível salvar a regra.";
+"silence.custom.section" = "Filtros Personalizados";
+"silence.custom.description" = "Oculta qualquer sessão cujo diretório de trabalho contenha:";
+"silence.custom.placeholder" = "ex.: /chronicle/dev-experiments";
+"silence.custom.hint" = "Dica: clique com o botão direito em um cartão de sessão para adicionar o diretório dele como filtro.";
+"silence.addPattern.button" = "Adicionar Padrão";
+"silence.contextMenu.hide" = "Ocultar sessões neste diretório";
+"silence.contextMenu.hidePrompt" = "Silenciar prompts que começam com…";
+"silence.custom.kind.directory" = "Diretório";
+"silence.custom.kind.prompt" = "Prompt";
+"silence.custom.prompt.placeholder" = "ex.: ## Memory Writing Agent";
+"silence.custom.prompt.description" = "Oculta qualquer sessão cujo primeiro prompt do usuário comece com:";
+"silence.custom.prompt.description.contains" = "Oculta qualquer sessão cujo primeiro prompt do usuário contenha:";
+"silence.matchType.prefix" = "Começa com";
+"silence.matchType.contains" = "Contém";
+"silence.matchType.label" = "Tipo de correspondência";
+"silence.custom.section.directory" = "Filtros Personalizados: Diretório";
+"silence.custom.section.prompt" = "Filtros Personalizados: Primeiro Prompt";
+"silence.custom.prompt.hint" = "Dica: clique com o botão direito em um cartão de sessão para adicionar o primeiro prompt dele como filtro.";
+"silence.custom.empty" = "Nenhum filtro personalizado ainda.";
+"silence.livePreview.noMatch" = "0 correspondências";
+"silence.livePreview.matchCountFormat" = "%d correspondências";
+"silence.livePreview.tooltip" = "Quantas sessões atuais esse padrão silenciaria";
+"silence.livePreview.idleHint" = "Digite um padrão para pré-visualizar as correspondências";
+"silence.builtIn.memoryConsolidation" = "Consolidação de Memória do Codex";
+"silence.builtIn.memoryWriterCwd" = "Codex Memory Writer (diretório)";
+"silence.builtIn.memoryWriterPrompt" = "Codex Memory Writer (prefixo de prompt)";
+"silence.builtIn.guardian" = "Agente Codex Guardian / AutoReview";
+"silence.builtIn.chronicle" = "Resumo de Memória Codex Chronicle";
+"silence.builtIn.codexAppSuggestions" = "Prompts sugeridos do Codex App";
+"silence.builtIn.codexAppGitHelper" = "Prompts auxiliares de Git do Codex App";
+"silence.builtIn.claudeMem" = "Sessões em segundo plano do plugin Claude-Mem";
+"silence.builtIn.craftTitle" = "Gerador de título do Craft Agent";
+"silence.preset.help.memoryWriterCwd" = "Usado por sessões de escrita de memória do Codex armazenadas em ~/.codex/memories.";
+"silence.preset.help.memoryWriterPrompt" = "Usado por sessões de escrita de memória do Codex que partem de um prompt fixo de escrita de memória.";
+"silence.preset.help.chronicle" = "Usado por sessões de resumo de memória de gravação de tela do Codex Desktop.";
+"silence.preset.help.codexAppSuggestions" = "Usado pelo Codex App para gerar os prompts sugeridos exibidos na tela inicial.";
+"silence.preset.help.codexAppGitHelper" = "Usado pelo assistente de Commit ou push do Codex App para gerar sugestões de mensagens do Git.";
+"silence.preset.help.claudeMem" = "Usado pelas sessões de compressão em segundo plano do plugin Claude-Mem.";
+"silence.preset.help.craftTitle" = "Usado pelo Craft Agent para gerar um título curto para uma conversa hospedada em GUI.";
+
+"cowork.option.count" = "%lld opções";
+
+/* Integrity reinstall nudge (SUP-352) */
+"integrity.reinstallTitle" = "Reinstalação recomendada";
+"integrity.reinstallSubtitle" = "Os arquivos do aplicativo parecem danificados. Reinstale a partir de vibeisland.app para restaurar a integridade.";
+"integrity.reinstallCTA" = "Reinstalar";
+
+/* Notificações móveis do Bark (SUP-1190) */
+"settings.bark.section" = "Notificações móveis";
+"settings.bark.enabled" = "Notificar meu iPhone";
+"settings.bark.enabledHelp" = "Requer o app gratuito Bark no seu iPhone.";
+"settings.bark.connection" = "Conexão";
+"settings.bark.configure" = "Configurar…";
+"settings.bark.status.notConfigured" = "Não configurado";
+"settings.bark.status.needsAttention" = "Reconexão necessária";
+"settings.bark.setup.title" = "Configurar o Bark";
+"settings.bark.setup.subtitle" = "Conecte o Bark, teste a entrega e, se quiser, criptografe o texto das notificações.";
+"settings.bark.destination" = "Destino";
+"settings.bark.server" = "Servidor";
+"settings.bark.server.public" = "Servidor público do Bark";
+"settings.bark.server.selfHosted" = "Hospedagem própria";
+"settings.bark.server.selfHostedHelp" = "Use um servidor Bark HTTPS. O Vibe Island envia para o endpoint /push dele.";
+"settings.bark.deviceKey" = "Chave do dispositivo";
+"settings.bark.sendTest" = "Enviar teste";
+"settings.bark.deviceKeyHelp" = "Copie no app Bark";
+"settings.bark.getBark" = "Ainda não tem o app Bark?";
+"settings.bark.getBarkHelp" = "Escaneie com a câmera do iPhone para baixar o Bark na App Store.";
+"settings.bark.awayOnly" = "Notificar apenas quando eu estiver longe deste Mac";
+"settings.bark.awayOnlyHelp" = "Longe significa tela bloqueada ou desligada, ou Mac ocioso por 2 minutos.";
+"settings.bark.events" = "Notificar sobre";
+"settings.bark.event.approvals" = "Aprovações";
+"settings.bark.event.questions" = "Perguntas";
+"settings.bark.event.completions" = "Tarefas concluídas";
+"settings.bark.event.warnings" = "Avisos";
+"settings.bark.encryption" = "Criptografar o conteúdo das notificações";
+"settings.bark.encryptionHelp" = "Criptografa título, corpo e grupo neste Mac. O servidor Bark ainda vê sua chave do dispositivo e os metadados de entrega.";
+"settings.bark.encryptionSetup" = "No Bark, abra Ajustes > Push Encryption, escolha AES256, GCM e NoPadding e cole esta Key e este IV.";
+"settings.bark.encryptionFailure" = "Não foi possível criar as configurações de criptografia";
+"settings.bark.copyEncryptionKey" = "Copiar Key";
+"settings.bark.copyEncryptionIV" = "Copiar IV";
+"settings.bark.copied" = "Copiado";
+"settings.bark.contentPreviews" = "Incluir detalhes da conversa";
+"settings.bark.contentPreviewsHelp" = "Adiciona um título de conversa higienizado localmente e até 240 caracteres de respostas, perguntas ou avisos.";
+"settings.bark.privacy" = "Privacidade";
+"settings.bark.privacyDetails" = "Como funciona a privacidade das notificações";
+"settings.bark.plaintextExplanation" = "Sem criptografia, o texto da notificação passa de forma legível pelo servidor Bark escolhido. Ele é enviado apenas à chave do dispositivo configurada e não é publicado, mas o operador do servidor pode lê-lo.";
+"settings.bark.detailedUnencrypted.title" = "Enviar conteúdo detalhado sem criptografia?";
+"settings.bark.detailedUnencrypted.message" = "Títulos e trechos de conversas passarão de forma legível pelo servidor Bark escolhido. Eles não são publicados, mas o operador do servidor pode lê-los.";
+"settings.bark.detailedUnencrypted.confirm" = "Enviar sem criptografia";
+"settings.bark.save" = "Salvar";
+"settings.bark.saveFailure" = "Não foi possível salvar os ajustes do Bark";
+"settings.bark.notificationOnlyHelp" = "Os alertas podem ser espelhados em um Apple Watch pareado. Aprovações e respostas continuam no seu Mac.";
+"settings.bark.testSuccess" = "Aceito pelo Bark. Confira seu dispositivo.";
+"settings.bark.testFailure" = "Não foi possível enviar a notificação de teste";
+"notification.bark.testBody" = "O Vibe Island pode enviar notificações do Bark para este dispositivo.";
+"notification.bark.approvalTitle" = "Aprovação necessária";
+"notification.bark.questionTitle" = "Pergunta aguardando resposta";
+"notification.bark.warningTitle" = "A tarefa precisa de atenção";
+"notification.bark.approveOnMac" = "Volte ao Mac para aprovar ou recusar.";
+"notification.bark.answerOnMac" = "Volte ao Mac para responder.";
+"notification.bark.openResponseOnMac" = "Abra o Vibe Island no Mac para ver a resposta.";
+"notification.bark.openDetailsOnMac" = "Abra o Vibe Island no Mac para ver os detalhes.";

@@ -8,8 +8,8 @@ import SwiftUI
 /// when you glance at a machine that has been working for twenty minutes without you.
 ///
 /// Ordered the way it is read rather than the way it is stored — what is happening, then
-/// what is next, then what is done — and the done tail is collapsed, because a plan that
-/// is mostly finished should not push the next step off the card.
+/// what is next. Completed tasks leave the island immediately; their count remains in the
+/// header without letting old work push the next step off the card.
 struct TaskBoardView: View {
   let board: TaskBoard
 
@@ -20,11 +20,17 @@ struct TaskBoardView: View {
   private var hidden: [AgentTask] { Array(board.tasks.dropFirst(visibleRows)) }
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 8) {
-      Text(headline)
-        .font(Theme.label(10, .medium))
-        .foregroundStyle(Theme.tertiary)
-        .lineLimit(1)
+    VStack(alignment: .leading, spacing: 0) {
+      HStack(spacing: 4) {
+        Text(t("Tasks"))
+          .font(Theme.label(12, .semibold))
+          .foregroundStyle(Theme.secondary)
+        Text("(\(headlineCounts))")
+          .font(Theme.label(11.5))
+          .foregroundStyle(Theme.tertiary)
+      }
+      .lineLimit(1)
+      .frame(height: 22)
 
       ForEach(shown) { task in
         TaskRow(task: task)
@@ -32,32 +38,32 @@ struct TaskBoardView: View {
 
       if !hidden.isEmpty {
         Text(overflow)
-          .font(Theme.mono(9))
+          .font(Theme.label(11.5))
           .foregroundStyle(Theme.tertiary)
           // Aligned with the subjects above, not with the marks.
-          .padding(.leading, 14)
+          .padding(.leading, 17)
+          .frame(height: 22)
       }
     }
-    .padding(.vertical, 4)
-    .padding(.horizontal, 7)
+    .padding(.vertical, 6)
+    .padding(.horizontal, 14)
     .frame(maxWidth: .infinity, alignment: .leading)
+    .background(RoundedRectangle(cornerRadius: 10).fill(Color.white.opacity(0.03)))
   }
 
   /// Counts, not a progress bar: "3 done, 1 running, 3 open" says which of the three
   /// numbers moved since you last looked, and a bar does not.
-  private var headline: String {
+  private var headlineCounts: String {
     let parts = [
       t("%lld done", board.completed),
       t("%lld running", board.inProgress),
       t("%lld open", board.open),
     ]
-    return t("Tasks (%@)", parts.joined(separator: ", "))
+    return parts.joined(separator: ", ")
   }
 
   private var overflow: String {
-    hidden.allSatisfy { $0.status == .completed }
-      ? t("… +%lld done", hidden.count)
-      : t("… +%lld active", hidden.count)
+    t("… +%lld active", hidden.count)
   }
 }
 
@@ -67,18 +73,20 @@ private struct TaskRow: View {
   var body: some View {
     HStack(alignment: .firstTextBaseline, spacing: 6) {
       Image(systemName: mark)
-        .font(.system(size: 8, weight: .semibold))
+        .font(.system(size: 10, weight: .semibold))
         .foregroundStyle(tint)
-        .frame(width: 8)
+        .frame(width: 11)
 
       Text(task.subject)
-        .font(Theme.label(11, task.status == .inProgress ? .semibold : .regular))
+        .font(Theme.label(12.5, task.status == .inProgress ? .medium : .regular))
         .foregroundStyle(text)
+        .strikethrough(task.status == .completed, color: Theme.tertiary)
         .lineLimit(1)
         .truncationMode(.tail)
 
       Spacer(minLength: 0)
     }
+    .frame(height: 22)
   }
 
   private var mark: String {
@@ -98,11 +106,11 @@ private struct TaskRow: View {
   }
 
   /// The running step is the one you are looking for, so it is the only one at full
-  /// contrast. Done steps stay legible but recede — they are context, not news.
+  /// contrast.
   private var text: Color {
     switch task.status {
     case .inProgress: return Theme.primary
-    case .pending: return Theme.secondary
+    case .pending: return Theme.primary.opacity(0.85)
     case .completed: return Theme.tertiary
     }
   }

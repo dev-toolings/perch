@@ -15,17 +15,31 @@ import SwiftUI
 enum PanelPreview {
     /// A session per case the card has to handle, so one image answers all of them.
     static func scene(layout: PanelLayout = .detailed) -> some View {
-        VStack(alignment: .leading, spacing: Theme.rowSpacing) {
+        panelBody(layout: layout, includesTranscript: false)
+            .frame(width: 680, alignment: .top)
+    }
+
+    private static func panelBody(
+        layout: PanelLayout, includesTranscript: Bool
+    ) -> some View {
+        var focused = working
+        if !includesTranscript { focused.turn = nil }
+
+        return VStack(alignment: .leading, spacing: 0) {
             header
 
-            SessionCardView(session: working, tasks: plan, layout: layout, isCollapsed: false)
-            SessionCardView(session: unattended, layout: layout, isCollapsed: false)
-            SessionCardView(session: waiting, layout: layout)
+            SessionCardView(session: focused, tasks: plan, layout: layout, isCollapsed: false)
+                .padding(.horizontal, 20)
+
+            Spacer(minLength: 0)
+
+            ShowAllSessionsButton(count: 2, action: {})
+                .padding(.top, 8)
         }
-        .padding(.horizontal, 14)
-        .padding(.top, 32 + 12)
-        .padding(.bottom, 12)
-        .frame(width: 680, alignment: .topLeading)
+        .padding(.bottom, 20)
+        .frame(
+            width: 650, height: NotchState.expandedInitialHeight,
+            alignment: .topLeading)
         .background(Theme.surface)
     }
 
@@ -118,28 +132,28 @@ enum PanelPreview {
     }
 
     private static var header: some View {
-        HStack(spacing: 8) {
-            ForEach(["activity", "stats", "rank"], id: \.self) { tab in
-                Text(tab)
-                    .font(Theme.label(11, .medium))
-                    .foregroundStyle(tab == "activity" ? Theme.primary : Theme.tertiary)
-                    .padding(.horizontal, 9)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .fill(tab == "activity" ? Theme.hairlineStrong : .clear))
+        ExpandedPanelHeader(
+            notch: CGSize(width: 190, height: 32),
+            reading: IdleReading(
+                agents: [(agent: .claude, isWorking: true)], count: 3,
+                needsYou: false, summary: "Bash: swift build"),
+            waiting: 0
+        ) {
+            HStack(spacing: 6) {
+                Circle()
+                    .fill(Color.white.opacity(0.45))
+                    .frame(width: 12, height: 12)
+                UsageLimitsStrip(
+                    reading: quota, maximum: 2, fontSize: 10, usesSystemFont: true)
             }
-
-            Spacer(minLength: 0)
-
-            UsageLimitsStrip(reading: quota)
-
-            ForEach(["speaker.wave.2", "gearshape", "xmark"], id: \.self) { symbol in
-                Image(systemName: symbol)
-                    .font(.system(size: 9, weight: .semibold))
-                    .foregroundStyle(Theme.tertiary)
-                    .padding(5)
-                    .background(Circle().fill(Theme.hairline))
+        } trailing: {
+            HStack(spacing: 10) {
+                ForEach(["speaker.slash", "gearshape.fill"], id: \.self) { symbol in
+                    Image(systemName: symbol)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Theme.tertiary)
+                        .frame(width: 20, height: 20)
+                }
             }
         }
     }
@@ -273,7 +287,8 @@ enum PanelPreview {
                             .frame(width: 200 + flank * 2, height: 32)
                         IdleView(
                             reading: reading, notchWidth: 200, notchHeight: 32,
-                            waiting: busy ? 1 : 0, quota: busy ? nil : quota)
+                            showsDetails: true, waiting: busy ? 1 : 0,
+                            quota: busy ? nil : quota)
                             .frame(width: 200 + flank * 2, height: 40)
                     }
                     .overlay(
@@ -312,7 +327,8 @@ enum PanelPreview {
             ) {
                 IdleView(
                     reading: IdleReading(agents: [], count: 0, needsYou: false),
-                    notchWidth: notch.width, notchHeight: notch.height, quota: quota)
+                    notchWidth: notch.width, notchHeight: notch.height,
+                    showsDetails: true, quota: quota)
                     .frame(width: NotchState.idle.size(notch: notch, flank: IdleView.flank(
                         for: IdleReading(agents: [], count: 0, needsYou: false), quota: quota
                     )).width)
@@ -326,7 +342,7 @@ enum PanelPreview {
             ) {
                 IdleView(
                     reading: busy, notchWidth: notch.width, notchHeight: notch.height,
-                    waiting: 1)
+                    showsDetails: true, waiting: 1)
                     .frame(width: NotchState.idle.size(
                         notch: notch, flank: IdleView.flank(for: busy, waiting: 1)
                     ).width)
@@ -349,33 +365,7 @@ enum PanelPreview {
                 "expanded · the menus either side of the cutout stay put",
                 size: NotchState.expanded.size(notch: notch), collar: notch
             ) {
-                VStack(alignment: .leading, spacing: 8) {
-                    PanelHeader {
-                        ForEach(["activity", "stats", "rank"], id: \.self) { tab in
-                            Text(tab)
-                                .font(Theme.label(11, .medium))
-                                .foregroundStyle(tab == "activity" ? Theme.primary : Theme.tertiary)
-                                .padding(.horizontal, 9)
-                                .padding(.vertical, 4)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .fill(tab == "activity" ? Theme.hairlineStrong : .clear))
-                        }
-                    } trailing: {
-                        UsageLimitsStrip(reading: quota)
-                        ShoulderButton(symbol: "speaker.wave.2") {}
-                        ShoulderButton(symbol: "gearshape") {}
-                        ShoulderButton(symbol: "xmark") {}
-                    }
-
-                    VStack(alignment: .leading, spacing: Theme.rowSpacing) {
-                        SessionCardView(session: working, tasks: plan, isCollapsed: false)
-                        SessionCardView(session: unattended)
-                        SessionCardView(session: waiting)
-                    }
-                    .padding(.horizontal, 14)
-                }
-                .padding(.bottom, 12)
+                panelBody(layout: .detailed, includesTranscript: true)
             }
 
             stage(

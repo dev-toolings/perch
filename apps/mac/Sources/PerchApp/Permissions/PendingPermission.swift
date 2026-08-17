@@ -17,6 +17,8 @@ final class PendingPermission: Identifiable {
     /// nothing is ever attached and this behaves exactly as it did before.
     let duplicateKey: String?
     private var continuations: [CheckedContinuation<PerchResponse, Never>]
+    private var resolved = false
+    let isObservationOnly: Bool
 
     init(
         request: PerchRequest,
@@ -27,10 +29,20 @@ final class PendingPermission: Identifiable {
         self.arrivedAt = arrivedAt
         self.duplicateKey = request.duplicateKey
         self.continuations = [continuation]
+        self.isObservationOnly = false
+    }
+
+    init(observing request: PerchRequest, arrivedAt: Date = .now) {
+        self.request = request
+        self.arrivedAt = arrivedAt
+        self.duplicateKey = request.duplicateKey
+        self.continuations = []
+        self.isObservationOnly = true
     }
 
     /// Adds another hook waiting on this same decision.
     func attach(_ continuation: CheckedContinuation<PerchResponse, Never>) {
+        guard !resolved else { return }
         continuations.append(continuation)
     }
 
@@ -85,7 +97,8 @@ final class PendingPermission: Identifiable {
         updatedInput: JSONValue? = nil,
         planMode: PlanMode? = nil
     ) {
-        guard !continuations.isEmpty else { return }
+        guard !resolved else { return }
+        resolved = true
         let waiting = continuations
         continuations = []
         let response = PerchResponse(
@@ -98,5 +111,5 @@ final class PendingPermission: Identifiable {
     /// or a plan to approve.
     var kind: RequestKind { RequestKind.of(request) }
 
-    var isResolved: Bool { continuations.isEmpty }
+    var isResolved: Bool { resolved }
 }

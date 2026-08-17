@@ -91,8 +91,14 @@
 
 /* Carte de permission */
 "Allow" = "Autoriser";
+"This chat" = "Ce chat";
 "Always" = "Toujours";
 "Deny" = "Refuser";
+"Allow all %lld" = "Tout autoriser (%lld)";
+"Deny all" = "Tout refuser";
+"Ask in terminal" = "Dans le terminal";
+"Allows %@ for the rest of this conversation" = "Autorise %@ pour le reste de cette conversation";
+"Adds %@ to this project's .claude/settings.local.json" = "Ajoute %@ au fichier .claude/settings.local.json de ce projet";
 "%lld waiting" = "%lld en attente";
 "Skip" = "Passer";
 
@@ -588,6 +594,7 @@
 "Unread completion" = "Fin non lue";
 "Show all %lld sessions" = "Afficher les %lld sessions";
 "+%lld additional sessions" = "+%lld sessions supplémentaires";
+"Agents, tasks, and answers in progress" = "Agents, tâches et réponses en cours";
 "Sound effects" = "Effets sonores";
 "Enable sound effects" = "Activer les effets sonores";
 "Creator" = "Créateur";

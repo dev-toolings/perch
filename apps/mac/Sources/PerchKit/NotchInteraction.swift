@@ -107,8 +107,9 @@ public struct NotchInteraction: Sendable, Equatable {
         case .hoverEntered:
             switch state {
             case .idle: return .hoverExpand
-            case .flash: return .peek(sessionId: nil)
-            case .peek, .expanded: return .pin(sessionId: nil)
+            case .flash: return .manualExpand(sessionId: nil)
+            case .peek: return .promotePeek(sessionId: nil)
+            case .expanded: return .pin(sessionId: nil)
             case .alert: return nil
             }
         case .hoverExited:

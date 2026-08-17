@@ -3,6 +3,30 @@ import Testing
 
 @testable import PerchKit
 
+@Test func newestUsageReadingWinsRegardlessOfItsSource() {
+  let older = UsageLimitsReader.Reading(
+    limits: RateLimits(), updatedAt: Date(timeIntervalSince1970: 100))
+  let newer = UsageLimitsReader.Reading(
+    limits: RateLimits(), updatedAt: Date(timeIntervalSince1970: 200))
+
+  #expect(UsageReadingSelection.newest(older, newer)?.updatedAt == newer.updatedAt)
+  #expect(UsageReadingSelection.newest(newer, older)?.updatedAt == newer.updatedAt)
+  #expect(UsageReadingSelection.newest(nil, newer)?.updatedAt == newer.updatedAt)
+}
+
+@Test func clickingTheUsageHeaderCyclesProvidersAndWraps() {
+  let providers = [UsageStore.Agent.codex, .claude]
+
+  #expect(UsageProviderCycle.next(after: .codex, in: providers) == .claude)
+  #expect(UsageProviderCycle.next(after: .claude, in: providers) == .codex)
+}
+
+@Test func usageHeaderSelectionRecoversWhenItsProviderDisappears() {
+  #expect(UsageProviderCycle.next(after: .codex, in: [.claude]) == .claude)
+  #expect(UsageProviderCycle.next(after: nil, in: [.codex]) == .codex)
+  #expect(UsageProviderCycle.next(after: .codex, in: []) == nil)
+}
+
 @Test func quotaWindowUsesItsHumanTitleWhenTheProviderIdIsInternal() {
   let window = NamedWindow(
     id: "codex_primary", title: "7d",

@@ -57,17 +57,42 @@ struct DisplayPolicyTests {
     #expect(decision.timerPolicy == .transient(milliseconds: 5_000))
   }
 
-  @Test func hoverPeekCanBePromotedWithoutLosingFocus() {
+  @Test func hoverOpensTheFullPanelWithoutLosingFocus() {
     var policy = DisplayPolicy(activeSessionId: "session-1")
     let hover = policy.decide(.hoverExpand)
-    let promoted = policy.decide(.promotePeek(sessionId: nil))
 
-    #expect(hover.nextState == .peek)
-    #expect(hover.expansion == .peek)
-    #expect(promoted.nextState == .manualExpanded)
-    #expect(promoted.activeSessionId == "session-1")
-    #expect(promoted.timerPolicy == .cancel)
-    #expect(promoted.hoverPolicy == .shortCooldown)
+    #expect(hover.nextState == .manualExpanded)
+    #expect(hover.expansion == .expand)
+    #expect(hover.activeSessionId == "session-1")
+    #expect(hover.timerPolicy == .cancel)
+  }
+
+  @Test func closingAndReopeningKeepsTheLastFocusedSession() {
+    var policy = DisplayPolicy()
+    _ = policy.decide(.manualExpand(sessionId: "session-2"))
+
+    let closed = policy.decide(.collapse(.manual))
+    #expect(closed.nextState == .closed)
+    #expect(closed.activeSessionId == "session-2")
+
+    let reopened = policy.decide(.hoverExpand)
+    #expect(reopened.nextState == .manualExpanded)
+    #expect(reopened.activeSessionId == "session-2")
+  }
+
+  @Test func aClosedFocusIsClearedWhenItsSessionDisappears() {
+    var policy = DisplayPolicy(activeSessionId: "session-2")
+
+    let decision = policy.decide(
+      .snapshotChanged(
+        FocusedSnapshot(
+          focusedSessionId: "session-2", sessionExists: false,
+          isHidden: false, status: nil)))
+
+    #expect(decision.accepted)
+    #expect(decision.nextState == .closed)
+    #expect(decision.activeSessionId == nil)
+    #expect(decision.expansion == .none)
   }
 
   @Test func blockingRequestsRejectEveryIncidentalIntent() {

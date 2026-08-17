@@ -28,6 +28,10 @@ final class UsageModel {
   /// disk is the reading.
   private(set) var codexLimits: UsageLimitsReader.Reading?
 
+  var claudeLimits: UsageLimitsReader.Reading? {
+    UsageReadingSelection.newest(directClaudeLimits, bridgeLimits)
+  }
+
   /// Which agent the Stats tab is showing. Everything below follows it: the quota, the
   /// tiles, the sparkline and the per-model rows.
   var agent: UsageStore.Agent = .claude {
@@ -47,7 +51,7 @@ final class UsageModel {
   /// offering the Claude bridge, which would fix nothing there.
   var limits: UsageLimitsReader.Reading? {
     switch agent {
-    case .claude: return directClaudeLimits ?? bridgeLimits
+    case .claude: return claudeLimits
     case .codex: return codexLimits
     case .opencode: return nil
     }
@@ -266,14 +270,14 @@ final class UsageModel {
 
   /// Cheap enough to do on every reload: one small file, read off the main actor's hot
   /// path only in the sense that it is a few hundred bytes.
-  func reloadLimits() {
+  func reloadLimits(forceNetwork: Bool = false) {
     bridgeLimits = limitsReader.read()
     codexLimits = CodexQuota.read()
     noticeCrossings()
     guard anthropicRefreshTask == nil else { return }
     anthropicRefreshTask = Task { [weak self] in
       guard let self else { return }
-      let reading = await anthropicUsage.fetch()
+      let reading = await anthropicUsage.fetch(force: forceNetwork)
       directClaudeLimits = reading
       anthropicRefreshTask = nil
       noticeCrossings()
@@ -287,7 +291,7 @@ final class UsageModel {
     // announcing them in turn would have each one wipe the other's history — and a
     // Codex week at 94% is exactly the thing worth being told about, whichever tab
     // happens to be open.
-    var combined = directClaudeLimits?.limits ?? bridgeLimits?.limits ?? RateLimits()
+    var combined = claudeLimits?.limits ?? RateLimits()
     combined.modelScoped += codexLimits?.limits.modelScoped ?? []
     guard !combined.isEmpty else { return }
     for event in watcher.events(for: combined) { onQuotaEvent?(event) }

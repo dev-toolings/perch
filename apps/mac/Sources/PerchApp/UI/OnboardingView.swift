@@ -83,14 +83,10 @@ struct OnboardingView: View {
         .task(id: step) {
             guard step == 1 else { return }
             demoScene = 0
-            for next in 1...4 {
+            for next in 1...3 {
                 try? await Task.sleep(for: .seconds(5))
                 guard !Task.isCancelled, step == 1 else { return }
-                if next == 4 {
-                    withAnimation(.easeInOut(duration: 0.45)) { step = 2 }
-                } else {
-                    withAnimation(.easeInOut(duration: 0.45)) { demoScene = next }
-                }
+                withAnimation(.easeInOut(duration: 0.45)) { demoScene = next }
             }
         }
     }
@@ -117,17 +113,17 @@ struct OnboardingView: View {
                     .font(Theme.mono(16))
                     .foregroundStyle(Color.white.opacity(0.78))
             }
-            .position(x: geometry.size.width / 2, y: geometry.size.height * 0.43)
+            .position(x: geometry.size.width / 2, y: geometry.size.height * 0.41)
 
-            VStack(spacing: 43) {
-                Button(t("Get Started")) {
-                    withAnimation(.easeInOut(duration: 0.22)) { step = 1 }
-                }
-                .keyboardShortcut(.defaultAction)
-                .buttonStyle(OnboardingPrimaryButtonStyle())
-                stepDots
+            Button(t("Get Started")) {
+                withAnimation(.easeInOut(duration: 0.22)) { step = 1 }
             }
-            .position(x: geometry.size.width / 2, y: geometry.size.height - 60)
+            .keyboardShortcut(.defaultAction)
+            .buttonStyle(OnboardingPrimaryButtonStyle())
+            .position(x: geometry.size.width / 2, y: geometry.size.height * 0.595)
+
+            stepDots
+                .position(x: geometry.size.width / 2, y: geometry.size.height - 36)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -171,13 +167,31 @@ struct OnboardingView: View {
             }
             .position(x: geometry.size.width / 2, y: geometry.size.height - 32)
 
-            Button(t("Skip")) {
-                withAnimation(.easeInOut(duration: 0.3)) { step = 2 }
+            if demoScene == 3 {
+                VStack(spacing: 8) {
+                    Text(
+                        t(
+                            "Perch can jump to the right window without Accessibility access. "
+                                + "No system permission prompt is required."))
+                        .font(Theme.mono(10))
+                        .foregroundStyle(Color.white.opacity(0.52))
+                        .multilineTextAlignment(.center)
+                        .frame(width: 520)
+                    Button(t("Next")) {
+                        withAnimation(.easeInOut(duration: 0.3)) { step = 2 }
+                    }
+                    .buttonStyle(OnboardingPrimaryButtonStyle())
+                }
+                .position(x: geometry.size.width / 2, y: geometry.size.height - 224)
+            } else {
+                Button(t("Skip")) {
+                    withAnimation(.easeInOut(duration: 0.3)) { step = 2 }
+                }
+                .buttonStyle(.plain)
+                .font(Theme.mono(12))
+                .foregroundStyle(Color.white.opacity(0.55))
+                .position(x: geometry.size.width - 62, y: geometry.size.height - 32)
             }
-            .buttonStyle(.plain)
-            .font(Theme.mono(12))
-            .foregroundStyle(Color.white.opacity(0.55))
-            .position(x: geometry.size.width - 62, y: geometry.size.height - 32)
         }
     }
 
@@ -219,14 +233,7 @@ struct OnboardingView: View {
                 symbol: "checkmark.circle.fill", title: t("Task complete"),
                 detail: t("Added dark mode support."), action: t("Open"))
         default:
-            VStack(spacing: 20) {
-                Image(systemName: "cursorarrow.rays")
-                    .font(.system(size: 48, weight: .bold))
-                demoWindow(title: "Package.swift · Cursor", agent: .codex, lines: [
-                    "// swift-tools-version: 6.0", "import PackageDescription",
-                    "name: \"perch\"",
-                ])
-            }
+            demoTerminalWindow.offset(y: 8)
         }
     }
 
@@ -370,20 +377,61 @@ struct OnboardingView: View {
         .font(Theme.mono(9))
     }
 
-    private func demoWindow(title: String, agent: Agent, lines: [String]) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 8) {
-                AgentGlyph(agent: agent, pixel: 3, beat: 0)
-                Text(title).font(Theme.mono(11))
-                Spacer()
+    private var demoTerminalWindow: some View {
+        VStack(spacing: 0) {
+            ZStack {
+                HStack(spacing: 6) {
+                    Circle().fill(Color.red.opacity(0.88)).frame(width: 10, height: 10)
+                    Circle().fill(Color.yellow.opacity(0.88)).frame(width: 10, height: 10)
+                    Circle().fill(Color.green.opacity(0.88)).frame(width: 10, height: 10)
+                    Spacer()
+                }
+                Text("perch · Claude Code")
+                    .font(Theme.mono(10))
+                    .foregroundStyle(Color.white.opacity(0.52))
             }
-            ForEach(lines, id: \.self) { line in
-                Text(line).font(Theme.mono(12)).foregroundStyle(Color.white.opacity(0.76))
+            .padding(.horizontal, 12)
+            .frame(height: 32)
+            .background(Color.white.opacity(0.035))
+
+            VStack(alignment: .leading, spacing: 7) {
+                HStack(alignment: .top, spacing: 10) {
+                    AgentGlyph(agent: .claude, pixel: 4, beat: 0)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Claude Code  v2.1.83")
+                            .font(Theme.mono(11).weight(.semibold))
+                        Text("Opus 4.6 (1M Context) · Claude Max")
+                            .font(Theme.mono(9))
+                            .foregroundStyle(Color.white.opacity(0.58))
+                        Text("~/Documents/my-app")
+                            .font(Theme.mono(9))
+                            .foregroundStyle(Color.white.opacity(0.42))
+                    }
+                }
+
+                Text("> add dark mode to the app")
+                    .foregroundStyle(Color.white.opacity(0.88))
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white.opacity(0.06))
+                Text("●  I'll add dark mode support to the app.")
+                Text("●  Read(src/styles/theme.css)")
+                Text("    └ Done (2 files · 840 tokens)")
+                    .foregroundStyle(Color.white.opacity(0.50))
+                Text("●  Edit(src/styles/theme.css)")
+                Text("    └ Done (+24 -3 lines)")
+                    .foregroundStyle(Color.white.opacity(0.50))
+                Text("●  Working…  (esc to interrupt)")
+                    .foregroundStyle(Color.orange.opacity(0.72))
+                Text("> ▮")
             }
-            Spacer()
+            .font(Theme.mono(10))
+            .foregroundStyle(Color.white.opacity(0.74))
+            .padding(18)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
-        .padding(18)
-        .frame(width: 500, height: 360)
+        .frame(width: 586, height: 346)
         .background(RoundedRectangle(cornerRadius: 10).fill(Color.black.opacity(0.88)))
         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white.opacity(0.12)))
         .shadow(color: .black.opacity(0.4), radius: 18, y: 8)
@@ -447,13 +495,14 @@ struct OnboardingView: View {
 
                 Divider().overlay(Color.white.opacity(0.08)).padding(.vertical, 9)
 
-                HStack(spacing: 12) {
+                HStack(spacing: 17) {
                     Image(systemName: "power")
                         .font(.system(size: 15, weight: .medium))
                         .foregroundStyle(Color.white.opacity(0.72))
                     VStack(alignment: .leading, spacing: 2) {
                         Text(t("Open at login"))
                             .font(.system(size: 13, weight: .semibold))
+                            .lineLimit(1)
                         Text(t("Start automatically when you log in"))
                             .font(.system(size: 10))
                             .foregroundStyle(Color.white.opacity(0.48))
@@ -461,9 +510,7 @@ struct OnboardingView: View {
                     Spacer()
                     Toggle("", isOn: $launchAtLogin)
                         .labelsHidden()
-                        .toggleStyle(.switch)
-                        .controlSize(.small)
-                        .tint(Color.white.opacity(0.30))
+                        .toggleStyle(OnboardingLoginToggleStyle())
                 }
                 .padding(.horizontal, 14)
                 .frame(height: 52)
@@ -519,9 +566,7 @@ struct OnboardingView: View {
                         else { enabledAgentNames.remove(tool.name) }
                     }))
                 .labelsHidden()
-                .toggleStyle(.switch)
-                .controlSize(.mini)
-                .tint(Color.white.opacity(0.30))
+                .toggleStyle(OnboardingToggleStyle())
         }
         .padding(.horizontal, 10)
         .frame(height: 27)
@@ -859,6 +904,55 @@ private struct PixelArt: View {
                 }
             }
         }
+    }
+}
+
+/// Vibe keeps the compact agent switches neutral even when selected; the knob position
+/// carries the state without adding another accent colour to the setup card.
+private struct OnboardingToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button {
+            configuration.isOn.toggle()
+        } label: {
+            HStack(spacing: 10) {
+                configuration.label
+                Spacer(minLength: 8)
+                ZStack {
+                    Capsule()
+                        .fill(Color.white.opacity(0.11))
+                    Circle()
+                        .fill(Color.white.opacity(0.94))
+                        .frame(width: 13, height: 13)
+                        .offset(x: configuration.isOn ? 9 : -9)
+                }
+                .frame(width: 36, height: 16)
+            }
+            .frame(minHeight: 20)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .animation(.easeOut(duration: 0.12), value: configuration.isOn)
+    }
+}
+
+private struct OnboardingLoginToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button {
+            configuration.isOn.toggle()
+        } label: {
+            ZStack {
+                Capsule()
+                    .fill(Color.white.opacity(0.11))
+                Capsule()
+                    .fill(Color.white.opacity(0.94))
+                    .frame(width: 30, height: 20)
+                    .offset(x: configuration.isOn ? 10 : -10)
+            }
+            .frame(width: 52, height: 22)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .animation(.easeOut(duration: 0.12), value: configuration.isOn)
     }
 }
 

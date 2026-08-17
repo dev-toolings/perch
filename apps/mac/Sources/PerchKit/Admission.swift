@@ -69,39 +69,39 @@ public struct AdmissionPolicy: Codable, Sendable, Equatable {
         self.rules = rules
     }
 
-    /// Background sessions Perch knows about. Off by default: silently hiding a session
-    /// someone did want is worse than showing one they did not, so these are opt-in.
+    /// Background sessions Perch knows about. Vibe enables its built-ins until a person
+    /// explicitly disables one, so a fresh Perch policy follows the same contract.
     public static let presets: [AdmissionRule] = [
         AdmissionRule(
             id: "preset.codex-memory-cwd", field: .directory, match: .contains,
-            pattern: "/.codex/memories", enabled: false, isPreset: true,
+            pattern: "/.codex/memories", enabled: true, isPreset: true,
             note: "Codex Memory Writer (cwd)"),
         AdmissionRule(
             id: "preset.codex-chronicle", field: .directory, match: .contains,
-            pattern: "/chronicle/screen_recording", enabled: false, isPreset: true,
+            pattern: "/chronicle/screen_recording", enabled: true, isPreset: true,
             note: "Codex Chronicle Memory Summary"),
         AdmissionRule(
             id: "preset.claude-mem-directory", field: .directory, match: .contains,
-            pattern: "/.claude-mem", enabled: false, isPreset: true,
+            pattern: "/.claude-mem", enabled: true, isPreset: true,
             note: "Claude-Mem plugin background compression sessions"),
         AdmissionRule(
             id: "preset.claude-mem", field: .prompt, match: .prefix,
-            pattern: "## Memory Writing Agent", enabled: false, isPreset: true,
+            pattern: "## Memory Writing Agent", enabled: true, isPreset: true,
             note: "Codex Memory Writer (prompt prefix)"),
         AdmissionRule(
             id: "preset.codex-suggestions", field: .prompt, match: .prefix,
             pattern: "# Overview Generate 0 to 3 hyperpersonalized suggestions",
-            enabled: false, isPreset: true,
+            enabled: true, isPreset: true,
             note: "Codex App suggested prompts"),
         AdmissionRule(
             id: "preset.codex-git-helper", field: .prompt, match: .prefix,
             pattern: "Using the supplied git context below, generate",
-            enabled: false, isPreset: true,
+            enabled: true, isPreset: true,
             note: "Codex App Git helper prompts"),
         AdmissionRule(
             id: "preset.craft-title", field: .prompt, match: .prefix,
             pattern: "What topic or area is the user exploring? Reply with ONLY a short descriptive title",
-            enabled: false, isPreset: true,
+            enabled: true, isPreset: true,
             note: "Craft Agent title generator"),
     ]
 

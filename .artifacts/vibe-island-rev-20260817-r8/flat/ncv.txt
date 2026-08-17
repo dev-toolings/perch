@@ -1,0 +1,778 @@
+--- func 0x100798010..0x100798a80 (depth 0)
+  7982fc  []  -> static SwiftUI.Alignment.top.getter : SwiftUI.Alignment
+  798368  []  -> SwiftUI.ZStack.init(alignment: SwiftUI.Alignment, content: () -> A) -> SwiftUI.ZStack<A>
+  79836c  []  -> static SwiftUI.Alignment.top.getter : SwiftUI.Alignment
+  7983f8  [mov w9, #0x1 | mov w1, #0x1 | mov w3, #0x1 | mov w5, #0x0 | mov w7, #0x1]  -> (extension in SwiftUI):SwiftUI.View.frame(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, 
+  798424  [d1=0.7 | fmov d0, #0.25000000]  -> static SwiftUI.Animation.spring(response: Swift.Double, dampingFraction: Swift.Double, blendDuration: Swift.Do
+  7984cc  []  -> (extension in SwiftUI):SwiftUI.View.animation<A where A1: Swift.Equatable>(_: SwiftUI.Animation?, value: A1) -
+  798560  []  -> (extension in SwiftUI):SwiftUI.View.onAppear(perform: (() -> ())?) -> some
+  798658  []  -> (extension in SwiftUI):SwiftUI.View.task<A where A1: Swift.Equatable>(id: A1, priority: Swift.TaskPriority, _:
+  798778  [mov w1, #0x0]  -> (extension in SwiftUI):SwiftUI.View.onChange<A where A1: Swift.Equatable>(of: A1, initial: Swift.Bool, _: (A1,
+  7988a8  []  -> (extension in SwiftUI):SwiftUI.View.task<A where A1: Swift.Equatable>(id: A1, priority: Swift.TaskPriority, _:
+  7989c0  []  -> (extension in SwiftUI):SwiftUI.View.task<A where A1: Swift.Equatable>(id: A1, priority: Swift.TaskPriority, _:
+--- func 0x100798a80..0x100798c84 (depth 0)
+  798b9c  [mov w9, #0x18]  -> static SwiftUI.HorizontalAlignment.center.getter : SwiftUI.HorizontalAlignment
+  798be4  [mov w2, #0x0]  -> SwiftUI.VStack.init(alignment: SwiftUI.HorizontalAlignment, spacing: CoreGraphics.CGFloat?, content: () -> A) 
+--- func 0x100798c84..0x10079a69c (depth 0)
+  799334  []  -> static SwiftUI.HorizontalAlignment.center.getter : SwiftUI.HorizontalAlignment
+  7993d8  [mov w24, #0x1 | mov w0, #0x1]  -> (extension in SwiftUI):SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -> ()) -> some
+  799408  []  -> static SwiftUI.Alignment.top.getter : SwiftUI.Alignment
+  799450  [mov w1, #0x1 | mov w3, #0x1 | mov w5, #0x0 | mov w7, #0x1]  -> SwiftUI._FlexFrameLayout.init(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, maxWidth: Co
+  799498  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  7994a8  []  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7994f4  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7996b0  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  7996bc  []  -> static SwiftUI.Edge.Set.bottom.getter : SwiftUI.Edge.Set
+  7996cc  [mov w0, #0x0]  -> SwiftUI.Edge.Set.init(rawValue: Swift.Int8) -> SwiftUI.Edge.Set
+  7996d4  []  -> SwiftUI.Edge.Set.init(rawValue: Swift.Int8) -> SwiftUI.Edge.Set
+  7996dc  []  -> SwiftUI.Edge.Set.init(rawValue: Swift.Int8) -> SwiftUI.Edge.Set
+  7996f0  []  -> SwiftUI.Edge.Set.init(rawValue: Swift.Int8) -> SwiftUI.Edge.Set
+  799704  []  -> SwiftUI.Edge.Set.init(rawValue: Swift.Int8) -> SwiftUI.Edge.Set
+  79970c  []  -> SwiftUI.Edge.Set.init(rawValue: Swift.Int8) -> SwiftUI.Edge.Set
+  799720  []  -> SwiftUI.Edge.Set.init(rawValue: Swift.Int8) -> SwiftUI.Edge.Set
+  7997d8  [fmov d1, #4.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  799828  []  -> static SwiftUI.Color.black.getter : SwiftUI.Color
+  799830  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+  7999b0  [fmov d0, #14.00000000 | fmov d1, #20.00000000 | mov w9, #0x100]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  799a64  []  -> static SwiftUI.Alignment.top.getter : SwiftUI.Alignment
+  799b7c  []  -> static SwiftUI.Alignment.topLeading.getter : SwiftUI.Alignment
+  799cd8  [fmov d1, #4.00000000]  -> static SwiftUI.Alignment.top.getter : SwiftUI.Alignment
+  799d04  []  -> static SwiftUI.Log.runtimeIssuesLog.getter : __C.OS_os_log
+  799d84  [mov w9, #0x1 | mov w1, #0x1 | mov w3, #0x1 | mov w5, #0x0 | mov w7, #0x1]  -> SwiftUI._FlexFrameLayout.init(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, maxWidth: Co
+  799ea8  [fmov d2, #0.50000000]  -> (extension in SwiftUI):SwiftUI.View.offset(x: CoreGraphics.CGFloat, y: CoreGraphics.CGFloat) -> some
+  799ee8  []  -> SwiftUI.State.wrappedValue.getter : A
+  799ef0  []  -> static SwiftUI.UnitPoint.center.getter : SwiftUI.UnitPoint
+  799f24  [fmov d8, #1.00000000 | fmov d1, #1.00000000]  -> (extension in SwiftUI):SwiftUI.View.scaleEffect(x: CoreGraphics.CGFloat, y: CoreGraphics.CGFloat, anchor: Swif
+  79a00c  [d0=const 1.02 | fmov d1, #1.00000000]  -> static SwiftUI.UnitPoint.center.getter : SwiftUI.UnitPoint
+  79a038  []  -> (extension in SwiftUI):SwiftUI.View.scaleEffect(_: CoreGraphics.CGFloat, anchor: SwiftUI.UnitPoint) -> some
+  79a138  []  -> (extension in SwiftUI):SwiftUI.View.animation<A where A1: Swift.Equatable>(_: SwiftUI.Animation?, value: A1) -
+  79a224  [d0=-40.0]  -> (extension in SwiftUI):SwiftUI.View.animation<A where A1: Swift.Equatable>(_: SwiftUI.Animation?, value: A1) -
+  79a324  [d1=40.0]  -> (extension in SwiftUI):SwiftUI.View.animation<A where A1: Swift.Equatable>(_: SwiftUI.Animation?, value: A1) -
+  79a3e8  [fmov d1, #8.00000000 | d1=38.0]  -> (extension in SwiftUI):SwiftUI.View.animation<A where A1: Swift.Equatable>(_: SwiftUI.Animation?, value: A1) -
+  79a420  [d8=const 0.4 | d9=const 0.8]  -> static SwiftUI.Animation.spring(response: Swift.Double, dampingFraction: Swift.Double, blendDuration: Swift.Do
+  79a49c  []  -> (extension in SwiftUI):SwiftUI.View.animation<A where A1: Swift.Equatable>(_: SwiftUI.Animation?, value: A1) -
+  79a4cc  []  -> static SwiftUI.Animation.spring(response: Swift.Double, dampingFraction: Swift.Double, blendDuration: Swift.Do
+  79a548  []  -> (extension in SwiftUI):SwiftUI.View.animation<A where A1: Swift.Equatable>(_: SwiftUI.Animation?, value: A1) -
+  79a654  []  -> static SwiftUI.Log.runtimeIssuesLog.getter : __C.OS_os_log
+--- func 0x10079a69c..0x10079a9d4 (depth 0)
+  79a82c  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+--- func 0x10079a9d4..0x10079ac9c (depth 0)
+  79aa74  []  -> static SwiftUI.Color.yellow.getter : SwiftUI.Color
+  79aa80  [fmov d0, #0.50000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  79aa90  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79aab4  [mov w26, #0x1 | x0=dbl 10.0 | mov w1, #0x0 | mov w3, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  79aacc  []  -> static SwiftUI.Color.yellow.getter : SwiftUI.Color
+  79aad8  [fmov d0, #0.50000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  79aae8  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79ab08  [x0=dbl 10.0 | mov w1, #0x0 | mov w3, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+--- func 0x10079ac9c..0x10079ae24 (depth 0)
+--- func 0x10079ae24..0x10079b340 (depth 0)
+  79b0c4  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79b158  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+--- func 0x10079b340..0x10079b560 (depth 0)
+  79b3e8  []  -> static SwiftUI.Color.black.getter : SwiftUI.Color
+  79b3f0  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79b410  [mov w1, #0x1 | x2=dbl 1.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  79b428  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  79b4e0  [fmov d0, #6.00000000 | fmov d1, #10.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+--- func 0x10079b560..0x10079b9d8 (depth 0)
+  79b6ec  []  -> static SwiftUI.HorizontalAlignment.leading.getter : SwiftUI.HorizontalAlignment
+--- func 0x10079b9d8..0x10079c3e8 (depth 0)
+  79ba4c  []  -> type metadata accessor for SwiftUI.LocalizedStringKey.StringInterpolation
+  79bb90  [fmov d9, #8.00000000]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79bbb4  [mov w21, #0x1 | mov w1, #0x1 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  79bbe0  []  -> static SwiftUI.Color.yellow.getter : SwiftUI.Color
+  79bbe8  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79bc08  [mov w1, #0x1 | x2=dbl 2.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  79bc30  [mov w0, #0x2a | mov w1, #0x5]  -> SwiftUI.LocalizedStringKey.StringInterpolation.init(literalCapacity: Swift.Int, interpolationCount: Swift.Int)
+  79bc4c  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  79bd0c  [d1=inf | d1=-9.223372036854778e+18 | d1=9.223372036854776e+18]  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendInterpolation<A where A: SwiftUI._FormatSpecifiable>(_: A
+  79bd24  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  79bda8  [d0=-9.223372036854778e+18 | d0=9.223372036854776e+18]  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendInterpolation<A where A: SwiftUI._FormatSpecifiable>(_: A
+  79bdb8  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  79be60  [d1=-9.223372036854778e+18 | d1=9.223372036854776e+18]  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendInterpolation<A where A: SwiftUI._FormatSpecifiable>(_: A
+  79be78  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  79bf94  [d1=40.0 | d1=-9.223372036854778e+18 | d1=9.223372036854776e+18]  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendInterpolation<A where A: SwiftUI._FormatSpecifiable>(_: A
+  79bfac  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  79bfd0  [mov w8, #0x28]  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendInterpolation<A where A: SwiftUI._FormatSpecifiable>(_: A
+  79bfdc  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  79bfe4  []  -> SwiftUI.LocalizedStringKey.init(stringInterpolation: SwiftUI.LocalizedStringKey.StringInterpolation) -> SwiftU
+  79c00c  [mov w8, #0x100]  -> SwiftUI.Text.init(_: SwiftUI.LocalizedStringKey, tableName: Swift.String?, bundle: __C.NSBundle?, comment: Swi
+  79c034  []  -> type metadata accessor for SwiftUI.Font.Design
+  79c07c  [mov w1, #0x0 | mov w2, #0x1 | fmov d0, #9.00000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  79c0b0  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  79c0e4  []  -> static SwiftUI.Color.yellow.getter : SwiftUI.Color
+  79c0fc  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+  79c130  []  -> static SwiftUI.Edge.Set.leading.getter : SwiftUI.Edge.Set
+  79c13c  [fmov d0, #24.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  79c15c  []  -> static SwiftUI.Edge.Set.top.getter : SwiftUI.Edge.Set
+  79c168  [fmov d0, #2.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+--- func 0x10079c3e8..0x10079c4e0 (depth 0)
+  79c478  [fmov d0, #0.25000000]  -> static SwiftUI.Animation.easeOut(duration: Swift.Double) -> SwiftUI.Animation
+  79c4b8  [mov w9, #0x18]  -> SwiftUI.withAnimation<A>(SwiftUI.Animation?, () throws -> A) throws -> A
+--- func 0x10079c4e0..0x10079c5d0 (depth 0)
+  79c5a8  []  -> SwiftUI.State.wrappedValue.setter : A
+--- func 0x10079c5d0..0x10079c634 (depth 0)
+--- func 0x10079c634..0x10079c718 (depth 0)
+--- func 0x10079c718..0x10079c9dc (depth 0)
+  79c8bc  [mov w8, #0x3]  -> SwiftUI.State.wrappedValue.setter : A
+--- func 0x10079c9dc..0x10079ca2c (depth 0)
+--- func 0x10079ca2c..0x10079caac (depth 0)
+  79ca80  []  -> SwiftUI.State.wrappedValue.setter : A
+--- func 0x10079caac..0x10079cc68 (depth 0)
+  79cbe8  []  -> SwiftUI.State.wrappedValue.setter : A
+  79cbf4  [d0=const 1.1]  -> static SwiftUI.Animation.easeOut(duration: Swift.Double) -> SwiftUI.Animation
+  79cc38  [mov w9, #0x18]  -> SwiftUI.withAnimation<A>(SwiftUI.Animation?, () throws -> A) throws -> A
+--- func 0x10079cc68..0x10079cd54 (depth 0)
+  79cd2c  []  -> SwiftUI.State.wrappedValue.setter : A
+--- func 0x10079cd54..0x10079cdb8 (depth 0)
+--- func 0x10079cdb8..0x10079d768 (depth 0)
+  79ce88  []  -> static SwiftUI.UnitPoint.center.getter : SwiftUI.UnitPoint
+  79ceb8  [d8=const 0.017453292519943295 | d0=360.0]  -> SwiftUI.Gradient.init(colors: [SwiftUI.Color]) -> SwiftUI.Gradient
+  79ced0  []  -> SwiftUI.AngularGradient.init(gradient: SwiftUI.Gradient, center: SwiftUI.UnitPoint, startAngle: SwiftUI.Angle,
+  79cef8  [fmov d0, #3.00000000 | fmov d1, #10.00000000 | mov w0, #0x0 | mov w1, #0x0]  -> SwiftUI.StrokeStyle.init(lineWidth: CoreGraphics.CGFloat, lineCap: __C.CGLineCap, lineJoin: __C.CGLineJoin, mi
+  79cefc  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79cf14  []  -> static SwiftUI.UnitPoint.center.getter : SwiftUI.UnitPoint
+  79cf44  [fmov d0, #30.00000000 | d0=390.0]  -> SwiftUI.Gradient.init(colors: [SwiftUI.Color]) -> SwiftUI.Gradient
+  79cf5c  []  -> SwiftUI.AngularGradient.init(gradient: SwiftUI.Gradient, center: SwiftUI.UnitPoint, startAngle: SwiftUI.Angle,
+  79cf7c  [fmov d0, #8.00000000 | fmov d1, #10.00000000 | mov w0, #0x0 | mov w1, #0x0]  -> SwiftUI.StrokeStyle.init(lineWidth: CoreGraphics.CGFloat, lineCap: __C.CGLineCap, lineJoin: __C.CGLineJoin, mi
+  79cf80  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79cfb0  []  -> static SwiftUI.UnitPoint.center.getter : SwiftUI.UnitPoint
+  79cfe4  [d0=60.0 | d0=420.0]  -> SwiftUI.Gradient.init(colors: [SwiftUI.Color]) -> SwiftUI.Gradient
+  79cffc  []  -> SwiftUI.AngularGradient.init(gradient: SwiftUI.Gradient, center: SwiftUI.UnitPoint, startAngle: SwiftUI.Angle,
+  79d01c  [fmov d0, #14.00000000 | fmov d1, #10.00000000 | mov w0, #0x0 | mov w1, #0x0]  -> SwiftUI.StrokeStyle.init(lineWidth: CoreGraphics.CGFloat, lineCap: __C.CGLineCap, lineJoin: __C.CGLineJoin, mi
+  79d020  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79d048  []  -> static SwiftUI.UnitPoint.center.getter : SwiftUI.UnitPoint
+  79d080  [d0=90.0 | d0=450.0]  -> SwiftUI.Gradient.init(colors: [SwiftUI.Color]) -> SwiftUI.Gradient
+  79d098  []  -> SwiftUI.AngularGradient.init(gradient: SwiftUI.Gradient, center: SwiftUI.UnitPoint, startAngle: SwiftUI.Angle,
+  79d0b8  [fmov d0, #22.00000000 | fmov d1, #10.00000000 | mov w0, #0x0 | mov w1, #0x0]  -> SwiftUI.StrokeStyle.init(lineWidth: CoreGraphics.CGFloat, lineCap: __C.CGLineCap, lineJoin: __C.CGLineJoin, mi
+  79d0bc  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79d0d0  [d0=const 0.2]  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  79d0f4  [fmov d0, #10.00000000 | fmov d1, #10.00000000 | mov w0, #0x0 | mov w1, #0x0]  -> SwiftUI.StrokeStyle.init(lineWidth: CoreGraphics.CGFloat, lineCap: __C.CGLineCap, lineJoin: __C.CGLineJoin, mi
+  79d0f8  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+--- func 0x10079d768..0x10079d9b4 (depth 0)
+  79d814  []  -> static SwiftUI.HorizontalAlignment.center.getter : SwiftUI.HorizontalAlignment
+  79d8cc  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  79d8e0  [d8=-80.0]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  79d8f8  []  -> static SwiftUI.Edge.Set.bottom.getter : SwiftUI.Edge.Set
+  79d904  []  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+--- func 0x10079d9b4..0x10079dbb0 (depth 0)
+  79da80  []  -> static SwiftUI.Color.clear.getter : SwiftUI.Color
+  79da88  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  79da90  []  -> static SwiftUI.UnitPoint.top.getter : SwiftUI.UnitPoint
+  79da9c  []  -> static SwiftUI.UnitPoint.bottom.getter : SwiftUI.UnitPoint
+  79daac  []  -> SwiftUI.Gradient.init(colors: [SwiftUI.Color]) -> SwiftUI.Gradient
+  79dac8  []  -> SwiftUI.LinearGradient.init(gradient: SwiftUI.Gradient, startPoint: SwiftUI.UnitPoint, endPoint: SwiftUI.UnitP
+  79dacc  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79daec  [mov w1, #0x1 | x2=dbl 14.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  79daf0  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+--- func 0x10079dbb0..0x10079e924 (depth 0)
+  79e0cc  [fmov d1, #8.00000000]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  79e0ec  [mov w1, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  79e1a8  []  -> static SwiftUI.Alignment.bottom.getter : SwiftUI.Alignment
+  79e1d0  []  -> static SwiftUI.Log.runtimeIssuesLog.getter : __C.OS_os_log
+  79e274  [mov w9, #0x1 | mov w1, #0x1 | mov w3, #0x1 | mov w5, #0x1]  -> SwiftUI._FlexFrameLayout.init(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, maxWidth: Co
+  79e3c0  []  -> static SwiftUI.Color.red.getter : SwiftUI.Color
+  79e3d4  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  79e3e8  []  -> static SwiftUI.Color.clear.getter : SwiftUI.Color
+  79e3f8  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+  79e580  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  79e69c  []  -> static SwiftUI.Color.blue.getter : SwiftUI.Color
+  79e6b0  [d0=0.15]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  79e6cc  [mov w19, #0x1]  -> static SwiftUI.Color.clear.getter : SwiftUI.Color
+  79e6d4  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+  79e79c  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+--- func 0x10079e924..0x10079ebbc (depth 0)
+  79eaec  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  79eb88  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+--- func 0x10079ebbc..0x10079ef44 (depth 0)
+  79ee50  [mov w1, #0x1 | mov w1, #0x0 | mov w2, #0x1 | mov w1, #0x1 | mov w1, #0x1]  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  79ee5c  [fmov d0, #4.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  79ee9c  []  -> static SwiftUI.Edge.Set.bottom.getter : SwiftUI.Edge.Set
+  79eea8  [fmov d0, #5.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+--- func 0x10079ef44..0x10079f850 (depth 0)
+  79f218  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  79f2cc  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  79f2f8  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  79f338  [add x8, x8, #0x480 ; literal pool for: "showModelInPanel" | mov w0, #0x0]  -> SwiftUI.AppStorage.init<A where A == Swift.Bool>(wrappedValue: Swift.Bool, _: Swift.String, store: __C.NSUserD
+  79f364  [add x8, x8, #0x4a0 ; literal pool for: "showReasoningEffortInPanel" | mov w9, #0xa | mov w0, #0x0]  -> SwiftUI.AppStorage.init<A where A == Swift.Bool>(wrappedValue: Swift.Bool, _: Swift.String, store: __C.NSUserD
+  79f390  [add x8, x8, #0x4c0 ; literal pool for: "showWorktreeChip" | mov w0, #0x1]  -> SwiftUI.AppStorage.init<A where A == Swift.Bool>(wrappedValue: Swift.Bool, _: Swift.String, store: __C.NSUserD
+  79f3c4  [mov w0, #0x1]  -> SwiftUI.AppStorage.init<A where A == Swift.Bool>(wrappedValue: Swift.Bool, _: Swift.String, store: __C.NSUserD
+  79f3f4  [mov w0, #0x0]  -> SwiftUI.AppStorage.init<A where A == Swift.Bool>(wrappedValue: Swift.Bool, _: Swift.String, store: __C.NSUserD
+  79f41c  [add x8, x8, #0x4e0 ; literal pool for: "hideTaskSubagents" | mov w0, #0x0]  -> SwiftUI.AppStorage.init<A where A == Swift.Bool>(wrappedValue: Swift.Bool, _: Swift.String, store: __C.NSUserD
+  79f424  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  79f430  [fmov d0, #8.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  79f470  []  -> static SwiftUI.Edge.Set.top.getter : SwiftUI.Edge.Set
+  79f47c  [fmov d0, #4.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  79f52c  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  79f5c0  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  79f794  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+--- func 0x10079f850..0x10079fb58 (depth 0)
+--- func 0x10079fb58..0x1007a0e48 (depth 0)
+  7a01d4  []  -> SwiftUI.AppStorage.wrappedValue.getter : A
+  7a0d74  []  -> static SwiftUI.HorizontalAlignment.center.getter : SwiftUI.HorizontalAlignment
+--- func 0x1007a0e48..0x1007a106c (depth 0)
+  7a0fb0  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a1030  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+--- func 0x1007a106c..0x1007a1290 (depth 0)
+  7a1114  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a116c  [d8=0.3 | d9=const 0.8]  -> static SwiftUI.Animation.spring(response: Swift.Double, dampingFraction: Swift.Double, blendDuration: Swift.Do
+  7a1208  []  -> static SwiftUI.Animation.spring(response: Swift.Double, dampingFraction: Swift.Double, blendDuration: Swift.Do
+--- func 0x1007a1290..0x1007a14b4 (depth 0)
+  7a1338  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a1390  [d8=0.3 | d9=const 0.8]  -> static SwiftUI.Animation.spring(response: Swift.Double, dampingFraction: Swift.Double, blendDuration: Swift.Do
+  7a142c  []  -> static SwiftUI.Animation.spring(response: Swift.Double, dampingFraction: Swift.Double, blendDuration: Swift.Do
+--- func 0x1007a14b4..0x1007a1674 (depth 0)
+  7a152c  []  -> SwiftUI.State.wrappedValue.getter : A
+  7a1538  []  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a1594  []  -> SwiftUI.State.wrappedValue.getter : A
+  7a15b0  [d1=0.6]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a15cc  []  -> SwiftUI.State.wrappedValue.getter : A
+  7a15e8  [d1=const 0.18 | fmov d1, #1.00000000]  -> static SwiftUI.UnitPoint.center.getter : SwiftUI.UnitPoint
+--- func 0x1007a1674..0x1007a1bc0 (depth 0)
+  7a1898  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a18b8  [x0=dbl 20.0 | mov w1, #0x0 | x2=dbl 20.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a18e4  [fmov d0, #0.50000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a1908  [fmov d0, #0.25000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a19e0  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a1a0c  [mov w20, #0x0]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a1a2c  [x0=dbl 32.0 | mov w1, #0x0 | x2=dbl 20.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a1a40  [fmov d0, #0.50000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a1a60  [d0=const 0.2]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a1b34  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+--- func 0x1007a1bc0..0x1007a1cd4 (depth 0)
+  7a1c78  []  -> static SwiftUI.Color.gray.getter : SwiftUI.Color
+  7a1c84  []  -> static SwiftUI.Color.green.getter : SwiftUI.Color
+  7a1c98  []  -> static SwiftUI.Color.green.getter : SwiftUI.Color
+  7a1ca8  []  -> static SwiftUI.Color.purple.getter : SwiftUI.Color
+  7a1cb0  []  -> static SwiftUI.Color.blue.getter : SwiftUI.Color
+  7a1cbc  []  -> static SwiftUI.Color.orange.getter : SwiftUI.Color
+--- func 0x1007a1cd4..0x1007a31a8 (depth 0)
+  7a1d5c  []  -> type metadata accessor for SwiftUI.LocalizedStringKey.StringInterpolation
+  7a1ee8  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a1fac  [fmov d0, #7.00000000 | fmov d1, #2.00000000]  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  7a1fb8  []  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7a1fd0  []  -> static SwiftUI.Edge.Set.vertical.getter : SwiftUI.Edge.Set
+  7a1fdc  [fmov d0, #3.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7a200c  []  -> type metadata accessor for SwiftUI.RoundedCornerStyle
+  7a2048  [d0=const 0.2]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a2078  [mov w9, #0x100]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a2224  [mov w1, #0x1]  -> SwiftUI.LocalizedStringKey.StringInterpolation.init(literalCapacity: Swift.Int, interpolationCount: Swift.Int)
+  7a2234  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  7a2270  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendInterpolation<A where A: SwiftUI._FormatSpecifiable>(_: A
+  7a227c  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  7a2284  []  -> SwiftUI.LocalizedStringKey.init(stringInterpolation: SwiftUI.LocalizedStringKey.StringInterpolation) -> SwiftU
+  7a22ac  [mov w8, #0x100]  -> SwiftUI.Text.init(_: SwiftUI.LocalizedStringKey, tableName: Swift.String?, bundle: __C.NSBundle?, comment: Swi
+  7a22c4  []  -> static SwiftUI.Font.Weight.semibold.getter : SwiftUI.Font.Weight
+  7a22dc  []  -> type metadata accessor for SwiftUI.Font.Design
+  7a2338  [mov w1, #0x0 | mov w2, #0x1 | fmov d0, #11.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7a236c  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7a23a4  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7a23bc  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+  7a2530  [mov w1, #0x1]  -> SwiftUI.LocalizedStringKey.StringInterpolation.init(literalCapacity: Swift.Int, interpolationCount: Swift.Int)
+  7a2540  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  7a257c  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendInterpolation<A where A: SwiftUI._FormatSpecifiable>(_: A
+  7a2588  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  7a2590  []  -> SwiftUI.LocalizedStringKey.init(stringInterpolation: SwiftUI.LocalizedStringKey.StringInterpolation) -> SwiftU
+  7a25b8  [mov w8, #0x100]  -> SwiftUI.Text.init(_: SwiftUI.LocalizedStringKey, tableName: Swift.String?, bundle: __C.NSBundle?, comment: Swi
+  7a25d0  []  -> static SwiftUI.Font.Weight.semibold.getter : SwiftUI.Font.Weight
+  7a25e8  []  -> type metadata accessor for SwiftUI.Font.Design
+  7a2634  [mov w1, #0x0 | mov w2, #0x1 | fmov d0, #11.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7a2668  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7a269c  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7a26b4  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+  7a27b8  [mov w10, #0x1]  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a28e8  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a2c48  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a2ffc  []  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+  7a3038  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  7a304c  []  -> static SwiftUI.Font.Weight.medium.getter : SwiftUI.Font.Weight
+  7a3090  [mov w1, #0x0 | mov w2, #0x1 | fmov d0, #9.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7a30c4  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7a30f8  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7a310c  [d0=0.7]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a3134  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+--- func 0x1007a31a8..0x1007a3658 (depth 0)
+  7a31dc  []  -> type metadata accessor for SwiftUI.LocalizedStringKey.StringInterpolation
+  7a32d8  []  -> SwiftUI.Image.init(systemName: Swift.String) -> SwiftUI.Image
+  7a32f4  [fmov d0, #10.00000000 | fmov d1, #9.00000000]  -> type metadata accessor for SwiftUI.Font.Design
+  7a3328  [mov w1, #0x1 | mov w2, #0x1 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7a33ac  [mov w1, #0x1]  -> SwiftUI.LocalizedStringKey.StringInterpolation.init(literalCapacity: Swift.Int, interpolationCount: Swift.Int)
+  7a33c0  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  7a33f4  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendInterpolation<A where A: SwiftUI._FormatSpecifiable>(_: A
+  7a3400  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  7a3408  []  -> SwiftUI.LocalizedStringKey.init(stringInterpolation: SwiftUI.LocalizedStringKey.StringInterpolation) -> SwiftU
+  7a3430  [mov w8, #0x100]  -> SwiftUI.Text.init(_: SwiftUI.LocalizedStringKey, tableName: Swift.String?, bundle: __C.NSBundle?, comment: Swi
+  7a344c  []  -> static SwiftUI.Font.Weight.medium.getter : SwiftUI.Font.Weight
+  7a3498  [mov w1, #0x0 | mov w2, #0x1 | fmov d0, #10.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7a34cc  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7a3518  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+--- func 0x1007a3658..0x1007a3954 (depth 0)
+  7a3680  []  -> type metadata accessor for SwiftUI.OpacityTransition
+  7a36bc  []  -> type metadata accessor for SwiftUI.ScaleTransition
+  7a3774  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a3794  [x0=dbl 7.0 | mov w1, #0x0 | x2=dbl 7.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a37c4  [d0=0.6]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a37d0  []  -> static SwiftUI.UnitPoint.center.getter : SwiftUI.UnitPoint
+  7a37f0  [d0=const 1e-05]  -> SwiftUI.ScaleTransition.init(_: Swift.Double, anchor: SwiftUI.UnitPoint) -> SwiftUI.ScaleTransition
+  7a37f8  []  -> SwiftUI.OpacityTransition.init() -> SwiftUI.OpacityTransition
+  7a3854  []  -> (extension in SwiftUI):SwiftUI.Transition.combined<A where A1: SwiftUI.Transition>(with: A1) -> some
+  7a38c4  []  -> SwiftUI.AnyTransition.init<A where A: SwiftUI.Transition>(A) -> SwiftUI.AnyTransition
+--- func 0x1007a3954..0x1007a45c8 (depth 0)
+  7a3cc0  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a3d0c  [fmov d0, #8.00000000 | fmov d1, #2.00000000]  -> static SwiftUI.Edge.Set.leading.getter : SwiftUI.Edge.Set
+  7a3d18  []  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7a3d70  []  -> static SwiftUI.Alignment.leading.getter : SwiftUI.Alignment
+  7a3d90  [mov w1, #0x0 | mov w3, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a3dd8  []  -> static SwiftUI.Color.red.getter : SwiftUI.Color
+  7a3dec  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a3e00  []  -> static SwiftUI.Color.clear.getter : SwiftUI.Color
+  7a3e14  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+  7a3e70  []  -> static SwiftUI.Color.green.getter : SwiftUI.Color
+  7a3e84  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a3f28  [d1=40.0]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a3f70  [mov w10, #0x1 | mov w1, #0x0 | mov w3, #0x1 | mov w5, #0x1 | mov w7, #0x1]  -> SwiftUI._FlexFrameLayout.init(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, maxWidth: Co
+  7a408c  [d1=40.0]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a40d4  [mov w20, #0x1 | mov w1, #0x0 | mov w3, #0x1 | mov w5, #0x1 | mov w7, #0x1]  -> SwiftUI._FlexFrameLayout.init(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, maxWidth: Co
+  7a41cc  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a4208  [mov w20, #0x0]  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a426c  []  -> static SwiftUI.Edge.Set.trailing.getter : SwiftUI.Edge.Set
+  7a4278  []  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7a42cc  []  -> static SwiftUI.Alignment.trailing.getter : SwiftUI.Alignment
+  7a42ec  [mov w1, #0x0 | mov w3, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a4334  []  -> static SwiftUI.Color.blue.getter : SwiftUI.Color
+  7a4348  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a435c  []  -> static SwiftUI.Color.clear.getter : SwiftUI.Color
+  7a4364  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+--- func 0x1007a45c8..0x1007a4c70 (depth 0)
+  7a4838  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  7a4848  []  -> static SwiftUI.Font.Weight.medium.getter : SwiftUI.Font.Weight
+  7a4860  []  -> type metadata accessor for SwiftUI.Font.Design
+  7a48b0  [mov w1, #0x0 | mov w2, #0x1 | fmov d0, #10.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7a48ec  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7a491c  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7a492c  [d0=const 0.9]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a4958  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+  7a49dc  []  -> type metadata accessor for SwiftUI.Text.TruncationMode
+--- func 0x1007a4c70..0x1007a54b4 (depth 0)
+  7a4fd0  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a4ff4  [mov w1, #0x0 | mov w3, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a5000  []  -> static SwiftUI.Color.red.getter : SwiftUI.Color
+  7a5014  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a5028  []  -> static SwiftUI.Color.clear.getter : SwiftUI.Color
+  7a5030  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+  7a5044  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a5088  [mov w9, #0x1 | mov w1, #0x1 | mov w3, #0x1 | mov w5, #0x0 | mov w7, #0x1]  -> SwiftUI._FlexFrameLayout.init(minWidth: CoreGraphics.CGFloat?, idealWidth: CoreGraphics.CGFloat?, maxWidth: Co
+  7a50dc  []  -> static SwiftUI.Color.green.getter : SwiftUI.Color
+  7a50f0  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a5104  []  -> static SwiftUI.Color.clear.getter : SwiftUI.Color
+  7a510c  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+  7a5144  []  -> static SwiftUI.Edge.Set.trailing.getter : SwiftUI.Edge.Set
+  7a5150  [fmov d0, #8.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7a51e4  [mov w22, #0x0]  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a525c  [mov w9, #0x101]  -> static SwiftUI.Edge.Set.trailing.getter : SwiftUI.Edge.Set
+  7a5268  [fmov d0, #8.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7a528c  []  -> static SwiftUI.Color.blue.getter : SwiftUI.Color
+  7a52a0  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a52b4  []  -> static SwiftUI.Color.clear.getter : SwiftUI.Color
+  7a52bc  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+--- func 0x1007a54b4..0x1007a5b78 (depth 0)
+  7a5714  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  7a5728  []  -> static SwiftUI.Font.Weight.medium.getter : SwiftUI.Font.Weight
+  7a5744  []  -> type metadata accessor for SwiftUI.Font.Design
+  7a578c  [mov w1, #0x0 | mov w2, #0x1 | fmov d0, #11.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7a57c0  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7a57f4  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7a580c  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+  7a5884  []  -> type metadata accessor for SwiftUI.Text.TruncationMode
+  7a592c  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a5974  []  -> SwiftUI.LocalizedStringKey.init(stringLiteral: Swift.String) -> SwiftUI.LocalizedStringKey
+  7a599c  [mov w8, #0x100]  -> SwiftUI.Text.init(_: SwiftUI.LocalizedStringKey, tableName: Swift.String?, bundle: __C.NSBundle?, comment: Swi
+  7a59b4  []  -> static SwiftUI.Font.Weight.medium.getter : SwiftUI.Font.Weight
+  7a59cc  []  -> type metadata accessor for SwiftUI.Font.Design
+  7a5a14  [mov w1, #0x0 | mov w2, #0x1 | fmov d0, #11.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7a5a48  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7a5a7c  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7a5a90  [d0=0.6]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a5ab4  []  -> SwiftUI.Text.foregroundColor(SwiftUI.Color?) -> SwiftUI.Text
+  7a5b30  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+--- func 0x1007a5b78..0x1007a7408 (depth 0)
+  7a64a0  [mov w1, #0x1]  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a65a4  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  7a65ec  [mov w26, #0x1]  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a68c8  []  -> static SwiftUI.Alignment.leading.getter : SwiftUI.Alignment
+  7a68e8  [mov w1, #0x0 | mov w3, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a696c  [d9=const -2.2250738585084133e-308]  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a69c0  []  -> static SwiftUI.Alignment.trailing.getter : SwiftUI.Alignment
+  7a69e0  [mov w1, #0x0 | mov w3, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a6c10  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a6c4c  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a6d34  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a6d90  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  7a6d9c  []  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7a6df4  []  -> static SwiftUI.Edge.Set.vertical.getter : SwiftUI.Edge.Set
+  7a6e00  [fmov d0, #4.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7a6f10  [d0=-40.0]  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a6f30  [mov w1, #0x0 | mov w3, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a6ff4  []  -> static SwiftUI.Color.green.getter : SwiftUI.Color
+  7a7008  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a701c  []  -> static SwiftUI.Color.clear.getter : SwiftUI.Color
+  7a7024  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+  7a7394  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7a73a4  [d0=const 0.03]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7a73b4  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+--- func 0x1007a7408..0x1007a7860 (depth 0)
+  7a7488  []  -> type metadata accessor for SwiftUI.PeriodicTimelineSchedule
+  7a76c8  [d0=60.0]  -> SwiftUI.PeriodicTimelineSchedule.init(from: Foundation.Date, by: Swift.Double) -> SwiftUI.PeriodicTimelineSche
+  7a77ec  []  -> (extension in SwiftUI):SwiftUI.TimelineView< where B: SwiftUI.View>.init(_: A, content: (SwiftUI.TimelineView<
+--- func 0x1007a7860..0x1007a7e10 (depth 0)
+  7a7ae8  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  7a7cb8  [mov w9, #0x2 | mov w9, #0x1 | mov w22, #0x1 | mov w1, #0x0 | mov w2, #0x1 | fmov d0, #28.00000000 | fmov d1, #24.00000000 | fmov d1, #18.00000000]  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+--- func 0x1007a7e10..0x1007a8588 (depth 0)
+  7a8208  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a82a8  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  7a82dc  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7a83c0  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a8414  [fmov d0, #28.00000000 | fmov d1, #24.00000000 | fmov d1, #18.00000000]  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+--- func 0x1007a8588..0x1007a8808 (depth 0)
+--- func 0x1007a8808..0x1007aa3f4 (depth 0)
+  7a8e18  []  -> (extension in SwiftUI):SwiftUI.ProgressView< where B == SwiftUI.EmptyView>.init< where A == SwiftUI.EmptyView>
+  7a8e60  []  -> type metadata accessor for SwiftUI.ControlSize
+  7a8e8c  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7a8eac  [x0=dbl 28.0 | mov w1, #0x0 | x2=dbl 28.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7a8f48  []  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+  7a8f94  []  -> (extension in SwiftUI):SwiftUI.View.accessibilityLabel<A where A1: Swift.StringProtocol>(A1) -> SwiftUI.Modifi
+  7a9010  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9074  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9100  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a92cc  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9330  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a93bc  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a969c  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a96f8  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9750  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a97ec  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  7a9870  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a98c8  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9948  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a99b0  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9a38  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9acc  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  7a9b40  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9ba8  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9c1c  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9d4c  []  -> SwiftUI.State.wrappedValue.getter : A
+  7a9ebc  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  7a9f40  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7a9fac  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7aa020  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7aa20c  []  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+  7aa2f4  [mov w8, #0x1]  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+  7aa368  []  -> (extension in SwiftUI):SwiftUI._ConditionalContent< where A: SwiftUI.View, B: SwiftUI.View>.init(storage: Swif
+--- func 0x1007aa3f4..0x1007aab1c (depth 0)
+  7aa768  []  -> SwiftUI.AppStorage.wrappedValue.getter : A
+  7aa78c  []  -> SwiftUI.TimelineView.Context.date.getter : Foundation.Date
+  7aa938  [mov w1, #0x1 | mov w1, #0x1 | mov w1, #0x1 | mov w2, #0x1 | mov w1, #0x1 | mov w1, #0x1 | mov w2, #0x1]  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7aa970  []  -> static SwiftUI.Edge.Set.vertical.getter : SwiftUI.Edge.Set
+  7aa97c  [fmov d0, #2.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+--- func 0x1007aab1c..0x1007aadc0 (depth 0)
+  7aac0c  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7aac20  [d0=0.15]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7aac30  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7aac50  [x0=dbl 1.0 | mov w1, #0x0 | x2=dbl 10.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+--- func 0x1007aadc0..0x1007aaf1c (depth 0)
+  7aaefc  [mov w8, #0x3]  -> SwiftUI.State.wrappedValue.setter : A
+--- func 0x1007aaf1c..0x1007aaf9c (depth 0)
+--- func 0x1007aaf9c..0x1007ab12c (depth 0)
+--- func 0x1007ab12c..0x1007abac0 (depth 0)
+  7ab174  []  -> type metadata accessor for SwiftUI.PlainButtonStyle
+  7ab524  []  -> SwiftUI.State.init(wrappedValue: A) -> SwiftUI.State<A>
+  7ab548  []  -> static SwiftUI.Edge.Set.trailing.getter : SwiftUI.Edge.Set
+  7ab568  [fmov d0, #4.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7ab6b0  [mov w9, #0x20]  -> SwiftUI.Button.init(action: () -> (), label: () -> A) -> SwiftUI.Button<A>
+  7ab6c4  []  -> SwiftUI.PlainButtonStyle.init() -> SwiftUI.PlainButtonStyle
+  7ab74c  []  -> (extension in SwiftUI):SwiftUI.View.buttonStyle<A where A1: SwiftUI.PrimitiveButtonStyle>(A1) -> some
+  7ab810  [mov w9, #0x18]  -> SwiftUI.Button.init(action: () -> (), label: () -> A) -> SwiftUI.Button<A>
+  7ab81c  []  -> SwiftUI.PlainButtonStyle.init() -> SwiftUI.PlainButtonStyle
+  7ab84c  []  -> (extension in SwiftUI):SwiftUI.View.buttonStyle<A where A1: SwiftUI.PrimitiveButtonStyle>(A1) -> some
+--- func 0x1007abac0..0x1007abd68 (depth 0)
+  7abd24  []  -> SwiftUI.AppStorage.wrappedValue.setter : A
+--- func 0x1007abd68..0x1007abfc0 (depth 0)
+  7abe5c  []  -> SwiftUI.AppStorage.wrappedValue.getter : A
+  7abe94  [add x9, x9, #0x520 ; literal pool for: "speaker.wave.2.fill" | add x10, x10, #0x500 ; literal pool for: "speaker.slash.fill"]  -> SwiftUI.Image.init(systemName: Swift.String) -> SwiftUI.Image
+  7abe9c  []  -> static SwiftUI.Font.Weight.regular.getter : SwiftUI.Font.Weight
+  7abea8  []  -> type metadata accessor for SwiftUI.Font.Design
+  7abed8  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #13.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7abf08  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7abf1c  []  -> SwiftUI.AppStorage.wrappedValue.getter : A
+  7abf44  [d0=const 0.4 | d1=0.7]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7abf58  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7abf78  [mov w1, #0x0 | x2=dbl 28.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+--- func 0x1007abfc0..0x1007ac1d4 (depth 0)
+--- func 0x1007ac1d4..0x1007ac3d0 (depth 0)
+  7ac2cc  []  -> SwiftUI.Image.init(systemName: Swift.String) -> SwiftUI.Image
+  7ac2d4  []  -> static SwiftUI.Font.Weight.regular.getter : SwiftUI.Font.Weight
+  7ac2e0  []  -> type metadata accessor for SwiftUI.Font.Design
+  7ac310  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #13.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7ac340  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7ac354  [d0=0.7]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7ac368  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7ac388  [mov w1, #0x0 | x2=dbl 28.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+--- func 0x1007ac3d0..0x1007ac428 (depth 0)
+--- func 0x1007ac428..0x1007ac48c (depth 0)
+--- func 0x1007ac48c..0x1007ac624 (depth 0)
+--- func 0x1007ac624..0x1007ac670 (depth 0)
+--- func 0x1007ac670..0x1007ac8bc (depth 0)
+--- func 0x1007ac8bc..0x1007ac904 (depth 0)
+--- func 0x1007ac904..0x1007ac90c (depth 0)
+--- func 0x1007ac90c..0x1007ac930 (depth 0)
+--- func 0x1007ac930..0x1007ac954 (depth 0)
+--- func 0x1007ac954..0x1007ac9ec (depth 0)
+--- func 0x1007ac9ec..0x1007ac9f4 (depth 0)
+--- func 0x1007ac9f4..0x1007ac9fc (depth 0)
+--- func 0x1007ac9fc..0x1007aca94 (depth 0)
+--- func 0x1007aca94..0x1007acab8 (depth 0)
+--- func 0x1007acab8..0x1007acadc (depth 0)
+--- func 0x1007acadc..0x1007acb28 (depth 0)
+--- func 0x1007acb28..0x1007acba0 (depth 0)
+--- func 0x1007acba0..0x1007acba4 (depth 0)
+--- func 0x1007acba4..0x1007acbc8 (depth 0)
+--- func 0x1007acbc8..0x1007acbd0 (depth 0)
+--- func 0x1007acbd0..0x1007acc68 (depth 0)
+--- func 0x1007acc68..0x1007acc8c (depth 0)
+--- func 0x1007acc8c..0x1007accb0 (depth 0)
+--- func 0x1007accb0..0x1007accfc (depth 0)
+--- func 0x1007accfc..0x1007acd00 (depth 0)
+--- func 0x1007acd00..0x1007acd24 (depth 0)
+--- func 0x1007acd24..0x1007acd70 (depth 0)
+--- func 0x1007acd70..0x1007ace4c (depth 0)
+--- func 0x1007ace4c..0x1007acee4 (depth 0)
+--- func 0x1007acee4..0x1007ad980 (depth 0)
+  7acf14  []  -> type metadata accessor for SwiftUI.PlainButtonStyle
+  7ad22c  [add x8, x8, #0x870 ; literal pool for: "checkmark.circle.fill" | add x9, x9, #0x270 ; literal pool for: "exclamationmark.triangle.fill" | add x11, x11, #0x6d0 ; literal pool for: "exclamationmark.octagon.fill"]  -> SwiftUI.Image.init(systemName: Swift.String) -> SwiftUI.Image
+  7ad234  []  -> static SwiftUI.Font.Weight.semibold.getter : SwiftUI.Font.Weight
+  7ad240  []  -> type metadata accessor for SwiftUI.Font.Design
+  7ad270  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7ad2ec  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7ad2fc  [d0=const 0.55]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7ad33c  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7ad35c  [x0=dbl 14.0 | mov w1, #0x0 | mov w3, #0x1]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7ad360  []  -> static SwiftUI.HorizontalAlignment.leading.getter : SwiftUI.HorizontalAlignment
+  7ad53c  []  -> SwiftUI.Button.init(action: () -> (), label: () -> A) -> SwiftUI.Button<A>
+  7ad548  []  -> SwiftUI.PlainButtonStyle.init() -> SwiftUI.PlainButtonStyle
+  7ad5bc  []  -> (extension in SwiftUI):SwiftUI.View.buttonStyle<A where A1: SwiftUI.PrimitiveButtonStyle>(A1) -> some
+  7ad664  []  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+  7ad6d0  []  -> (extension in SwiftUI):SwiftUI.View.help<A where A1: Swift.StringProtocol>(A1) -> some
+--- func 0x1007ad980..0x1007ade3c (depth 0)
+  7ada88  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  7adaa0  []  -> static SwiftUI.Font.Weight.semibold.getter : SwiftUI.Font.Weight
+  7adaac  []  -> type metadata accessor for SwiftUI.Font.Design
+  7adae0  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.50000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7adb1c  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7adb50  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7adb60  [d0=const 0.9]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7adba0  []  -> SwiftUI.Text.foregroundStyle<A where A: SwiftUI.ShapeStyle>(A) -> SwiftUI.Text
+  7adc00  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  7adc3c  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #9.50000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7adc70  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7adca4  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7adcb4  [d0=const 0.48]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7adcf0  []  -> SwiftUI.Text.foregroundStyle<A where A: SwiftUI.ShapeStyle>(A) -> SwiftUI.Text
+--- func 0x1007ade3c..0x1007adf38 (depth 0)
+--- func 0x1007adf38..0x1007ae11c (depth 0)
+  7ae028  []  -> SwiftUI.Image.init(systemName: Swift.String) -> SwiftUI.Image
+  7ae030  []  -> static SwiftUI.Font.Weight.semibold.getter : SwiftUI.Font.Weight
+  7ae03c  []  -> type metadata accessor for SwiftUI.Font.Design
+  7ae06c  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #9.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7ae09c  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7ae0ac  [d0=const 0.55]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7ae0bc  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7ae0dc  [x0=dbl 20.0 | mov w1, #0x0 | x2=dbl 20.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+--- func 0x1007ae11c..0x1007ae220 (depth 0)
+  7ae138  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7ae16c  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7ae18c  [mov w1, #0x1 | x2=dbl 30.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+  7ae1bc  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  7ae1c8  [fmov d0, #4.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+--- func 0x1007ae220..0x1007ae768 (depth 0)
+  7ae3dc  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7ae41c  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  7ae428  [fmov d0, #12.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7ae468  []  -> static SwiftUI.Edge.Set.vertical.getter : SwiftUI.Edge.Set
+  7ae474  [fmov d0, #6.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7ae490  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7ae4bc  []  -> SwiftUI.State.wrappedValue.getter : A
+  7ae4e0  [d0=const 0.03 | d1=const 0.06]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7ae4f0  []  -> static SwiftUI.Edge.Set.all.getter : SwiftUI.Edge.Set
+  7ae538  []  -> type metadata accessor for SwiftUI.RoundedRectangle
+  7ae550  []  -> type metadata accessor for SwiftUI.RoundedCornerStyle
+  7ae5b0  [fmov.2d v0, #6.00000000 | mov w9, #0x100]  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  7ae5bc  [fmov d0, #8.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7ae608  []  -> static SwiftUI.Edge.Set.bottom.getter : SwiftUI.Edge.Set
+  7ae614  [fmov d0, #4.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7ae71c  [mov w0, #0x1]  -> (extension in SwiftUI):SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -> ()) -> some
+--- func 0x1007ae768..0x1007af100 (depth 0)
+  7ae7ac  []  -> type metadata accessor for SwiftUI.PlainButtonStyle
+  7ae8ac  []  -> type metadata accessor for SwiftUI.LocalizedStringKey.StringInterpolation
+  7ae9ac  []  -> SwiftUI.Image.init(systemName: Swift.String) -> SwiftUI.Image
+  7ae9b8  []  -> type metadata accessor for SwiftUI.Font.Design
+  7ae9fc  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.00000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7aea30  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7aea44  [d8=const 0.4]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7aead8  [mov w9, #0x2a]  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+  7aeb08  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  7aeb40  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.00000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7aeb74  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7aeba8  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7aebb4  []  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7aebf0  []  -> SwiftUI.Text.foregroundStyle<A where A: SwiftUI.ShapeStyle>(A) -> SwiftUI.Text
+  7aec44  [mov w0, #0x4 | mov w1, #0x1]  -> SwiftUI.LocalizedStringKey.StringInterpolation.init(literalCapacity: Swift.Int, interpolationCount: Swift.Int)
+  7aec54  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  7aec60  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendInterpolation(Swift.String) -> ()
+  7aec74  []  -> SwiftUI.LocalizedStringKey.StringInterpolation.appendLiteral(Swift.String) -> ()
+  7aec7c  []  -> SwiftUI.LocalizedStringKey.init(stringInterpolation: SwiftUI.LocalizedStringKey.StringInterpolation) -> SwiftU
+  7aeca4  [mov w8, #0x100]  -> SwiftUI.Text.init(_: SwiftUI.LocalizedStringKey, tableName: Swift.String?, bundle: __C.NSBundle?, comment: Swi
+  7aecbc  []  -> static SwiftUI.Font.Weight.medium.getter : SwiftUI.Font.Weight
+  7aecf0  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7aed24  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7aed58  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7aed68  [d0=const 0.55]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7aed9c  []  -> SwiftUI.Text.foregroundStyle<A where A: SwiftUI.ShapeStyle>(A) -> SwiftUI.Text
+  7aee10  []  -> static SwiftUI.Text.+ infix(SwiftUI.Text, SwiftUI.Text) -> SwiftUI.Text
+  7aeeec  []  -> SwiftUI.Button.init(action: () -> (), label: () -> A) -> SwiftUI.Button<A>
+  7aeefc  []  -> SwiftUI.PlainButtonStyle.init() -> SwiftUI.PlainButtonStyle
+  7aef70  []  -> (extension in SwiftUI):SwiftUI.View.buttonStyle<A where A1: SwiftUI.PrimitiveButtonStyle>(A1) -> some
+--- func 0x1007af100..0x1007af21c (depth 0)
+--- func 0x1007af21c..0x1007af3bc (depth 0)
+  7af2f8  []  -> SwiftUI.Image.init(systemName: Swift.String) -> SwiftUI.Image
+  7af300  []  -> static SwiftUI.Font.Weight.semibold.getter : SwiftUI.Font.Weight
+  7af30c  []  -> type metadata accessor for SwiftUI.Font.Design
+  7af33c  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #8.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7af36c  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7af380  [d0=0.3]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+--- func 0x1007af3bc..0x1007af4b8 (depth 0)
+  7af490  []  -> SwiftUI.State.wrappedValue.setter : A
+--- func 0x1007af4b8..0x1007af698 (depth 0)
+--- func 0x1007af698..0x1007af794 (depth 0)
+--- func 0x1007af794..0x1007af814 (depth 0)
+--- func 0x1007af814..0x1007afad4 (depth 0)
+--- func 0x1007afad4..0x1007afae0 (depth 0)
+--- func 0x1007afae0..0x1007b0418 (depth 0)
+  7afbbc  []  -> type metadata accessor for SwiftUI.PlainButtonStyle
+  7afe00  []  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+  7afea0  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  7afeb8  []  -> type metadata accessor for SwiftUI.Font.Design
+  7afee8  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.50000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7aff1c  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7aff50  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7aff60  [d0=const 0.4]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7aff98  []  -> SwiftUI.Text.foregroundStyle<A where A: SwiftUI.ShapeStyle>(A) -> SwiftUI.Text
+  7b0058  []  -> SwiftUI.Button.init(action: () -> (), label: () -> A) -> SwiftUI.Button<A>
+  7b006c  []  -> SwiftUI.PlainButtonStyle.init() -> SwiftUI.PlainButtonStyle
+  7b00e8  []  -> (extension in SwiftUI):SwiftUI.View.buttonStyle<A where A1: SwiftUI.PrimitiveButtonStyle>(A1) -> some
+  7b01f0  []  -> SwiftUI.Button.init(action: () -> (), label: () -> A) -> SwiftUI.Button<A>
+  7b01f8  []  -> SwiftUI.PlainButtonStyle.init() -> SwiftUI.PlainButtonStyle
+  7b0248  []  -> (extension in SwiftUI):SwiftUI.View.buttonStyle<A where A1: SwiftUI.PrimitiveButtonStyle>(A1) -> some
+--- func 0x1007b0418..0x1007b0800 (depth 0)
+  7b057c  [mov w8, #0x2c]  -> Foundation.NSLocalizedString(_: Swift.String, tableName: Swift.String?, bundle: __C.NSBundle, value: Swift.Str
+  7b05ac  []  -> SwiftUI.Text.init<A where A: Swift.StringProtocol>(A) -> SwiftUI.Text
+  7b05c4  []  -> type metadata accessor for SwiftUI.Font.Design
+  7b05f4  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #10.50000000 | mov w1, #0x1]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7b0628  []  -> SwiftUI.Text.font(SwiftUI.Font?) -> SwiftUI.Text
+  7b065c  []  -> static SwiftUI.Color.cyan.getter : SwiftUI.Color
+  7b0694  []  -> SwiftUI.State.wrappedValue.getter : A
+  7b06bc  [d0=0.7 | d1=const 0.9]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7b06f4  []  -> SwiftUI.Text.foregroundStyle<A where A: SwiftUI.ShapeStyle>(A) -> SwiftUI.Text
+  7b0728  []  -> static SwiftUI.Color.cyan.getter : SwiftUI.Color
+  7b0744  []  -> SwiftUI.State.wrappedValue.getter : A
+  7b0768  [d0=0.3 | fmov d1, #0.50000000]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7b0790  [mov w0, #0x1]  -> SwiftUI.Text.underline(_: Swift.Bool, color: SwiftUI.Color?) -> SwiftUI.Text
+--- func 0x1007b0800..0x1007b08ec (depth 0)
+  7b08c8  []  -> SwiftUI.State.wrappedValue.setter : A
+--- func 0x1007b08ec..0x1007b0ac8 (depth 0)
+  7b09cc  []  -> SwiftUI.Image.init(systemName: Swift.String) -> SwiftUI.Image
+  7b09d4  []  -> static SwiftUI.Font.Weight.bold.getter : SwiftUI.Font.Weight
+  7b09e0  []  -> type metadata accessor for SwiftUI.Font.Design
+  7b0a10  [mov w1, #0x1 | mov w2, #0x1 | fmov d0, #8.00000000 | mov w1, #0x0]  -> static SwiftUI.Font.system(size: CoreGraphics.CGFloat, weight: SwiftUI.Font.Weight?, design: SwiftUI.Font.Desi
+  7b0a40  []  -> static SwiftUI.Color.white.getter : SwiftUI.Color
+  7b0a54  [d0=0.15]  -> SwiftUI.Color.opacity(Swift.Double) -> SwiftUI.Color
+  7b0a64  []  -> static SwiftUI.Alignment.center.getter : SwiftUI.Alignment
+  7b0a84  [x0=dbl 14.0 | mov w1, #0x0 | x2=dbl 14.0 | mov w3, #0x0]  -> SwiftUI._FrameLayout.init(width: CoreGraphics.CGFloat?, height: CoreGraphics.CGFloat?, alignment: SwiftUI.Alig
+--- func 0x1007b0ac8..0x1007b0bd8 (depth 0)
+  7b0af4  []  -> static SwiftUI.VerticalAlignment.center.getter : SwiftUI.VerticalAlignment
+  7b0b28  []  -> static SwiftUI.Edge.Set.horizontal.getter : SwiftUI.Edge.Set
+  7b0b34  [fmov d0, #14.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+  7b0b74  []  -> static SwiftUI.Edge.Set.vertical.getter : SwiftUI.Edge.Set
+  7b0b80  [fmov d0, #5.00000000]  -> SwiftUI.EdgeInsets.init(_all: CoreGraphics.CGFloat) -> SwiftUI.EdgeInsets
+--- func 0x1007b0bd8..0x1007b0cb8 (depth 0)
+--- func 0x1007b0cb8..0x1007b0ce0 (depth 0)
+  7b0ccc  []  -> SwiftUI.EnvironmentValues.font.getter : SwiftUI.Font?
+--- func 0x1007b0ce0..0x1007b0d08 (depth 0)
+  7b0cf8  []  -> SwiftUI.EnvironmentValues.font.setter : SwiftUI.Font?
+--- func 0x1007b0d08..0x1007b0d30 (depth 0)
+  7b0d1c  []  -> SwiftUI.EnvironmentValues.foregroundColor.getter : SwiftUI.Color?
+--- func 0x1007b0d30..0x1007b0d58 (depth 0)
+  7b0d48  []  -> SwiftUI.EnvironmentValues.foregroundColor.setter : SwiftUI.Color?
+--- func 0x1007b0d58..0x1007b0d78 (depth 0)
+  7b0d68  []  -> SwiftUI.EnvironmentValues.controlSize.getter : SwiftUI.ControlSize
+--- func 0x1007b0d78..0x1007b0d8c (depth 0)
+--- func 0x1007b0d8c..0x1007b0dbc (depth 0)
+  7b0da0  []  -> SwiftUI.EnvironmentValues.lineLimit.getter : Swift.Int?
+--- func 0x1007b0dbc..0x1007b0de8 (depth 0)
+  7b0dd8  []  -> SwiftUI.EnvironmentValues.lineLimit.setter : Swift.Int?
+--- func 0x1007b0de8..0x1007b0e08 (depth 0)
+  7b0df8  []  -> SwiftUI.EnvironmentValues.truncationMode.getter : SwiftUI.Text.TruncationMode
+--- func 0x1007b0e08..0x1007b0e1c (depth 0)
+--- func 0x1007b0e1c..0x1007b0e98 (depth 0)
+--- func 0x1007b0e98..0x1007b0f94 (depth 0)
+--- func 0x1007b0f94..0x1007b0fb8 (depth 0)
+--- func 0x1007b0fb8..0x1007b101c (depth 0)
+--- func 0x1007b101c..0x1007b1034 (depth 0)
+--- func 0x1007b1034..0x1007b104c (depth 0)
+--- func 0x1007b104c..0x1007b1054 (depth 0)
+--- func 0x1007b1054..0x1007b10ec (depth 0)
+--- func 0x1007b10ec..0x1007b1184 (depth 0)
+--- func 0x1007b1184..0x1007b121c (depth 0)
+--- func 0x1007b121c..0x1007b12b4 (depth 0)
+--- func 0x1007b12b4..0x1007b134c (depth 0)
+--- func 0x1007b134c..0x1007b13e4 (depth 0)
+--- func 0x1007b13e4..0x1007b145c (depth 0)
+--- func 0x1007b145c..0x1007b14d4 (depth 0)
+--- func 0x1007b14d4..0x1007b154c (depth 0)
+--- func 0x1007b154c..0x1007b15c4 (depth 0)
+--- func 0x1007b15c4..0x1007b163c (depth 0)
+--- func 0x1007b163c..0x1007b16d4 (depth 0)
+--- func 0x1007b16d4..0x1007b176c (depth 0)
+--- func 0x1007b176c..0x1007b1804 (depth 0)
+--- func 0x1007b1804..0x1007b189c (depth 0)
+--- func 0x1007b189c..0x1007b1934 (depth 0)
+--- func 0x1007b1934..0x1007b19ac (depth 0)
+--- func 0x1007b19ac..0x1007b1a44 (depth 0)
+--- func 0x1007b1a44..0x1007b1abc (depth 0)
+--- func 0x1007b1abc..0x1007b1b64 (depth 0)
+--- func 0x1007b1b64..0x1007b1c1c (depth 0)
+--- func 0x1007b1c1c..0x1007b1c24 (depth 0)
+--- func 0x1007b1c24..0x1007b1c48 (depth 0)
+--- func 0x1007b1c48..0x1007b1c6c (depth 0)
+--- func 0x1007b1c6c..0x1007b1cac (depth 0)
+--- func 0x1007b1cac..0x1007b1cd0 (depth 0)
+--- func 0x1007b1cd0..0x1007b1cf4 (depth 0)
+--- func 0x1007b1cf4..0x1007b1cf8 (depth 0)
+--- func 0x1007b1cf8..0x1007b1d28 (depth 0)
+--- func 0x1007b1d28..0x1007b1d4c (depth 0)
+--- func 0x1007b1d4c..0x1007b1d70 (depth 0)
+--- func 0x1007b1d70..0x1007b1d94 (depth 0)
+--- func 0x1007b1d94..0x1007b1db8 (depth 0)
+--- func 0x1007b1db8..0x1007b1ddc (depth 0)
+--- func 0x1007b1ddc..0x1007b1e00 (depth 0)
+--- func 0x1007b1e00..0x1007b1e30 (depth 0)
+--- func 0x1007b1e30..0x1007b1e54 (depth 0)
+--- func 0x1007b1e54..0x1007b1e78 (depth 0)
+--- func 0x1007b1e78..0x1007b1e80 (depth 0)
+--- func 0x1007b1e80..0x1007b1ea4 (depth 0)
+--- func 0x1007b1ea4..0x1007b1ec8 (depth 0)
+--- func 0x1007b1ec8..0x1007b1eec (depth 0)
+--- func 0x1007b1eec..0x1007b1f10 (depth 0)
+--- func 0x1007b1f10..0x1007b1f30 (depth 0)
+--- func 0x1007b1f30..0x1007b1fc8 (depth 0)
+--- func 0x1007b1fc8..0x1007b2080 (depth 0)

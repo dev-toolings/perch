@@ -92,8 +92,14 @@
 
 /* Permission card */
 "Allow" = "Allow";
+"This chat" = "This chat";
 "Always" = "Always";
 "Deny" = "Deny";
+"Allow all %lld" = "Allow all %lld";
+"Deny all" = "Deny all";
+"Ask in terminal" = "Ask in terminal";
+"Allows %@ for the rest of this conversation" = "Allows %@ for the rest of this conversation";
+"Adds %@ to this project's .claude/settings.local.json" = "Adds %@ to this project's .claude/settings.local.json";
 "%lld waiting" = "%lld waiting";
 "Skip" = "Skip";
 
@@ -448,6 +454,7 @@
 "Unread completion" = "Unread completion";
 "Show all %lld sessions" = "Show all %lld sessions";
 "+%lld additional sessions" = "+%lld additional sessions";
+"Agents, tasks, and answers in progress" = "Agents, tasks, and answers in progress";
 "Sound effects" = "Sound effects";
 "Enable sound effects" = "Enable sound effects";
 "Creator" = "Creator";

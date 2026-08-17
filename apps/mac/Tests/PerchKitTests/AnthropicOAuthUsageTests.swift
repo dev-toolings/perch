@@ -5,6 +5,23 @@ import Testing
 
 @Suite("Anthropic OAuth usage")
 struct AnthropicOAuthUsageTests {
+  @Test func forcedRefreshBypassesTheBackgroundThrottle() {
+    let now = Date(timeIntervalSince1970: 1_700_000_030)
+    let recent = Date(timeIntervalSince1970: 1_700_000_000)
+
+    #expect(UsageNetworkRefresh.shouldFetch(lastAttempt: recent, now: now, force: true))
+  }
+
+  @Test func backgroundRefreshKeepsItsThrottle() {
+    let now = Date(timeIntervalSince1970: 1_700_000_030)
+    let recent = Date(timeIntervalSince1970: 1_700_000_000)
+    let old = Date(timeIntervalSince1970: 1_699_999_900)
+
+    #expect(!UsageNetworkRefresh.shouldFetch(lastAttempt: recent, now: now, force: false))
+    #expect(UsageNetworkRefresh.shouldFetch(lastAttempt: old, now: now, force: false))
+    #expect(UsageNetworkRefresh.shouldFetch(lastAttempt: nil, now: now, force: false))
+  }
+
   @Test func readsClaudeCodesCredentialShape() throws {
     let data = Data(
       #"{"claudeAiOauth":{"accessToken":"oauth-secret","expiresAt":1999999999999}}"#.utf8)

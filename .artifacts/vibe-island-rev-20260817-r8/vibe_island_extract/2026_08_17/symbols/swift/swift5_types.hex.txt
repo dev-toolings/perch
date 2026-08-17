@@ -1,0 +1,722 @@
+/Applications/Vibe Island.app/Contents/MacOS/vibe-island (architecture x86_64):
+Contents of (__TEXT,__swift5_types) section
+0000000100f2d29c	48 66 ed ff 64 66 ed ff 80 66 ed ff ac 66 ed ff 
+0000000100f2d2ac	d8 66 ed ff 04 67 ed ff 20 67 ed ff 48 67 ed ff 
+0000000100f2d2bc	64 67 ed ff 80 67 ed ff 9c 67 ed ff c8 67 ed ff 
+0000000100f2d2cc	e4 67 ed ff 00 68 ed ff 2c 68 ed ff 48 68 ed ff 
+0000000100f2d2dc	74 68 ed ff a0 68 ed ff bc 68 ed ff d8 68 ed ff 
+0000000100f2d2ec	f4 68 ed ff 34 69 ed ff 50 69 ed ff 6c 69 ed ff 
+0000000100f2d2fc	c0 69 ed ff 00 6a ed ff 18 6a ed ff 30 6a ed ff 
+0000000100f2d30c	48 6a ed ff 60 6a ed ff 80 6a ed ff c0 6a ed ff 
+0000000100f2d31c	d8 6a ed ff f0 6a ed ff 14 6b ed ff 2c 6b ed ff 
+0000000100f2d32c	44 6b ed ff 64 6b ed ff b8 6b ed ff ec 6b ed ff 
+0000000100f2d33c	04 6c ed ff 1c 6c ed ff 3c 6c ed ff 54 6c ed ff 
+0000000100f2d34c	78 6c ed ff 90 6c ed ff b4 6c ed ff d8 6c ed ff 
+0000000100f2d35c	fc 6c ed ff 14 6d ed ff 2c 6d ed ff 44 6d ed ff 
+0000000100f2d36c	5c 6d ed ff 74 6d ed ff 8c 6d ed ff a4 6d ed ff 
+0000000100f2d37c	bc 6d ed ff d4 6d ed ff ec 6d ed ff 0c 6e ed ff 
+0000000100f2d38c	44 6e ed ff 7c 6e ed ff 44 72 ed ff 68 72 ed ff 
+0000000100f2d39c	d8 72 ed ff f0 72 ed ff 08 73 ed ff 20 73 ed ff 
+0000000100f2d3ac	38 73 ed ff 50 73 ed ff 68 73 ed ff 80 73 ed ff 
+0000000100f2d3bc	98 73 ed ff bc 73 ed ff e0 73 ed ff f8 73 ed ff 
+0000000100f2d3cc	10 74 ed ff 28 74 ed ff 4c 74 ed ff 70 74 ed ff 
+0000000100f2d3dc	94 74 ed ff ac 74 ed ff c4 74 ed ff dc 74 ed ff 
+0000000100f2d3ec	f4 74 ed ff 0c 75 ed ff 24 75 ed ff 3c 75 ed ff 
+0000000100f2d3fc	54 75 ed ff 6c 75 ed ff 84 75 ed ff a8 75 ed ff 
+0000000100f2d40c	c0 75 ed ff e4 75 ed ff 08 76 ed ff 2c 76 ed ff 
+0000000100f2d41c	44 76 ed ff 5c 76 ed ff 74 76 ed ff 8c 76 ed ff 
+0000000100f2d42c	a4 76 ed ff bc 76 ed ff d4 76 ed ff ec 76 ed ff 
+0000000100f2d43c	10 77 ed ff 34 77 ed ff 4c 77 ed ff 70 77 ed ff 
+0000000100f2d44c	94 77 ed ff b8 77 ed ff dc 77 ed ff f4 77 ed ff 
+0000000100f2d45c	0c 78 ed ff 24 78 ed ff 44 78 ed ff 7c 78 ed ff 
+0000000100f2d46c	c0 78 ed ff d8 78 ed ff f0 78 ed ff 10 79 ed ff 
+0000000100f2d47c	34 79 ed ff 58 79 ed ff 70 79 ed ff 88 79 ed ff 
+0000000100f2d48c	ac 79 ed ff c4 79 ed ff 08 7a ed ff 20 7a ed ff 
+0000000100f2d49c	44 7a ed ff 5c 7a ed ff 74 7a ed ff 8c 7a ed ff 
+0000000100f2d4ac	b0 7a ed ff c8 7a ed ff f4 7a ed ff 18 7b ed ff 
+0000000100f2d4bc	5c 7b ed ff 74 7b ed ff 8c 7b ed ff a4 7b ed ff 
+0000000100f2d4cc	c8 7b ed ff e0 7b ed ff f8 7b ed ff 10 7c ed ff 
+0000000100f2d4dc	28 7c ed ff 40 7c ed ff 58 7c ed ff 70 7c ed ff 
+0000000100f2d4ec	90 7c ed ff a8 7c ed ff cc 7c ed ff e4 7c ed ff 
+0000000100f2d4fc	24 7d ed ff 3c 7d ed ff 54 7d ed ff 74 7d ed ff 
+0000000100f2d50c	8c 7d ed ff ac 7d ed ff c4 7d ed ff dc 7d ed ff 
+0000000100f2d51c	f4 7d ed ff 0c 7e ed ff 24 7e ed ff 3c 7e ed ff 
+0000000100f2d52c	54 7e ed ff 6c 7e ed ff a4 7e ed ff c8 7e ed ff 
+0000000100f2d53c	ec 7e ed ff 2c 7f ed ff 58 7f ed ff 7c 7f ed ff 
+0000000100f2d54c	9c 7f ed ff b4 7f ed ff f4 7f ed ff 0c 80 ed ff 
+0000000100f2d55c	24 80 ed ff 44 80 ed ff 5c 80 ed ff 74 80 ed ff 
+0000000100f2d56c	8c 80 ed ff b8 80 ed ff d8 80 ed ff f8 80 ed ff 
+0000000100f2d57c	10 81 ed ff 3c 81 ed ff 54 81 ed ff 6c 81 ed ff 
+0000000100f2d58c	84 81 ed ff 9c 81 ed ff 94 83 ed ff ac 83 ed ff 
+0000000100f2d59c	c4 83 ed ff 10 84 ed ff 50 84 ed ff 68 84 ed ff 
+0000000100f2d5ac	8c 84 ed ff a4 84 ed ff bc 84 ed ff dc 84 ed ff 
+0000000100f2d5bc	fc 84 ed ff 14 85 ed ff 64 85 ed ff 7c 85 ed ff 
+0000000100f2d5cc	94 85 ed ff cc 85 ed ff e4 85 ed ff 08 86 ed ff 
+0000000100f2d5dc	2c 86 ed ff 44 86 ed ff 78 86 ed ff 90 86 ed ff 
+0000000100f2d5ec	d4 86 ed ff f4 86 ed ff 0c 87 ed ff 24 87 ed ff 
+0000000100f2d5fc	58 87 ed ff 70 87 ed ff 34 87 ed ff 84 87 ed ff 
+0000000100f2d60c	b8 87 ed ff f0 87 ed ff 10 88 ed ff 30 88 ed ff 
+0000000100f2d61c	50 88 ed ff 68 88 ed ff 80 88 ed ff 98 88 ed ff 
+0000000100f2d62c	b0 88 ed ff c8 88 ed ff e0 88 ed ff f8 88 ed ff 
+0000000100f2d63c	30 89 ed ff 48 89 ed ff 98 89 ed ff cc 89 ed ff 
+0000000100f2d64c	ac 89 ed ff e0 89 ed ff f8 89 ed ff 44 8a ed ff 
+0000000100f2d65c	64 8a ed ff 84 8a ed ff a4 8a ed ff c4 8a ed ff 
+0000000100f2d66c	dc 8a ed ff f4 8a ed ff 0c 8b ed ff 24 8b ed ff 
+0000000100f2d67c	44 8b ed ff 5c 8b ed ff 74 8b ed ff 8c 8b ed ff 
+0000000100f2d68c	cc 8b ed ff f0 8b ed ff 10 8c ed ff 28 8c ed ff 
+0000000100f2d69c	4c 8c ed ff 64 8c ed ff 7c 8c ed ff 94 8c ed ff 
+0000000100f2d6ac	ac 8c ed ff 1c 8d ed ff 34 8d ed ff 4c 8d ed ff 
+0000000100f2d6bc	64 8d ed ff 7c 8d ed ff a0 8d ed ff b8 8d ed ff 
+0000000100f2d6cc	d0 8d ed ff e8 8d ed ff 00 8e ed ff 24 8e ed ff 
+0000000100f2d6dc	3c 8e ed ff 54 8e ed ff 80 8e ed ff 98 8e ed ff 
+0000000100f2d6ec	bc 8e ed ff e0 8e ed ff 0c 8f ed ff 24 8f ed ff 
+0000000100f2d6fc	44 8f ed ff 64 8f ed ff 84 8f ed ff a4 8f ed ff 
+0000000100f2d70c	c4 8f ed ff e4 8f ed ff 1c 90 ed ff 54 90 ed ff 
+0000000100f2d71c	6c 90 ed ff 40 91 ed ff 58 91 ed ff 70 91 ed ff 
+0000000100f2d72c	b0 91 ed ff e8 91 ed ff c4 98 ed ff f0 98 ed ff 
+0000000100f2d73c	1c 99 ed ff 48 99 ed ff 6c 99 ed ff 90 99 ed ff 
+0000000100f2d74c	a8 99 ed ff c0 99 ed ff d8 99 ed ff f8 99 ed ff 
+0000000100f2d75c	1c 9a ed ff 3c 9a ed ff 60 9a ed ff 84 9a ed ff 
+0000000100f2d76c	a8 9a ed ff c0 9a ed ff d8 9a ed ff f8 9a ed ff 
+0000000100f2d77c	1c 9b ed ff 34 9b ed ff 54 9b ed ff 74 9b ed ff 
+0000000100f2d78c	a0 9b ed ff cc 9b ed ff e4 9b ed ff 10 9c ed ff 
+0000000100f2d79c	28 9c ed ff 40 9c ed ff 58 9c ed ff 70 9c ed ff 
+0000000100f2d7ac	88 9c ed ff a0 9c ed ff cc 9c ed ff ec 9c ed ff 
+0000000100f2d7bc	18 9d ed ff 30 9d ed ff 50 9d ed ff 70 9d ed ff 
+0000000100f2d7cc	90 9d ed ff b0 9d ed ff c8 9d ed ff e0 9d ed ff 
+0000000100f2d7dc	f8 9d ed ff 10 9e ed ff 28 9e ed ff 48 9e ed ff 
+0000000100f2d7ec	68 9e ed ff 88 9e ed ff a0 9e ed ff c0 9e ed ff 
+0000000100f2d7fc	d8 9e ed ff f0 9e ed ff 08 9f ed ff 20 9f ed ff 
+0000000100f2d80c	38 9f ed ff 30 a0 ed ff 48 a0 ed ff 88 a0 ed ff 
+0000000100f2d81c	a8 a0 ed ff c0 a0 ed ff d8 a0 ed ff f0 a0 ed ff 
+0000000100f2d82c	08 a1 ed ff 20 a1 ed ff 38 a1 ed ff 38 a2 ed ff 
+0000000100f2d83c	64 a2 ed ff 7c a2 ed ff 9c a2 ed ff b4 a2 ed ff 
+0000000100f2d84c	d4 a2 ed ff ec a2 ed ff 04 a3 ed ff 1c a3 ed ff 
+0000000100f2d85c	34 a3 ed ff 4c a3 ed ff 64 a3 ed ff 7c a3 ed ff 
+0000000100f2d86c	94 a3 ed ff ac a3 ed ff c4 a3 ed ff a4 a4 ed ff 
+0000000100f2d87c	c8 a4 ed ff f4 a4 ed ff 18 a5 ed ff 38 a5 ed ff 
+0000000100f2d88c	50 a5 ed ff 70 a5 ed ff 94 a5 ed ff ac a5 ed ff 
+0000000100f2d89c	c4 a5 ed ff dc a5 ed ff f4 a5 ed ff 0c a6 ed ff 
+0000000100f2d8ac	24 a6 ed ff 3c a6 ed ff 68 a6 ed ff 8c a6 ed ff 
+0000000100f2d8bc	a4 a6 ed ff b8 a7 ed ff 40 a8 ed ff 80 a8 ed ff 
+0000000100f2d8cc	a0 a8 ed ff c4 a8 ed ff dc a8 ed ff f4 a8 ed ff 
+0000000100f2d8dc	0c a9 ed ff 4c a9 ed ff 70 a9 ed ff 88 a9 ed ff 
+0000000100f2d8ec	a8 a9 ed ff c8 a9 ed ff e0 a9 ed ff f8 a9 ed ff 
+0000000100f2d8fc	10 aa ed ff 28 aa ed ff 40 aa ed ff 58 aa ed ff 
+0000000100f2d90c	70 aa ed ff 88 aa ed ff a0 aa ed ff b8 aa ed ff 
+0000000100f2d91c	d0 aa ed ff 0c ab ed ff 44 ab ed ff 5c b0 ed ff 
+0000000100f2d92c	7c b0 ed ff 9c b0 ed ff c0 b0 ed ff e4 b0 ed ff 
+0000000100f2d93c	fc b0 ed ff 14 b1 ed ff 38 b1 ed ff 50 b1 ed ff 
+0000000100f2d94c	74 b1 ed ff 94 b1 ed ff b8 b1 ed ff d0 b1 ed ff 
+0000000100f2d95c	e8 b1 ed ff 00 b2 ed ff 18 b2 ed ff 30 b2 ed ff 
+0000000100f2d96c	48 b2 ed ff 60 b2 ed ff 78 b2 ed ff 90 b2 ed ff 
+0000000100f2d97c	a8 b2 ed ff c0 b2 ed ff d8 b2 ed ff f0 b2 ed ff 
+0000000100f2d98c	08 b3 ed ff 20 b3 ed ff 38 b3 ed ff 50 b3 ed ff 
+0000000100f2d99c	68 b3 ed ff 80 b3 ed ff 98 b3 ed ff b0 b3 ed ff 
+0000000100f2d9ac	c8 b3 ed ff e0 b3 ed ff f8 b3 ed ff 10 b4 ed ff 
+0000000100f2d9bc	28 b4 ed ff 78 b4 ed ff 90 b4 ed ff a8 b4 ed ff 
+0000000100f2d9cc	c0 b4 ed ff d8 b4 ed ff f0 b4 ed ff 08 b5 ed ff 
+0000000100f2d9dc	20 b5 ed ff 38 b5 ed ff 58 b5 ed ff 78 b5 ed ff 
+0000000100f2d9ec	90 b5 ed ff cc b5 ed ff e4 b5 ed ff fc b5 ed ff 
+0000000100f2d9fc	14 b6 ed ff 2c b6 ed ff 4c b6 ed ff 6c b6 ed ff 
+0000000100f2da0c	84 b6 ed ff c8 b6 ed ff e8 b6 ed ff 00 b7 ed ff 
+0000000100f2da1c	18 b7 ed ff 38 b7 ed ff 58 b7 ed ff 70 b7 ed ff 
+0000000100f2da2c	94 b7 ed ff ac b7 ed ff c4 b7 ed ff 14 b8 ed ff 
+0000000100f2da3c	2c b8 ed ff 44 b8 ed ff 5c b8 ed ff 74 b8 ed ff 
+0000000100f2da4c	94 b8 ed ff b4 b8 ed ff cc b8 ed ff ec b8 ed ff 
+0000000100f2da5c	0c b9 ed ff 2c b9 ed ff 44 b9 ed ff 64 b9 ed ff 
+0000000100f2da6c	84 b9 ed ff a4 b9 ed ff bc b9 ed ff d4 b9 ed ff 
+0000000100f2da7c	ec b9 ed ff 04 ba ed ff 1c ba ed ff 34 ba ed ff 
+0000000100f2da8c	4c ba ed ff 64 ba ed ff 7c ba ed ff 94 ba ed ff 
+0000000100f2da9c	ac ba ed ff c4 ba ed ff dc ba ed ff 44 bb ed ff 
+0000000100f2daac	64 bb ed ff 7c bb ed ff 24 bc ed ff 3c bc ed ff 
+0000000100f2dabc	5c bc ed ff 7c bc ed ff 9c bc ed ff b4 bc ed ff 
+0000000100f2dacc	cc bc ed ff ec bc ed ff 04 bd ed ff 1c bd ed ff 
+0000000100f2dadc	34 bd ed ff b4 bd ed ff f4 bd ed ff 38 be ed ff 
+0000000100f2daec	50 be ed ff 68 be ed ff b4 be ed ff d8 be ed ff 
+0000000100f2dafc	38 bf ed ff 70 bf ed ff 88 bf ed ff a0 bf ed ff 
+0000000100f2db0c	b8 bf ed ff d0 bf ed ff e8 bf ed ff 00 c0 ed ff 
+0000000100f2db1c	18 c0 ed ff 30 c0 ed ff 48 c0 ed ff 60 c0 ed ff 
+0000000100f2db2c	78 c0 ed ff 90 c0 ed ff a8 c0 ed ff c8 c0 ed ff 
+0000000100f2db3c	e8 c0 ed ff 08 c1 ed ff 28 c1 ed ff 40 c1 ed ff 
+0000000100f2db4c	60 c1 ed ff 80 c1 ed ff a0 c1 ed ff c0 c1 ed ff 
+0000000100f2db5c	e0 c1 ed ff 00 c2 ed ff 20 c2 ed ff 40 c2 ed ff 
+0000000100f2db6c	60 c2 ed ff 78 c2 ed ff 90 c2 ed ff b0 c2 ed ff 
+0000000100f2db7c	d0 c2 ed ff e8 c2 ed ff 08 c3 ed ff 20 c3 ed ff 
+0000000100f2db8c	38 c3 ed ff 5c c3 ed ff 94 c4 ed ff ac c4 ed ff 
+0000000100f2db9c	7c c5 ed ff 94 c5 ed ff ac c5 ed ff c4 c5 ed ff 
+0000000100f2dbac	dc c5 ed ff f4 c5 ed ff 0c c6 ed ff 24 c6 ed ff 
+0000000100f2dbbc	3c c6 ed ff 5c c6 ed ff 7c c6 ed ff 9c c6 ed ff 
+0000000100f2dbcc	b4 c6 ed ff cc c6 ed ff ec c6 ed ff 4c c7 ed ff 
+0000000100f2dbdc	40 c8 ed ff 58 c8 ed ff 70 c8 ed ff 90 c8 ed ff 
+0000000100f2dbec	a8 c8 ed ff c0 c8 ed ff e0 c8 ed ff 00 c9 ed ff 
+0000000100f2dbfc	18 c9 ed ff 30 c9 ed ff 48 c9 ed ff 60 c9 ed ff 
+0000000100f2dc0c	78 c9 ed ff 90 c9 ed ff a8 c9 ed ff c0 c9 ed ff 
+0000000100f2dc1c	c8 ca ed ff e8 ca ed ff 0c cb ed ff 38 cb ed ff 
+0000000100f2dc2c	58 cb ed ff 70 cb ed ff 90 cb ed ff b0 cb ed ff 
+0000000100f2dc3c	c8 cb ed ff e8 cb ed ff 28 cc ed ff 40 cc ed ff 
+0000000100f2dc4c	60 cc ed ff 00 cc ed ff 74 cc ed ff 8c cc ed ff 
+0000000100f2dc5c	a4 cc ed ff bc cc ed ff d4 cc ed ff 18 cd ed ff 
+0000000100f2dc6c	38 cd ed ff 50 cd ed ff 68 cd ed ff 80 cd ed ff 
+0000000100f2dc7c	a4 cd ed ff bc cd ed ff d4 cd ed ff ec cd ed ff 
+0000000100f2dc8c	04 ce ed ff 38 ce ed ff 50 ce ed ff 68 ce ed ff 
+0000000100f2dc9c	80 ce ed ff 98 ce ed ff bc ce ed ff d4 ce ed ff 
+0000000100f2dcac	ec ce ed ff 04 cf ed ff 1c cf ed ff 34 cf ed ff 
+0000000100f2dcbc	58 cf ed ff 9c cf ed ff c8 cf ed ff 00 d0 ed ff 
+0000000100f2dccc	18 d0 ed ff 3c d0 ed ff 54 d0 ed ff 78 d0 ed ff 
+0000000100f2dcdc	a4 d0 ed ff c4 d0 ed ff e4 d0 ed ff fc d0 ed ff 
+0000000100f2dcec	14 d1 ed ff 54 d1 ed ff 6c d1 ed ff b4 d1 ed ff 
+0000000100f2dcfc	d4 d1 ed ff ec d1 ed ff 0c d2 ed ff 2c d2 ed ff 
+0000000100f2dd0c	44 d2 ed ff 5c d2 ed ff 7c d2 ed ff b4 d2 ed ff 
+0000000100f2dd1c	cc d2 ed ff e4 d2 ed ff 1c d3 ed ff 34 d3 ed ff 
+0000000100f2dd2c	60 d3 ed ff 98 d3 ed ff b0 d3 ed ff c8 d3 ed ff 
+0000000100f2dd3c	e0 d3 ed ff f8 d3 ed ff 10 d4 ed ff 34 d4 ed ff 
+0000000100f2dd4c	4c d4 ed ff 64 d4 ed ff 7c d4 ed ff b4 d4 ed ff 
+0000000100f2dd5c	d0 d5 ed ff e8 d5 ed ff 00 d6 ed ff 18 d6 ed ff 
+0000000100f2dd6c	30 d6 ed ff 48 d6 ed ff 64 d7 ed ff 7c d7 ed ff 
+0000000100f2dd7c	94 d7 ed ff b4 d7 ed ff d8 d7 ed ff 78 d9 ed ff 
+0000000100f2dd8c	90 d9 ed ff bc d9 ed ff e0 d9 ed ff 24 da ed ff 
+0000000100f2dd9c	50 da ed ff 70 da ed ff 88 da ed ff a0 da ed ff 
+0000000100f2ddac	c0 da ed ff e0 da ed ff 24 db ed ff 44 db ed ff 
+0000000100f2ddbc	68 db ed ff 80 db ed ff 98 db ed ff dc db ed ff 
+0000000100f2ddcc	08 dc ed ff 20 dc ed ff 38 dc ed ff 98 dc ed ff 
+0000000100f2dddc	d8 dc ed ff f0 dc ed ff 08 dd ed ff 2c dd ed ff 
+0000000100f2ddec	44 dd ed ff 64 dd ed ff 84 dd ed ff 9c dd ed ff 
+0000000100f2ddfc	bc dd ed ff d4 dd ed ff f4 dd ed ff 0c de ed ff 
+0000000100f2de0c	4c de ed ff 64 de ed ff a8 de ed ff c0 de ed ff 
+0000000100f2de1c	d8 de ed ff f8 de ed ff 18 df ed ff 38 df ed ff 
+0000000100f2de2c	50 df ed ff 68 df ed ff 88 df ed ff a8 df ed ff 
+0000000100f2de3c	c8 df ed ff e8 df ed ff 08 e0 ed ff 20 e0 ed ff 
+0000000100f2de4c	64 e0 ed ff b8 e0 ed ff f0 e0 ed ff 08 e1 ed ff 
+0000000100f2de5c	20 e1 ed ff 38 e1 ed ff 5c e1 ed ff 74 e1 ed ff 
+0000000100f2de6c	8c e1 ed ff d0 e1 ed ff e8 e1 ed ff 1c e2 ed ff 
+0000000100f2de7c	34 e2 ed ff 4c e2 ed ff 78 e2 ed ff 98 e2 ed ff 
+0000000100f2de8c	c4 e2 ed ff e8 e2 ed ff 08 e3 ed ff 20 e3 ed ff 
+0000000100f2de9c	40 e3 ed ff 78 e3 ed ff bc e3 ed ff ec e8 ed ff 
+0000000100f2deac	10 e9 ed ff 34 e9 ed ff 58 e9 ed ff 7c e9 ed ff 
+0000000100f2debc	a0 e9 ed ff c4 e9 ed ff e8 e9 ed ff 14 ea ed ff 
+0000000100f2decc	38 ea ed ff 5c ea ed ff 80 ea ed ff a4 ea ed ff 
+0000000100f2dedc	bc ea ed ff d4 ea ed ff 00 eb ed ff 18 eb ed ff 
+0000000100f2deec	30 eb ed ff 48 eb ed ff 60 eb ed ff 78 eb ed ff 
+0000000100f2defc	9c eb ed ff bc eb ed ff dc eb ed ff f4 eb ed ff 
+0000000100f2df0c	14 ec ed ff 2c ec ed ff 44 ec ed ff 88 ec ed ff 
+0000000100f2df1c	b4 ec ed ff cc ec ed ff ec ec ed ff 04 ed ed ff 
+0000000100f2df2c	30 ed ed ff 48 ed ed ff 60 ed ed ff 78 ed ed ff 
+0000000100f2df3c	ac ed ed ff d4 ed ed ff 18 ee ed ff 30 ee ed ff 
+0000000100f2df4c	a4 ef ed ff e8 ef ed ff 08 f0 ed ff 20 f0 ed ff 
+0000000100f2df5c	38 f0 ed ff 50 f0 ed ff 70 f0 ed ff 90 f0 ed ff 
+0000000100f2df6c	a8 f0 ed ff c8 f0 ed ff e8 f0 ed ff 00 f1 ed ff 
+0000000100f2df7c	20 f1 ed ff 38 f1 ed ff 50 f1 ed ff 70 f1 ed ff 
+0000000100f2df8c	90 f1 ed ff a8 f1 ed ff 64 f2 ed ff 9c f2 ed ff 
+0000000100f2df9c	fc f2 ed ff 60 f3 ed ff 78 f3 ed ff 90 f3 ed ff 
+0000000100f2dfac	d8 f3 ed ff fc f3 ed ff 20 f4 ed ff 38 f4 ed ff 
+0000000100f2dfbc	50 f4 ed ff 68 f4 ed ff 80 f4 ed ff 98 f4 ed ff 
+0000000100f2dfcc	b0 f4 ed ff 58 f5 ed ff 70 f5 ed ff 90 f5 ed ff 
+0000000100f2dfdc	b0 f5 ed ff dc f5 ed ff 28 f6 ed ff f8 f6 ed ff 
+0000000100f2dfec	10 f7 ed ff 30 f7 ed ff 58 f7 ed ff 70 f7 ed ff 
+0000000100f2dffc	88 f7 ed ff a0 f7 ed ff b8 f7 ed ff d0 f7 ed ff 
+0000000100f2e00c	f0 f7 ed ff 1c f8 ed ff 34 f8 ed ff 4c f8 ed ff 
+0000000100f2e01c	70 f8 ed ff 88 f8 ed ff a0 f8 ed ff b8 f8 ed ff 
+0000000100f2e02c	d0 f8 ed ff e8 f8 ed ff 00 f9 ed ff 20 f9 ed ff 
+0000000100f2e03c	4c f9 ed ff 78 f9 ed ff b0 f9 ed ff 34 fa ed ff 
+0000000100f2e04c	60 fa ed ff 80 fa ed ff a0 fa ed ff c0 fa ed ff 
+0000000100f2e05c	e0 fa ed ff 00 fb ed ff 20 fb ed ff 40 fb ed ff 
+0000000100f2e06c	60 fb ed ff 80 fb ed ff a0 fb ed ff b8 fb ed ff 
+0000000100f2e07c	d0 fb ed ff e8 fb ed ff 00 fc ed ff 18 fc ed ff 
+0000000100f2e08c	30 fc ed ff 48 fc ed ff 60 fc ed ff 78 fc ed ff 
+0000000100f2e09c	90 fc ed ff b0 fc ed ff c8 fc ed ff e8 fc ed ff 
+0000000100f2e0ac	00 fd ed ff 20 fd ed ff 38 fd ed ff 50 fd ed ff 
+0000000100f2e0bc	68 fd ed ff a8 fd ed ff c0 fd ed ff d8 fd ed ff 
+0000000100f2e0cc	f0 fd ed ff 08 fe ed ff 3c fe ed ff 5c fe ed ff 
+0000000100f2e0dc	7c fe ed ff 9c fe ed ff 10 fe ed ff b0 fe ed ff 
+0000000100f2e0ec	d0 fe ed ff 10 ff ed ff 30 ff ed ff 48 ff ed ff 
+0000000100f2e0fc	6c ff ed ff 84 ff ed ff a8 ff ed ff cc ff ed ff 
+0000000100f2e10c	f0 ff ed ff 08 00 ee ff 20 00 ee ff 9c 00 ee ff 
+0000000100f2e11c	b4 00 ee ff cc 00 ee ff e4 00 ee ff 08 01 ee ff 
+0000000100f2e12c	20 01 ee ff 38 01 ee ff 50 01 ee ff 68 01 ee ff 
+0000000100f2e13c	80 01 ee ff d0 01 ee ff f4 01 ee ff 18 02 ee ff 
+0000000100f2e14c	30 02 ee ff 48 02 ee ff 6c 02 ee ff 84 02 ee ff 
+0000000100f2e15c	9c 02 ee ff b4 02 ee ff cc 02 ee ff e4 02 ee ff 
+0000000100f2e16c	fc 02 ee ff e8 03 ee ff 0c 04 ee ff 24 04 ee ff 
+0000000100f2e17c	18 06 ee ff 3c 06 ee ff 54 06 ee ff 6c 06 ee ff 
+0000000100f2e18c	a4 06 ee ff 70 07 ee ff bc 07 ee ff f4 07 ee ff 
+0000000100f2e19c	28 0a ee ff 40 0a ee ff 58 0a ee ff 70 0a ee ff 
+0000000100f2e1ac	88 0a ee ff a0 0a ee ff b8 0a ee ff fc 0a ee ff 
+0000000100f2e1bc	14 0b ee ff 2c 0b ee ff 44 0b ee ff 5c 0b ee ff 
+0000000100f2e1cc	94 0b ee ff cc 0b ee ff 04 0c ee ff 3c 0c ee ff 
+0000000100f2e1dc	5c 0d ee ff 74 0d ee ff 8c 0d ee ff a4 0d ee ff 
+0000000100f2e1ec	0c 0e ee ff 74 0e ee ff 2c 0f ee ff 64 0f ee ff 
+0000000100f2e1fc	04 10 ee ff 50 10 ee ff 74 10 ee ff 94 10 ee ff 
+0000000100f2e20c	b4 10 ee ff d4 10 ee ff f4 10 ee ff 14 11 ee ff 
+0000000100f2e21c	34 11 ee ff 54 11 ee ff 74 11 ee ff b4 11 ee ff 
+0000000100f2e22c	cc 11 ee ff e4 11 ee ff 04 12 ee ff 64 13 ee ff 
+0000000100f2e23c	7c 13 ee ff 94 13 ee ff ac 13 ee ff d4 13 ee ff 
+0000000100f2e24c	ec 13 ee ff 04 14 ee ff 58 14 ee ff a4 14 ee ff 
+0000000100f2e25c	bc 14 ee ff fc 14 ee ff 14 15 ee ff cc 15 ee ff 
+0000000100f2e26c	e4 15 ee ff 04 16 ee ff 94 16 ee ff ac 16 ee ff 
+0000000100f2e27c	d0 16 ee ff 10 17 ee ff 28 17 ee ff 40 17 ee ff 
+0000000100f2e28c	80 17 ee ff c0 17 ee ff e0 17 ee ff 0c 18 ee ff 
+0000000100f2e29c	2c 18 ee ff 4c 18 ee ff 70 18 ee ff 50 19 ee ff 
+0000000100f2e2ac	68 19 ee ff 80 19 ee ff 98 19 ee ff 50 1a ee ff 
+0000000100f2e2bc	90 1a ee ff a8 1a ee ff c0 1a ee ff 28 1b ee ff 
+0000000100f2e2cc	68 1b ee ff 88 1b ee ff a0 1b ee ff c4 1b ee ff 
+0000000100f2e2dc	e8 1b ee ff 00 1c ee ff 24 1c ee ff 48 1c ee ff 
+0000000100f2e2ec	6c 1c ee ff 90 1c ee ff a8 1c ee ff cc 1c ee ff 
+0000000100f2e2fc	f0 1c ee ff 1c 1d ee ff 40 1d ee ff 60 1d ee ff 
+0000000100f2e30c	78 1d ee ff a4 1d ee ff 04 1f ee ff 1c 1f ee ff 
+0000000100f2e31c	34 1f ee ff 54 1f ee ff 5c 20 ee ff 3c 21 ee ff 
+0000000100f2e32c	54 21 ee ff 6c 21 ee ff 90 21 ee ff a8 21 ee ff 
+0000000100f2e33c	d4 21 ee ff f8 21 ee ff 1c 22 ee ff 34 22 ee ff 
+0000000100f2e34c	54 22 ee ff 6c 22 ee ff 84 22 ee ff a4 22 ee ff 
+0000000100f2e35c	c4 22 ee ff e4 22 ee ff 04 23 ee ff 24 23 ee ff 
+0000000100f2e36c	44 23 ee ff 70 23 ee ff 88 23 ee ff a8 23 ee ff 
+0000000100f2e37c	18 24 ee ff 30 24 ee ff 40 27 ee ff 80 27 ee ff 
+0000000100f2e38c	c8 27 ee ff f4 27 ee ff 5c 28 ee ff c8 28 ee ff 
+0000000100f2e39c	08 29 ee ff 5c 29 ee ff 74 29 ee ff a0 29 ee ff 
+0000000100f2e3ac	c0 29 ee ff e0 29 ee ff 00 2a ee ff 40 2a ee ff 
+0000000100f2e3bc	60 2a ee ff 80 2a ee ff 38 2b ee ff 78 2b ee ff 
+0000000100f2e3cc	b8 2b ee ff f8 2b ee ff 54 2c ee ff 6c 2c ee ff 
+0000000100f2e3dc	b8 2c ee ff d8 2c ee ff 04 2d ee ff 74 2d ee ff 
+0000000100f2e3ec	8c 2d ee ff cc 2d ee ff e4 2d ee ff fc 2d ee ff 
+0000000100f2e3fc	44 2e ee ff 5c 2e ee ff a4 2e ee ff bc 2e ee ff 
+0000000100f2e40c	08 2f ee ff 34 2f ee ff 54 2f ee ff 6c 2f ee ff 
+0000000100f2e41c	98 2f ee ff d8 2f ee ff f0 2f ee ff 30 30 ee ff 
+0000000100f2e42c	50 30 ee ff b8 30 ee ff dc 30 ee ff f4 30 ee ff 
+0000000100f2e43c	0c 31 ee ff 4c 31 ee ff 78 31 ee ff 9c 31 ee ff 
+0000000100f2e44c	f0 31 ee ff 80 32 ee ff ac 32 ee ff cc 32 ee ff 
+0000000100f2e45c	ec 32 ee ff b0 33 ee ff f0 33 ee ff 1c 34 ee ff 
+0000000100f2e46c	84 34 ee ff d0 34 ee ff 3c 35 ee ff 7c 35 ee ff 
+0000000100f2e47c	bc 35 ee ff fc 35 ee ff 48 36 ee ff 94 36 ee ff 
+0000000100f2e48c	d4 36 ee ff f4 36 ee ff 14 37 ee ff a4 37 ee ff 
+0000000100f2e49c	bc 37 ee ff d4 37 ee ff ec 37 ee ff 2c 38 ee ff 
+0000000100f2e4ac	6c 38 ee ff b4 38 ee ff cc 38 ee ff 18 39 ee ff 
+0000000100f2e4bc	58 39 ee ff 98 39 ee ff bc 39 ee ff e0 39 ee ff 
+0000000100f2e4cc	04 3a ee ff 28 3a ee ff 4c 3a ee ff 64 3a ee ff 
+0000000100f2e4dc	7c 3a ee ff a0 3a ee ff b8 3a ee ff dc 3a ee ff 
+0000000100f2e4ec	00 3b ee ff 38 3b ee ff 50 3b ee ff 68 3b ee ff 
+0000000100f2e4fc	cc 3c ee ff 0c 3d ee ff 50 3d ee ff 68 3d ee ff 
+0000000100f2e50c	88 3d ee ff a8 3d ee ff c8 3d ee ff e0 3d ee ff 
+0000000100f2e51c	24 3e ee ff 3c 3e ee ff 54 3e ee ff 6c 3e ee ff 
+0000000100f2e52c	84 3e ee ff 9c 3e ee ff b4 3e ee ff f4 3e ee ff 
+0000000100f2e53c	0c 3f ee ff 24 3f ee ff 5c 3f ee ff 7c 3f ee ff 
+0000000100f2e54c	94 3f ee ff ac 3f ee ff c4 3f ee ff dc 3f ee ff 
+0000000100f2e55c	f4 3f ee ff 0c 40 ee ff 24 40 ee ff 3c 40 ee ff 
+0000000100f2e56c	54 40 ee ff 6c 40 ee ff a4 40 ee ff bc 40 ee ff 
+0000000100f2e57c	e8 40 ee ff 00 41 ee ff 18 41 ee ff 38 41 ee ff 
+0000000100f2e58c	78 41 ee ff b0 41 ee ff f4 41 ee ff 0c 42 ee ff 
+0000000100f2e59c	24 42 ee ff 3c 42 ee ff 5c 42 ee ff 74 42 ee ff 
+0000000100f2e5ac	c0 42 ee ff 14 43 ee ff 2c 43 ee ff 4c 43 ee ff 
+0000000100f2e5bc	64 43 ee ff 7c 43 ee ff 94 43 ee ff ac 43 ee ff 
+0000000100f2e5cc	c4 43 ee ff dc 43 ee ff 50 44 ee ff 94 44 ee ff 
+0000000100f2e5dc	cc 44 ee ff 04 45 ee ff 28 45 ee ff 40 45 ee ff 
+0000000100f2e5ec	58 45 ee ff 70 45 ee ff 88 45 ee ff a0 45 ee ff 
+0000000100f2e5fc	b8 45 ee ff d0 45 ee ff f0 45 ee ff 1c 46 ee ff 
+0000000100f2e60c	34 46 ee ff 54 46 ee ff 88 46 ee ff a0 46 ee ff 
+0000000100f2e61c	c0 46 ee ff d8 46 ee ff f8 46 ee ff 30 47 ee ff 
+0000000100f2e62c	74 47 ee ff 24 48 ee ff 50 48 ee ff 68 48 ee ff 
+0000000100f2e63c	80 48 ee ff 98 48 ee ff b0 48 ee ff c8 48 ee ff 
+0000000100f2e64c	e0 48 ee ff f8 48 ee ff 10 49 ee ff 28 49 ee ff 
+0000000100f2e65c	40 49 ee ff 64 49 ee ff 7c 49 ee ff 94 49 ee ff 
+0000000100f2e66c	ac 49 ee ff d0 4c ee ff f4 4c ee ff 10 4d ee ff 
+0000000100f2e67c	50 4d ee ff b8 4d ee ff d0 4d ee ff e8 4d ee ff 
+0000000100f2e68c	84 4e ee ff 9c 4e ee ff b4 4e ee ff cc 4e ee ff 
+0000000100f2e69c	f0 4e ee ff 14 4f ee ff 38 4f ee ff 50 4f ee ff 
+0000000100f2e6ac	68 4f ee ff 80 4f ee ff a0 4f ee ff b8 4f ee ff 
+0000000100f2e6bc	d0 4f ee ff f0 4f ee ff 08 50 ee ff 20 50 ee ff 
+0000000100f2e6cc	38 50 ee ff 50 50 ee ff 68 50 ee ff 80 50 ee ff 
+0000000100f2e6dc	a4 50 ee ff c4 50 ee ff e4 50 ee ff fc 50 ee ff 
+0000000100f2e6ec	14 51 ee ff 2c 51 ee ff 44 51 ee ff 5c 51 ee ff 
+0000000100f2e6fc	74 51 ee ff 8c 51 ee ff a4 51 ee ff bc 51 ee ff 
+0000000100f2e70c	dc 51 ee ff fc 51 ee ff 20 52 ee ff 38 52 ee ff 
+0000000100f2e71c	50 52 ee ff 68 52 ee ff 80 52 ee ff 98 52 ee ff 
+0000000100f2e72c	b0 52 ee ff c8 52 ee ff ec 52 ee ff 48 54 ed ff 
+0000000100f2e73c	10 53 ee ff 38 53 ee ff 60 53 ee ff 78 53 ee ff 
+0000000100f2e74c	c4 53 ee ff dc 53 ee ff 3c 54 ee ff 54 54 ee ff 
+0000000100f2e75c	7c 54 ee ff d0 54 ee ff d8 55 ee ff 10 56 ee ff 
+0000000100f2e76c	48 56 ee ff 80 56 ee ff 48 57 ee ff 60 57 ee ff 
+0000000100f2e77c	a0 57 ee ff b8 57 ee ff d0 57 ee ff f4 57 ee ff 
+0000000100f2e78c	20 58 ee ff 38 58 ee ff 64 58 ee ff 7c 58 ee ff 
+0000000100f2e79c	c8 58 ee ff e0 58 ee ff 20 59 ee ff 48 59 ee ff 
+0000000100f2e7ac	98 59 ee ff c0 59 ee ff e8 59 ee ff 0c 5a ee ff 
+0000000100f2e7bc	50 5a ee ff a8 5a ee ff e0 5a ee ff 08 5b ee ff 
+0000000100f2e7cc	58 5b ee ff 7c 5b ee ff a8 5b ee ff c0 5b ee ff 
+0000000100f2e7dc	10 5c ee ff 58 5c ee ff ac 5c ee ff 9c 5e ee ff 
+0000000100f2e7ec	d4 5e ee ff f8 5e ee ff 24 5f ee ff 3c 5f ee ff 
+0000000100f2e7fc	64 5f ee ff 9c 5f ee ff ec 5f ee ff 64 60 ee ff 
+0000000100f2e80c	7c 60 ee ff a4 60 ee ff ec 60 ee ff 38 61 ee ff 
+0000000100f2e81c	60 61 ee ff c8 61 ee ff f0 61 ee ff 38 62 ee ff 
+0000000100f2e82c	b8 62 ee ff b4 63 ee ff d4 63 ee ff f4 63 ee ff 
+0000000100f2e83c	0c 64 ee ff 24 64 ee ff 4c 65 ee ff 74 65 ee ff 
+0000000100f2e84c	9c 65 ee ff b4 65 ee ff dc 65 ee ff 0c 66 ee ff 
+0000000100f2e85c	24 66 ee ff 3c 66 ee ff 64 66 ee ff 9c 66 ee ff 
+0000000100f2e86c	b4 66 ee ff dc 66 ee ff 1c 67 ee ff 48 68 ee ff 
+0000000100f2e87c	f8 68 ee ff 74 69 ee ff b4 69 ee ff dc 69 ee ff 
+0000000100f2e88c	34 6a ee ff 58 6a ee ff 70 6a ee ff 98 6a ee ff 
+0000000100f2e89c	d0 6a ee ff f8 6a ee ff 4c 6b ee ff 74 6b ee ff 
+0000000100f2e8ac	cc 6b ee ff e4 6b ee ff 4c 6c ee ff 64 6c ee ff 
+0000000100f2e8bc	9c 6c ee ff 94 6d ee ff ac 6d ee ff 08 6e ee ff 
+0000000100f2e8cc	30 6e ee ff b0 6e ee ff e8 6e ee ff 3c 6f ee ff 
+0000000100f2e8dc	64 6f ee ff b4 6f ee ff f4 6f ee ff 84 70 ee ff 
+0000000100f2e8ec	bc 70 ee ff 64 71 ee ff 90 71 ee ff bc 71 ee ff 
+0000000100f2e8fc	d4 71 ee ff 
+/Applications/Vibe Island.app/Contents/MacOS/vibe-island (architecture arm64):
+Contents of (__TEXT,__swift5_types) section
+0000000100e02670	ffed65cc ffed65e8 ffed6604 ffed6630 
+0000000100e02680	ffed665c ffed6688 ffed66a4 ffed66cc 
+0000000100e02690	ffed66e8 ffed6704 ffed6720 ffed674c 
+0000000100e026a0	ffed6768 ffed6784 ffed67b0 ffed67cc 
+0000000100e026b0	ffed67f8 ffed6824 ffed6840 ffed685c 
+0000000100e026c0	ffed6878 ffed68b8 ffed68d4 ffed68f0 
+0000000100e026d0	ffed6944 ffed6984 ffed699c ffed69b4 
+0000000100e026e0	ffed69cc ffed69e4 ffed6a04 ffed6a44 
+0000000100e026f0	ffed6a5c ffed6a74 ffed6a98 ffed6ab0 
+0000000100e02700	ffed6ac8 ffed6ae8 ffed6b3c ffed6b70 
+0000000100e02710	ffed6b88 ffed6ba0 ffed6bc0 ffed6bd8 
+0000000100e02720	ffed6bfc ffed6c14 ffed6c38 ffed6c5c 
+0000000100e02730	ffed6c80 ffed6c98 ffed6cb0 ffed6cc8 
+0000000100e02740	ffed6ce0 ffed6cf8 ffed6d10 ffed6d28 
+0000000100e02750	ffed6d40 ffed6d58 ffed6d70 ffed6d90 
+0000000100e02760	ffed6dc8 ffed6e00 ffed71c8 ffed71ec 
+0000000100e02770	ffed725c ffed7274 ffed728c ffed72a4 
+0000000100e02780	ffed72bc ffed72d4 ffed72ec ffed7304 
+0000000100e02790	ffed731c ffed7340 ffed7364 ffed737c 
+0000000100e027a0	ffed7394 ffed73ac ffed73d0 ffed73f4 
+0000000100e027b0	ffed7418 ffed7430 ffed7448 ffed7460 
+0000000100e027c0	ffed7478 ffed7490 ffed74a8 ffed74c0 
+0000000100e027d0	ffed74d8 ffed74f0 ffed7508 ffed752c 
+0000000100e027e0	ffed7544 ffed7568 ffed758c ffed75b0 
+0000000100e027f0	ffed75c8 ffed75e0 ffed75f8 ffed7610 
+0000000100e02800	ffed7628 ffed7640 ffed7658 ffed7670 
+0000000100e02810	ffed7694 ffed76b8 ffed76d0 ffed76f4 
+0000000100e02820	ffed7718 ffed773c ffed7760 ffed7778 
+0000000100e02830	ffed7790 ffed77a8 ffed77c8 ffed7800 
+0000000100e02840	ffed7844 ffed785c ffed7874 ffed7894 
+0000000100e02850	ffed78b8 ffed78dc ffed78f4 ffed790c 
+0000000100e02860	ffed7930 ffed7948 ffed798c ffed79a4 
+0000000100e02870	ffed79c8 ffed79e0 ffed79f8 ffed7a10 
+0000000100e02880	ffed7a34 ffed7a4c ffed7a78 ffed7a9c 
+0000000100e02890	ffed7ae0 ffed7af8 ffed7b10 ffed7b28 
+0000000100e028a0	ffed7b4c ffed7b64 ffed7b7c ffed7b94 
+0000000100e028b0	ffed7bac ffed7bc4 ffed7bdc ffed7bf4 
+0000000100e028c0	ffed7c14 ffed7c2c ffed7c50 ffed7c68 
+0000000100e028d0	ffed7ca8 ffed7cc0 ffed7cd8 ffed7cf8 
+0000000100e028e0	ffed7d10 ffed7d30 ffed7d48 ffed7d60 
+0000000100e028f0	ffed7d78 ffed7d90 ffed7da8 ffed7dc0 
+0000000100e02900	ffed7dd8 ffed7df0 ffed7e28 ffed7e4c 
+0000000100e02910	ffed7e70 ffed7eb0 ffed7edc ffed7f00 
+0000000100e02920	ffed7f20 ffed7f38 ffed7f78 ffed7f90 
+0000000100e02930	ffed7fa8 ffed7fc8 ffed7fe0 ffed7ff8 
+0000000100e02940	ffed8010 ffed803c ffed805c ffed807c 
+0000000100e02950	ffed8094 ffed80c0 ffed80d8 ffed80f0 
+0000000100e02960	ffed8108 ffed8120 ffed8318 ffed8330 
+0000000100e02970	ffed8348 ffed8394 ffed83d4 ffed83ec 
+0000000100e02980	ffed8410 ffed8428 ffed8440 ffed8460 
+0000000100e02990	ffed8480 ffed8498 ffed84e8 ffed8500 
+0000000100e029a0	ffed8518 ffed8550 ffed8568 ffed858c 
+0000000100e029b0	ffed85b0 ffed85c8 ffed85fc ffed8614 
+0000000100e029c0	ffed8658 ffed8678 ffed8690 ffed86a8 
+0000000100e029d0	ffed86dc ffed86f4 ffed86b8 ffed8708 
+0000000100e029e0	ffed873c ffed8774 ffed8794 ffed87b4 
+0000000100e029f0	ffed87d4 ffed87ec ffed8804 ffed881c 
+0000000100e02a00	ffed8834 ffed884c ffed8864 ffed887c 
+0000000100e02a10	ffed88b4 ffed88cc ffed891c ffed8950 
+0000000100e02a20	ffed8930 ffed8964 ffed897c ffed89c8 
+0000000100e02a30	ffed89e8 ffed8a08 ffed8a28 ffed8a48 
+0000000100e02a40	ffed8a60 ffed8a78 ffed8a90 ffed8aa8 
+0000000100e02a50	ffed8ac8 ffed8ae0 ffed8af8 ffed8b10 
+0000000100e02a60	ffed8b50 ffed8b74 ffed8b94 ffed8bac 
+0000000100e02a70	ffed8bd0 ffed8be8 ffed8c00 ffed8c18 
+0000000100e02a80	ffed8c30 ffed8ca0 ffed8cb8 ffed8cd0 
+0000000100e02a90	ffed8ce8 ffed8d00 ffed8d24 ffed8d3c 
+0000000100e02aa0	ffed8d54 ffed8d6c ffed8d84 ffed8da8 
+0000000100e02ab0	ffed8dc0 ffed8dd8 ffed8e04 ffed8e1c 
+0000000100e02ac0	ffed8e40 ffed8e64 ffed8e90 ffed8ea8 
+0000000100e02ad0	ffed8ec8 ffed8ee8 ffed8f08 ffed8f28 
+0000000100e02ae0	ffed8f48 ffed8f68 ffed8fa0 ffed8fd8 
+0000000100e02af0	ffed8ff0 ffed90c4 ffed90dc ffed90f4 
+0000000100e02b00	ffed9134 ffed916c ffed9848 ffed9874 
+0000000100e02b10	ffed98a0 ffed98cc ffed98f0 ffed9914 
+0000000100e02b20	ffed992c ffed9944 ffed995c ffed997c 
+0000000100e02b30	ffed99a0 ffed99c0 ffed99e4 ffed9a08 
+0000000100e02b40	ffed9a2c ffed9a44 ffed9a5c ffed9a7c 
+0000000100e02b50	ffed9aa0 ffed9ab8 ffed9ad8 ffed9af8 
+0000000100e02b60	ffed9b24 ffed9b50 ffed9b68 ffed9b94 
+0000000100e02b70	ffed9bac ffed9bc4 ffed9bdc ffed9bf4 
+0000000100e02b80	ffed9c0c ffed9c24 ffed9c50 ffed9c70 
+0000000100e02b90	ffed9c9c ffed9cb4 ffed9cd4 ffed9cf4 
+0000000100e02ba0	ffed9d14 ffed9d34 ffed9d4c ffed9d64 
+0000000100e02bb0	ffed9d7c ffed9d94 ffed9dac ffed9dcc 
+0000000100e02bc0	ffed9dec ffed9e0c ffed9e24 ffed9e44 
+0000000100e02bd0	ffed9e5c ffed9e74 ffed9e8c ffed9ea4 
+0000000100e02be0	ffed9ebc ffed9fb4 ffed9fcc ffeda00c 
+0000000100e02bf0	ffeda02c ffeda044 ffeda05c ffeda074 
+0000000100e02c00	ffeda08c ffeda0a4 ffeda0bc ffeda1bc 
+0000000100e02c10	ffeda1e8 ffeda200 ffeda220 ffeda238 
+0000000100e02c20	ffeda258 ffeda270 ffeda288 ffeda2a0 
+0000000100e02c30	ffeda2b8 ffeda2d0 ffeda2e8 ffeda300 
+0000000100e02c40	ffeda318 ffeda330 ffeda348 ffeda428 
+0000000100e02c50	ffeda44c ffeda478 ffeda49c ffeda4bc 
+0000000100e02c60	ffeda4d4 ffeda4f4 ffeda518 ffeda530 
+0000000100e02c70	ffeda548 ffeda560 ffeda578 ffeda590 
+0000000100e02c80	ffeda5a8 ffeda5c0 ffeda5ec ffeda610 
+0000000100e02c90	ffeda628 ffeda73c ffeda7c4 ffeda804 
+0000000100e02ca0	ffeda824 ffeda848 ffeda860 ffeda878 
+0000000100e02cb0	ffeda890 ffeda8d0 ffeda8f4 ffeda90c 
+0000000100e02cc0	ffeda92c ffeda94c ffeda964 ffeda97c 
+0000000100e02cd0	ffeda994 ffeda9ac ffeda9c4 ffeda9dc 
+0000000100e02ce0	ffeda9f4 ffedaa0c ffedaa24 ffedaa3c 
+0000000100e02cf0	ffedaa54 ffedaa90 ffedaac8 ffedafe0 
+0000000100e02d00	ffedb000 ffedb020 ffedb044 ffedb068 
+0000000100e02d10	ffedb080 ffedb098 ffedb0bc ffedb0d4 
+0000000100e02d20	ffedb0f8 ffedb118 ffedb13c ffedb154 
+0000000100e02d30	ffedb16c ffedb184 ffedb19c ffedb1b4 
+0000000100e02d40	ffedb1cc ffedb1e4 ffedb1fc ffedb214 
+0000000100e02d50	ffedb22c ffedb244 ffedb25c ffedb274 
+0000000100e02d60	ffedb28c ffedb2a4 ffedb2bc ffedb2d4 
+0000000100e02d70	ffedb2ec ffedb304 ffedb31c ffedb334 
+0000000100e02d80	ffedb34c ffedb364 ffedb37c ffedb394 
+0000000100e02d90	ffedb3ac ffedb3fc ffedb414 ffedb42c 
+0000000100e02da0	ffedb444 ffedb45c ffedb474 ffedb48c 
+0000000100e02db0	ffedb4a4 ffedb4bc ffedb4dc ffedb4fc 
+0000000100e02dc0	ffedb514 ffedb550 ffedb568 ffedb580 
+0000000100e02dd0	ffedb598 ffedb5b0 ffedb5d0 ffedb5f0 
+0000000100e02de0	ffedb608 ffedb64c ffedb66c ffedb684 
+0000000100e02df0	ffedb69c ffedb6bc ffedb6dc ffedb6f4 
+0000000100e02e00	ffedb718 ffedb730 ffedb748 ffedb798 
+0000000100e02e10	ffedb7b0 ffedb7c8 ffedb7e0 ffedb7f8 
+0000000100e02e20	ffedb818 ffedb838 ffedb850 ffedb870 
+0000000100e02e30	ffedb890 ffedb8b0 ffedb8c8 ffedb8e8 
+0000000100e02e40	ffedb908 ffedb928 ffedb940 ffedb958 
+0000000100e02e50	ffedb970 ffedb988 ffedb9a0 ffedb9b8 
+0000000100e02e60	ffedb9d0 ffedb9e8 ffedba00 ffedba18 
+0000000100e02e70	ffedba30 ffedba48 ffedba60 ffedbac8 
+0000000100e02e80	ffedbae8 ffedbb00 ffedbba8 ffedbbc0 
+0000000100e02e90	ffedbbe0 ffedbc00 ffedbc20 ffedbc38 
+0000000100e02ea0	ffedbc50 ffedbc70 ffedbc88 ffedbca0 
+0000000100e02eb0	ffedbcb8 ffedbd38 ffedbd78 ffedbdbc 
+0000000100e02ec0	ffedbdd4 ffedbdec ffedbe38 ffedbe5c 
+0000000100e02ed0	ffedbebc ffedbef4 ffedbf0c ffedbf24 
+0000000100e02ee0	ffedbf3c ffedbf54 ffedbf6c ffedbf84 
+0000000100e02ef0	ffedbf9c ffedbfb4 ffedbfcc ffedbfe4 
+0000000100e02f00	ffedbffc ffedc014 ffedc02c ffedc04c 
+0000000100e02f10	ffedc06c ffedc08c ffedc0ac ffedc0c4 
+0000000100e02f20	ffedc0e4 ffedc104 ffedc124 ffedc144 
+0000000100e02f30	ffedc164 ffedc184 ffedc1a4 ffedc1c4 
+0000000100e02f40	ffedc1e4 ffedc1fc ffedc214 ffedc234 
+0000000100e02f50	ffedc254 ffedc26c ffedc28c ffedc2a4 
+0000000100e02f60	ffedc2bc ffedc2e0 ffedc418 ffedc430 
+0000000100e02f70	ffedc500 ffedc518 ffedc530 ffedc548 
+0000000100e02f80	ffedc560 ffedc578 ffedc590 ffedc5a8 
+0000000100e02f90	ffedc5c0 ffedc5e0 ffedc600 ffedc620 
+0000000100e02fa0	ffedc638 ffedc650 ffedc670 ffedc6d0 
+0000000100e02fb0	ffedc7c4 ffedc7dc ffedc7f4 ffedc814 
+0000000100e02fc0	ffedc82c ffedc844 ffedc864 ffedc884 
+0000000100e02fd0	ffedc89c ffedc8b4 ffedc8cc ffedc8e4 
+0000000100e02fe0	ffedc8fc ffedc914 ffedc92c ffedc944 
+0000000100e02ff0	ffedca4c ffedca6c ffedca90 ffedcabc 
+0000000100e03000	ffedcadc ffedcaf4 ffedcb14 ffedcb34 
+0000000100e03010	ffedcb4c ffedcb6c ffedcbac ffedcbc4 
+0000000100e03020	ffedcbe4 ffedcb84 ffedcbf8 ffedcc10 
+0000000100e03030	ffedcc28 ffedcc40 ffedcc58 ffedcc9c 
+0000000100e03040	ffedccbc ffedccd4 ffedccec ffedcd04 
+0000000100e03050	ffedcd28 ffedcd40 ffedcd58 ffedcd70 
+0000000100e03060	ffedcd88 ffedcdbc ffedcdd4 ffedcdec 
+0000000100e03070	ffedce04 ffedce1c ffedce40 ffedce58 
+0000000100e03080	ffedce70 ffedce88 ffedcea0 ffedceb8 
+0000000100e03090	ffedcedc ffedcf20 ffedcf4c ffedcf84 
+0000000100e030a0	ffedcf9c ffedcfc0 ffedcfd8 ffedcffc 
+0000000100e030b0	ffedd028 ffedd048 ffedd068 ffedd080 
+0000000100e030c0	ffedd098 ffedd0d8 ffedd0f0 ffedd138 
+0000000100e030d0	ffedd158 ffedd170 ffedd190 ffedd1b0 
+0000000100e030e0	ffedd1c8 ffedd1e0 ffedd200 ffedd238 
+0000000100e030f0	ffedd250 ffedd268 ffedd2a0 ffedd2b8 
+0000000100e03100	ffedd2e4 ffedd31c ffedd334 ffedd34c 
+0000000100e03110	ffedd364 ffedd37c ffedd394 ffedd3b8 
+0000000100e03120	ffedd3d0 ffedd3e8 ffedd400 ffedd438 
+0000000100e03130	ffedd554 ffedd56c ffedd584 ffedd59c 
+0000000100e03140	ffedd5b4 ffedd5cc ffedd6e8 ffedd700 
+0000000100e03150	ffedd718 ffedd738 ffedd75c ffedd8fc 
+0000000100e03160	ffedd914 ffedd940 ffedd964 ffedd9a8 
+0000000100e03170	ffedd9d4 ffedd9f4 ffedda0c ffedda24 
+0000000100e03180	ffedda44 ffedda64 ffeddaa8 ffeddac8 
+0000000100e03190	ffeddaec ffeddb04 ffeddb1c ffeddb60 
+0000000100e031a0	ffeddb8c ffeddba4 ffeddbbc ffeddc1c 
+0000000100e031b0	ffeddc5c ffeddc74 ffeddc8c ffeddcb0 
+0000000100e031c0	ffeddcc8 ffeddce8 ffeddd08 ffeddd20 
+0000000100e031d0	ffeddd40 ffeddd58 ffeddd78 ffeddd90 
+0000000100e031e0	ffedddd0 ffeddde8 ffedde2c ffedde44 
+0000000100e031f0	ffedde5c ffedde7c ffedde9c ffeddebc 
+0000000100e03200	ffedded4 ffeddeec ffeddf0c ffeddf2c 
+0000000100e03210	ffeddf4c ffeddf6c ffeddf8c ffeddfa4 
+0000000100e03220	ffeddfe8 ffede03c ffede074 ffede08c 
+0000000100e03230	ffede0a4 ffede0bc ffede0e0 ffede0f8 
+0000000100e03240	ffede110 ffede154 ffede16c ffede1a0 
+0000000100e03250	ffede1b8 ffede1d0 ffede1fc ffede21c 
+0000000100e03260	ffede248 ffede26c ffede28c ffede2a4 
+0000000100e03270	ffede2c4 ffede2fc ffede340 ffede870 
+0000000100e03280	ffede894 ffede8b8 ffede8dc ffede900 
+0000000100e03290	ffede924 ffede948 ffede96c ffede998 
+0000000100e032a0	ffede9bc ffede9e0 ffedea04 ffedea28 
+0000000100e032b0	ffedea40 ffedea58 ffedea84 ffedea9c 
+0000000100e032c0	ffedeab4 ffedeacc ffedeae4 ffedeafc 
+0000000100e032d0	ffedeb20 ffedeb40 ffedeb60 ffedeb78 
+0000000100e032e0	ffedeb98 ffedebb0 ffedebc8 ffedec0c 
+0000000100e032f0	ffedec38 ffedec50 ffedec70 ffedec88 
+0000000100e03300	ffedecb4 ffedeccc ffedece4 ffedecfc 
+0000000100e03310	ffeded30 ffeded58 ffeded9c ffededb4 
+0000000100e03320	ffedef28 ffedef6c ffedef8c ffedefa4 
+0000000100e03330	ffedefbc ffedefd4 ffedeff4 ffedf014 
+0000000100e03340	ffedf02c ffedf04c ffedf06c ffedf084 
+0000000100e03350	ffedf0a4 ffedf0bc ffedf0d4 ffedf0f4 
+0000000100e03360	ffedf114 ffedf12c ffedf1e8 ffedf220 
+0000000100e03370	ffedf280 ffedf2e4 ffedf2fc ffedf314 
+0000000100e03380	ffedf35c ffedf380 ffedf3a4 ffedf3bc 
+0000000100e03390	ffedf3d4 ffedf3ec ffedf404 ffedf41c 
+0000000100e033a0	ffedf434 ffedf4dc ffedf4f4 ffedf514 
+0000000100e033b0	ffedf534 ffedf560 ffedf5ac ffedf67c 
+0000000100e033c0	ffedf694 ffedf6b4 ffedf6dc ffedf6f4 
+0000000100e033d0	ffedf70c ffedf724 ffedf73c ffedf754 
+0000000100e033e0	ffedf774 ffedf7a0 ffedf7b8 ffedf7d0 
+0000000100e033f0	ffedf7f4 ffedf80c ffedf824 ffedf83c 
+0000000100e03400	ffedf854 ffedf86c ffedf884 ffedf8a4 
+0000000100e03410	ffedf8d0 ffedf8fc ffedf934 ffedf9b8 
+0000000100e03420	ffedf9e4 ffedfa04 ffedfa24 ffedfa44 
+0000000100e03430	ffedfa64 ffedfa84 ffedfaa4 ffedfac4 
+0000000100e03440	ffedfae4 ffedfb04 ffedfb24 ffedfb3c 
+0000000100e03450	ffedfb54 ffedfb6c ffedfb84 ffedfb9c 
+0000000100e03460	ffedfbb4 ffedfbcc ffedfbe4 ffedfbfc 
+0000000100e03470	ffedfc14 ffedfc34 ffedfc4c ffedfc6c 
+0000000100e03480	ffedfc84 ffedfca4 ffedfcbc ffedfcd4 
+0000000100e03490	ffedfcec ffedfd2c ffedfd44 ffedfd5c 
+0000000100e034a0	ffedfd74 ffedfd8c ffedfdc0 ffedfde0 
+0000000100e034b0	ffedfe00 ffedfe20 ffedfd94 ffedfe34 
+0000000100e034c0	ffedfe54 ffedfe94 ffedfeb4 ffedfecc 
+0000000100e034d0	ffedfef0 ffedff08 ffedff2c ffedff50 
+0000000100e034e0	ffedff74 ffedff8c ffedffa4 ffee0020 
+0000000100e034f0	ffee0038 ffee0050 ffee0068 ffee008c 
+0000000100e03500	ffee00a4 ffee00bc ffee00d4 ffee00ec 
+0000000100e03510	ffee0104 ffee0154 ffee0178 ffee019c 
+0000000100e03520	ffee01b4 ffee01cc ffee01f0 ffee0208 
+0000000100e03530	ffee0220 ffee0238 ffee0250 ffee0268 
+0000000100e03540	ffee0280 ffee036c ffee0390 ffee03a8 
+0000000100e03550	ffee059c ffee05c0 ffee05d8 ffee05f0 
+0000000100e03560	ffee0628 ffee06f4 ffee0740 ffee0778 
+0000000100e03570	ffee09ac ffee09c4 ffee09dc ffee09f4 
+0000000100e03580	ffee0a0c ffee0a24 ffee0a3c ffee0a80 
+0000000100e03590	ffee0a98 ffee0ab0 ffee0ac8 ffee0ae0 
+0000000100e035a0	ffee0b18 ffee0b50 ffee0b88 ffee0bc0 
+0000000100e035b0	ffee0ce0 ffee0cf8 ffee0d10 ffee0d28 
+0000000100e035c0	ffee0d90 ffee0df8 ffee0eb0 ffee0ee8 
+0000000100e035d0	ffee0f88 ffee0fd4 ffee0ff8 ffee1018 
+0000000100e035e0	ffee1038 ffee1058 ffee1078 ffee1098 
+0000000100e035f0	ffee10b8 ffee10d8 ffee10f8 ffee1138 
+0000000100e03600	ffee1150 ffee1168 ffee1188 ffee12e8 
+0000000100e03610	ffee1300 ffee1318 ffee1330 ffee1358 
+0000000100e03620	ffee1370 ffee1388 ffee13dc ffee1428 
+0000000100e03630	ffee1440 ffee1480 ffee1498 ffee1550 
+0000000100e03640	ffee1568 ffee1588 ffee1618 ffee1630 
+0000000100e03650	ffee1654 ffee1694 ffee16ac ffee16c4 
+0000000100e03660	ffee1704 ffee1744 ffee1764 ffee1790 
+0000000100e03670	ffee17b0 ffee17d0 ffee17f4 ffee18d4 
+0000000100e03680	ffee18ec ffee1904 ffee191c ffee19d4 
+0000000100e03690	ffee1a14 ffee1a2c ffee1a44 ffee1aac 
+0000000100e036a0	ffee1aec ffee1b0c ffee1b24 ffee1b48 
+0000000100e036b0	ffee1b6c ffee1b84 ffee1ba8 ffee1bcc 
+0000000100e036c0	ffee1bf0 ffee1c14 ffee1c2c ffee1c50 
+0000000100e036d0	ffee1c74 ffee1ca0 ffee1cc4 ffee1ce4 
+0000000100e036e0	ffee1cfc ffee1d28 ffee1e88 ffee1ea0 
+0000000100e036f0	ffee1eb8 ffee1ed8 ffee1fe0 ffee20c0 
+0000000100e03700	ffee20d8 ffee20f0 ffee2114 ffee212c 
+0000000100e03710	ffee2158 ffee217c ffee21a0 ffee21b8 
+0000000100e03720	ffee21d8 ffee21f0 ffee2208 ffee2228 
+0000000100e03730	ffee2248 ffee2268 ffee2288 ffee22a8 
+0000000100e03740	ffee22c8 ffee22f4 ffee230c ffee232c 
+0000000100e03750	ffee239c ffee23b4 ffee26c4 ffee2704 
+0000000100e03760	ffee274c ffee2778 ffee27e0 ffee284c 
+0000000100e03770	ffee288c ffee28e0 ffee28f8 ffee2924 
+0000000100e03780	ffee2944 ffee2964 ffee2984 ffee29c4 
+0000000100e03790	ffee29e4 ffee2a04 ffee2abc ffee2afc 
+0000000100e037a0	ffee2b3c ffee2b7c ffee2bd8 ffee2bf0 
+0000000100e037b0	ffee2c3c ffee2c5c ffee2c88 ffee2cf8 
+0000000100e037c0	ffee2d10 ffee2d50 ffee2d68 ffee2d80 
+0000000100e037d0	ffee2dc8 ffee2de0 ffee2e28 ffee2e40 
+0000000100e037e0	ffee2e8c ffee2eb8 ffee2ed8 ffee2ef0 
+0000000100e037f0	ffee2f1c ffee2f5c ffee2f74 ffee2fb4 
+0000000100e03800	ffee2fd4 ffee303c ffee3060 ffee3078 
+0000000100e03810	ffee3090 ffee30d0 ffee30fc ffee3120 
+0000000100e03820	ffee3174 ffee3204 ffee3230 ffee3250 
+0000000100e03830	ffee3270 ffee3334 ffee3374 ffee33a0 
+0000000100e03840	ffee3408 ffee3454 ffee34c0 ffee3500 
+0000000100e03850	ffee3540 ffee3580 ffee35cc ffee3618 
+0000000100e03860	ffee3658 ffee3678 ffee3698 ffee3728 
+0000000100e03870	ffee3740 ffee3758 ffee3770 ffee37b0 
+0000000100e03880	ffee37f0 ffee3838 ffee3850 ffee389c 
+0000000100e03890	ffee38dc ffee391c ffee3940 ffee3964 
+0000000100e038a0	ffee3988 ffee39ac ffee39d0 ffee39e8 
+0000000100e038b0	ffee3a00 ffee3a24 ffee3a3c ffee3a60 
+0000000100e038c0	ffee3a84 ffee3abc ffee3ad4 ffee3aec 
+0000000100e038d0	ffee3c50 ffee3c90 ffee3cd4 ffee3cec 
+0000000100e038e0	ffee3d0c ffee3d2c ffee3d4c ffee3d64 
+0000000100e038f0	ffee3da8 ffee3dc0 ffee3dd8 ffee3df0 
+0000000100e03900	ffee3e08 ffee3e20 ffee3e38 ffee3e78 
+0000000100e03910	ffee3e90 ffee3ea8 ffee3ee0 ffee3f00 
+0000000100e03920	ffee3f18 ffee3f30 ffee3f48 ffee3f60 
+0000000100e03930	ffee3f78 ffee3f90 ffee3fa8 ffee3fc0 
+0000000100e03940	ffee3fd8 ffee3ff0 ffee4028 ffee4040 
+0000000100e03950	ffee406c ffee4084 ffee409c ffee40bc 
+0000000100e03960	ffee40fc ffee4134 ffee4178 ffee4190 
+0000000100e03970	ffee41a8 ffee41c0 ffee41e0 ffee41f8 
+0000000100e03980	ffee4244 ffee4298 ffee42b0 ffee42d0 
+0000000100e03990	ffee42e8 ffee4300 ffee4318 ffee4330 
+0000000100e039a0	ffee4348 ffee4360 ffee43d4 ffee4418 
+0000000100e039b0	ffee4450 ffee4488 ffee44ac ffee44c4 
+0000000100e039c0	ffee44dc ffee44f4 ffee450c ffee4524 
+0000000100e039d0	ffee453c ffee4554 ffee4574 ffee45a0 
+0000000100e039e0	ffee45b8 ffee45d8 ffee460c ffee4624 
+0000000100e039f0	ffee4644 ffee465c ffee467c ffee46b4 
+0000000100e03a00	ffee46f8 ffee47a8 ffee47d4 ffee47ec 
+0000000100e03a10	ffee4804 ffee481c ffee4834 ffee484c 
+0000000100e03a20	ffee4864 ffee487c ffee4894 ffee48ac 
+0000000100e03a30	ffee48c4 ffee48e8 ffee4900 ffee4918 
+0000000100e03a40	ffee4930 ffee4c54 ffee4c78 ffee4c94 
+0000000100e03a50	ffee4cd4 ffee4d3c ffee4d54 ffee4d6c 
+0000000100e03a60	ffee4e08 ffee4e20 ffee4e38 ffee4e50 
+0000000100e03a70	ffee4e74 ffee4e98 ffee4ebc ffee4ed4 
+0000000100e03a80	ffee4eec ffee4f04 ffee4f24 ffee4f3c 
+0000000100e03a90	ffee4f54 ffee4f74 ffee4f8c ffee4fa4 
+0000000100e03aa0	ffee4fbc ffee4fd4 ffee4fec ffee5004 
+0000000100e03ab0	ffee5028 ffee5048 ffee5068 ffee5080 
+0000000100e03ac0	ffee5098 ffee50b0 ffee50c8 ffee50e0 
+0000000100e03ad0	ffee50f8 ffee5110 ffee5128 ffee5140 
+0000000100e03ae0	ffee5160 ffee5180 ffee51a4 ffee51bc 
+0000000100e03af0	ffee51d4 ffee51ec ffee5204 ffee521c 
+0000000100e03b00	ffee5234 ffee524c ffee5270 ffed53cc 
+0000000100e03b10	ffee5294 ffee52bc ffee52e4 ffee52fc 
+0000000100e03b20	ffee5348 ffee5360 ffee53c0 ffee53d8 
+0000000100e03b30	ffee5400 ffee5454 ffee555c ffee5594 
+0000000100e03b40	ffee55cc ffee5604 ffee56cc ffee56e4 
+0000000100e03b50	ffee5724 ffee573c ffee5754 ffee5778 
+0000000100e03b60	ffee57a4 ffee57bc ffee57e8 ffee5800 
+0000000100e03b70	ffee584c ffee5864 ffee58a4 ffee58cc 
+0000000100e03b80	ffee591c ffee5944 ffee596c ffee5990 
+0000000100e03b90	ffee59d4 ffee5a2c ffee5a64 ffee5a8c 
+0000000100e03ba0	ffee5adc ffee5b00 ffee5b2c ffee5b44 
+0000000100e03bb0	ffee5b94 ffee5bdc ffee5c30 ffee5e20 
+0000000100e03bc0	ffee5e58 ffee5e7c ffee5ea8 ffee5ec0 
+0000000100e03bd0	ffee5ee8 ffee5f20 ffee5f70 ffee5fe8 
+0000000100e03be0	ffee6000 ffee6028 ffee6070 ffee60bc 
+0000000100e03bf0	ffee60e4 ffee614c ffee6174 ffee61bc 
+0000000100e03c00	ffee623c ffee6338 ffee6358 ffee6378 
+0000000100e03c10	ffee6390 ffee63a8 ffee64d0 ffee64f8 
+0000000100e03c20	ffee6520 ffee6538 ffee6560 ffee6590 
+0000000100e03c30	ffee65a8 ffee65c0 ffee65e8 ffee6620 
+0000000100e03c40	ffee6638 ffee6660 ffee66a0 ffee67cc 
+0000000100e03c50	ffee687c ffee68f8 ffee6938 ffee6960 
+0000000100e03c60	ffee69b8 ffee69dc ffee69f4 ffee6a1c 
+0000000100e03c70	ffee6a54 ffee6a7c ffee6ad0 ffee6af8 
+0000000100e03c80	ffee6b50 ffee6b68 ffee6bd0 ffee6be8 
+0000000100e03c90	ffee6c20 ffee6d18 ffee6d30 ffee6d8c 
+0000000100e03ca0	ffee6db4 ffee6e34 ffee6e6c ffee6ec0 
+0000000100e03cb0	ffee6ee8 ffee6f38 ffee6f78 ffee7008 
+0000000100e03cc0	ffee7040 ffee70e8 ffee7114 ffee7140 
+0000000100e03cd0	ffee7158 

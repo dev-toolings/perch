@@ -1,0 +1,9632 @@
+[
+{
+"addr": "00000001006f2b00",
+"kind": "system",
+"size": 20.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001006f5828",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"paywall.chooseYourPlan\"",
+"\"Choose your plan\"",
+"\"LicenseWindow title when user is buying\"",
+"\"\""
+],
+"inline": [
+"trusted"
+]
+},
+{
+"addr": "00000001006f5a50",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.autoCleanedHint\"",
+"\"Your previous device was automatically released.\"",
+"\"Shown after activation when 1-Mac auto-cleanup released old"
+],
+"inline": [
+"trusted"
+]
+},
+{
+"addr": "00000001006f6d9c",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001006f8be8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001006f8c80",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001006f9d50",
+"kind": "system",
+"size": 13.5,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"paywall.getLicense.withPrice\"",
+"\"Get License \\302\\267 %@\"",
+"\"Purchase CTA button with dynamic price\""
+],
+"inline": []
+},
+{
+"addr": "00000001006fa2bc",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"paywall.earlyBird.locked\"",
+"\"Early Bird pricing locked to your install\"",
+"\"Footer hint reinforcing locked discount\""
+],
+"inline": []
+},
+{
+"addr": "00000001006fa84c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"paywall.earlyBird.locked\"",
+"\"Early Bird pricing locked to your install\"",
+"\"Footer hint reinforcing locked discount\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001006fb218",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"license.keyPlaceholder\"",
+"\"Enter license key\"",
+"\"License key text field placeholder\""
+],
+"inline": []
+},
+{
+"addr": "00000001006fc58c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "00000001006fce18",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001006fcf10",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001006fd7b4",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.keyPlaceholder\"",
+"\"Enter license key\"",
+"\"License key text field placeholder\""
+],
+"inline": []
+},
+{
+"addr": "00000001006fed1c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001006ff200",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.devices.addMacFailed\"",
+"\"Couldn't start checkout. Please try again.\"",
+"\"Device management: could not create the upgrade checkout\""
+],
+"inline": []
+},
+{
+"addr": "0000000100700924",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"checkmark.circle.fill\""
+],
+"inline": []
+},
+{
+"addr": "0000000100700a38",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"checkmark.circle.fill\"",
+"\"license.devices.slotFreed\"",
+"\"1 slot freed \\342\\200\\224 activate again\"",
+"\"Device management: confirmation after deactivating a device"
+],
+"inline": []
+},
+{
+"addr": "0000000100701a54",
+"kind": "system",
+"size": "var",
+"weight": "semibold",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"license.activating\"",
+"\"Activating in progress\"",
+"\"license.activate\"",
+"\"Activate license button\""
+],
+"inline": [
+"Activate"
+]
+},
+{
+"addr": "00000001007028e0",
+"kind": "system",
+"size": 13.5,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"license.devices.addMac\"",
+"\"Device management: buy one more activation seat for the exi"
+],
+"inline": [
+"Add a Ma"
+]
+},
+{
+"addr": "0000000100703268",
+"kind": "system",
+"size": 13.5,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"https://app.lemonsqueezy.com/my-orders\"",
+"\"\"",
+"\"license.manageDevices\"",
+"\"Open Lemon Squeezy customer portal to manage activated devi"
+],
+"inline": [
+"Manage D"
+]
+},
+{
+"addr": "0000000100703d54",
+"kind": "system",
+"size": 12.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"https://vibeisland.app\"",
+"\"purchase_clicked\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100703e74",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"https://vibeisland.app\"",
+"\"purchase_clicked\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100704840",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007052f4",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"square.on.square\""
+],
+"inline": [
+"checkmar"
+]
+},
+{
+"addr": "0000000100705aac",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"license.manageDevices\"",
+"\"Open Lemon Squeezy customer portal to manage activated devi"
+],
+"inline": []
+},
+{
+"addr": "0000000100706908",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100727a80",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Checking for updates...\"",
+"\"Update: checking spinner\""
+],
+"inline": [
+"Alert OK"
+]
+},
+{
+"addr": "000000010072a478",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "default*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010072a974",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010072cd4c",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010072d034",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, x8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"checkmark.circle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010072d168",
+"kind": "system",
+"size": 16.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"checkmark.circle.fill\"",
+"\"You're up to date!\"",
+"\"Update: no update available\""
+],
+"inline": [
+"update.u"
+]
+},
+{
+"addr": "000000010072d390",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Update: no update available\"",
+"\"update.upToDateDesc\"",
+"\"Vibe Island %@ is the latest version.\"",
+"\"Update: current version is latest\""
+],
+"inline": []
+},
+{
+"addr": "000000010072d734",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, x8"
+],
+"ctx": [
+"\"Vibe Island %@ is the latest version.\"",
+"\"Update: current version is latest\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010072d868",
+"kind": "system",
+"size": 15.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Update: current version is latest\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\"",
+"\"Update: error title\""
+],
+"inline": [
+"update.e",
+"Update E"
+]
+},
+{
+"addr": "000000010072d928",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Update: current version is latest\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\"",
+"\"Update: error title\""
+],
+"inline": [
+"Update E"
+]
+},
+{
+"addr": "000000010072db10",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Update: error title\"",
+"\"update.errorHint\"",
+"\"Restart the app or check again to complete the update.\"",
+"\"Update: error recovery hint\""
+],
+"inline": [
+"Update E"
+]
+},
+{
+"addr": "000000010072edcc",
+"kind": "system",
+"size": 13.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100733010",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "0000000100733138",
+"kind": "system",
+"size": "var",
+"weight": "semibold",
+"design": "monospaced",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "0000000100733a20",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "0000000100735030",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100735208",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010073540c",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100735d0c",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100736414",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d12"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100736698",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d12"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100736890",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d12"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100738650",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010073886c",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"approval.detail.newFile\"",
+"\"Write tool label for new file\""
+],
+"inline": [
+"new file"
+]
+},
+{
+"addr": "0000000100739300",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010073a538",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"approval.detail.moreLines\"",
+"\"Collapsed lines indicator in approval detail\""
+],
+"inline": [
+"+%lld li"
+]
+},
+{
+"addr": "000000010073a7e0",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"approval.detail.moreLines\"",
+"\"Collapsed lines indicator in approval detail\""
+],
+"inline": [
+"+%lld li"
+]
+},
+{
+"addr": "000000010073adf0",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010073c218",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010073c524",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"blocked_"
+]
+},
+{
+"addr": "000000010073cc84",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010073cd88",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "monospaced",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": [
+"WebSearc"
+]
+},
+{
+"addr": "000000010073dfe8",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010073e3c4",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "000000010073ec84",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010073ee70",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "monospaced",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": [
+"WebFetch"
+]
+},
+{
+"addr": "00000001007402e4",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100740508",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "monospaced",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100740680",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100741378",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d12"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100741564",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d12"
+],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100743c58",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100744040",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007442a8",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010074455c",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "00000001007448e4",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "0000000100744b04",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "0000000100745948",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100745e68",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d12"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007460f0",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d12"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007462e8",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d12"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100746a40",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100748164",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100748608",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100748b14",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100748c7c",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010075b294",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010075c08c",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010075c640",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010075e460",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"question.custom.submit\"",
+"\"Accessibility label for submitting a custom answer\"",
+"\"\""
+],
+"inline": [
+"Submit a"
+]
+},
+{
+"addr": "00000001007662f4",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007663bc",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100766554",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100767f60",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"arrow.triangle.branch\""
+],
+"inline": []
+},
+{
+"addr": "00000001007680b0",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"arrow.triangle.branch\"",
+"\"session.subagents\"",
+"\"Section title for task subagents\""
+],
+"inline": [
+"Subagent"
+]
+},
+{
+"addr": "000000010076824c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"arrow.triangle.branch\"",
+"\"session.subagents\"",
+"\"Section title for task subagents\""
+],
+"inline": []
+},
+{
+"addr": "0000000100768880",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007689e4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010076af30",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010076b19c",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"child_agents.requester_from\"",
+"\"Approval/question card byline naming the exact child agent "
+],
+"inline": [
+"from %@"
+]
+},
+{
+"addr": "000000010076bb44",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"hideAgentDetailLine\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010076bca4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"hideAgentDetailLine\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010076be08",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010076bf34",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010076c4c8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"exclamationmark.triangle.fill\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010076c5f4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010077896c",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100778bec",
+"kind": "system",
+"size": 17.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100778d68",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100779860",
+"kind": "system",
+"size": 10.5,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"paywall.earlyBird.banner\"",
+"\"Early Bird \\302\\267 Limited Time\"",
+"\"Early Bird banner above tier cards\""
+],
+"inline": []
+},
+{
+"addr": "000000010077a1bc",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"paywall.yourPlan\"",
+"\"Plan reminder chip label\""
+],
+"inline": [
+"Your pla"
+]
+},
+{
+"addr": "000000010077a3f8",
+"kind": "system",
+"size": 13.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"paywall.yourPlan\"",
+"\"Plan reminder chip label\""
+],
+"inline": []
+},
+{
+"addr": "000000010077a91c",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"paywall.changePlan\"",
+"\"Plan chip: button to return to purchase mode\""
+],
+"inline": [
+"Change"
+]
+},
+{
+"addr": "000000010077e454",
+"kind": "system",
+"size": 6.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010077f2c4",
+"kind": "system",
+"size": 11.0,
+"weight": "bold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010077f578",
+"kind": "system",
+"size": 8.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"%04X-%04"
+]
+},
+{
+"addr": "0000000100781328",
+"kind": "system",
+"size": 18.0,
+"weight": "bold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100781520",
+"kind": "system",
+"size": 8.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"BOARDING"
+]
+},
+{
+"addr": "000000010078178c",
+"kind": "system",
+"size": 9.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"STATUS",
+"LANDED"
+]
+},
+{
+"addr": "0000000100781904",
+"kind": "system",
+"size": 9.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"JOINED",
+"LANDED"
+]
+},
+{
+"addr": "0000000100781a68",
+"kind": "system",
+"size": 9.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": [
+"ACCESS",
+"LANDED"
+]
+},
+{
+"addr": "0000000100782aa0",
+"kind": "system",
+"size": 7.0,
+"weight": "bold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100782c44",
+"kind": "system",
+"size": 7.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100782d4c",
+"kind": "system",
+"size": 7.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"WELCOME "
+]
+},
+{
+"addr": "0000000100787e30",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"license.deactivateConfirm.copyFailed\"",
+"\"Couldn't copy the key. Retry, or save it another way before",
+"\"Deactivation confirmation: clipboard write failed and the k"
+],
+"inline": []
+},
+{
+"addr": "000000010078810c",
+"kind": "system",
+"size": 15.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.deactivateConfirm.title\"",
+"\"Deactivate this Mac?\"",
+"\"Deactivation confirmation: dialog title\""
+],
+"inline": []
+},
+{
+"addr": "0000000100788248",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Deactivation confirmation: dialog title\"",
+"\"license.deactivateConfirm.body\"",
+"\"The seat will be freed for another Mac.\"",
+"\"Deactivation confirmation: what deactivating does\""
+],
+"inline": []
+},
+{
+"addr": "000000010078878c",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.deactivateConfirm.keyHint\"",
+"\"Save this \\342\\200\\224 it won't be shown again\"",
+"\"Deactivation confirmation: why the license key is shown bef"
+],
+"inline": []
+},
+{
+"addr": "0000000100788af4",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Deactivation confirmation: why the license key is shown bef",
+"\"license.deactivateConfirm.purchasedWith\"",
+"\"Purchased with %@\"",
+"\"Deactivation confirmation: the email the license was bought"
+],
+"inline": []
+},
+{
+"addr": "000000010078915c",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"license.deactivateConfirm.purchasedWith\"",
+"\"Purchased with %@\"",
+"\"Deactivation confirmation: the email the license was bought",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007898fc",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"square.on.square\""
+],
+"inline": [
+"checkmar"
+]
+},
+{
+"addr": "000000010078a7c8",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"license.deactivateConfirm.cancel\"",
+"\"Deactivation confirmation: cancel button\""
+],
+"inline": [
+"Cancel"
+]
+},
+{
+"addr": "000000010078acc0",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.deactivateConfirm.cancel\"",
+"\"Deactivation confirmation: cancel button\"",
+"\"\""
+],
+"inline": [
+"Cancel"
+]
+},
+{
+"addr": "000000010078b30c",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.deactivateConfirm.withoutCopyingAction\"",
+"\"Deactivate Without Copying\"",
+"\"Deactivation confirmation: explicit fallback after clipboar"
+],
+"inline": []
+},
+{
+"addr": "000000010078df80",
+"kind": "system",
+"size": 12.5,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"license.devices.title\"",
+"\"Device management: sheet/section title\""
+],
+"inline": [
+"Devices"
+]
+},
+{
+"addr": "000000010078e148",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"license.devices.title\"",
+"\"Device management: sheet/section title\""
+],
+"inline": [
+"Devices"
+]
+},
+{
+"addr": "000000010078e79c",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.devices.loadFailed\"",
+"\"Couldn't load devices\"",
+"\"Device management: error state when device list fails to lo"
+],
+"inline": []
+},
+{
+"addr": "000000010078ea78",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Couldn't load devices\"",
+"\"Device management: error state when device list fails to lo",
+"\"license.devices.retry\"",
+"\"Device management: retry loading device list button\""
+],
+"inline": [
+"Retry"
+]
+},
+{
+"addr": "000000010078efd0",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.devices.loadFailed\"",
+"\"Couldn't load devices\"",
+"\"Device management: error state when device list fails to lo"
+],
+"inline": []
+},
+{
+"addr": "00000001007907e4",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100790904",
+"kind": "system",
+"size": 12.5,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"license.devices.addMac\"",
+"\"Device management: buy one more activation seat for the exi"
+],
+"inline": [
+"Add a Ma"
+]
+},
+{
+"addr": "0000000100791174",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.devices.addMacFailed\"",
+"\"Couldn't start checkout. Please try again.\"",
+"\"Device management: could not create the upgrade checkout\""
+],
+"inline": []
+},
+{
+"addr": "000000010079153c",
+"kind": "system",
+"size": 18.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"license.devices.addMacFailed\"",
+"\"Couldn't start checkout. Please try again.\"",
+"\"Device management: could not create the upgrade checkout\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100791ccc",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007920ec",
+"kind": "system",
+"size": 13.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100792298",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"license.devices.thisMac\"",
+"\"Device management: badge marking the current Mac in the dev"
+],
+"inline": [
+"THIS MAC"
+]
+},
+{
+"addr": "000000010079348c",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Deactivate this device?\"",
+"\"Device management: confirmation dialog title before deactiv",
+"\"license.devices.deactivate\"",
+"\"Device management: deactivate a device button\""
+],
+"inline": [
+"Deactiva"
+]
+},
+{
+"addr": "000000010079c07c",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007a2338",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007a2634",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007a3090",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Singular session label\"",
+"\"content.sessions\"",
+"\"Plural sessions label\""
+],
+"inline": [
+"sessions"
+]
+},
+{
+"addr": "00000001007a3328",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"Singular session label\"",
+"\"content.sessions\"",
+"\"Plural sessions label\"",
+"\"\""
+],
+"inline": [
+"sessions"
+]
+},
+{
+"addr": "00000001007a3498",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"Singular session label\"",
+"\"content.sessions\"",
+"\"Plural sessions label\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007a48b0",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007a578c",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007a5a14",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007abed8",
+"kind": "system",
+"size": 13.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"speaker.wave.2.fill\"",
+"\"speaker.slash.fill\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ac310",
+"kind": "system",
+"size": 13.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"speaker.wave.2.fill\"",
+"\"speaker.slash.fill\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ad270",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"checkmark.circle.fill\"",
+"\"exclamationmark.triangle.fill\"",
+"\"exclamationmark.octagon.fill\""
+],
+"inline": []
+},
+{
+"addr": "00000001007adae0",
+"kind": "system",
+"size": 10.5,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"usage.peek.openSource\"",
+"\"View source post\"",
+"\"Tooltip for the external source link on a reset forecast\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007adc3c",
+"kind": "system",
+"size": 9.5,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"usage.peek.openSource\"",
+"\"View source post\"",
+"\"Tooltip for the external source link on a reset forecast\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ae06c",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ae9fc",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007aeb40",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"payment.trouble.hint\"",
+"\"Payment issue? Click to contact support\"",
+"\"Hint shown when purchase was clicked but license not activa"
+],
+"inline": []
+},
+{
+"addr": "00000001007aecf0",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"payment.trouble.hint\"",
+"\"Payment issue? Click to contact support\"",
+"\"Hint shown when purchase was clicked but license not activa"
+],
+"inline": []
+},
+{
+"addr": "00000001007af33c",
+"kind": "system",
+"size": 8.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007afee8",
+"kind": "system",
+"size": 10.5,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"screen.switchTip\"",
+"\"Main display is %@, \"",
+"\"One-time tip: main display differs from built-in. %@ = disp"
+],
+"inline": []
+},
+{
+"addr": "00000001007b05f4",
+"kind": "system",
+"size": 10.5,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"screen.switchAction\"",
+"\"One-time tip: action link to switch notch panel to main dis"
+],
+"inline": [
+"switch t"
+]
+},
+{
+"addr": "00000001007b0a10",
+"kind": "system",
+"size": 8.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"screen.switchAction\"",
+"\"One-time tip: action link to switch notch panel to main dis",
+"\"\"",
+"\"\""
+],
+"inline": [
+"switch t"
+]
+},
+{
+"addr": "00000001007b6630",
+"kind": "system",
+"size": 22.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.allSet\"",
+"\"Onboarding configuration-complete title\""
+],
+"inline": [
+"All Set"
+]
+},
+{
+"addr": "00000001007b6824",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Onboarding configuration-complete title\"",
+"\"onboarding.autoConfigured\"",
+"\"Vibe Island automatically detected and configured your tool",
+"\"Onboarding configuration-complete subtitle\""
+],
+"inline": [
+"All Set"
+]
+},
+{
+"addr": "00000001007b7e88",
+"kind": "system",
+"size": 14.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"onboarding.launchAtLoginSubtitle\"",
+"\"Start automatically when you log in\"",
+"\"Onboarding launch at login toggle subtitle\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007b8b60",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.agents\"",
+"\"Onboarding Act 3: agents section\""
+],
+"inline": [
+"AI Agent"
+]
+},
+{
+"addr": "00000001007bafdc",
+"kind": "system",
+"size": 9.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"accessibility_granted\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007bb0c4",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"accessibility_granted\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007bc128",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007bcebc",
+"kind": "system",
+"size": 22.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.chooseVibe\"",
+"\"Choose your vibe\"",
+"\"Onboarding sound pack selection title\""
+],
+"inline": []
+},
+{
+"addr": "00000001007be290",
+"kind": "system",
+"size": 15.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"checkmark.circle.fill\""
+],
+"inline": [
+"circle"
+]
+},
+{
+"addr": "00000001007be3d8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"checkmark.circle.fill\"",
+"\"speaker.wave.2.fill\""
+],
+"inline": [
+"circle"
+]
+},
+{
+"addr": "00000001007bf398",
+"kind": "system",
+"size": 22.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"onboarding.readyToLand\"",
+"\"Onboarding paywall title\""
+],
+"inline": [
+"Ready to"
+]
+},
+{
+"addr": "00000001007bf574",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Onboarding paywall title\"",
+"\"onboarding.purchaseNoSubscriptions\"",
+"\"One-time purchase \\302\\267 no subscriptions\"",
+"\"Onboarding paywall subtitle\""
+],
+"inline": []
+},
+{
+"addr": "00000001007c2b38",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.alreadyHaveKey\"",
+"\"Already have a license key?\"",
+"\"Onboarding paywall: reveal license key input\""
+],
+"inline": []
+},
+{
+"addr": "00000001007c32ac",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007c33e8",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.checkEmail\"",
+"\"Check your email for the license key\"",
+"\"Onboarding post-checkout: email hint\""
+],
+"inline": []
+},
+{
+"addr": "00000001007c3ecc",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.reopenCheckout\"",
+"\"Re-open checkout\"",
+"\"Onboarding post-checkout: reopen purchase link\""
+],
+"inline": []
+},
+{
+"addr": "00000001007c4d94",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.startTrialInstead\"",
+"\"Start trial instead\"",
+"\"Onboarding post-checkout: fallback to trial\""
+],
+"inline": []
+},
+{
+"addr": "00000001007c50e8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"onboarding.startTrialInstead\"",
+"\"Start trial instead\"",
+"\"Onboarding post-checkout: fallback to trial\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007c5a74",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.pasteKey\"",
+"\"Paste license key\"",
+"\"Onboarding: license key text field placeholder\""
+],
+"inline": []
+},
+{
+"addr": "00000001007c6bc8",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"license.activate\"",
+"\"Activate license button\""
+],
+"inline": [
+"Activate"
+]
+},
+{
+"addr": "00000001007c7200",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"license.activate\"",
+"\"Activate license button\"",
+"\"https://vibeisland.app\"",
+"\"\""
+],
+"inline": [
+"Activate"
+]
+},
+{
+"addr": "00000001007c72e8",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"https://vibeisland.app\"",
+"\"\""
+],
+"inline": [
+"Activate"
+]
+},
+{
+"addr": "00000001007cad60",
+"kind": "custom",
+"size": 26.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"editionCardPalette\"",
+"\"\"",
+"\"onboarding.welcomeAboard\"",
+"\"Onboarding completion title\""
+],
+"inline": [
+"Departur",
+"Welcome "
+]
+},
+{
+"addr": "00000001007caf44",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Onboarding completion title\"",
+"\"onboarding.readyRestartHint\"",
+"\"Restart any running sessions, or start a new one.\"",
+"\"Onboarding Step 5: restart instruction\""
+],
+"inline": [
+"Welcome "
+]
+},
+{
+"addr": "00000001007cb6cc",
+"kind": "system",
+"size": 14.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.startVibing\"",
+"\"Onboarding Act 3: CTA button\""
+],
+"inline": [
+"Start Vi"
+]
+},
+{
+"addr": "00000001007cc47c",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ccf18",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ccfe8",
+"kind": "system",
+"size": "var",
+"weight": "semibold",
+"design": "nil",
+"arith": [
+"fmov\td0, x8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007cd0a4",
+"kind": "system",
+"size": 18.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007cd108",
+"kind": "custom",
+"size": 15.0,
+"weight": "?",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": [
+"Departur"
+]
+},
+{
+"addr": "00000001007cdfac",
+"kind": "system",
+"size": 14.0,
+"weight": "?",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ce1f0",
+"kind": "system",
+"size": 9.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ce2b4",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ce5b0",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ce6e8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007d2598",
+"kind": "custom",
+"size": 20.0,
+"weight": "?",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"onboarding.tagline\"",
+"\"A Dynamic Island for your AI coding tools\"",
+"\"Onboarding screen subtitle\""
+],
+"inline": [
+"Departur"
+]
+},
+{
+"addr": "00000001007d5fec",
+"kind": "custom",
+"size": 28.0,
+"weight": "?",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"Departur"
+]
+},
+{
+"addr": "00000001007e4128",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"cursorarrow.click.2\""
+],
+"inline": [
+"terminal"
+]
+},
+{
+"addr": "00000001007e49a8",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007e4bc8",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007e4d90",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007e51a0",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007e5988",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"approval.pendingCount\"",
+"\"Pending permission count label\""
+],
+"inline": [
+"%lld pen"
+]
+},
+{
+"addr": "00000001007e739c",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"review-n"
+]
+},
+{
+"addr": "00000001007e8458",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "00000001007e85b4",
+"kind": "system",
+"size": "var",
+"weight": "semibold",
+"design": "monospaced",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "00000001007e87c4",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "monospaced",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "00000001007e8a94",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d9"
+],
+"ctx": [
+"\"exclamationmark.triangle.fill\"",
+"\"approval.detailsUnavailable\"",
+"\"(%@ - details unavailable)\"",
+"\"Fallback when toolInput is nil\""
+],
+"inline": []
+},
+{
+"addr": "00000001007eedcc",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"bubble.left.and.bubble.right.fill\""
+],
+"inline": []
+},
+{
+"addr": "00000001007eef9c",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"bubble.left.and.bubble.right.fill\"",
+"\"question.waiting.agent\"",
+"\"%@ is waiting for an answer\"",
+"\"Question indicator title with CLI agent name\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ef840",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007efe2c",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f0138",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"cowork.option.count\"",
+"\"Collapsed option count on Cowork read-only question card\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f1430",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"bubble.left.and.bubble.right.fill\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f1634",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"bubble.left.and.bubble.right.fill\"",
+"\"question.agentQuestion\"",
+"\"Question section title with CLI agent name\""
+],
+"inline": [
+"%@'s Que"
+]
+},
+{
+"addr": "00000001007f187c",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"question.agentQuestion\"",
+"\"Question section title with CLI agent name\"",
+"\"(%lld questions)\"",
+"\"Number of questions\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f24f8",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f2cf4",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f2e28",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f32e4",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f3b40",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"question.answerInTerminal\"",
+"\"Please answer in the terminal\"",
+"\"Instruction to answer in terminal\""
+],
+"inline": [
+"Go to Te"
+]
+},
+{
+"addr": "00000001007f3cb4",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"question.answerInTerminal\"",
+"\"Please answer in the terminal\"",
+"\"Instruction to answer in terminal\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f4074",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Please answer in the terminal\"",
+"\"Instruction to answer in terminal\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f4644",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"approval.goToTerminal\"",
+"\"Button to jump to terminal\""
+],
+"inline": [
+"Go to Te"
+]
+},
+{
+"addr": "00000001007f757c",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007f93bc",
+"kind": "system",
+"size": 8.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"question.multiSelect\"",
+"\"Badge for multi-select questions\""
+],
+"inline": [
+"Multi-se"
+]
+},
+{
+"addr": "00000001007fb764",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007fdd94",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"question.wizard.next\"",
+"\"Next question button in wizard\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007fe5dc",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"question.wizard.previous\"",
+"\"Previous question button in wizard\"",
+"\"\""
+],
+"inline": [
+"Previous"
+]
+},
+{
+"addr": "00000001007feb74",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "default*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"checkmark.circle.fill\"",
+"\"question.wizard.submit\"",
+"\"Submit all answers button in wizard\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ff140",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001007ff6e8",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "default*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"question.wizard.next\"",
+"\"Next question button in wizard\""
+],
+"inline": []
+},
+{
+"addr": "00000001008012a0",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008018f0",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "default*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100801cb4",
+"kind": "system",
+"size": 8.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100801d98",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "default",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008030dc",
+"kind": "system",
+"size": 10.0,
+"weight": "bold",
+"design": "default*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008048b4",
+"kind": "system",
+"size": 14.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"checkmark.square.fill\""
+],
+"inline": [
+"square"
+]
+},
+{
+"addr": "0000000100804bb0",
+"kind": "system",
+"size": 9.0,
+"weight": "bold",
+"design": "default",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"checkmark.square.fill\""
+],
+"inline": [
+"square"
+]
+},
+{
+"addr": "0000000100805294",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d9"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100805470",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100806ea0",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"Contradictory frame constraints specified.\"",
+"\"\"",
+"\"User message prefix\""
+],
+"inline": []
+},
+{
+"addr": "0000000100807064",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"Contradictory frame constraints specified.\"",
+"\"\"",
+"\"User message prefix\""
+],
+"inline": []
+},
+{
+"addr": "0000000100807320",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"Contradictory frame constraints specified.\"",
+"\"\"",
+"\"User message prefix\"",
+"\"Completion card tag label\""
+],
+"inline": [
+"session."
+]
+},
+{
+"addr": "0000000100807770",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"Completion card tag label\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100808180",
+"kind": "system",
+"size": "var",
+"weight": "semibold",
+"design": "nil",
+"arith": [
+"fmov\td0, d9"
+],
+"ctx": [
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "0000000100808798",
+"kind": "system",
+"size": "var",
+"weight": "semibold",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"exclamationmark.triangle.fill\"",
+"\"\"",
+"\"session.statusWarning.title\"",
+"\"Title for lightweight session warning card\""
+],
+"inline": [
+"Needs at"
+]
+},
+{
+"addr": "00000001008088e8",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"exclamationmark.triangle.fill\"",
+"\"\"",
+"\"session.statusWarning.title\"",
+"\"Title for lightweight session warning card\""
+],
+"inline": [
+"Needs at"
+]
+},
+{
+"addr": "000000010080b460",
+"kind": "system",
+"size": "var",
+"weight": "semibold",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"ExitPlanMode section title\""
+],
+"inline": [
+"exitPlan",
+"Exit Pla"
+]
+},
+{
+"addr": "000000010080b708",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"ExitPlanMode section title\"",
+"\"ExitPlanMode card tag label\""
+],
+"inline": [
+"exitPlan",
+"exitPlan",
+"Exit Pla"
+]
+},
+{
+"addr": "000000010080c19c",
+"kind": "system",
+"size": "var",
+"weight": "bold",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010080c3d0",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010080c6e4",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010080c9c0",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "monospaced*",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "000000010080d0f8",
+"kind": "system",
+"size": "var",
+"weight": "semibold",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"exitPlan.requestedPermissions\"",
+"\"Requested permissions:\"",
+"\"List header for allowed prompts\""
+],
+"inline": []
+},
+{
+"addr": "000000010080d540",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"exitPlan.requestedPermissions\"",
+"\"Requested permissions:\"",
+"\"List header for allowed prompts\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010086c7f4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Right-click menu: silence sessions whose first user prompt ",
+"\"\"",
+"\"Show all %lld sessions\"",
+"\"Button to expand hidden sessions\""
+],
+"inline": []
+},
+{
+"addr": "000000010086d5c0",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010086d758",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"arrow.up"
+]
+},
+{
+"addr": "000000010086dba8",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.unlockFullControl\"",
+"\"Unlock full control\"",
+"\"CTA title for Free Mode upsell row\""
+],
+"inline": []
+},
+{
+"addr": "000000010086dd10",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.unlockFullControl\"",
+"\"Unlock full control\"",
+"\"CTA title for Free Mode upsell row\""
+],
+"inline": []
+},
+{
+"addr": "000000010086e5e8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.lockedSessionsSummary\"",
+"\"+%lld more sessions with a license\"",
+"\"Summary row for sessions hidden in Free Mode\""
+],
+"inline": []
+},
+{
+"addr": "0000000100870e80",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100874788",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"waiting_for_input\"",
+"\"waiting_for_approval\"",
+"\"waiting_for_input\""
+],
+"inline": [
+"running_",
+"question"
+]
+},
+{
+"addr": "0000000100874a78",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"waiting_for_input\"",
+"\"waiting_for_approval\"",
+"\"waiting_for_input\""
+],
+"inline": [
+"running_",
+"question"
+]
+},
+{
+"addr": "0000000100874eac",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100877cfc",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"User message prefix\""
+],
+"inline": []
+},
+{
+"addr": "0000000100877e20",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"User message prefix\""
+],
+"inline": []
+},
+{
+"addr": "0000000100879bd4",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"session.interrupted\"",
+"\"User interrupted status\""
+],
+"inline": [
+"Interrup"
+]
+},
+{
+"addr": "000000010087a434",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "000000010087a970",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"tool.workingEllipsis\"",
+"\"Working status with ellipsis\""
+],
+"inline": [
+"Working."
+]
+},
+{
+"addr": "000000010087ace8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"tool.workingEllipsis\"",
+"\"Working status with ellipsis\"",
+"\"Idle/ready status\""
+],
+"inline": [
+"Ready"
+]
+},
+{
+"addr": "000000010087afc8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"tool.workingEllipsis\"",
+"\"Working status with ellipsis\"",
+"\"Idle/ready status\""
+],
+"inline": [
+"Ready"
+]
+},
+{
+"addr": "000000010087e4f0",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Status: AI reasoning\""
+],
+"inline": [
+"Thinking"
+]
+},
+{
+"addr": "000000010087e648",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Status: AI reasoning\""
+],
+"inline": [
+"Thinking"
+]
+},
+{
+"addr": "000000010087e9b4",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Status: AI reasoning\"",
+"\"\"",
+"\"arrow.triangle.2.circlepath\""
+],
+"inline": [
+"Thinking"
+]
+},
+{
+"addr": "000000010087eaf8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"arrow.triangle.2.circlepath\"",
+"\"session.restartForLive\"",
+"\"Restart session for live tracking\"",
+"\"Restored session hint\""
+],
+"inline": [
+"Thinking"
+]
+},
+{
+"addr": "000000010087edd4",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Restart session for live tracking\"",
+"\"Restored session hint\"",
+"\"\"",
+"\"checkmark.circle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010087ef18",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"checkmark.circle.fill\"",
+"\"session.compactComplete\"",
+"\"Conversation compacted\"",
+"\"Compaction completed status\""
+],
+"inline": []
+},
+{
+"addr": "000000010087f1f4",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Conversation compacted\"",
+"\"Compaction completed status\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010087f2c8",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Conversation compacted\"",
+"\"Compaction completed status\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010087f5e0",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"exclamationmark.triangle.fill\"",
+"\"\"",
+"\"exclamationmark.circle\""
+],
+"inline": []
+},
+{
+"addr": "000000010087f728",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"exclamationmark.circle\"",
+"\"session.mayNeedAttention\"",
+"\"May need attention\"",
+"\"Codex tool silent too long, possibly waiting for approval\""
+],
+"inline": []
+},
+{
+"addr": "000000010087fa68",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"session.mayNeedAttention\"",
+"\"May need attention\"",
+"\"Codex tool silent too long, possibly waiting for approval\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010087fba0",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"session.mayNeedAttention\"",
+"\"May need attention\"",
+"\"Codex tool silent too long, possibly waiting for approval\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010087fd68",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"session.mayNeedAttention\"",
+"\"May need attention\"",
+"\"Codex tool silent too long, possibly waiting for approval\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010087fe94",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100881b90",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Tasks section label\""
+],
+"inline": [
+"Tasks"
+]
+},
+{
+"addr": "0000000100881cb0",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Tasks section label\""
+],
+"inline": [
+"Tasks"
+]
+},
+{
+"addr": "00000001008826f8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": [
+"pending"
+]
+},
+{
+"addr": "0000000100882a5c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010088323c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"checkmark.square.fill\""
+],
+"inline": []
+},
+{
+"addr": "0000000100883d6c",
+"kind": "system",
+"size": 14.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"arrow.triangle.2.circlepath\""
+],
+"inline": []
+},
+{
+"addr": "0000000100884404",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"session.restartBannerTitle\"",
+"\"Restart your sessions\"",
+"\"First install restart banner title\""
+],
+"inline": []
+},
+{
+"addr": "00000001008845a8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"First install restart banner title\"",
+"\"session.restartBannerSubtitle\"",
+"\"Hooks just installed \\342\\200\\224 restart running sessions ",
+"\"First install restart banner subtitle\""
+],
+"inline": []
+},
+{
+"addr": "0000000100884f6c",
+"kind": "system",
+"size": 14.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"wrench.and.screwdriver\""
+],
+"inline": []
+},
+{
+"addr": "00000001008857a4",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"integrity.reinstallTitle\"",
+"\"Reinstall recommended\"",
+"\"Integrity nudge banner title (benign-damaged install)\""
+],
+"inline": []
+},
+{
+"addr": "0000000100885948",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Integrity nudge banner title (benign-damaged install)\"",
+"\"integrity.reinstallSubtitle\"",
+"\"Your app files look damaged. Reinstall from vibeisland.app ",
+"\"Integrity nudge banner subtitle\""
+],
+"inline": []
+},
+{
+"addr": "0000000100885ef8",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"https://vibeisland.app\"",
+"\"\"",
+"\"integrity.reinstallCTA\"",
+"\"Integrity nudge banner action button\""
+],
+"inline": [
+"Reinstal"
+]
+},
+{
+"addr": "0000000100886ad0",
+"kind": "system",
+"size": 14.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"puzzlepiece.extension\""
+],
+"inline": []
+},
+{
+"addr": "0000000100887620",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"session.ideExtensionBannerTitle\"",
+"\"Install %@ extension?\"",
+"\"IDE extension install banner title\""
+],
+"inline": []
+},
+{
+"addr": "00000001008877c8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"IDE extension install banner title\"",
+"\"session.ideExtensionBannerSubtitle\"",
+"\"Enables precise terminal tab jumping\"",
+"\"IDE extension install banner subtitle\""
+],
+"inline": []
+},
+{
+"addr": "0000000100887c14",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"settings.install\"",
+"\"Settings: IDE extension install button\""
+],
+"inline": [
+"Install"
+]
+},
+{
+"addr": "00000001008888d4",
+"kind": "system",
+"size": 14.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"checkmark.circle.fill\""
+],
+"inline": [
+"sparkles"
+]
+},
+{
+"addr": "0000000100889444",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010088961c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"session.kittyConfigBannerSubtitle\"",
+"\"Adds 2 lines to kitty.conf \\342\\200\\224 restart Kitty to ap",
+"\"Kitty remote control banner subtitle\""
+],
+"inline": []
+},
+{
+"addr": "0000000100889a88",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Kitty remote control banner subtitle\"",
+"\"\"",
+"\"\"",
+"\"Enable button label\""
+],
+"inline": [
+"Enable"
+]
+},
+{
+"addr": "000000010088a46c",
+"kind": "system",
+"size": 14.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"exclamationmark.shield.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010088aef4",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Codex hook trust banner manual-trust prompt title \\342\\200\\",
+"\"session.codexHookTrustBannerTitle\"",
+"\"Codex updated \\342\\200\\224 confirm authorization\"",
+"\"Codex hook trust banner title\""
+],
+"inline": []
+},
+{
+"addr": "000000010088b044",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Codex hook trust banner manual-trust prompt title \\342\\200\\",
+"\"session.codexHookTrustBannerTitle\"",
+"\"Codex updated \\342\\200\\224 confirm authorization\"",
+"\"Codex hook trust banner title\""
+],
+"inline": []
+},
+{
+"addr": "000000010088bd38",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"session.codexHookTrustBannerManualConfirm\"",
+"\"Codex hook trust banner manual-trust acknowledge button\"",
+"\"settings.codex.trust.authorize\"",
+"\"Settings: one-click button to authorize Vibe Island hooks v"
+],
+"inline": [
+"Authoriz"
+]
+},
+{
+"addr": "000000010088c018",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.codex.trust.authorize\"",
+"\"Settings: one-click button to authorize Vibe Island hooks v",
+"\"\"",
+"\"\""
+],
+"inline": [
+"Authoriz"
+]
+},
+{
+"addr": "000000010088ca48",
+"kind": "system",
+"size": 20.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010088cba0",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"session.emptyFirstInstall\"",
+"\"The island awaits\"",
+"\"First install empty state title\""
+],
+"inline": []
+},
+{
+"addr": "000000010088cd40",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"First install empty state title\"",
+"\"session.emptyFirstInstallHint\"",
+"\"Restart your terminal or start a new session\"",
+"\"First install empty state subtitle\""
+],
+"inline": []
+},
+{
+"addr": "000000010088d08c",
+"kind": "system",
+"size": 24.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"session.emptyFirstInstallHint\"",
+"\"Restart your terminal or start a new session\"",
+"\"First install empty state subtitle\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010088d1d8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"session.waitingForSession\"",
+"\"Waiting for session\"",
+"\"No sessions empty state\""
+],
+"inline": []
+},
+{
+"addr": "000000010088db24",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Hide session from panel\"",
+"\"Tooltip for archive button\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010088e9e0",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "default*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010088eaa0",
+"kind": "system",
+"size": 7.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": [
+"arrow.up"
+]
+},
+{
+"addr": "0000000100890088",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010089072c",
+"kind": "system",
+"size": 7.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Contradictory frame constraints specified.\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100890f50",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"session.compacting\"",
+"\"Compacting context...\"",
+"\"Compacting status\""
+],
+"inline": []
+},
+{
+"addr": "0000000100891524",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"session.compactingWithElapsed\"",
+"\"Compacting \\302\\267 %@\"",
+"\"Compacting status with elapsed wall-clock time\""
+],
+"inline": []
+},
+{
+"addr": "00000001008a2d1c",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d9"
+],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "00000001008a3144",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d9"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008a3c34",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"arrow.counterclockwise\""
+],
+"inline": []
+},
+{
+"addr": "00000001008a8814",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "00000001008a953c",
+"kind": "system",
+"size": "var",
+"weight": "medium",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008a961c",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008afccc",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"https://vibeisland.app\"",
+"\"settings_early_bird\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008afe68",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.priceLocked\"",
+"\"Your price locked at %@ \\302\\267 Click to purchase\"",
+"\"Settings About: early adopter price CTA. %@ = formatted pri"
+],
+"inline": []
+},
+{
+"addr": "00000001008bb9cc",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": [
+"Zstandar"
+]
+},
+{
+"addr": "00000001008bbab0",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"Zstandar"
+]
+},
+{
+"addr": "00000001008bd3e4",
+"kind": "system",
+"size": 15.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"wechat.community.title\"",
+"\"\\360\\237\\221\\276 Vibe Island Community\"",
+"\"WeChat QR sheet: modal title\""
+],
+"inline": []
+},
+{
+"addr": "00000001008bf734",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"WeChat QR sheet: modal title\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008c08e4",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"https://vibeisland.app/discord\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008c0b6c",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, x8"
+],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"arrow.up.right.circle.fill\""
+],
+"inline": []
+},
+{
+"addr": "00000001008c0c8c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"arrow.up.right.circle.fill\"",
+"\"common.openInBrowser\"",
+"\"Generic button: open link in system browser\""
+],
+"inline": [
+"Open in "
+]
+},
+{
+"addr": "00000001008ccbcc",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.tuning.help\"",
+"\"Fine-tune notch dimensions if your machine doesn't fit perf",
+"\"Settings help text: notch tuning purpose and default\""
+],
+"inline": []
+},
+{
+"addr": "00000001008d0d1c",
+"kind": "system",
+"size": 6.0,
+"weight": "bold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"compact"
+]
+},
+{
+"addr": "00000001008d0ee4",
+"kind": "system",
+"size": 5.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"normal"
+]
+},
+{
+"addr": "00000001008d1234",
+"kind": "system",
+"size": 11.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"normal"
+]
+},
+{
+"addr": "00000001008d1378",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"normal"
+]
+},
+{
+"addr": "00000001008d418c",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008d4b0c",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"Vibe Isl"
+]
+},
+{
+"addr": "00000001008d5704",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008d5bcc",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Singular session label\"",
+"\"content.sessions\"",
+"\"Plural sessions label\""
+],
+"inline": [
+"sessions"
+]
+},
+{
+"addr": "00000001008d5e74",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"Singular session label\"",
+"\"content.sessions\"",
+"\"Plural sessions label\"",
+"\"\""
+],
+"inline": [
+"sessions"
+]
+},
+{
+"addr": "00000001008d5fe4",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"Singular session label\"",
+"\"content.sessions\"",
+"\"Plural sessions label\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008d7810",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"You: extract chatEndpoint into a transport-agnostic layer\""
+],
+"inline": []
+},
+{
+"addr": "00000001008d8314",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Refactor auth flow\""
+],
+"inline": []
+},
+{
+"addr": "00000001008d9250",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Editing chatEndpoint.ts \\302\\267 12s\""
+],
+"inline": [
+"Claude",
+"xhigh",
+"Ultra"
+]
+},
+{
+"addr": "00000001008d93b0",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Editing chatEndpoint.ts \\302\\267 12s\""
+],
+"inline": [
+"xhigh",
+"Ultra"
+]
+},
+{
+"addr": "00000001008d957c",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Editing chatEndpoint.ts \\302\\267 12s\"",
+"\"child_agents.running_one\"",
+"\"Compact summary replacing hidden child agent details, exact"
+],
+"inline": [
+"Ultra",
+"Running "
+]
+},
+{
+"addr": "00000001008d9dcc",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Tasks section label\""
+],
+"inline": [
+"Tasks"
+]
+},
+{
+"addr": "00000001008d9ef0",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Tasks section label\""
+],
+"inline": [
+"Tasks"
+]
+},
+{
+"addr": "00000001008db5f0",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"arrow.triangle.branch\""
+],
+"inline": []
+},
+{
+"addr": "00000001008db734",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"arrow.triangle.branch\"",
+"\"settings.display.agentsSection\"",
+"\"Display pane: section header for agent detail toggle\""
+],
+"inline": [
+"Agents"
+]
+},
+{
+"addr": "00000001008db874",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"arrow.triangle.branch\"",
+"\"settings.display.agentsSection\"",
+"\"Display pane: section header for agent detail toggle\""
+],
+"inline": []
+},
+{
+"addr": "00000001008dc170",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"claude-sonnet-4-6\"",
+"\"\""
+],
+"inline": [
+"Ultra"
+]
+},
+{
+"addr": "00000001008dc2cc",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"Ultra"
+]
+},
+{
+"addr": "00000001008dc3fc",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"Ultra"
+]
+},
+{
+"addr": "00000001008dc8c0",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008dc9f4",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008df7e8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.docker.intro\"",
+"\"Choose where the container runs. Local containers are autom",
+"\"SSH Remote: Docker intro paragraph\""
+],
+"inline": []
+},
+{
+"addr": "00000001008dfd20",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"sshRemote.docker.remote.noHosts\"",
+"\"Add and set up an SSH host above first.\"",
+"\"SSH Remote: remote Docker requires an SSH host\"",
+"\"exclamationmark.triangle\""
+],
+"inline": []
+},
+{
+"addr": "00000001008dfefc",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"sshRemote.docker.local.automatic\"",
+"\"The container host address is detected automatically.\"",
+"\"SSH Remote: local Docker automatic host discovery status\"",
+"\"checkmark.circle\""
+],
+"inline": []
+},
+{
+"addr": "00000001008e0660",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"checkmark.circle\"",
+"\"sshRemote.docker.rerun\"",
+"\"Re-run after container rebuild. For persistent setup, volum",
+"\"SSH Remote: Docker persistence hint\""
+],
+"inline": [
+"info.cir"
+]
+},
+{
+"addr": "00000001008e1368",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.docker.location\"",
+"\"Container runs on:\"",
+"\"SSH Remote: Docker container location picker label\""
+],
+"inline": []
+},
+{
+"addr": "00000001008e1d8c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.docker.platform\"",
+"\"Container platform:\"",
+"\"SSH Remote: container platform picker label\""
+],
+"inline": []
+},
+{
+"addr": "00000001008e26b8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001008e2b8c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"sshRemote.docker.remote.setupHostFirst\"",
+"\"Run Set Up for this SSH host above before using remote Dock",
+"\"SSH Remote: selected host has not been set up\"",
+"\"exclamationmark.circle\""
+],
+"inline": []
+},
+{
+"addr": "00000001008e2d1c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"sshRemote.docker.remote.connectHostFirst\"",
+"\"Connect this SSH host above before running the command.\"",
+"\"SSH Remote: selected host tunnel is disconnected\"",
+"\"exclamationmark.circle\""
+],
+"inline": []
+},
+{
+"addr": "00000001008e3184",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"exclamationmark.circle\"",
+"\"\"",
+"\"sshRemote.docker.remote.host\"",
+"\"SSH Remote: remote Docker SSH host picker label\""
+],
+"inline": [
+"SSH host"
+]
+},
+{
+"addr": "00000001008e3ce4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"sshRemote.docker.remote.relayAddress\"",
+"\"SSH Remote: container-reachable relay address label\""
+],
+"inline": [
+"Relay ad"
+]
+},
+{
+"addr": "00000001008e4828",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"sshRemote.docker.remote.relayNotManaged\"",
+"\"Vibe Island fills the tunnel port, but does not create the ",
+"\"SSH Remote: relay ownership boundary\"",
+"\"\""
+],
+"inline": [
+"info.cir"
+]
+},
+{
+"addr": "00000001008e4ea8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.docker.pasteInContainer\"",
+"\"Paste inside your container:\"",
+"\"SSH Remote: prompt before pasting command into container\""
+],
+"inline": []
+},
+{
+"addr": "00000001008e5e38",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Generic Copied confirmation label (post-click)\"",
+"\"Generic Copy button label (inline)\""
+],
+"inline": [
+"common.c",
+"Copied"
+]
+},
+{
+"addr": "00000001008e98ac",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"settings.hoverDuration\"",
+"\"Settings: delay before hover triggers expansion\""
+],
+"inline": [
+"Hover du"
+]
+},
+{
+"addr": "00000001008ea254",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings: suppress auto-expand when terminal is focused\"",
+"\"settings.smartSuppression.help\"",
+"\"Don't auto-expand when the agent's terminal tab is in focus",
+"\"Settings: smart suppression help text\""
+],
+"inline": []
+},
+{
+"addr": "00000001008eb8d4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings picker: how long the notch stays expanded for ligh",
+"\"settings.taskCompleteDwell.help\"",
+"\"How long the panel stays open for completion and warning re",
+"\"Settings help text: lightweight automatic reveal dwell time"
+],
+"inline": []
+},
+{
+"addr": "00000001008ec40c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings toggle: click outside the notch to immediately dis",
+"\"settings.dismissOnOutsideClick.help\"",
+"\"Clicking anywhere outside the notch panel immediately close",
+"\"Settings help text: dismiss lightweight automatic reveals o"
+],
+"inline": []
+},
+{
+"addr": "00000001008ec9f8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings General: idle fallback timeout picker title\"",
+"\"settings.behaviour.idleTimeout.help\"",
+"\"Applies only to sessions without a clear close signal (Code",
+"\"Settings General: idle fallback timeout help text\""
+],
+"inline": []
+},
+{
+"addr": "00000001008edddc",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings toggle: disables click-to-jump to terminal/IDE\"",
+"\"settings.disableClickToJump.help\"",
+"\"When enabled, clicking a session won't switch to its termin",
+"\"Settings help text: disable click-to-jump\""
+],
+"inline": []
+},
+{
+"addr": "00000001008f1f9c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"square.and.arrow.down\"",
+"\"settings.hookRepair.reportSaved\"",
+"\"Settings: diagnostic report save confirmation\"",
+"\"checkmark.circle.fill\""
+],
+"inline": [
+"Report s"
+]
+},
+{
+"addr": "00000001008f2174",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"square.and.arrow.down\"",
+"\"settings.hookRepair.reportSaved\"",
+"\"Settings: diagnostic report save confirmation\"",
+"\"checkmark.circle.fill\""
+],
+"inline": [
+"Report s"
+]
+},
+{
+"addr": "00000001008f2700",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.hookRepair.retryExport\"",
+"\"Settings: retry diagnostic report export\""
+],
+"inline": [
+"Retry Ex",
+"arrow.cl"
+]
+},
+{
+"addr": "00000001008f7bb4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.status.active\"",
+"\"Settings: IDE extension status \\342\\200\\224 active\"",
+"\"settings.trae.hooks.fileReady\"",
+"\"Settings: Trae hook row status when Vibe Island has written"
+],
+"inline": [
+"Hook fil"
+]
+},
+{
+"addr": "00000001008f7e64",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings: Trae hook row status when Vibe Island has written",
+"\"settings.trae.hooks.enableHelp\"",
+"\"Vibe Island has written Trae's hooks.json. In Trae, open Se",
+"\"Settings: tooltip explaining how to enable Trae Configured "
+],
+"inline": [
+"Hook fil"
+]
+},
+{
+"addr": "00000001008faad8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"exclamationmark.circle.fill\""
+],
+"inline": [
+"codex",
+"codex"
+]
+},
+{
+"addr": "00000001008fab84",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"exclamationmark.circle.fill\""
+],
+"inline": [
+"codex",
+"codex"
+]
+},
+{
+"addr": "00000001008fd568",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings: global toggle title for future newly detected age",
+"\"settings.agents.autoConfigureNewAgents.help\"",
+"\"Set up newly detected supported agents automatically.\"",
+"\"Settings: global toggle help for future newly detected agen"
+],
+"inline": []
+},
+{
+"addr": "0000000100908a90",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.addCLIBranch\"",
+"\"Add CLI Branch\\342\\200\\246\"",
+"\"Settings: button to add custom Claude Code or Codex config "
+],
+"inline": [
+"plus.cir"
+]
+},
+{
+"addr": "000000010090992c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings Integrations: Ghostty title customization toggle\"",
+"\"settings.manageTerminalTitles.description\"",
+"\"Adds a session marker so Vibe Island can return to the corr",
+"\"Settings Integrations: reason Ghostty titles include a sess"
+],
+"inline": [
+"Title fo"
+]
+},
+{
+"addr": "000000010090b548",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"https://vibeisland.app/docs/custom-jump-rules/\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010090b684",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.customJumpRules\"",
+"\"Custom Jump Rules\"",
+"\"Settings link: opens custom jump rules documentation\""
+],
+"inline": []
+},
+{
+"addr": "000000010090cba4",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010090cd60",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010090f04c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.install\"",
+"\"Settings: IDE extension install button\""
+],
+"inline": [
+"Install"
+]
+},
+{
+"addr": "000000010090f360",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.install\"",
+"\"Settings: IDE extension install button\"",
+"\"settings.status.cliNotFound\"",
+"\"Settings: CLI hook status \\342\\200\\224 CLI binary not found"
+],
+"inline": [
+"CLI not "
+]
+},
+{
+"addr": "000000010090f8d0",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"com.google.antigravity\"",
+"\"settings.antigravity.subtitle\"",
+"\"Desktop and terminal agents supported\"",
+"\"Settings: Antigravity Desktop and CLI agents are both obser"
+],
+"inline": [
+"CLI not "
+]
+},
+{
+"addr": "000000010090fcd8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Desktop and terminal agents supported\"",
+"\"Settings: Antigravity Desktop and CLI agents are both obser",
+"\"\"",
+"\"checkmark.circle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010090fdf8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"checkmark.circle.fill\"",
+"\"settings.status.installed\"",
+"\"Settings: CLI hook status \\342\\200\\224 installed\""
+],
+"inline": [
+"Installe"
+]
+},
+{
+"addr": "000000010090fff8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.status.installed\"",
+"\"Settings: CLI hook status \\342\\200\\224 installed\"",
+"\"settings.uninstall\"",
+"\"Settings: IDE extension uninstall button\""
+],
+"inline": [
+"Uninstal"
+]
+},
+{
+"addr": "0000000100910ff0",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010091108c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010091125c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"exclamationmark.triangle.fill\"",
+"\"settings.fixInSettings\"",
+"\"Settings: button to open macOS System Settings \\342\\206\\222"
+],
+"inline": [
+"Open Set"
+]
+},
+{
+"addr": "000000010092aeb0",
+"kind": "system",
+"size": 15.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"settings.bark.setup.title\"",
+"\"Bark setup sheet title\""
+],
+"inline": [
+"Configur"
+]
+},
+{
+"addr": "000000010092afec",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Bark setup sheet title\"",
+"\"settings.bark.setup.subtitle\"",
+"\"Connect Bark, test delivery, and optionally encrypt notific",
+"\"Bark setup sheet subtitle\""
+],
+"inline": [
+"Configur"
+]
+},
+{
+"addr": "0000000100936918",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"codex-internal-workers\"",
+"\"silence.builtIn.codexInternalWorkers\"",
+"\"Codex internal workers\"",
+"\"Silence Rules: grouped system filter for opaque Codex backg"
+],
+"inline": []
+},
+{
+"addr": "00000001009369e0",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"codex-internal-workers\"",
+"\"silence.builtIn.codexInternalWorkers\"",
+"\"Codex internal workers\"",
+"\"Silence Rules: grouped system filter for opaque Codex backg"
+],
+"inline": []
+},
+{
+"addr": "0000000100937980",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "rounded*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009385bc",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"folder"
+]
+},
+{
+"addr": "000000010093889c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100938c78",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100939730",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100939b38",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "rounded*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"silence.preset.chip\"",
+"\"Silence Rules: chip shown on built-in preset rule rows\""
+],
+"inline": [
+"Preset"
+]
+},
+{
+"addr": "000000010093a7f8",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"folder"
+]
+},
+{
+"addr": "000000010093a9f8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"folder"
+]
+},
+{
+"addr": "000000010093b758",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "rounded*",
+"arith": [],
+"ctx": [
+"\"silence.matchType.prefix\"",
+"\"Silence Rules: match type picker option \\342\\200\\224 prefix",
+"\"silence.matchType.contains\"",
+"\"Silence Rules: match type picker option \\342\\200\\224 contai"
+],
+"inline": [
+"Contains"
+]
+},
+{
+"addr": "000000010093c16c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010093cbe4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Generic Remove button\"",
+"\"\""
+],
+"inline": [
+"Remove"
+]
+},
+{
+"addr": "000000010093cd4c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"Generic Remove button\"",
+"\"\""
+],
+"inline": [
+"Remove"
+]
+},
+{
+"addr": "000000010093d8dc",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"xmark.circle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010093e484",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"e.g. /chronicle/dev-experiments\"",
+"\"Silence Rules: placeholder for new pattern input\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010093fd30",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"e.g. ## Memory Writing Agent\"",
+"\"Silence Rules: placeholder for new first-prompt prefix inpu",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009415fc",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"checkmark.circle.fill\"",
+"\"sparkle.magnifyingglass\""
+],
+"inline": [
+"Contains",
+"magnifyi"
+]
+},
+{
+"addr": "00000001009416d8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"checkmark.circle.fill\"",
+"\"sparkle.magnifyingglass\""
+],
+"inline": [
+"Contains",
+"magnifyi"
+]
+},
+{
+"addr": "000000010094b448",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100954c6c",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": [
+"claude",
+"pass_pan"
+]
+},
+{
+"addr": "0000000100954da0",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"pass.licenseDevices\"",
+"\"License & Devices\"",
+"\"Pass: menu/section entry linking to license and device mana"
+],
+"inline": [
+"pass_pan"
+]
+},
+{
+"addr": "0000000100954fbc",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"pass.licenseDevices\"",
+"\"License & Devices\"",
+"\"Pass: menu/section entry linking to license and device mana"
+],
+"inline": [
+"pass_pan"
+]
+},
+{
+"addr": "000000010095524c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"pass.licenseDevices\"",
+"\"License & Devices\"",
+"\"Pass: menu/section entry linking to license and device mana"
+],
+"inline": []
+},
+{
+"addr": "00000001009556a8",
+"kind": "system",
+"size": "var",
+"weight": "nil",
+"design": "nil",
+"arith": [
+"fmov\td0, x8"
+],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009557e8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.pass.placeholder\"",
+"\"Activate a license to unlock your pass\"",
+"\"Settings: Pass tab placeholder when license not activated\""
+],
+"inline": []
+},
+{
+"addr": "0000000100955d8c",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"license.activate\"",
+"\"Activate license button\""
+],
+"inline": [
+"settings",
+"Activate"
+]
+},
+{
+"addr": "0000000100956118",
+"kind": "system",
+"size": 14.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"license.activate\"",
+"\"Activate license button\"",
+"\"\""
+],
+"inline": [
+"Activate"
+]
+},
+{
+"addr": "000000010095aa74",
+"kind": "system",
+"size": 20.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010095af08",
+"kind": "system",
+"size": 15.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.codexRoots.title\"",
+"\"Codex Directories\"",
+"\"SSH Remote: Codex root selection title\""
+],
+"inline": []
+},
+{
+"addr": "000000010095b0b8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: Codex root selection title\"",
+"\"sshRemote.codexRoots.subtitle\"",
+"\"Choose which Codex configurations to connect on %@.\"",
+"\"SSH Remote: Codex root selection subtitle. %@ = host name\""
+],
+"inline": []
+},
+{
+"addr": "000000010095b594",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"Choose which Codex configurations to connect on %@.\"",
+"\"SSH Remote: Codex root selection subtitle. %@ = host name\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010095b730",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Choose which Codex configurations to connect on %@.\"",
+"\"SSH Remote: Codex root selection subtitle. %@ = host name\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010095bb60",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.codexRoots.invalidPath\"",
+"\"Enter an absolute remote path.\"",
+"\"SSH Remote: invalid manual Codex root error\""
+],
+"inline": []
+},
+{
+"addr": "000000010095c490",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.codexRoots.pathPlaceholder\"",
+"\"/absolute/path/to/codex-home\"",
+"\"SSH Remote: manual Codex root placeholder\""
+],
+"inline": []
+},
+{
+"addr": "0000000100960c38",
+"kind": "system",
+"size": 13.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100961a10",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.usage.hint\"",
+"\"Use this when Claude or Codex is logged in on the remote ho",
+"\"SSH Remote: remote usage toggle help text\""
+],
+"inline": []
+},
+{
+"addr": "0000000100962d2c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: disable automatic connection and reconnection f",
+"\"sshRemote.manualConnectionOnly.description\"",
+"\"For browser-based or enterprise SSO sign-in. Vibe Island co",
+"\"SSH Remote: explanation for manual-only connection mode\""
+],
+"inline": []
+},
+{
+"addr": "00000001009631e8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: automatically redeploy the remote hook when the",
+"\"sshRemote.autoUpdateHooks.description\"",
+"\"After an app update, Vibe Island redeploys the hook on this",
+"\"SSH Remote: explanation for automatic remote hook updates\""
+],
+"inline": []
+},
+{
+"addr": "00000001009636c8",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: explanation for automatic remote hook updates\"",
+"\"\"",
+"\"sshRemote.commonOptions\"",
+"\"SSH Remote: common SSH options header\""
+],
+"inline": [
+"Common o"
+]
+},
+{
+"addr": "0000000100964134",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.formFooter\"",
+"\"Requires SSH pubkey auth (or ControlMaster for MFA)\"",
+"\"SSH Remote: form footer note\""
+],
+"inline": [
+"-J jumph"
+]
+},
+{
+"addr": "0000000100964bd4",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009650c4",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010096cf74",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: enable remote Codex usage probe\"",
+"\"\"",
+"\"sshRemote.usage.status\"",
+"\"SSH Remote: row status when remote usage collection is enab"
+],
+"inline": [
+"chart.ba",
+"Usage: %"
+]
+},
+{
+"addr": "000000010096df74",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010096e1e4",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010096e488",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010096f510",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"needsManualTrust\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010096fca0",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010096fd38",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100973380",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"folder.badge.plus\""
+],
+"inline": []
+},
+{
+"addr": "0000000100973b64",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009769e0",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: remote Codex hook trust warning\"",
+"\"sshRemote.codexTrust.unverified\"",
+"\"Codex hook trust could not be verified\"",
+"\"SSH Remote: remote Codex hook trust unverified warning\""
+],
+"inline": []
+},
+{
+"addr": "0000000100976b9c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: remote Codex hook trust unverified warning\"",
+"\"sshRemote.codexTrust.guidance\"",
+"\"Open Codex on %@, run /hooks, trust the Vibe Island hooks, ",
+"\"SSH Remote: remote Codex hook trust recovery. %@ = host nam"
+],
+"inline": []
+},
+{
+"addr": "0000000100977520",
+"kind": "system",
+"size": 14.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"arrow.up.circle.fill\""
+],
+"inline": []
+},
+{
+"addr": "0000000100977648",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"arrow.up.circle.fill\"",
+"\"sshRemote.hookUpdateAvailable\"",
+"\"Remote hook update available\"",
+"\"SSH Remote: hook binary update banner\""
+],
+"inline": []
+},
+{
+"addr": "000000010097a900",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.manual.scpBlocked\"",
+"\"Corporate firewalls often block scp (sftp-server subsystem)",
+"\"SSH Remote: explains why manual install is needed\""
+],
+"inline": []
+},
+{
+"addr": "000000010097b2f0",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010097b4ac",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.manual.pickPlatform\"",
+"\"Pick remote platform:\"",
+"\"SSH Remote: manual install platform picker label\""
+],
+"inline": []
+},
+{
+"addr": "000000010097bfa8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010097c660",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010097c818",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.manual.runOnRemote\"",
+"\"Run on the remote (inside an SSH session):\"",
+"\"SSH Remote: manual install instruction header\""
+],
+"inline": []
+},
+{
+"addr": "000000010097d464",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Generic Copied confirmation label (post-click)\"",
+"\"Generic Copy button label (inline)\""
+],
+"inline": [
+"common.c",
+"Copied"
+]
+},
+{
+"addr": "000000010097d648",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Generic Copied confirmation label (post-click)\"",
+"\"Generic Copy button label (inline)\"",
+"\"\""
+],
+"inline": [
+"common.c"
+]
+},
+{
+"addr": "000000010097d7f0",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.manual.clickDeploy\"",
+"\"Then click \\\"Set Up\\\" above, or turn on a remote usage swit",
+"\"SSH Remote: post-install hint. IMPORTANT: the quoted label "
+],
+"inline": [
+"common.c"
+]
+},
+{
+"addr": "000000010097dcec",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.manual.airgapIntro\"",
+"\"If the remote cannot reach GitHub either (fully air-gapped ",
+"\"SSH Remote: air-gapped fallback intro\""
+],
+"inline": []
+},
+{
+"addr": "000000010097e4dc",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.manual.transport\"",
+"\"Transport via AirDrop / email / USB / rsync, land it in ~/ ",
+"\"SSH Remote: air-gapped transport instructions\""
+],
+"inline": []
+},
+{
+"addr": "000000010097eaa8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Reveal in Finder\"",
+"\"Generic button: reveal item in Finder\""
+],
+"inline": [
+"folder"
+]
+},
+{
+"addr": "000000010097ee84",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Reveal in Finder\"",
+"\"Generic button: reveal item in Finder\"",
+"\"\""
+],
+"inline": [
+"folder"
+]
+},
+{
+"addr": "000000010097f58c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.manual.thenOnRemote\"",
+"\"Then on the remote:\"",
+"\"SSH Remote: label before second-stage remote commands\""
+],
+"inline": []
+},
+{
+"addr": "0000000100980190",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Generic Copied confirmation label (post-click)\"",
+"\"Generic Copy button label (inline)\""
+],
+"inline": [
+"common.c",
+"Copied"
+]
+},
+{
+"addr": "0000000100980594",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.manual.airgapFallback\"",
+"\"Offline / air-gapped fallback\"",
+"\"SSH Remote: air-gapped fallback section title\""
+],
+"inline": [
+"common.c"
+]
+},
+{
+"addr": "0000000100983244",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Monitor and approve remote AI CLI sessions from your Notch.",
+"\"SSH Remote: introduction text\""
+],
+"inline": [
+"Hosts"
+]
+},
+{
+"addr": "00000001009833e0",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: introduction text\"",
+"\"sshRemote.introHint\"",
+"\"Add Host \\342\\206\\222 Set Up \\342\\206\\222 Connect. Requires",
+"\"SSH Remote: introduction hint\""
+],
+"inline": []
+},
+{
+"addr": "000000010098369c",
+"kind": "system",
+"size": 18.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Add Host \\342\\206\\222 Set Up \\342\\206\\222 Connect. Requires",
+"\"SSH Remote: introduction hint\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": []
+},
+{
+"addr": "0000000100983afc",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.portConflict.title\"",
+"\"SSH tunnel port conflict\"",
+"\"SSH Remote: port conflict banner title\""
+],
+"inline": []
+},
+{
+"addr": "0000000100983c54",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: port conflict banner title\"",
+"\"sshRemote.portConflict.message\"",
+"\"Multiple hosts are competing for the same remote port. Unti",
+"\"SSH Remote: port conflict banner body\""
+],
+"inline": []
+},
+{
+"addr": "00000001009840d8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"sshRemote.portConflict.message\"",
+"\"Multiple hosts are competing for the same remote port. Unti",
+"\"SSH Remote: port conflict banner body\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010098494c",
+"kind": "system",
+"size": 18.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"clock.arrow.circlepath\""
+],
+"inline": []
+},
+{
+"addr": "0000000100984dac",
+"kind": "system",
+"size": 12.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.stalePort.title\"",
+"\"Remote port held by a stale tunnel\"",
+"\"SSH Remote: stale tunnel banner title\""
+],
+"inline": []
+},
+{
+"addr": "0000000100984f04",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: stale tunnel banner title\"",
+"\"sshRemote.stalePort.message\"",
+"\"A previous tunnel from this Mac still holds the remote port",
+"\"SSH Remote: stale tunnel banner body\""
+],
+"inline": []
+},
+{
+"addr": "0000000100985388",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"sshRemote.stalePort.message\"",
+"\"A previous tunnel from this Mac still holds the remote port",
+"\"SSH Remote: stale tunnel banner body\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010098a658",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"Generic OK button\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100992cf8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100992e20",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sshRemote.restartToApply\"",
+"\"restart to apply\"",
+"\"SSH Remote: restart hint after port change\""
+],
+"inline": []
+},
+{
+"addr": "0000000100993158",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"SSH Remote: restart hint after port change\"",
+"\"\"",
+"\"sshRemote.tcpPort\"",
+"\"SSH Remote: TCP port label\""
+],
+"inline": [
+"TCP Port"
+]
+},
+{
+"addr": "0000000100998e80",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100998ff0",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010099970c",
+"kind": "system",
+"size": 11.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100999ed8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"checkmar"
+]
+},
+{
+"addr": "000000010099b9c8",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010099c044",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010099dc3c",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "000000010099e0d8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"xmark.circle.fill\""
+],
+"inline": []
+},
+{
+"addr": "000000010099f8f4",
+"kind": "system",
+"size": 13.0,
+"weight": "?",
+"design": "default*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009a0028",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.recordShortcut\"",
+"\"Settings: shortcut recorder placeholder\"",
+"\"\"",
+"\"xmark.circle.fill\""
+],
+"inline": [
+"Record S"
+]
+},
+{
+"addr": "00000001009a53d4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.shortcut.footer\"",
+"\"All shortcuts below are active while the panel is expanded.",
+"\"Settings: panel shortcuts footer emphasizing modifier-hold ",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009a5da0",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009a70d4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.sound.noCustomSounds\"",
+"\"No imported sounds yet.\"",
+"\"Placeholder when My Sounds library is empty\""
+],
+"inline": []
+},
+{
+"addr": "00000001009a72ac",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.sound.noCustomSounds\"",
+"\"No imported sounds yet.\"",
+"\"Placeholder when My Sounds library is empty\""
+],
+"inline": []
+},
+{
+"addr": "00000001009a7ce8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Button: add a new sound to the library via file picker\"",
+"\"\"",
+"\"settings.sound.addSound\"",
+"\"Button: add a new sound to the library via file picker\""
+],
+"inline": [
+"Add Soun"
+]
+},
+{
+"addr": "00000001009a8148",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.sound.addSound\"",
+"\"Button: add a new sound to the library via file picker\"",
+"\"\""
+],
+"inline": [
+"Add Soun"
+]
+},
+{
+"addr": "00000001009a8adc",
+"kind": "system",
+"size": 14.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Tooltip for delete button on My Sounds row\"",
+"\"\"",
+"\"\"",
+"\"play.circle.fill\""
+],
+"inline": [
+"Delete s"
+]
+},
+{
+"addr": "00000001009a8fd4",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"play.circle.fill\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009aa1ec",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Sound settings: quiet hours end time label\"",
+"\"sound.quietHours.help\"",
+"\"Mutes all sounds during the selected time range (crosses mi",
+"\"Sound settings: quiet hours help text\""
+],
+"inline": [
+"Until"
+]
+},
+{
+"addr": "00000001009aa89c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Sound settings: quiet hours help text\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009aa9bc",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"sound.quietHours.activeNow\"",
+"\"Quiet hours active \\342\\200\\224 sounds muted\"",
+"\"Sound settings: indicator that quiet hours is currently in "
+],
+"inline": []
+},
+{
+"addr": "00000001009af330",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"settings.sound.uninstallPack\"",
+"\"Sound settings: uninstall pack button (%@ = pack display na"
+],
+"inline": [
+"Uninstal",
+"trash"
+]
+},
+{
+"addr": "00000001009afb2c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.sound.loadFailed\"",
+"\"Failed to load sound pack registry\"",
+"\"Sound settings: registry fetch failure message\""
+],
+"inline": []
+},
+{
+"addr": "00000001009afdc8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.sound.loadFailed\"",
+"\"Failed to load sound pack registry\"",
+"\"Sound settings: registry fetch failure message\"",
+"\"Generic Retry button\""
+],
+"inline": [
+"Retry"
+]
+},
+{
+"addr": "00000001009b09d8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Sound settings: disclosure title (%lld = count)\"",
+"\"\"",
+"\"settings.sound.filter\"",
+"\"Sound settings: filter text field placeholder\""
+],
+"inline": []
+},
+{
+"addr": "00000001009b0df8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Sound settings: filter text field placeholder\"",
+"\"settings.sound.noMatches\"",
+"\"No packs matching \\\"%@\\\"\"",
+"\"Sound settings: empty filter result (%@ = search query)\""
+],
+"inline": []
+},
+{
+"addr": "00000001009b1824",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.sound.moreTypeToFilter\"",
+"\"%lld more \\342\\200\\224 type to filter\"",
+"\"Sound settings: overflow hint when list truncated (%lld = r"
+],
+"inline": []
+},
+{
+"addr": "00000001009b20c4",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.sound.poweredBy\"",
+"\"Powered by [PeonPing Registry](https://github.com/PeonPing/",
+"\"Sound settings: attribution footer; markdown link preserved"
+],
+"inline": []
+},
+{
+"addr": "00000001009b2370",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.sound.poweredBy\"",
+"\"Powered by [PeonPing Registry](https://github.com/PeonPing/",
+"\"Sound settings: attribution footer; markdown link preserved",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009b4a20",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009b4ae0",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009b4c94",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009b5b00",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Generic Install button\""
+],
+"inline": [
+"Install"
+]
+},
+{
+"addr": "00000001009b6064",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Generic Install button\"",
+"\"\"",
+"\"exclamationmark.triangle.fill\""
+],
+"inline": [
+"Install"
+]
+},
+{
+"addr": "00000001009b62f8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"exclamationmark.triangle.fill\"",
+"\"Generic Retry button\""
+],
+"inline": [
+"Retry"
+]
+},
+{
+"addr": "00000001009bb5d0",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Sound settings: auto-detect health-check sessions toggle\"",
+"\"sound.autoDetectProbes.help\"",
+"\"Automatically mutes health-check sessions (e.g. CodexBar Cl",
+"\"Sound settings: auto-detect probes help text\""
+],
+"inline": []
+},
+{
+"addr": "00000001009bc770",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Sound settings: preview button tooltip\"",
+"\"\""
+],
+"inline": [
+"Preview"
+]
+},
+{
+"addr": "00000001009bce44",
+"kind": "system",
+"size": 16.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"play.circle.fill\""
+],
+"inline": []
+},
+{
+"addr": "00000001009bef44",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.sound.importNew\"",
+"\"Picker menu item: import new file and assign to current eve",
+"\"\""
+],
+"inline": [
+"Import S"
+]
+},
+{
+"addr": "00000001009c3060",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings toggle: show subscription usage limits in notch pa",
+"\"settings.showUsageHelp\"",
+"\"Display subscription usage limits in the notch panel header",
+"\"Settings toggle help text for usage limits display\""
+],
+"inline": []
+},
+{
+"addr": "00000001009c4380",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings toggle: show Codex Reset Card inventory in usage h",
+"\"settings.showCodexResetCardsHelp\"",
+"\"Show available Codex Reset Cards and the earliest expiry in",
+"\"Settings help text for Codex Reset Card header display\""
+],
+"inline": []
+},
+{
+"addr": "00000001009c48d4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Settings toggle: show a lightweight peek when usage crosses",
+"\"settings.usageThresholdAlertHelp\"",
+"\"Show a lightweight peek once when any usage window crosses ",
+"\"Settings help text for usage threshold peek alerts\""
+],
+"inline": []
+},
+{
+"addr": "00000001009c5690",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Claude Usage Bridge\"",
+"\"Settings section header for Claude usage bridge\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009c5814",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009c6254",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Guidance copy when chain bridge is installed\"",
+"\"\"",
+"\"settings.usage.bridge.enable\"",
+"\"Button to install bridge into custom statusline\""
+],
+"inline": [
+"Connect "
+]
+},
+{
+"addr": "00000001009c66b8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"settings.usage.bridge.enable\"",
+"\"Button to install bridge into custom statusline\"",
+"\"settings.usage.bridge.remove\"",
+"\"Button to uninstall bridge from custom statusline\""
+],
+"inline": [
+"Remove b"
+]
+},
+{
+"addr": "00000001009d2030",
+"kind": "system",
+"size": 12.5,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "00000001009d4d10",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Vibe Island needs Accessibility to jump to the right window"
+],
+"inline": []
+},
+{
+"addr": "00000001009d4e70",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Vibe Island needs Accessibility to jump to the right window",
+"\"Choose \\\"Allow\\\" once macOS requests permission.\""
+],
+"inline": []
+},
+{
+"addr": "00000001009d5674",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"AXTrustedCheckOptionPrompt\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009d854c",
+"kind": "system",
+"size": 12.5,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"I'll add dark mode support to the app.\""
+],
+"inline": []
+},
+{
+"addr": "00000001009d8654",
+"kind": "system",
+"size": 12.5,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"I'll add dark mode support to the app.\"",
+"\"Read(src/styles/theme.css)\""
+],
+"inline": []
+},
+{
+"addr": "00000001009d87b4",
+"kind": "system",
+"size": 12.5,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"I'll add dark mode support to the app.\"",
+"\"Read(src/styles/theme.css)\"",
+"\"Edit(src/styles/theme.css)\""
+],
+"inline": []
+},
+{
+"addr": "00000001009da294",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Opus 4.6 (1M Context) \\302\\267 Claude Max\""
+],
+"inline": []
+},
+{
+"addr": "00000001009da41c",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Opus 4.6 (1M Context) \\302\\267 Claude Max\"",
+"\"~/Documents/my-app\""
+],
+"inline": []
+},
+{
+"addr": "00000001009da83c",
+"kind": "system",
+"size": 14.0,
+"weight": "bold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Opus 4.6 (1M Context) \\302\\267 Claude Max\"",
+"\"~/Documents/my-app\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009da9b4",
+"kind": "system",
+"size": 14.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"~/Documents/my-app\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009dc6fc",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009de844",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"square.and.pencil\""
+],
+"inline": []
+},
+{
+"addr": "00000001009de8c8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"square.and.pencil\""
+],
+"inline": []
+},
+{
+"addr": "00000001009de934",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"square.and.pencil\""
+],
+"inline": []
+},
+{
+"addr": "00000001009deb24",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"square.and.pencil\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009debd4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"square.and.pencil\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009defa0",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"square.and.pencil\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009dff84",
+"kind": "system",
+"size": 8.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e03c4",
+"kind": "system",
+"size": 8.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e08b8",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"UserPromptSubmit\"",
+"\"\"",
+"\"fix the checkout total \\342\\200\\224 it's not including tax\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e0d00",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"fix the checkout total \\342\\200\\224 it's not including tax\"",
+"\"\"",
+"\"I found the bug \\342\\200\\224 tax calculation is missing in "
+],
+"inline": []
+},
+{
+"addr": "00000001009e0e4c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"fix the checkout total \\342\\200\\224 it's not including tax\"",
+"\"\"",
+"\"I found the bug \\342\\200\\224 tax calculation is missing in "
+],
+"inline": []
+},
+{
+"addr": "00000001009e0efc",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"fix the checkout total \\342\\200\\224 it's not including tax\"",
+"\"\"",
+"\"I found the bug \\342\\200\\224 tax calculation is missing in ",
+"\"Fixed. The subtotal now includes tax before displaying.\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e10a4",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"I found the bug \\342\\200\\224 tax calculation is missing in ",
+"\"Fixed. The subtotal now includes tax before displaying.\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e1b9c",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"3 files, 1 search\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e1c74",
+"kind": "system",
+"size": 13.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"3 files, 1 search\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e1e08",
+"kind": "system",
+"size": 11.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"arrow.up"
+]
+},
+{
+"addr": "00000001009e2c44",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e2e40",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e3094",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e32f8",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"Core/"
+]
+},
+{
+"addr": "00000001009e3558",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": [
+"Services"
+]
+},
+{
+"addr": "00000001009e37ac",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": [
+"Services"
+]
+},
+{
+"addr": "00000001009e3a04",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": [
+"Utilitie"
+]
+},
+{
+"addr": "00000001009e3c58",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "00000001009e3eac",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": [
+"Package."
+]
+},
+{
+"addr": "00000001009e411c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": [
+"CLAUDE.m"
+]
+},
+{
+"addr": "00000001009e4368",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Package.resolved\""
+],
+"inline": [
+"CLAUDE.m"
+]
+},
+{
+"addr": "00000001009e6744",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e6824",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e693c",
+"kind": "system",
+"size": 7.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e6d98",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"// swift-tools-version:\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e6fd4",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"// swift-tools-version:\"",
+"\"// ============================\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e721c",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"// swift-tools-version:\"",
+"\"// ============================\"",
+"\" \\342\\200\\224 Swift Package\""
+],
+"inline": [
+"//  Vibe"
+]
+},
+{
+"addr": "00000001009e7460",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"// ============================\"",
+"\" \\342\\200\\224 Swift Package\""
+],
+"inline": [
+"//  Vibe"
+]
+},
+{
+"addr": "00000001009e7694",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\" \\342\\200\\224 Swift Package\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e78d8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"PackageDescription\""
+],
+"inline": [
+"import "
+]
+},
+{
+"addr": "00000001009e7af8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"PackageDescription\""
+],
+"inline": []
+},
+{
+"addr": "00000001009e7d40",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"PackageDescription\""
+],
+"inline": [
+"package",
+" = Packa"
+]
+},
+{
+"addr": "00000001009e7f94",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": [
+"    name",
+"\"vibe-is",
+" = Packa"
+]
+},
+{
+"addr": "00000001009e81e8",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": [
+"[.macOS(",
+" = Packa",
+"    plat"
+]
+},
+{
+"addr": "00000001009e8420",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": [
+"    prod",
+"[.macOS("
+]
+},
+{
+"addr": "00000001009e8678",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"        .executable(\"",
+"\"name: \\\"vibe-island\\\"\""
+],
+"inline": [
+"    prod",
+"[.macOS("
+]
+},
+{
+"addr": "00000001009e88b4",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"        .executable(\"",
+"\"name: \\\"vibe-island\\\"\""
+],
+"inline": [
+"    ],"
+]
+},
+{
+"addr": "00000001009e8aec",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"        .executable(\"",
+"\"name: \\\"vibe-island\\\"\"",
+"\"    dependencies: \""
+],
+"inline": []
+},
+{
+"addr": "00000001009e8d3c",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"    dependencies: \"",
+"\"        // Sparkle\""
+],
+"inline": [
+" auto-up"
+]
+},
+{
+"addr": "00000001009e8f88",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"    dependencies: \"",
+"\"        // Sparkle\"",
+"\"        .package(\"",
+"\"url: \\\"https://github\\342\\200\\246\\\"\""
+],
+"inline": [
+" auto-up"
+]
+},
+{
+"addr": "00000001009ea354",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ea4c8",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ea628",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ea788",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009eb178",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009eb2d8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009eb700",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"Plan, @ for context, / for commands\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ebfac",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ec114",
+"kind": "system",
+"size": 7.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ecd1c",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ece18",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ed5f0",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ed764",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009ede6c",
+"kind": "system",
+"size": 11.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009f7e18",
+"kind": "system",
+"size": 18.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.releaseNotes.title\"",
+"\"Settings: reopen release notes for the installed version\""
+],
+"inline": [
+"Release "
+]
+},
+{
+"addr": "00000001009f7f40",
+"kind": "system",
+"size": 12.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"settings.releaseNotes.title\"",
+"\"Settings: reopen release notes for the installed version\""
+],
+"inline": []
+},
+{
+"addr": "00000001009f87d4",
+"kind": "system",
+"size": 28.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"exclamationmark.triangle\""
+],
+"inline": []
+},
+{
+"addr": "00000001009f88f4",
+"kind": "system",
+"size": 14.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"exclamationmark.triangle\"",
+"\"releaseNotes.loadError\"",
+"\"Unable to Load Release Notes\"",
+"\"Release notes: current version could not be loaded\""
+],
+"inline": []
+},
+{
+"addr": "00000001009fb754",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009fb838",
+"kind": "system",
+"size": 13.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009fb94c",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": [
+"chevron."
+]
+},
+{
+"addr": "00000001009fbea4",
+"kind": "system",
+"size": 12.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009fd0ac",
+"kind": "system",
+"size": 9.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "00000001009fd1c4",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"update.pill.label\"",
+"\"Pill button in Notch panel header \\342\\200\\224 click to ins"
+],
+"inline": [
+"Update"
+]
+},
+{
+"addr": "0000000100a033c8",
+"kind": "system",
+"size": "var",
+"weight": "bold",
+"design": "nil",
+"arith": [
+"fmov\td0, d8"
+],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a05994",
+"kind": "system",
+"size": 11.0,
+"weight": "bold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a05b94",
+"kind": "system",
+"size": 11.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a05e7c",
+"kind": "system",
+"size": 11.0,
+"weight": "regular",
+"design": "nil",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "0000000100a067e4",
+"kind": "system",
+"size": 11.0,
+"weight": "regular",
+"design": "monospaced*",
+"arith": [],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "0000000100a071c8",
+"kind": "system",
+"size": 10.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"arrow.counterclockwise\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a07344",
+"kind": "system",
+"size": 11.0,
+"weight": "bold",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"arrow.counterclockwise\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a07f80",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"usage.activate.tip\"",
+"\"Click to view usage limits\"",
+"\"First-time tip text in expanded header to enable usage disp"
+],
+"inline": []
+},
+{
+"addr": "0000000100a08d1c",
+"kind": "system",
+"size": 10.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"usage.bridgeHint.dismiss\"",
+"\"Header CTA dismiss label for Claude usage bridge reminder\"",
+"\"\"",
+"\"\""
+],
+"inline": [
+"Remind m"
+]
+},
+{
+"addr": "0000000100a08eb4",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"usage.bridgeHint.enable\"",
+"\"Connect Claude usage\"",
+"\"Header CTA when a custom Claude statusline needs the usage "
+],
+"inline": []
+},
+{
+"addr": "0000000100a092c0",
+"kind": "system",
+"size": 8.0,
+"weight": "bold",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Connect Claude usage\"",
+"\"Header CTA when a custom Claude statusline needs the usage ",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a09654",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a09720",
+"kind": "system",
+"size": 11.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a0a6b8",
+"kind": "system",
+"size": 8.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"Usage mini bar reset time. %@ = compact relative time\""
+],
+"inline": [
+"resets %"
+]
+},
+{
+"addr": "0000000100a0ac88",
+"kind": "system",
+"size": 9.0,
+"weight": "semibold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"Usage mini bar reset time. %@ = compact relative time\"",
+"\"\""
+],
+"inline": [
+"resets %"
+]
+},
+{
+"addr": "0000000100a0afec",
+"kind": "system",
+"size": 9.0,
+"weight": "medium",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"remainin"
+]
+},
+{
+"addr": "0000000100a0c528",
+"kind": "system",
+"size": 7.0,
+"weight": "medium",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a0cff8",
+"kind": "system",
+"size": 7.0,
+"weight": "bold",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"\""
+],
+"inline": [
+"remainin"
+]
+},
+{
+"addr": "0000000100a0e224",
+"kind": "system",
+"size": 8.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"Usage tooltip last-updated time. %@ = compact relative time"
+],
+"inline": [
+"Updated "
+]
+},
+{
+"addr": "0000000100a0eda8",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"usage.window.monthlyShort\"",
+"\"Compact usage label for monthly quota\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a0efac",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\"",
+"\"usage.window.monthlyShort\"",
+"\"Compact usage label for monthly quota\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a0f2d8",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "monospaced*",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"usage.window.monthlyShort\"",
+"\"Compact usage label for monthly quota\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a0f664",
+"kind": "system",
+"size": 10.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": []
+},
+{
+"addr": "0000000100a0f914",
+"kind": "system",
+"size": 10.0,
+"weight": "semibold",
+"design": "monospaced",
+"arith": [],
+"ctx": [
+"\"\"",
+"\"\""
+],
+"inline": [
+"remainin"
+]
+},
+{
+"addr": "0000000100a0fb94",
+"kind": "system",
+"size": 9.0,
+"weight": "nil",
+"design": "nil",
+"arith": [],
+"ctx": [
+"\"\""
+],
+"inline": [
+"remainin"
+]
+},
+{
+"addr": "0000000100b041f4",
+"kind": "system",
+"size": "var",
+"weight": "regular",
+"design": "nil",
+"arith": [
+"fmov\td0, d14"
+],
+"ctx": [],
+"inline": []
+},
+{
+"addr": "0000000100b0bad0",
+"kind": "system",
+"size": "var",
+"weight": "regular",
+"design": "nil",
+"arith": [
+"fmov\td0, d14"
+],
+"ctx": [],
+"inline": []
+}
+]

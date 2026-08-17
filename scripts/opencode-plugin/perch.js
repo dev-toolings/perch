@@ -9,10 +9,9 @@
 // stdin — same binary, same wire format (PerchKit/Wire.swift's ClaudeHookPayload), so the
 // app doesn't need to know which CLI is talking to it.
 //
-// Perch only observes here: permission events are sent fire-and-forget. opencode's own
-// permission prompt still makes the decision; blocking on Perch would mean a missing or
-// wedged Perch could stall a session, which the Claude Code hook explicitly never does
-// either (see perch-hook/main.swift's "fails open" comments).
+// Ordinary lifecycle events are fire-and-forget. Permission and question events wait for
+// Perch in a detached promise, then reply through opencode's local HTTP API. Every failure
+// path leaves opencode's own prompt in charge, so a missing Perch never stalls a session.
 //
 // Event mapping:
 //   session.created                        -> SessionStart
@@ -22,7 +21,8 @@
 //     + message.updated (role: user)       -> UserPromptSubmit, with the buffered text
 //   message.part.updated (tool, running)   -> PreToolUse
 //   message.part.updated (tool, completed) -> PostToolUse
-//   permission.asked                       -> PermissionRequest (fire-and-forget)
+//   permission.asked / replied             -> PermissionRequest / PostToolUse
+//   question.asked / replied / rejected    -> AskUserQuestion / PostToolUse
 //
 // Checks that need no running opencode:
 //   node --check scripts/opencode-plugin/perch.js
@@ -66,6 +66,11 @@ function rememberBounded(map, key, value) {
   map.set(key, value);
 }
 
+function displayToolName(value) {
+  const name = typeof value === "string" ? value : "";
+  return name ? name[0].toUpperCase() + name.slice(1) : "unknown";
+}
+
 /// Maps one opencode event to a Claude-shaped hook payload, or null if this event carries
 /// nothing perch-hook understands. Kept pure and exported so the live plugin and
 /// --self-test run the exact same mapping.
@@ -88,6 +93,12 @@ export function mapEvent(event, { directory, sessionCwd, pendingUserText, toolPa
         payload: base(properties.info.id, { hook_event_name: "SessionStart" }),
       };
     }
+
+    case "session.status":
+      if (properties.sessionID && properties.status?.type === "idle") {
+        return { hookEvent: "Stop", payload: base(properties.sessionID, { hook_event_name: "Stop" }) };
+      }
+      return null;
 
     case "session.idle": {
       if (!properties.sessionID) return null;
@@ -117,7 +128,7 @@ export function mapEvent(event, { directory, sessionCwd, pendingUserText, toolPa
 
       if (part.type === "tool" && part.sessionID) {
         const status = part.state?.status;
-        const toolName = part.tool || "unknown";
+        const toolName = displayToolName(part.tool);
         // opencode reports a running tool call through several part updates — one per
         // streamed state change, not one per call. Only the first pending/running and the
         // first completed/error are worth a hook, so the transition is tracked per part
@@ -169,12 +180,70 @@ export function mapEvent(event, { directory, sessionCwd, pendingUserText, toolPa
 
     case "permission.asked": {
       if (!properties.sessionID) return null;
+      const patterns = properties.patterns || [];
+      const toolName = displayToolName(properties.permission);
+      const toolInput = { patterns, metadata: properties.metadata };
+      if (properties.permission === "bash" && patterns.length > 0) {
+        toolInput.command = patterns.join(" && ");
+      }
+      if ((properties.permission === "edit" || properties.permission === "write")
+        && patterns.length > 0) {
+        toolInput.file_path = patterns[0];
+      }
       return {
         hookEvent: "PermissionRequest",
         payload: base(properties.sessionID, {
           hook_event_name: "PermissionRequest",
-          tool_name: properties.permission || "unknown",
-          tool_input: { patterns: properties.patterns || [], metadata: properties.metadata },
+          tool_name: toolName,
+          tool_input: toolInput,
+        }),
+        replyRequest: properties.id ? { kind: "permission", id: properties.id } : null,
+      };
+    }
+
+    case "permission.replied": {
+      if (!properties.sessionID) return null;
+      return {
+        hookEvent: "PostToolUse",
+        payload: base(properties.sessionID, {
+          hook_event_name: "PostToolUse",
+          tool_name: "Permission",
+        }),
+      };
+    }
+
+    case "question.asked": {
+      if (!properties.id || !properties.sessionID) return null;
+      const questions = (properties.questions || []).map((question) => ({
+        question: question.question || "",
+        header: question.header || "",
+        options: (question.options || []).map((option) => ({
+          label: option.label || "",
+          description: option.description || "",
+        })),
+        multiSelect: question.multiple || false,
+      }));
+      return {
+        hookEvent: "PermissionRequest",
+        payload: base(properties.sessionID, {
+          hook_event_name: "PermissionRequest",
+          tool_name: "AskUserQuestion",
+          tool_use_id: properties.id,
+          tool_input: { questions },
+        }),
+        replyRequest: { kind: "question", id: properties.id },
+      };
+    }
+
+    case "question.replied":
+    case "question.rejected": {
+      if (!properties.sessionID) return null;
+      return {
+        hookEvent: "PostToolUse",
+        payload: base(properties.sessionID, {
+          hook_event_name: "PostToolUse",
+          tool_name: "AskUserQuestion",
+          tool_use_id: properties.requestID,
         }),
       };
     }
@@ -204,10 +273,129 @@ function sendHook(hookEvent, payload) {
   }
 }
 
-export default async ({ directory }) => {
+function sendHookAndWait(hookEvent, payload, timeoutMs = 300_000) {
+  return new Promise((resolve) => {
+    let settled = false;
+    let output = "";
+    const settle = (value) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve(value);
+    };
+
+    let child;
+    try {
+      child = spawn(resolveHookBin(), [hookEvent, "--source", "opencode"], {
+        stdio: ["pipe", "pipe", "ignore"],
+      });
+    } catch {
+      resolve(null);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      child.kill("SIGTERM");
+      settle(null);
+    }, timeoutMs);
+    child.on("error", () => settle(null));
+    child.stdout.on("data", (chunk) => {
+      if (output.length < 1_000_000) output += chunk.toString();
+    });
+    child.on("close", (code) => {
+      if (code !== 0 || !output.trim()) {
+        settle(null);
+        return;
+      }
+      try {
+        settle(JSON.parse(output));
+      } catch {
+        settle(null);
+      }
+    });
+    child.stdin.on("error", () => settle(null));
+    child.stdin.end(JSON.stringify(payload));
+  });
+}
+
+export function openCodeQuestionAnswers(questions, updatedInput) {
+  const answers = updatedInput?.answers;
+  if (!answers || typeof answers !== "object") return null;
+
+  const result = questions.map((question) => {
+    const value = answers[question.id] ?? answers[question.question] ?? answers[question.header];
+    if (Array.isArray(value)) return value.map(String).filter(Boolean);
+    if (typeof value !== "string" || !value) return [];
+    return question.multiSelect ? value.split(", ").filter(Boolean) : [value];
+  });
+  return result.every((answer) => answer.length > 0) ? result : null;
+}
+
+export default async ({ client, serverUrl, directory }) => {
   const sessionCwd = new Map();
   const pendingUserText = new Map();
   const toolPartState = new Map();
+  const serverOrigin = typeof serverUrl === "string"
+    ? new URL(serverUrl).origin
+    : serverUrl?.origin || "http://127.0.0.1:4096";
+
+  const headers = (cwd) => {
+    const result = { "Content-Type": "application/json" };
+    const password = process.env.OPENCODE_SERVER_PASSWORD;
+    if (password) {
+      const username = process.env.OPENCODE_SERVER_USERNAME || "opencode";
+      result.Authorization = `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`;
+    }
+    if (cwd || directory) result["x-opencode-directory"] = encodeURIComponent(cwd || directory);
+    return result;
+  };
+
+  const postReply = async (path, body, cwd) => {
+    try {
+      const response = await fetch(`${serverOrigin}${path}`, {
+        method: "POST", headers: headers(cwd), body: JSON.stringify(body),
+      });
+      if (response.ok) return true;
+    } catch {}
+
+    try {
+      const rawClient = client?._client;
+      if (!rawClient?.post) return false;
+      await rawClient.post({ url: path, headers: headers(cwd), body });
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const dispatch = (mapped) => {
+    if (!mapped?.replyRequest) {
+      sendHook(mapped.hookEvent, mapped.payload);
+      return;
+    }
+
+    sendHookAndWait(mapped.hookEvent, mapped.payload).then(async (response) => {
+      if (!response) return;
+      const requestId = encodeURIComponent(mapped.replyRequest.id);
+      const cwd = mapped.payload.cwd;
+
+      if (mapped.replyRequest.kind === "question") {
+        const answers = openCodeQuestionAnswers(
+          mapped.payload.tool_input?.questions || [],
+          response?.hookSpecificOutput?.decision?.updatedInput);
+        if (answers) await postReply(`/question/${requestId}/reply`, { answers }, cwd);
+        return;
+      }
+
+      const decision = response?.hookSpecificOutput?.decision;
+      if (!decision?.behavior) return;
+      const remembers = Array.isArray(decision.updatedPermissions)
+        && decision.updatedPermissions.length > 0;
+      const reply = decision.behavior === "allow" ? (remembers ? "always" : "once") : "reject";
+      await postReply(
+        `/permission/${requestId}/reply`, { reply, message: decision.message }, cwd);
+    });
+  };
 
   return {
     event: async ({ event }) => {
@@ -217,7 +405,7 @@ export default async ({ directory }) => {
       } catch {
         return; // an event shape we don't understand must never break the session
       }
-      if (mapped) sendHook(mapped.hookEvent, mapped.payload);
+      if (mapped) dispatch(mapped);
     },
   };
 };
@@ -280,6 +468,18 @@ function runSelfTest() {
       after: () => assertPhase("toolPartState after 2nd completed update", ctx.toolPartState, "part_1", "post"),
     },
     { type: "permission.asked", properties: { sessionID: "ses_1", permission: "bash", patterns: ["ls"] } },
+    { type: "permission.replied", properties: { sessionID: "ses_1", requestID: "perm_1" } },
+    {
+      type: "question.asked",
+      properties: {
+        id: "question_1", sessionID: "ses_1",
+        questions: [{ question: "Which database?", header: "Database", multiple: false,
+          options: [{ label: "Postgres", description: "Relational" }] }],
+      },
+      expectedTool: "AskUserQuestion",
+    },
+    { type: "question.replied", properties: { sessionID: "ses_1", requestID: "question_1" } },
+    { type: "session.status", properties: { sessionID: "ses_1", status: { type: "idle" } } },
     { type: "session.idle", properties: { sessionID: "ses_1" } },
     { type: "session.deleted", properties: { info: { id: "ses_1" } } },
   ];
@@ -304,8 +504,9 @@ function runSelfTest() {
     if (event.after) event.after();
 
     if (!mapped) {
-      const label = event.expectNull ? "PASS (expected, buffered/deduped)" : "-- (no mapping)";
+      const label = event.expectNull ? "PASS (expected, buffered/deduped)" : "FAIL (no mapping)";
       console.log(`${label} ${event.type}`);
+      if (!event.expectNull) failures++;
       continue;
     }
     if (event.expectNull) {
@@ -325,13 +526,23 @@ function runSelfTest() {
     let ok = false;
     try {
       const parsed = JSON.parse(printed);
-      ok = parsed.hook_event_name === mapped.hookEvent && parsed.session_id === "ses_1" && "cwd" in parsed;
+      ok = parsed.hook_event_name === mapped.hookEvent
+        && parsed.session_id === "ses_1"
+        && "cwd" in parsed
+        && (!event.expectedTool || parsed.tool_name === event.expectedTool);
     } catch {
       ok = false;
     }
     console.log(`${ok ? "PASS" : "FAIL"} ${event.type} -> ${mapped.hookEvent}: ${printed}`);
     if (!ok) failures++;
   }
+
+  const openCodeAnswers = openCodeQuestionAnswers(
+    [{ question: "Which database?", header: "Database", multiSelect: false }],
+    { answers: { "Which database?": "Postgres" } });
+  const answerOk = JSON.stringify(openCodeAnswers) === '[["Postgres"]]';
+  console.log(`${answerOk ? "PASS" : "FAIL"} question answer conversion`);
+  if (!answerOk) failures++;
 
   if (failures > 0) {
     console.error(`self-test: ${failures} failure(s)`);
