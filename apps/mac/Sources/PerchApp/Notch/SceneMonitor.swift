@@ -75,7 +75,40 @@ final class SceneMonitor {
     func refresh() {
         scene.isScreenShared = Self.isScreenBeingCaptured()
         scene.isFocusActive = Self.isFocusActive()
-        scene.frontmostBundleId = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+        let frontmost = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+        scene.frontmostBundleId = frontmost
+        scene.frontmostSurfaceIds = frontmost == Self.cmuxBundleId ? Self.cmuxFocusedIds() : []
+    }
+
+    private static let cmuxBundleId = "com.cmuxterm.app"
+
+    /// Which pane cmux has in front, asked of its own CLI over its local socket — about
+    /// 18 ms, and only ever when cmux is the frontmost app. Empty when the CLI is not
+    /// where the app installs it, or does not answer in time; the scene then falls back
+    /// to the bundle id alone, which is what it always had.
+    private static func cmuxFocusedIds() -> Set<String> {
+        let candidates = [
+            "/Applications/cmux.app/Contents/Resources/bin/cmux",
+            NSHomeDirectory() + "/Applications/cmux.app/Contents/Resources/bin/cmux",
+        ]
+        guard let cli = candidates.first(where: { FileManager.default.isExecutableFile(atPath: $0) })
+        else { return [] }
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: cli)
+        process.arguments = ["--id-format", "uuids", "identify", "--no-caller"]
+        let output = Pipe()
+        process.standardOutput = output
+        process.standardError = FileHandle.nullDevice
+        do { try process.run() } catch { return [] }
+        // Bounded: a hung socket must not hold the hook that is waiting on this answer.
+        let deadline = Date().addingTimeInterval(0.25)
+        while process.isRunning, Date() < deadline { usleep(5_000) }
+        guard !process.isRunning else {
+            process.terminate()
+            return []
+        }
+        let data = output.fileHandleForReading.readDataToEndOfFile()
+        return CmuxFocus.surfaceIds(fromIdentifyJSON: data)
     }
 
     /// Whether the frontmost app owns a normal window that fills a display exactly.

@@ -65,17 +65,37 @@ public struct Scene: Sendable, Equatable {
   /// Bundle id of whatever is frontmost, so Perch can tell when you are already looking
   /// at the terminal that is asking.
   public var frontmostBundleId: String?
+  /// Which pane, surface or tab of that frontmost terminal has the focus, when the
+  /// terminal can say — cmux answers `identify` with all three ids. Empty when it
+  /// cannot, which is every other terminal today.
+  ///
+  /// The bundle id alone said "you are looking at cmux", and cmux is four workspaces
+  /// of panes: a question in one of them stayed silent while you worked in another,
+  /// and was found by hovering, a minute late. With the focused ids the question is
+  /// only quiet when its own pane is the one in front.
+  public var frontmostSurfaceIds: Set<String>
 
   public init(
     isFocusActive: Bool = false,
     isScreenObscured: Bool = false,
     isScreenShared: Bool = false,
-    frontmostBundleId: String? = nil
+    frontmostBundleId: String? = nil,
+    frontmostSurfaceIds: Set<String> = []
   ) {
     self.isFocusActive = isFocusActive
     self.isScreenObscured = isScreenObscured
     self.isScreenShared = isScreenShared
     self.frontmostBundleId = frontmostBundleId
+    self.frontmostSurfaceIds = frontmostSurfaceIds
+  }
+
+  /// Whether the session living in `surface` of `host` is what the person is looking
+  /// at. True on the bundle id alone when the terminal cannot say which pane is up —
+  /// the old, coarse answer — and only for the matching pane when it can.
+  public func isLookingAt(host: String?, surface: String?) -> Bool {
+    guard let host, host == frontmostBundleId else { return false }
+    guard !frontmostSurfaceIds.isEmpty, let surface, !surface.isEmpty else { return true }
+    return frontmostSurfaceIds.contains(surface)
   }
 }
 
@@ -168,6 +188,9 @@ public enum InterruptionPolicy {
     settings: QuietSettings,
     /// Where the session asking this is running, when we know.
     host: String? = nil,
+    /// And in which pane of it, for a terminal that has several. See
+    /// `Scene.frontmostSurfaceIds`.
+    surface: String? = nil,
     at date: Date = .now,
     calendar: Calendar = .current
   ) -> Interruption {
@@ -179,7 +202,7 @@ public enum InterruptionPolicy {
 
     // You are already looking at the terminal that is asking. Taking the screen to
     // tell you what is on it would be a step backwards.
-    if settings.smartSuppression, let host, host == scene.frontmostBundleId {
+    if settings.smartSuppression, scene.isLookingAt(host: host, surface: surface) {
       return .quiet
     }
 
@@ -212,6 +235,7 @@ public enum InterruptionPolicy {
     scene: Scene,
     settings: QuietSettings,
     host: String? = nil,
+    surface: String? = nil,
     at date: Date = .now,
     calendar: Calendar = .current
   ) -> Bool {
@@ -220,7 +244,7 @@ public enum InterruptionPolicy {
     if settings.manualQuiet { return false }
     if isQuietScene(scene: scene, settings: settings) { return false }
     if settings.quietHours?.contains(date, calendar: calendar) == true { return false }
-    if let host, host == scene.frontmostBundleId { return false }
+    if scene.isLookingAt(host: host, surface: surface) { return false }
     return true
   }
 
@@ -236,12 +260,14 @@ public enum InterruptionPolicy {
     scene: Scene,
     settings: QuietSettings,
     host: String? = nil,
+    surface: String? = nil,
     at date: Date = .now,
     calendar: Calendar = .current
   ) -> Bool {
     guard settings.soundEnabled else { return false }
     return decide(
-      kind, scene: scene, settings: settings, host: host, at: date, calendar: calendar)
+      kind, scene: scene, settings: settings, host: host, surface: surface, at: date,
+      calendar: calendar)
       == .full
   }
 }
@@ -267,5 +293,24 @@ extension QuietSettings {
     } catch {
       NSLog("perch: could not save quiet settings: \(error)")
     }
+  }
+}
+
+/// What cmux says is focused, read off `cmux --id-format uuids identify --no-caller`.
+///
+/// Kept in the framework so the parsing has tests; the process that asks lives with the
+/// scene monitor in the app.
+public enum CmuxFocus {
+  /// Every id in `focused` — pane, surface, tab, workspace, window — because a session's
+  /// `CMUX_PANEL_ID` is a panel id and `CMUX_SURFACE_ID` a surface id, and matching any
+  /// of the ids the focus report carries is what makes either environment work.
+  public static func surfaceIds(fromIdentifyJSON data: Data) -> Set<String> {
+    guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+      let focused = object["focused"] as? [String: Any]
+    else { return [] }
+    return Set(
+      focused.compactMap { key, value in
+        key.hasSuffix("_id") ? (value as? String).flatMap { $0.isEmpty ? nil : $0 } : nil
+      })
   }
 }

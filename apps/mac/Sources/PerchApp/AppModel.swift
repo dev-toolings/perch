@@ -516,10 +516,14 @@ final class AppModel {
     // read at the moment it matters rather than cached.
     scenes.refresh()
     let host = TerminalJump.bundleId(for: client)
+    // For a multi-pane terminal, `client.session` is the pane the session lives in —
+    // `CMUX_PANEL_ID` — which is what tells "looking at cmux" from "looking at it".
+    let surface = host == "com.cmuxterm.app" ? client?.session : nil
     let decision = InterruptionPolicy.decide(
-      kind, scene: scenes.scene, settings: quiet, host: host)
+      kind, scene: scenes.scene, settings: quiet, host: host, surface: surface)
     if decision == .full,
-      InterruptionPolicy.playsSound(kind, scene: scenes.scene, settings: quiet, host: host)
+      InterruptionPolicy.playsSound(
+        kind, scene: scenes.scene, settings: quiet, host: host, surface: surface)
     {
       SoundPlayer.play(kind, settings: sounds)
     }
@@ -532,10 +536,11 @@ final class AppModel {
   /// app" is exactly what people ask this app for.
   private func notify(_ kind: SessionNotifier.Kind, for request: PerchRequest) {
     let host = TerminalJump.bundleId(for: request.client)
+    let surface = host == "com.cmuxterm.app" ? request.client?.session : nil
     guard
       InterruptionPolicy.notifies(
         kind == .failed ? .taskError : .taskComplete,
-        scene: scenes.scene, settings: quiet, host: host)
+        scene: scenes.scene, settings: quiet, host: host, surface: surface)
     else { return }
 
     // The session's own name, so a notification says which of six agents finished.

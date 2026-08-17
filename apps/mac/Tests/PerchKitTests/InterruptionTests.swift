@@ -176,6 +176,45 @@ private func at(_ hour: Int, _ minute: Int = 0) -> Date {
       .approvalNeeded, scene: scene, settings: QuietSettings(), host: nil) == .full)
 }
 
+/// cmux is four workspaces of panes behind one bundle id. When it says which pane is in
+/// front, a question from another pane is not "already on screen" — it earns the panel.
+@Test func aFocusedMultiplexerOnlySuppressesItsFocusedPane() {
+  let scene = Scene(
+    frontmostBundleId: "com.cmuxterm.app",
+    frontmostSurfaceIds: ["PANE-A", "SURFACE-A", "TAB-A"])
+
+  // The session in the focused pane: you are looking at it.
+  #expect(
+    InterruptionPolicy.decide(
+      .questionAsked, scene: scene, settings: QuietSettings(),
+      host: "com.cmuxterm.app", surface: "PANE-A") == .quiet)
+  // A session in another pane of the same app: you are not.
+  #expect(
+    InterruptionPolicy.decide(
+      .questionAsked, scene: scene, settings: QuietSettings(),
+      host: "com.cmuxterm.app", surface: "PANE-B") == .full)
+  // No pane known for the session: the bundle id is all there is, as before.
+  #expect(
+    InterruptionPolicy.decide(
+      .questionAsked, scene: scene, settings: QuietSettings(),
+      host: "com.cmuxterm.app", surface: nil) == .quiet)
+  // The terminal could not say which pane is up: same fallback.
+  #expect(
+    InterruptionPolicy.decide(
+      .questionAsked, scene: Scene(frontmostBundleId: "com.cmuxterm.app"),
+      settings: QuietSettings(), host: "com.cmuxterm.app", surface: "PANE-B") == .quiet)
+}
+
+@Test func cmuxIdentifyIsReadForEveryFocusedId() {
+  let json = """
+    {"bundle_identifier":"com.cmuxterm.app","caller":null,"focused":{
+      "is_browser_surface":false,"pane_id":"P","surface_id":"S","surface_type":"terminal",
+      "tab_id":"T","window_id":"W","workspace_id":"K"},"socket_path":"/x"}
+    """.data(using: .utf8)!
+  #expect(CmuxFocus.surfaceIds(fromIdentifyJSON: json) == ["P", "S", "T", "W", "K"])
+  #expect(CmuxFocus.surfaceIds(fromIdentifyJSON: Data("nope".utf8)).isEmpty)
+}
+
 @Test func smartSuppressionCanBeTurnedOff() {
   var settings = QuietSettings()
   settings.smartSuppression = false
