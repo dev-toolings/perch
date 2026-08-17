@@ -53,6 +53,21 @@ struct FeaturedSessionSelectionTests {
         #expect(SessionDisplaySelection.compactSummary(for: priority) == "working")
     }
 
+    @Test func amongWorkingSessionsTheOneThatMovedLastLeads() throws {
+        // First in the list, but stuck in a six-minute command; the other one just ran
+        // a tool. The strip follows the movement.
+        var stuck = session("stuck", status: .runningTool)
+        stuck.lastEvent = epoch
+        var lively = session("lively", status: .runningTool)
+        lively.lastEvent = epoch.addingTimeInterval(300)
+
+        #expect(try #require(SessionDisplaySelection.priority(in: [stuck, lively])).id == "lively")
+
+        // And the lead changes hands the moment the other one moves again.
+        stuck.lastEvent = epoch.addingTimeInterval(301)
+        #expect(try #require(SessionDisplaySelection.priority(in: [stuck, lively])).id == "stuck")
+    }
+
     @Test func aRequestBlockedOnAPersonOutranksAFinishedTurn() throws {
         let sessions = [session("finished", status: .idle), session("asking", status: .needsApproval)]
 

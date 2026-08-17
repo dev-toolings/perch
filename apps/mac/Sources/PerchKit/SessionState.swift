@@ -286,12 +286,18 @@ public enum SessionDisplaySelection {
     /// turn ends: `Stop` is the newest event by definition, so the strip named the
     /// session that had just *finished* while another was still working — an animated
     /// mark next to the title of something at rest. Work in flight outranks a request
-    /// blocked on a person, which outranks a finished turn; inside a group the stable
-    /// list order holds, so the label does not flicker between peers.
+    /// blocked on a person, which outranks a finished turn.
+    ///
+    /// Inside the group, though, recency is the point. Two harnesses at work and the
+    /// strip pinned to the *first* one — six minutes into a `sleep`-loop — is a label
+    /// that never changes while the other session runs a tool a second. The strip
+    /// exists to show that something is moving, so it follows the one that moved last.
     public static func priority(in sessions: [SessionSnapshot]) -> SessionSnapshot? {
-        sessions.first(where: \.isWorking)
-            ?? sessions.first(where: \.status.needsYou)
-            ?? sessions.first
+        let group =
+            sessions.filter(\.isWorking).nonEmpty
+            ?? sessions.filter(\.status.needsYou).nonEmpty
+            ?? sessions
+        return group.max { ($0.lastEvent, $0.id) < ($1.lastEvent, $1.id) }
     }
 
     /// What the strip says about that session. Vibe's `priorityCompactTitle` is the
@@ -815,4 +821,9 @@ public struct SessionTracker: Sendable {
     public var subagentCount: Int {
         sessions.values.reduce(0) { $0 + $1.subagents }
     }
+}
+
+extension Array {
+    /// Nil rather than empty, so a chain of fallbacks can be written as one expression.
+    fileprivate var nonEmpty: [Element]? { isEmpty ? nil : self }
 }

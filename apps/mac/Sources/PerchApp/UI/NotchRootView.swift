@@ -432,15 +432,41 @@ struct CompactStatusSprites: View {
       || status == .background
   }
 
+  /// Vibe's working sprite is not a sticker: its `PixelStatusIcon` carries a phase and a
+  /// timer, and the pair steps in place while a harness runs. Half a second a step, on
+  /// the shared clock rather than an implicit animation, so the strip and the header —
+  /// which draw the same pair — stay in step with each other.
+  static let stepInterval: TimeInterval = 0.55
+
   var body: some View {
-    HStack(spacing: 4) {
-      PixelStatusIconCompact(
-        isPrimary: true, isWorking: isWorking, needsYou: status?.needsYou == true)
+    Group {
       if isWorking {
-        PixelStatusIconCompact(isPrimary: false, isWorking: true, needsYou: false)
+        TimelineView(.periodic(from: .now, by: Self.stepInterval)) { context in
+          let step =
+            Int((context.date.timeIntervalSinceReferenceDate / Self.stepInterval).rounded(.down))
+          pair(step: step)
+        }
+      } else {
+        pair(step: nil)
       }
     }
     .accessibilityHidden(true)
+  }
+
+  /// The primary and the companion take turns: one lifts while the other lands, which
+  /// reads as walking rather than as the whole thing bouncing.
+  private func pair(step: Int?) -> some View {
+    let lifted = step.map { $0 % 2 == 0 }
+    return HStack(spacing: 4) {
+      PixelStatusIconCompact(
+        isPrimary: true, isWorking: isWorking, needsYou: status?.needsYou == true)
+        .offset(y: lifted == true ? -1 : 0)
+      if isWorking {
+        PixelStatusIconCompact(isPrimary: false, isWorking: true, needsYou: false)
+          .offset(y: lifted == false ? -1 : 0)
+      }
+    }
+    .animation(.easeInOut(duration: Self.stepInterval * 0.6), value: lifted)
   }
 }
 
