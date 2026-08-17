@@ -938,7 +938,7 @@ private struct ExpandedView: View {
           : 34 + CGFloat(visibleTaskRows) * 22
       return total + 34 + summarySpacing + (revealsConversation ? 166 : 0) + taskHeight
     }
-    let footerHeight: CGFloat = additionalSessionCount > 0 ? 80 : 0
+    let footerHeight: CGFloat = additionalSessionCount > 0 ? 24 : 0
     return notch.height + NotchState.bodyInset + 36 + Self.tabStripHeight
       + min(max(rows + footerHeight, 96), 452) + 20
   }
@@ -1288,59 +1288,34 @@ private struct ActivityList: View {
   }
 }
 
+/// The rest of the sessions, behind one quiet line.
+///
+/// This was a 52pt raised card with a glyph and an arrow, which read like Vibe's
+/// paywall row rather than a disclosure — and it carried two numbers that disagreed:
+/// "Show all N+1 sessions" over "+N additional". `count` is already the hidden count,
+/// so one honest number is the whole message. Vibe keeps this to a single 11pt row that
+/// lifts on hover; so does this.
 struct ShowAllSessionsButton: View {
   let count: Int
   let action: () -> Void
   @State private var isHovered = false
 
   var body: some View {
-    VStack(spacing: 7) {
-      Button(action: action) {
-        HStack(spacing: 10) {
-          ZStack {
-            Circle()
-              .fill(Color.white.opacity(0.09))
-            Image(systemName: "rectangle.stack.fill")
-              .font(.system(size: 11, weight: .semibold))
-              .foregroundStyle(Theme.primary)
-          }
-          .frame(width: 28, height: 28)
-
-          VStack(alignment: .leading, spacing: 1) {
-            Text(t("Show all %lld sessions", count + 1))
-              .font(Theme.label(12, .semibold))
-              .foregroundStyle(Theme.primary)
-            Text(t("Agents, tasks, and answers in progress"))
-              .font(Theme.prose(10))
-              .foregroundStyle(Theme.secondary)
-          }
-
-          Spacer(minLength: 8)
-
-          Image(systemName: "arrow.up.right")
-            .font(.system(size: 11, weight: .semibold))
-            .foregroundStyle(isHovered ? Theme.primary : Theme.tertiary)
-        }
-        .padding(.horizontal, 12)
-        .frame(height: 52)
-        .background(
-          RoundedRectangle(cornerRadius: 12, style: .continuous)
-            .fill(isHovered ? Theme.neutral : Theme.raised.opacity(0.72))
-        )
-        .overlay(
-          RoundedRectangle(cornerRadius: 12, style: .continuous)
-            .stroke(Theme.hairline, lineWidth: 1)
-        )
+    Button(action: action) {
+      HStack(spacing: 5) {
+        Text(t("+%lld more sessions", count))
+          .font(Theme.label(11))
+        Image(systemName: "chevron.down")
+          .font(.system(size: 8, weight: .semibold))
       }
-      .buttonStyle(.plain)
-      .onHover { isHovered = $0 }
-      .accessibilityIdentifier("sessions.show-all")
-
-      Text(t("+%lld additional sessions", count))
-        .font(Theme.prose(10))
-        .foregroundStyle(Theme.tertiary)
-        .frame(maxWidth: .infinity)
+      .foregroundStyle(isHovered ? Theme.primary : Theme.secondary)
+      .frame(maxWidth: .infinity)
+      .padding(.vertical, 4)
+      .contentShape(Rectangle())
     }
+    .buttonStyle(.plain)
+    .onHover { isHovered = $0 }
+    .accessibilityIdentifier("sessions.show-all")
   }
 }
 

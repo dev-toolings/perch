@@ -592,9 +592,6 @@
 "Codex App Git helper prompts" = "Prompts Git helper de Codex App";
 "Craft Agent title generator" = "Générateur de titre Craft Agent";
 "Unread completion" = "Fin non lue";
-"Show all %lld sessions" = "Afficher les %lld sessions";
-"+%lld additional sessions" = "+%lld sessions supplémentaires";
-"Agents, tasks, and answers in progress" = "Agents, tâches et réponses en cours";
 "Sound effects" = "Effets sonores";
 "Enable sound effects" = "Activer les effets sonores";
 "Creator" = "Créateur";
@@ -717,3 +714,4 @@
 "Install hooks, then restart your sessions." = "Installez les hooks, puis redémarrez vos sessions.";
 "%lld project hook files duplicate the global installation." = "%lld fichiers de hooks de projet dupliquent l’installation globale.";
 "Unread completion" = "Fin non lue";
+"+%lld more sessions" = "+%lld sessions de plus";

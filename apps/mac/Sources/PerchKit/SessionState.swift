@@ -123,10 +123,6 @@ public struct SessionSnapshot: Sendable, Equatable {
     public var lastEvent: Date
     public var lastDetail: String
     public var status: SessionStatus
-    /// When the turn last became finished (`isFinished`), and nil while it is not. Set on
-    /// the transition rather than read off `lastEvent`, because a Codex rollout keeps
-    /// touching `lastEvent` on every poll while sitting perfectly still.
-    public var finishedAt: Date?
     /// Subagents observed during the current turn — fan-out `Task` calls and Agent Team
     /// members both report through `SubagentStart` / `SubagentStop`.
     ///
@@ -351,7 +347,6 @@ public struct SessionTracker: Sendable {
         session.status = status
         updateCompletionReadState(
             of: &session, previousStatus: previousStatus, acceptsInitialCompletion: false)
-        Self.stampFinish(&session, at: date)
 
         sessions[id] = session
         if holdsSteady, status != .idle { heldVisible.insert(id) }
@@ -407,7 +402,6 @@ public struct SessionTracker: Sendable {
         guard var session = sessions[id], session.status.needsYou else { return }
         session.status = .working
         session.lastEvent = date
-        Self.stampFinish(&session, at: date)
         sessions[id] = session
     }
 
@@ -567,7 +561,6 @@ public struct SessionTracker: Sendable {
 
         updateCompletionReadState(
             of: &session, previousStatus: previousStatus, acceptsInitialCompletion: true)
-        Self.stampFinish(&session, at: date)
 
         sessions[id] = session
         // A session that turns up while the list is held earns its row for the rest of the
@@ -661,33 +654,6 @@ public struct SessionTracker: Sendable {
 
     public mutating func drop(id: String) {
         remove(id: id)
-    }
-
-    /// How long a finished turn stays on the card before it leaves on its own.
-    ///
-    /// Long enough to read "Done" and the last line, short enough that a panel full of
-    /// finished sessions does not become the normal state of the panel. A constant rather
-    /// than a preference until someone needs a different one.
-    public static let finishedLinger: TimeInterval = 20
-
-    /// Keeps `finishedAt` honest: set on the transition into a finished status, kept while
-    /// it stays there, cleared the moment the session does anything else.
-    static func stampFinish(_ session: inout SessionSnapshot, at date: Date) {
-        session.finishedAt = session.status.isFinished ? (session.finishedAt ?? date) : nil
-    }
-
-    /// The sessions whose turn has been over for at least `seconds`, oldest first — what a
-    /// sweep should archive. Live background work keeps a session off the list even
-    /// though its status alone would qualify it.
-    public func finished(olderThan seconds: TimeInterval, now: Date = .now) -> [String] {
-        let cutoff = now.addingTimeInterval(-seconds)
-        return sessions.values
-            .filter { session in
-                guard let finishedAt = session.finishedAt else { return false }
-                return session.status.isFinished && !session.hasLiveWork && finishedAt <= cutoff
-            }
-            .sorted { ($0.finishedAt ?? .distantPast) < ($1.finishedAt ?? .distantPast) }
-            .map(\.id)
     }
 
     /// Removes a row immediately because the person reading it explicitly asked to.
