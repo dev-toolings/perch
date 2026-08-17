@@ -23,10 +23,34 @@ struct FeaturedSessionSelectionTests {
         #expect(
             SessionDisplaySelection.shown(
                 in: sessions, focusedSessionId: "focused", showsAll: false
-            ).map(\.id) == ["focused"])
+            ).map(\.id) == ["focused", "working"])
         #expect(
             SessionDisplaySelection.additionalCount(
-                in: sessions, focusedSessionId: "focused", showsAll: false) == 1)
+                in: sessions, focusedSessionId: "focused", showsAll: false) == 0)
+    }
+
+    @Test func aHoverShowsTwoCardsAndCountsTheRest() {
+        let sessions = [
+            session("a", status: .working), session("b", status: .working),
+            session("c", status: .idle), session("d", status: .idle),
+        ]
+
+        // The focused one leads, the next in list order follows, the other two fold.
+        #expect(
+            SessionDisplaySelection.shown(in: sessions, focusedSessionId: "c", showsAll: false)
+                .map(\.id) == ["c", "a"])
+        #expect(
+            SessionDisplaySelection.additionalCount(
+                in: sessions, focusedSessionId: "c", showsAll: false) == 2)
+
+        // One session is one card and nothing to fold.
+        #expect(
+            SessionDisplaySelection.shown(
+                in: [sessions[0]], focusedSessionId: nil, showsAll: false
+            ).map(\.id) == ["a"])
+        #expect(
+            SessionDisplaySelection.additionalCount(
+                in: [sessions[0]], focusedSessionId: nil, showsAll: false) == 0)
     }
 
     @Test func aMissingFocusFallsBackToTheFirstWorkingSession() throws {

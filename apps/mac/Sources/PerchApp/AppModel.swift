@@ -343,6 +343,17 @@ final class AppModel {
       activity.holdSteady(isVisible)
       if isVisible {
         panelReadGeneration += 1
+        // A request that arrived quietly — the asking terminal was in front, so the
+        // panel stayed shut — is still the thing to answer. Opening the panel by hand
+        // is asking what is going on, and a queued question is the answer; it used to
+        // open onto the session list with the question nowhere in it. After the
+        // transition that opened the panel, not inside it.
+        if permissions.current != nil, notch.state != .alert {
+          Task { @MainActor [weak self] in
+            guard let self, notch.state.drawsPanel, notch.state != .alert else { return }
+            refreshAlertPresentation()
+          }
+        }
         transcripts.start { [weak self] in await self?.refreshTranscripts() }
         usage.reloadLimits(forceNetwork: true)
         // The quota was only ever re-read when a hook fired, so a panel opened on a

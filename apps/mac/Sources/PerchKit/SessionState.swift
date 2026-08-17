@@ -265,11 +265,23 @@ public enum SessionDisplaySelection {
         return sessions.first(where: \.isWorking) ?? sessions.first
     }
 
+    /// How many cards a hover shows before the rest fold into "+N more sessions". Two:
+    /// the one you are reading and the one after it, which is usually the other harness
+    /// you are running — one card hid it, and every card is a panel you have to scroll.
+    public static let hoverLimit = 2
+
+    /// The featured session first, then the list order, up to `limit`; everything past
+    /// that is what "+N more sessions" counts.
     public static func shown(
-        in sessions: [SessionSnapshot], focusedSessionId: String?, showsAll: Bool
+        in sessions: [SessionSnapshot], focusedSessionId: String?, showsAll: Bool,
+        limit: Int = hoverLimit
     ) -> [SessionSnapshot] {
         if showsAll { return sessions }
-        return featured(in: sessions, focusedSessionId: focusedSessionId).map { [$0] } ?? []
+        guard let first = featured(in: sessions, focusedSessionId: focusedSessionId) else {
+            return []
+        }
+        let rest = sessions.filter { $0.id != first.id }.prefix(max(0, limit - 1))
+        return [first] + rest
     }
 
     public static func additionalCount(
