@@ -641,7 +641,12 @@ final class AppModel {
       // thing being announced had not started coming back yet — and did it again
       // for real, twenty minutes later, when it had. The turn that carries an empty
       // list is the one worth a sound.
-      case "Stop" where request.payload.backgroundTasks?.contains(where: \.isRunning) == true:
+      //
+      // Read off the session rather than off the payload: the tracker has just
+      // decided which of the listed tasks it believes, and a ghost agent in the list
+      // — see `SessionTracker.credible` — silenced every finish of the day here.
+      case "Stop"
+      where request.payload.sessionId.flatMap({ activity.sessions[$0]?.status }) == .background:
         break
       case "Stop" where shouldAnnounceCompletion(for: request):
         // Sound and presentation are independent. Vibe reveals the completed

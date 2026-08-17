@@ -529,8 +529,14 @@ public struct SessionTracker: Sendable {
         switch kind {
         case _ where belongsToSubagent:
             // The event has already done its one job above: it moved `lastEvent`, so the
-            // session does not age out while its agent works.
-            break
+            // session does not age out while its agent works. One more thing, for an
+            // agent Perch never saw start — older than the app, or started while it was
+            // not listening: a tool call is proof of life, and it earns the row that
+            // `SubagentStart` would have given it, so the next `Stop` believes it.
+            if let agentId, !session.children.contains(where: { $0.id == agentId }) {
+                session.children.append(
+                    SubagentRun(id: agentId, label: Self.subagentName(nil), startedAt: date))
+            }
         case "SubagentStart":
             // Keyed by the agent's own id, so a start seen twice — a reconnect, a replayed
             // event — does not put the same agent on the card twice.
@@ -560,7 +566,8 @@ public struct SessionTracker: Sendable {
             // launched in the background, not when it comes back, and the payload carries
             // the list of what is still going — so this is read, not guessed.
             if let backgroundTasks {
-                session.background = backgroundTasks.filter(\.isRunning)
+                session.background = Self.credible(
+                    backgroundTasks.filter(\.isRunning), children: session.children, session: id)
                 session.children = Self.reconcile(session.children, with: session.background, at: date)
                 session.status = session.background.isEmpty ? .idle : .background
             } else {
@@ -638,6 +645,32 @@ public struct SessionTracker: Sendable {
     /// know when the agent started and the `Stop` list does not say. Anything running with
     /// no row yet gets one: an agent launched before Perch was — or before its hooks were
     /// installed — is otherwise invisible for the whole of its run.
+    /// The part of a `Stop` payload's live list that is worth believing.
+    ///
+    /// Claude Code lists a session's team members there, and a member is not struck off
+    /// when it finishes: an Explore agent spawned in the morning, in the session before a
+    /// `/clear`, was still reported `running` at midnight — so every turn of the day ended
+    /// in "still running", the card never went to Done, the strip kept counting a harness
+    /// at work, and the row could never age out. The list is the only word there is on
+    /// backgrounded shells, which emit no hook of their own, so those are taken as they
+    /// come. A subagent, though, announces itself: `SubagentStart` arrives before it does
+    /// anything, and one this session never saw start — and has not seen stop — is a
+    /// ghost, not work.
+    static func credible(
+        _ running: [BackgroundTask], children: [SubagentRun], session: String
+    ) -> [BackgroundTask] {
+        running.filter { task in
+            guard task.isSubagent else { return true }
+            let known = children.contains { $0.id == task.id && !$0.isCompleted }
+            if !known {
+                PerchLog.info(
+                    "ignoring background subagent \(task.id) (\(task.agentType ?? "?")) "
+                        + "the session \(session.prefix(8)) never saw start")
+            }
+            return known
+        }
+    }
+
     static func reconcile(
         _ children: [SubagentRun], with running: [BackgroundTask], at date: Date
     ) -> [SubagentRun] {

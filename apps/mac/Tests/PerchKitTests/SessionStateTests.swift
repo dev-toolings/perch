@@ -451,6 +451,9 @@ struct AnsweredTests {
         command: "gh run watch")
 
     tracker.record(id: "s1", kind: "UserPromptSubmit", prompt: "split the repo", at: epoch)
+    tracker.record(
+        id: "s1", kind: "SubagentStart", subagentLabel: "Lot 2A auth HMAC", agentId: "a1",
+        at: epoch)
     tracker.record(id: "s1", kind: "Stop", backgroundTasks: [agent, shell], at: epoch)
 
     #expect(tracker.sessions["s1"]?.status == .background)
@@ -460,7 +463,6 @@ struct AnsweredTests {
     // A backgrounded command has no start or stop event of its own; the `Stop` list is
     // the only place it is ever mentioned.
     #expect(tracker.sessions["s1"]?.background.count == 2)
-    // And the agent earns a child row even though Perch never saw it start.
     #expect(tracker.sessions["s1"]?.children.map(\.label) == ["Lot 2A auth HMAC"])
 
     // Everything came back: now the turn is over, and its completed card remains readable.
@@ -470,6 +472,46 @@ struct AnsweredTests {
     #expect(tracker.sessions["s1"]?.children.first?.completedAt == epoch.addingTimeInterval(600))
     #expect(tracker.sessions["s1"]?.subagents == 0)
     #expect(tracker.visible.count == 1)
+}
+
+/// Claude Code lists a session's team members on `Stop` and does not strike a member off
+/// when it finishes: an Explore agent from the morning — from the session before a
+/// `/clear`, even — was still reported `running` at midnight, and every turn of the day
+/// ended in "still running". A subagent this session never saw start, and never saw
+/// work, is a ghost.
+@Test func aSubagentTheSessionNeverSawIsNotWorkStillRunning() {
+    var tracker = SessionTracker()
+    let ghost = BackgroundTask(
+        id: "perch-ui-inventory@session-7c86f9b8", kind: "subagent", status: "running",
+        label: "Repo: /lab/perch (macOS SwiftUI app)", agentType: "Explore")
+
+    tracker.record(id: "s1", kind: "UserPromptSubmit", prompt: "fix the strip", at: epoch)
+    tracker.record(id: "s1", kind: "Stop", backgroundTasks: [ghost], at: epoch)
+
+    #expect(tracker.sessions["s1"]?.status == .idle)
+    #expect(tracker.sessions["s1"]?.background.isEmpty == true)
+    #expect(tracker.sessions["s1"]?.children.isEmpty == true)
+    #expect(tracker.sessions["s1"]?.hasLiveWork == false)
+
+    // A shell in the same list is still believed: nothing else ever mentions it.
+    let shell = BackgroundTask(id: "b1", kind: "shell", status: "running", command: "gh run watch")
+    tracker.record(id: "s1", kind: "Stop", backgroundTasks: [ghost, shell], at: epoch)
+    #expect(tracker.sessions["s1"]?.status == .background)
+    #expect(tracker.sessions["s1"]?.background.map(\.id) == ["b1"])
+}
+
+/// An agent older than the app, or started while it was not listening, is not a ghost
+/// the moment it does something: its tool calls arrive under the parent's session with
+/// its own id, and that is proof enough for the next `Stop` to count it.
+@Test func aSubagentSeenWorkingIsBelievedEvenWithoutItsStart() {
+    var tracker = SessionTracker()
+    let agent = BackgroundTask(id: "a1", kind: "subagent", status: "running", label: "yoda")
+
+    tracker.record(id: "s1", kind: "PreToolUse", detail: "bun test", agentId: "a1", at: epoch)
+    tracker.record(id: "s1", kind: "Stop", backgroundTasks: [agent], at: epoch)
+
+    #expect(tracker.sessions["s1"]?.status == .background)
+    #expect(tracker.sessions["s1"]?.children.map(\.id) == ["a1"])
 }
 
 /// A CLI that reports no such list — Codex — must not have its subagents wiped by a `Stop`
@@ -491,6 +533,7 @@ struct AnsweredTests {
     let agent = BackgroundTask(id: "a1", kind: "subagent", status: "running", label: "yoda")
 
     tracker.record(id: "s1", kind: "PreToolUse", detail: "src/auth.ts", at: epoch)
+    tracker.record(id: "s1", kind: "SubagentStart", subagentLabel: "yoda", agentId: "a1", at: epoch)
     tracker.record(id: "s1", kind: "Stop", backgroundTasks: [agent], at: epoch)
     #expect(tracker.sessions["s1"]?.status == .background)
 
@@ -512,6 +555,7 @@ struct AnsweredTests {
     var tracker = SessionTracker(timeout: 30 * 60)
     let agent = BackgroundTask(id: "a1", kind: "subagent", status: "running", label: "yoda")
 
+    tracker.record(id: "s1", kind: "SubagentStart", subagentLabel: "yoda", agentId: "a1", at: epoch)
     tracker.record(id: "s1", kind: "Stop", backgroundTasks: [agent], at: epoch)
     tracker.prune(now: epoch.addingTimeInterval(3 * 3_600))
     #expect(tracker.sessions["s1"] != nil)
