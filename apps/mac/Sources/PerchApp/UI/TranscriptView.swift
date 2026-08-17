@@ -43,9 +43,13 @@ struct TranscriptView: View {
                         .font(Theme.label(11.5))
                         .foregroundStyle(Theme.secondary)
                     Spacer(minLength: 6)
-                    Text(isFinished ? t("Done") : t("Writing…"))
-                        .font(Theme.label(11.5))
-                        .foregroundStyle(isFinished ? Theme.tertiary : Theme.active)
+                    Text(
+                        turn.isInterrupted
+                            ? t("Interrupted") : isFinished ? t("Done") : t("Writing…")
+                    )
+                    .font(Theme.label(11.5))
+                    .foregroundStyle(
+                        isFinished || turn.isInterrupted ? Theme.tertiary : Theme.active)
                 }
                 .padding(.horizontal, 9)
                 .padding(.vertical, 7)

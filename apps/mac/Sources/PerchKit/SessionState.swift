@@ -328,6 +328,12 @@ public struct SessionTracker: Sendable {
     public mutating func setTurn(_ turn: TranscriptTurn, for id: String) {
         guard var session = sessions[id] else { return }
         session.turn = turn
+        // A turn the person cut short is over, and no hook says so: `Stop` does not fire
+        // on an interrupt. Left alone, the card kept "Writing…" and a green dot, and the
+        // strip kept counting a harness at work, for a CLI sitting at its prompt.
+        if turn.isInterrupted, session.status == .working || session.status == .runningTool {
+            session.status = .idle
+        }
         sessions[id] = session
     }
 
@@ -618,6 +624,11 @@ public struct SessionTracker: Sendable {
     static let lifecycleKinds: Set<String> = [
         "SessionStart", "Stop", "StopFailure", "SubagentStart", "SubagentStop", "PreCompact",
         "UserPromptSubmit",
+        // Its message is a state — "waiting for your input", "needs your permission" —
+        // and it is read as one above. Kept as the activity line, it outlived the state
+        // it described: the next prompt put the card back to work with "Claude is
+        // waiting for your input" still written under it.
+        "Notification",
     ]
 
     /// The two tools whose permission prompt is really a question. Approving the *asking*
@@ -720,6 +731,11 @@ public struct SessionTracker: Sendable {
             .map(String.init) ?? visible
 
         let trimmed = firstLine.trimmingCharacters(in: .whitespaces)
+        // Written by the harness in the user's voice, and submitted as a prompt all the
+        // same. Not what anyone asked, so not what the card is called.
+        if Transcript.isHarnessNotice(trimmed) || Transcript.isInterruptMarker(trimmed) {
+            return ""
+        }
         guard trimmed.count > limit else { return trimmed }
         return String(trimmed.prefix(limit)).trimmingCharacters(in: .whitespaces) + "…"
     }

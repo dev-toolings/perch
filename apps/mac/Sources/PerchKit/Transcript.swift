@@ -15,10 +15,15 @@ public struct TranscriptTurn: Sendable, Equatable {
     /// `thinking` is left out because it is not addressed to anyone, and `tool_use` because
     /// the activity line already says which tool is running. What is left is the prose.
     public var reply: String
+    /// The person cut this turn short. Claude Code writes `[Request interrupted by user]`
+    /// into the conversation as a user line and fires no hook — `Stop` is documented not to
+    /// run on an interrupt — so the transcript is the only witness that the turn is over.
+    public var isInterrupted: Bool
 
-    public init(prompt: String? = nil, reply: String = "") {
+    public init(prompt: String? = nil, reply: String = "", isInterrupted: Bool = false) {
         self.prompt = prompt
         self.reply = reply
+        self.isInterrupted = isInterrupted
     }
 
     public var isEmpty: Bool { (prompt ?? "").isEmpty && reply.isEmpty }
@@ -69,12 +74,21 @@ public enum Transcript {
         // The last thing the user actually typed. Tool results come back as `user` lines
         // too — they carry `tool_result` blocks and no text — and taking one of those for
         // a prompt puts a diff where the question belongs.
+        // An interrupt marker is a user line too, and it is not what anyone asked: the
+        // prompt stays the last real question, and the marker only says how the turn
+        // ended. A real prompt after it is a new turn, so it clears the flag.
         var promptIndex: Int?
+        var interrupted = false
         for (index, object) in objects.enumerated() where isMainThread(object) {
             guard object["type"] as? String == "user",
                 let text = text(in: object), !text.isEmpty
             else { continue }
+            if isInterruptMarker(text) {
+                interrupted = true
+                continue
+            }
             promptIndex = index
+            interrupted = false
         }
 
         var reply = ""
@@ -88,8 +102,26 @@ public enum Transcript {
         }
 
         let prompt = promptIndex.flatMap { text(in: objects[$0]) }
-        let turn = TranscriptTurn(prompt: prompt, reply: reply)
-        return turn.isEmpty ? nil : turn
+        let turn = TranscriptTurn(prompt: prompt, reply: reply, isInterrupted: interrupted)
+        // An interrupted turn whose prompt fell outside the window is still news: the
+        // card has nothing to show, but the session has to learn that the turn is over.
+        return turn.isEmpty && !interrupted ? nil : turn
+    }
+
+    /// `[Request interrupted by user]`, with or without ` for tool use`.
+    public static func isInterruptMarker(_ text: String) -> Bool {
+        text.range(
+            of: "^\\[Request interrupted by user( for tool use)?\\]$",
+            options: .regularExpression) != nil
+    }
+
+    /// A line the harness wrote in the user's voice about its own housekeeping — "2
+    /// background agents were stopped by the user: …" — which Claude Code both writes into
+    /// the transcript and submits as a prompt, hook and all. It titled a card.
+    public static func isHarnessNotice(_ text: String) -> Bool {
+        text.range(
+            of: "^\\d+ background agents? (was|were) stopped by the user\\b",
+            options: .regularExpression) != nil
     }
 
     /// Subagent transcripts are interleaved into the same file under `isSidechain`, and
@@ -147,6 +179,7 @@ public enum Transcript {
     /// grows without telling us: a leading `#123 [something]`, or a message that is nothing
     /// but a JSON object.
     private static func isMachineWritten(_ text: String) -> Bool {
+        if isHarnessNotice(text) { return true }
         if text.range(of: "^#\\d+ \\[[a-z_]+\\]", options: .regularExpression) != nil { return true }
         if text.hasPrefix("{"), text.hasSuffix("}"), text.contains("\"") { return true }
         return false

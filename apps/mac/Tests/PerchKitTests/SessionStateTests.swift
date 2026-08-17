@@ -116,6 +116,44 @@ struct FeaturedSessionSelectionTests {
     }
 }
 
+/// `Stop` does not fire on a user interrupt, so the transcript is the only witness that
+/// the turn is over — and without it the card said "Writing…" over a CLI at its prompt.
+@Test func anInterruptedTurnReadOffTheTranscriptIsOver() {
+    var tracker = SessionTracker()
+    tracker.record(id: "s1", kind: "UserPromptSubmit", prompt: "fix the strip", at: epoch)
+    tracker.record(id: "s1", kind: "PreToolUse", detail: "swift test", tool: "Bash", at: epoch)
+    #expect(tracker.sessions["s1"]?.status == .runningTool)
+
+    tracker.setTurn(TranscriptTurn(prompt: "fix the strip", reply: "", isInterrupted: true), for: "s1")
+    #expect(tracker.sessions["s1"]?.status == .idle)
+
+    // A turn that is *not* interrupted leaves the state to the hooks.
+    tracker.record(id: "s1", kind: "UserPromptSubmit", prompt: "try again", at: epoch)
+    tracker.setTurn(TranscriptTurn(prompt: "try again", reply: "On it."), for: "s1")
+    #expect(tracker.sessions["s1"]?.status == .working)
+}
+
+/// A notification's message is a state, and it is read as one. It is not what the
+/// session is doing, and it must not be left under the next turn as though it were.
+@Test func aNotificationDoesNotBecomeTheActivityLine() {
+    var tracker = SessionTracker()
+    tracker.record(id: "s1", kind: "PreToolUse", detail: "swift test", tool: "Bash", at: epoch)
+    tracker.record(id: "s1", kind: "Stop", backgroundTasks: [], at: epoch)
+    tracker.record(
+        id: "s1", kind: "Notification", detail: "Claude is waiting for your input",
+        message: "Claude is waiting for your input", at: epoch)
+    #expect(tracker.sessions["s1"]?.status == .idle)
+    #expect(tracker.sessions["s1"]?.lastDetail == "swift test")
+
+    // The harness's housekeeping line, submitted as a prompt, is not what the card is
+    // called either.
+    tracker.record(
+        id: "s1", kind: "UserPromptSubmit",
+        prompt: "2 background agents were stopped by the user: \"Reply with ok\".", at: epoch)
+    #expect(tracker.sessions["s1"]?.prompt == nil)
+    #expect(SessionTracker.condense("[Request interrupted by user]") == "")
+}
+
 @Test func aSessionIsNotDescribedByTheHookThatCreatedIt() {
     var tracker = SessionTracker()
     tracker.record(id: "s1", kind: "SessionStart", cwd: "/lab/perch", detail: "SessionStart", at: epoch)

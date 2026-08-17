@@ -35,6 +35,41 @@ struct TranscriptTests {
         #expect(turn?.reply == "It reads the file.")
     }
 
+    @Test("an interrupt marker says how the turn ended, not what was asked")
+    func interruptMarkerIsNotAPrompt() throws {
+        // Off a real transcript: the harness's own housekeeping line arrives as a user
+        // line too, 126 ms before the marker, and neither was typed by anyone.
+        let turn = try #require(
+            Transcript.turn(in: [
+                user("fix the strip"),
+                assistant([["type": "text", "text": "Looking at the reducer."]]),
+                user("2 background agents were stopped by the user: \"Repo: /lab/perch (ma...\"."),
+                user([["type": "text", "text": "[Request interrupted by user]"]]),
+            ]))
+
+        #expect(turn.prompt == "fix the strip")
+        #expect(turn.reply == "Looking at the reducer.")
+        #expect(turn.isInterrupted)
+
+        // A prompt typed after the interrupt is a new turn.
+        let resumed = try #require(
+            Transcript.turn(in: [
+                user("fix the strip"),
+                user([["type": "text", "text": "[Request interrupted by user for tool use]"]]),
+                user("try again without the tests"),
+            ]))
+        #expect(resumed.prompt == "try again without the tests")
+        #expect(!resumed.isInterrupted)
+    }
+
+    @Test("an interrupt with the prompt outside the window is still reported")
+    func interruptAloneIsStillATurn() throws {
+        let turn = try #require(
+            Transcript.turn(in: [user([["type": "text", "text": "[Request interrupted by user]"]])]))
+        #expect(turn.isEmpty)
+        #expect(turn.isInterrupted)
+    }
+
     @Test("a tool result is not a prompt")
     func toolResultsAreNotPrompts() {
         // Results come back as `user` lines. Taking one for a prompt puts a diff where the
