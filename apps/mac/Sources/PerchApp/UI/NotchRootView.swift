@@ -416,10 +416,11 @@ struct IdleReading: Equatable {
   }
 }
 
-/// Vibe Island's collapsed status sprite, as its `PixelStatusIconCompact(status:)` draws
-/// it: one 20 x 14 invader tinted by the priority session's state, and — only while that
-/// session works — an 11 x 11 companion trailing it. Green once the turn is over, blue
-/// while a harness works, amber when it waits on you.
+/// Vibe Island's status sprite, in the strip and in the header, as vibeisland.app draws
+/// it in the island on its front page: an inline SVG on a 13 x 8 grid at 2 px a cell —
+/// two bright antennae, a six-wide body with two black eyes, four feet — with a
+/// `drop-shadow(0 0 3px)` glow in the same colour. One pet, no companion; the state is
+/// the colour, and the site's palette is read off its `:root`.
 ///
 /// This is what the strip shows in place of the resting creature as soon as anything is
 /// running: the creature says "nothing here", and an animated one next to a live count
@@ -427,15 +428,12 @@ struct IdleReading: Equatable {
 struct CompactStatusSprites: View {
   let status: SessionStatus?
 
-  private var isWorking: Bool {
-    status == .working || status == .runningTool || status == .compacting
-      || status == .background
-  }
+  private var isWorking: Bool { VibePet.isWorking(status) }
 
-  /// Vibe's working sprite is not a sticker: its `PixelStatusIcon` carries a phase and a
-  /// timer, and the pair steps in place while a harness runs. Half a second a step, on
-  /// the shared clock rather than an implicit animation, so the strip and the header —
-  /// which draw the same pair — stay in step with each other.
+  /// The pet steps in place while a harness runs — the app's own `PixelStatusIcon`
+  /// carries a phase and a timer for exactly this. Half a second a step, on the shared
+  /// clock rather than an implicit animation, so the strip and the header — which draw
+  /// the same pet — stay in step with each other.
   static let stepInterval: TimeInterval = 0.55
 
   var body: some View {
@@ -444,125 +442,86 @@ struct CompactStatusSprites: View {
         TimelineView(.periodic(from: .now, by: Self.stepInterval)) { context in
           let step =
             Int((context.date.timeIntervalSinceReferenceDate / Self.stepInterval).rounded(.down))
-          pair(step: step)
+          pet(lifted: step % 2 == 0)
         }
       } else {
-        pair(step: nil)
+        pet(lifted: false)
       }
     }
     .accessibilityHidden(true)
   }
 
-  /// The primary and the companion take turns: one lifts while the other lands, which
-  /// reads as walking rather than as the whole thing bouncing.
-  private func pair(step: Int?) -> some View {
-    let lifted = step.map { $0 % 2 == 0 }
-    return HStack(spacing: 4) {
-      PixelStatusIconCompact(
-        isPrimary: true, isWorking: isWorking, needsYou: status?.needsYou == true)
-        .offset(y: lifted == true ? -1 : 0)
-      if isWorking {
-        PixelStatusIconCompact(isPrimary: false, isWorking: true, needsYou: false)
-          .offset(y: lifted == false ? -1 : 0)
-      }
-    }
-    .animation(.easeInOut(duration: Self.stepInterval * 0.6), value: lifted)
+  private func pet(lifted: Bool) -> some View {
+    VibePet(status: status)
+      .offset(y: lifted ? -1 : 0)
+      .animation(.easeInOut(duration: Self.stepInterval * 0.6), value: lifted)
   }
 }
 
-/// The small Space-Invader status mark used by Vibe in the collapsed island.
-///
-/// The rows are reconstructed from the 1.0.44 idle and working captures at the
-/// screenshot's native scale. Vibe changes the colour with the session state:
-/// green after completion, blue while working, amber when input is required.
-struct PixelStatusIconCompact: View {
-  let isPrimary: Bool
-  let isWorking: Bool
-  let needsYou: Bool
+/// The pet itself. Rows and colours are the site's, cell for cell.
+struct VibePet: View {
+  let status: SessionStatus?
+  /// 2 pt a cell, the site's own `width=26 height=16` for its 13 x 8 viewBox.
+  var pixel: CGFloat = 2
 
-  private var rows: [String] {
-    if isPrimary {
-      return [
-        "..x....x..",
-        "...x..x...",
-        "..xxxxxx..",
-        ".xx.oo.xx.",
-        "xxxxxxxxxx",
-        "x.xxxxxx.x",
-        ".x......x.",
-      ]
-    }
-    return [
-      "...x...x...",
-      "....x.x....",
-      "...xxxxx...",
-      "..xx.o.xx..",
-      ".xxxxxxxxx.",
-      ".x.xxxxx.x.",
-      "...x...x...",
-      "..x.....x..",
-      ".x.......x.",
-      "...........",
-      "...........",
-    ]
+  /// `o` is the bright tone (antennae), `x` the body, `#` an eye — black on the site,
+  /// and black here: on the panel it reads as a hole either way, and where the pet
+  /// ever meets a lighter ground the eye still stays an eye.
+  static let rows = [
+    "..o..o..",
+    ".x#xx#x.",
+    ".xxxxxx.",
+    "..xx.xx.",
+  ]
+
+  static func isWorking(_ status: SessionStatus?) -> Bool {
+    status == .working || status == .runningTool || status == .compacting
+      || status == .background
   }
 
-  private var pixel: CGFloat { isPrimary ? 2 : 1 }
-
-  private var tint: Color {
-    if needsYou { return Theme.warning }
-    return isWorking ? Theme.info : Theme.active
+  /// `--vi-idle`, `--vi-work`, `--vi-alert`, `--vi-question` and their `-bright` pairs.
+  static func palette(for status: SessionStatus?) -> (body: Color, bright: Color) {
+    switch status {
+    case .needsApproval, .failed:
+      return (Color(hex: 0xF97316), Color(hex: 0xFB923C))
+    case .waitingForAnswer:
+      return (Color(hex: 0x06B6D4), Color(hex: 0x22D3EE))
+    case .working, .runningTool, .compacting, .background:
+      return (Color(hex: 0x3B82F6), Color(hex: 0x60A5FA))
+    case .idle, .none:
+      return (Color(hex: 0x22C55E), Color(hex: 0x4ADE80))
+    }
   }
 
   var body: some View {
+    let palette = Self.palette(for: status)
     VStack(spacing: 0) {
-      ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
+      ForEach(Array(Self.rows.enumerated()), id: \.offset) { _, row in
         HStack(spacing: 0) {
           ForEach(Array(row.enumerated()), id: \.offset) { _, cell in
             Rectangle()
-              .fill(colour(cell))
+              .fill(colour(cell, palette: palette))
               .frame(width: pixel, height: pixel)
           }
         }
       }
     }
+    // The site's `drop-shadow(0 0 3px)`: a soft halo in the body colour, which is what
+    // makes a 12 pt sprite read from across the room.
+    .shadow(color: palette.body.opacity(0.9), radius: 3)
+    // The site's box is 8 rows tall for 4 rows of pet: it sits with two rows of air
+    // above and below, so the frame keeps that and the strip's centring stays put.
+    .frame(height: pixel * 8)
     .accessibilityHidden(true)
   }
 
-  private func colour(_ cell: Character) -> Color {
+  private func colour(_ cell: Character, palette: (body: Color, bright: Color)) -> Color {
     switch cell {
-    case "x": return tint.opacity(isPrimary ? 0.90 : 0.68)
-    case "o": return tint
+    case "x": return palette.body
+    case "o": return palette.bright
+    case "#": return .black
     default: return .clear
     }
-  }
-}
-
-/// The animated status mark used at the leading edge of a Vibe session card.
-/// Reflection metadata for 1.0.44 shows a single `status` input plus animation state;
-/// the previous Perch card incorrectly drew both collapsed-island icons on every row.
-struct PixelSessionIcon: View {
-  let status: SessionStatus
-  @State private var phase = false
-
-  private var isWorking: Bool {
-    status == .working || status == .runningTool || status == .compacting
-      || status == .background
-  }
-
-  var body: some View {
-    PixelStatusIconCompact(
-      isPrimary: true,
-      isWorking: isWorking,
-      needsYou: status.needsYou)
-      .offset(y: isWorking && phase ? -1 : 0)
-      .animation(
-        isWorking
-          ? .easeInOut(duration: 0.55).repeatForever(autoreverses: true)
-          : .default,
-        value: phase)
-      .onAppear { phase = true }
-      .accessibilityHidden(true)
   }
 }
 

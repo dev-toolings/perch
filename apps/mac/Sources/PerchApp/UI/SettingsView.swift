@@ -3463,11 +3463,8 @@ private struct NotchSettingsPreview: View {
           .clipped()
 
         HStack(spacing: 4) {
-          HStack(spacing: 3) {
-            PixelStatusIconCompact(isPrimary: true, isWorking: false, needsYou: false)
-            PixelStatusIconCompact(isPrimary: false, isWorking: false, needsYou: false)
-          }
-          .frame(width: 24, height: 12)
+          VibePet(status: .idle)
+            .frame(width: 24, height: 12)
           Text("Recopier la vibe Island dans Perch")
             .foregroundStyle(.white)
             .lineLimit(1)
