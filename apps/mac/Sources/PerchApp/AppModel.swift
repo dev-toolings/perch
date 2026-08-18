@@ -665,10 +665,16 @@ final class AppModel {
       where request.payload.sessionId.flatMap({ activity.sessions[$0]?.status }) == .background:
         break
       case "Stop" where shouldAnnounceCompletion(for: request):
-        // Sound and presentation are independent. Vibe reveals the completed
-        // transcript even while muted; muting must not make the answer invisible.
-        _ = announce(.taskComplete, client: request.client)
-        notch.revealExpanded(sessionId: request.payload.sessionId)
+        // Mute is not quiet. `announce` answers "may this take the screen" — the
+        // completion toggle, smart suppression, heads-down, quiet hours, a shared
+        // screen — and the mute switch is read separately, inside `playsSound`. So a
+        // muted Perch still reveals the answer, as Vibe does, while a Perch that was
+        // told to stay closed for finished turns actually stays closed. Ignoring the
+        // decision here opened the panel on every `Stop` of every harness, five
+        // seconds at a time, over the very terminal that had just printed it.
+        if announce(.taskComplete, client: request.client) == .full {
+          notch.revealExpanded(sessionId: request.payload.sessionId)
+        }
         notify(.finished, for: request)
         scheduleCompletionFollowUp(for: request)
       case "StopFailure" where displayEligibility(for: request).allowsDisplay:
