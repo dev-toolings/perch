@@ -86,9 +86,11 @@ Perch source + tests + installed app ───────┘    green / partial
 ### Native visual pass — 2026-08-16
 
 - Settings window chrome now uses the same 620×680 native full-size sidebar,
-  traffic lights, 188 pt sidebar, 31 pt navigation rows, content width, card
-  rhythm, compact 36×16 switches, and overlay scrollbar behavior observed in
-  Vibe Island.
+  traffic lights, 188 pt sidebar, 31 pt navigation rows, card rhythm, compact
+  36×16 switches, and overlay scrollbar behavior observed in Vibe Island. The
+  content column matches Vibe's 391 pt at the 620 pt window and, unlike Vibe's
+  fixed column, stretches with the window up to a 720 pt reading width
+  (2026-08-18).
 - General, Integrations, Notifications, Display, Sound, Usage, Shortcuts, SSH,
   Labs, Pass, and About were recaptured in both installed apps. Integration
   status placement, notification grouping, reminder checkboxes, Bark state,

@@ -109,8 +109,19 @@ enum Diagnostics {
   @MainActor
   static func render(
     _ path: String, layout: PanelLayout = .detailed, idle: Bool = false,
-    phases: Bool = false, plan: Bool = false, stats: UsageStore.Agent? = nil
+    phases: Bool = false, plan: Bool = false, stats: UsageStore.Agent? = nil,
+    settings: SettingsView.Pane? = nil, windowWidth: CGFloat = 620
   ) -> Int32 {
+    if let settings {
+      // A Settings pane at a window width, off this machine's own preferences. The
+      // window needs Screen Recording to be captured and Accessibility to be resized;
+      // this needs neither, and is how the column is judged at 620 and at 1000.
+      let model = AppModel(notch: NotchController())
+      return write(
+        ImageRenderer(
+          content: SettingsView.rendering(settings, model: model, windowWidth: windowWidth)),
+        to: path)
+    }
     if plan {
       // The card with the most structure in it, and the only one whose defects are
       // all about block boundaries — which a still image shows and a test cannot.

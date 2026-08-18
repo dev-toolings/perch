@@ -122,7 +122,20 @@ if let index = CommandLine.arguments.firstIndex(of: "--render") {
                 CommandLine.arguments.count > index + 1
                     ? UsageStore.Agent(rawValue: CommandLine.arguments[index + 1]) ?? .claude
                     : .claude
-            }))
+            },
+            // `--render x.png --settings-pane display --width 1000` draws one Settings
+            // pane as the window would at that width, without the window.
+            settings: CommandLine.arguments.firstIndex(of: "--settings-pane").flatMap { index in
+                CommandLine.arguments.count > index + 1
+                    ? SettingsView.Pane.allCases.first {
+                        $0.rawValue.lowercased() == CommandLine.arguments[index + 1].lowercased()
+                    }
+                    : nil
+            },
+            windowWidth: CommandLine.arguments.firstIndex(of: "--width").flatMap { index in
+                CommandLine.arguments.count > index + 1
+                    ? Double(CommandLine.arguments[index + 1]).map { CGFloat($0) } : nil
+            } ?? 620))
 }
 
 if let index = CommandLine.arguments.firstIndex(of: "--tasks") {

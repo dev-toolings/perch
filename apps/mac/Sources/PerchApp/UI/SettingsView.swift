@@ -102,33 +102,56 @@ struct SettingsView: View {
     VStack(spacing: 0) {
       SettingsPaneHeader(pane: pane)
       ScrollView {
-        Group {
-          switch pane {
-          case .general: GeneralPane(model: model, scope: .general)
-          case .integrations:
-            IntegrationsPane(model: model, scope: .integrations)
-          case .notifications: NotificationsPane(model: model)
-          case .display: GeneralPane(model: model, scope: .display)
-          case .sound: SoundPane(model: model)
-          case .usage: IntegrationsPane(model: model, scope: .usage)
-          case .shortcuts: GeneralPane(model: model, scope: .shortcuts)
-          case .remote: RemotePane(model: model)
-          case .labs: GeneralPane(model: model, scope: .labs)
-          case .pass: PassPane()
-          case .about: AboutPane(model: model)
-          }
-        }
-        // Vibe's scrollbar overlays the content instead of reserving a 16 pt lane.
-        // Extending the trailing edge under that lane keeps cards at the measured
-        // 391 pt width while leaving the same 20 pt leading gutter.
-        .padding(.leading, 24)
-        .padding(.trailing, 4)
-        .padding(.bottom, 24)
-        .frame(width: 419, alignment: .leading)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        Self.column(pane, model: model)
       }
     }
     .background(SettingsStyle.canvas)
+  }
+
+  /// One pane's content at the column's width rules — shared with `--render`, which
+  /// draws it without the scroll view (`ImageRenderer` paints a `ScrollView` empty).
+  static func column(_ pane: Pane, model: AppModel) -> some View {
+    Group {
+      switch pane {
+      case .general: GeneralPane(model: model, scope: .general)
+      case .integrations:
+        IntegrationsPane(model: model, scope: .integrations)
+      case .notifications: NotificationsPane(model: model)
+      case .display: GeneralPane(model: model, scope: .display)
+      case .sound: SoundPane(model: model)
+      case .usage: IntegrationsPane(model: model, scope: .usage)
+      case .shortcuts: GeneralPane(model: model, scope: .shortcuts)
+      case .remote: RemotePane(model: model)
+      case .labs: GeneralPane(model: model, scope: .labs)
+      case .pass: PassPane()
+      case .about: AboutPane(model: model)
+      }
+    }
+    // The column follows the window. Vibe measures 391 pt of card at its 620 pt
+    // window, and that is still what a 620 pt window gets here; wider windows
+    // stretch the cards with them up to a reading width, then stop — a toggle
+    // whose switch sits a metre from its label is not easier to use, and a
+    // fixed column left half the window empty.
+    .padding(.leading, 24)
+    .padding(.trailing, 20)
+    .padding(.bottom, 24)
+    .frame(maxWidth: 720 + 44, alignment: .leading)
+    .frame(maxWidth: .infinity, alignment: .leading)
+  }
+
+  /// The detail side as `--render` draws it: header and column, at a window width,
+  /// with the same chrome the window applies — so what the file shows is what the
+  /// window shows, minus scrolling.
+  static func rendering(_ pane: Pane, model: AppModel, windowWidth: CGFloat) -> some View {
+    VStack(spacing: 0) {
+      SettingsPaneHeader(pane: pane)
+      column(pane, model: model)
+    }
+    .frame(width: windowWidth - 188, alignment: .topLeading)
+    .background(SettingsStyle.canvas)
+    .preferredColorScheme(.dark)
+    .toggleStyle(VibeToggleStyle())
+    .environment(\.colorScheme, .dark)
   }
 
   private var primaryPanes: [Pane] {
@@ -183,32 +206,49 @@ private enum SettingsStyle {
   static let cardBorder = Color.white.opacity(0.035)
 }
 
+/// The switch: a track that says its state in colour and a thumb that slides between
+/// two edges. Vibe's 36×16 pill told on from off by two greys four points apart; this
+/// reads at a glance and lands where a finger or a cursor expects it.
 private struct VibeToggleStyle: ToggleStyle {
+  static let trackSize = CGSize(width: 38, height: 22)
+  static let thumbSize: CGFloat = 18
+  static let accent = Color(hex: 0x0A84FF)
+
   func makeBody(configuration: Configuration) -> some View {
     Button {
       configuration.isOn.toggle()
     } label: {
-      HStack(spacing: 10) {
+      HStack(spacing: 0) {
+        // The gap rides on the label rather than on the stack, so a toggle with its
+        // label hidden measures exactly its track and sits flush in a row.
         configuration.label
-        Spacer(minLength: 8)
-        ZStack {
-          Capsule()
-            .fill(
-              configuration.isOn
-                ? Color.white.opacity(0.18)
-                : Color.white.opacity(0.11))
-          Circle()
-            .fill(Color.white.opacity(0.94))
-            .frame(width: 13, height: 13)
-            .offset(x: configuration.isOn ? 9 : -9)
-        }
-        .frame(width: 36, height: 16)
+          .padding(.trailing, 12)
+        Spacer(minLength: 0)
+        Self.track(isOn: configuration.isOn)
       }
-      .frame(minHeight: 20)
+      .frame(minHeight: 22)
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)
-    .animation(.easeOut(duration: 0.12), value: configuration.isOn)
+    .animation(.spring(response: 0.22, dampingFraction: 0.9), value: configuration.isOn)
+  }
+
+  static func track(isOn: Bool) -> some View {
+    let inset = (trackSize.height - thumbSize) / 2
+    return HStack {
+      if isOn { Spacer(minLength: 0) }
+      Circle()
+        .fill(Color.white)
+        .frame(width: thumbSize, height: thumbSize)
+        .shadow(color: .black.opacity(0.28), radius: 1.5, y: 1)
+      if !isOn { Spacer(minLength: 0) }
+    }
+    .padding(inset)
+    .frame(width: trackSize.width, height: trackSize.height)
+    .background(
+      Capsule().fill(isOn ? accent : Color.white.opacity(0.16)))
+    .overlay(
+      Capsule().stroke(Color.white.opacity(isOn ? 0 : 0.08), lineWidth: 1))
   }
 }
 
@@ -273,7 +313,7 @@ private struct GeneralPane: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 18) {
       if scope == .general {
-        Section(t("System"), note: nil, verticalPadding: 5) {
+        Section(t("System"), note: nil) {
           Toggle(t("Open at login"), isOn: launchAtLogin)
           Divider().overlay(Color.white.opacity(0.07))
           HStack {
@@ -286,20 +326,17 @@ private struct GeneralPane: View {
               })
           }
         }
-        .padding(.bottom, 10)
 
-        Section(t("Deployment"), note: nil, verticalPadding: 13) {
+        Section(t("Deployment"), note: nil) {
           Toggle(t("Expand notch on hover"), isOn: expandsOnHover)
         }
-        .padding(.bottom, 14)
 
-        Section(t("Visibility"), note: nil, verticalPadding: 13) {
+        Section(t("Visibility"), note: nil) {
           Toggle(t("Hide in fullscreen"), isOn: hidesInFullscreen)
           Toggle(
             t("Hide automatically when there is no active session"),
             isOn: hidesWhenNoSessions)
         }
-        .padding(.bottom, 12)
 
         Section(t("Closing"), note: nil) {
           Toggle(t("Collapse automatically on mouse exit"), isOn: collapsesOnHoverExit)
@@ -424,7 +461,6 @@ private struct GeneralPane: View {
               ])
           }
         }
-        .padding(.bottom, 12)
         Section(
           t("Global shortcuts"),
           note: nil
@@ -434,6 +470,7 @@ private struct GeneralPane: View {
               Text(t("Enable keyboard shortcuts"))
               Text(t("Disables all Perch shortcuts without clearing your configured keys."))
                 .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             }
           }
           Divider().overlay(Color.white.opacity(0.07))
@@ -472,6 +509,7 @@ private struct GeneralPane: View {
               }
               Text(t("Adds Shift to the switcher shortcut to cycle backwards."))
                 .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             }
           }
           Divider().overlay(Color.white.opacity(0.07))
@@ -547,7 +585,7 @@ private struct GeneralPane: View {
             range: 320...720, suffix: "pt")
           SettingsValueSlider(
             title: t("Maximum panel width"), value: panelMaximumWidth,
-            range: 420...820, suffix: "pt")
+            range: 420...820, suffix: "pt", bottomPadding: 4)
         }
 
         Section(t("Session Card"), note: nil) {
@@ -559,6 +597,7 @@ private struct GeneralPane: View {
             Toggle(t("Show tasks"), isOn: showsTasks)
             Text(t("Shows the task list in each session card."))
               .font(.caption).foregroundStyle(.secondary)
+              .fixedSize(horizontal: false, vertical: true)
           }
           VStack(alignment: .leading, spacing: 4) {
             Toggle(t("Show subagents"), isOn: showsSubagents)
@@ -584,18 +623,16 @@ private struct GeneralPane: View {
             "Fine-tune only when the panel does not sit exactly over the cutout. Zero uses the dimensions detected by macOS."
           )
         ) {
-          Slider(value: notchWidth, in: -60...60, step: 1) {
-            Text(t("Notch width") + "  \(Int(model.preferences.notchWidthAdjustment)) pt")
-              .monospacedDigit()
-          }
-          .vibeSliderTrack(
-            value: model.preferences.notchWidthAdjustment, in: -60...60)
-          Slider(value: notchHeight, in: -12...24, step: 1) {
-            Text(t("Notch height") + "  \(Int(model.preferences.notchHeightAdjustment)) pt")
-              .monospacedDigit()
-          }
-          .vibeSliderTrack(
-            value: model.preferences.notchHeightAdjustment, in: -12...24)
+          // Same row as the sizing sliders above: title and value over the track. A
+          // label passed to `Slider` itself sits inline on macOS, and the Vibe track
+          // overlay is drawn across the whole control — which struck the label
+          // through with the blue capsule.
+          SettingsValueSlider(
+            title: t("Notch width"), value: notchWidth, range: -60...60,
+            suffix: " pt", step: 1, signed: true, bottomPadding: 6)
+          SettingsValueSlider(
+            title: t("Notch height"), value: notchHeight, range: -12...24,
+            suffix: " pt", step: 1, signed: true, bottomPadding: 6)
           Button(t("Reset to what macOS reports")) {
             var next = model.preferences
             next.notchWidthAdjustment = 0
@@ -615,6 +652,7 @@ private struct GeneralPane: View {
               Text(t("Beta Updates"))
               Text(t("Get early access to new features. Beta builds may be less stable."))
                 .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             }
           }
         }
@@ -624,6 +662,7 @@ private struct GeneralPane: View {
               Text(t("Restart if memory is high"))
               Text(t("Optional safety net. Relaunches only if memory stays high and every session is idle."))
                 .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             }
           }
         }
@@ -633,6 +672,7 @@ private struct GeneralPane: View {
               Text(t("Use Auto Mode instead of Bypass"))
               Text(t("Replace Bypass with Auto Mode. Claude Code decides the safety of each action."))
                 .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             }
           }
           Toggle(isOn: ignoresClaudeApprovals) {
@@ -640,6 +680,7 @@ private struct GeneralPane: View {
               Text(t("Use native Claude Code approvals"))
               Text(t("Ignore Perch approval cards and notifications, and let Claude Code handle approvals in the terminal."))
                 .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             }
           }
         }
@@ -649,6 +690,7 @@ private struct GeneralPane: View {
               Text(t("When Codex needs your approval"))
               Text(t("Auto-reviewed requests are always silent"))
                 .font(.caption).foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             }
             Spacer()
             VibeMenuPicker(
@@ -668,6 +710,7 @@ private struct GeneralPane: View {
                 )
               )
               .font(.caption).foregroundStyle(.secondary)
+              .fixedSize(horizontal: false, vertical: true)
             }
           }
         }
@@ -685,6 +728,7 @@ private struct GeneralPane: View {
           }
           Text(t("Auto reads Cursor's YOLO config to decide."))
             .font(.caption).foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
         }
       }
 
@@ -1111,8 +1155,7 @@ private struct SoundPane: View {
         if sounds.enabled {
           HStack {
             Text(t("Volume")).foregroundStyle(.secondary)
-            Slider(value: volume, in: 0...1)
-              .vibeSliderTrack(value: sounds.volume, in: 0...1)
+            SettingsSlider(value: volume, in: 0...1, step: 0.01)
             Text(String(format: "%.0f%%", sounds.volume * 100))
               .monospacedDigit()
               .foregroundStyle(.secondary)
@@ -1174,44 +1217,64 @@ private struct SoundPane: View {
               + "app gets muted for good.")
         ) {
           ForEach(InterruptionKind.allCases, id: \.rawValue) { kind in
-            HStack(spacing: 8) {
-              Text(t(kind.title))
-                .frame(width: 170, alignment: .leading)
-
-              Picker("", selection: source(for: kind)) {
-                Text(t("Off")).tag(SoundSource.off)
-                // The 8-bit voices first: they are the ones that belong to the
-                // instrument, and the ones a fresh install already uses.
-                ForEach(ChipTune.names, id: \.self) { name in
-                  Text("\(name) · 8-bit").tag(SoundSource.synth(name))
-                }
-                ForEach(SoundSettings.systemNames, id: \.self) { name in
-                  Text(name).tag(SoundSource.system(name))
-                }
-                // A picked file is not in the list, so it needs its own row or
-                // the selection would silently fall back to Off.
-                if case .file(let path) = sounds.source(for: kind) {
-                  Text(URL(fileURLWithPath: path).lastPathComponent)
-                    .tag(SoundSource.file(path))
-                }
-              }
-              .labelsHidden()
-              .frame(width: 160)
-
-              Button(t("Choose…")) { chooseFile(for: kind) }
-              Button(t("Preview")) {
-                SoundPlayer.preview(sounds.source(for: kind), volume: sounds.volume)
-              }
-              .disabled(sounds.source(for: kind) == .off)
-
-              Spacer()
-            }
-            .disabled(!sounds.enabled)
+            eventRow(for: kind)
           }
         }
       }
     }
     .padding(.top, 5)
+  }
+
+  /// Title, source picker, and the two buttons — on one line where the card is wide
+  /// enough, and title over controls where it is not. Fixed 170 + 160 pt columns
+  /// used to run past the card at the window's minimum width.
+  @ViewBuilder
+  private func eventRow(for kind: InterruptionKind) -> some View {
+    ViewThatFits(in: .horizontal) {
+      HStack(spacing: 8) {
+        Text(t(kind.title))
+          .lineLimit(1)
+          .layoutPriority(1)
+        Spacer(minLength: 12)
+        eventControls(for: kind)
+      }
+      VStack(alignment: .leading, spacing: 6) {
+        Text(t(kind.title))
+        eventControls(for: kind)
+      }
+    }
+    .disabled(!sounds.enabled)
+  }
+
+  private func eventControls(for kind: InterruptionKind) -> some View {
+    HStack(spacing: 8) {
+      Picker("", selection: source(for: kind)) {
+        Text(t("Off")).tag(SoundSource.off)
+        // The 8-bit voices first: they are the ones that belong to the
+        // instrument, and the ones a fresh install already uses.
+        ForEach(ChipTune.names, id: \.self) { name in
+          Text("\(name) · 8-bit").tag(SoundSource.synth(name))
+        }
+        ForEach(SoundSettings.systemNames, id: \.self) { name in
+          Text(name).tag(SoundSource.system(name))
+        }
+        // A picked file is not in the list, so it needs its own row or
+        // the selection would silently fall back to Off.
+        if case .file(let path) = sounds.source(for: kind) {
+          Text(URL(fileURLWithPath: path).lastPathComponent)
+            .tag(SoundSource.file(path))
+        }
+      }
+      .labelsHidden()
+      .frame(minWidth: 140, maxWidth: 220)
+
+      Button(t("Choose…")) { chooseFile(for: kind) }
+      Button(t("Preview")) {
+        SoundPlayer.preview(sounds.source(for: kind), volume: sounds.volume)
+      }
+      .disabled(sounds.source(for: kind) == .off)
+    }
+    .fixedSize(horizontal: true, vertical: false)
   }
 
   private var enabled: Binding<Bool> {
@@ -1436,11 +1499,12 @@ private struct FiltersPane: View {
         }
         Text("\(rule.match == .prefix ? t("Prefix") : t("Contains")) · \(rule.pattern)")
           .font(.caption).foregroundStyle(.secondary)
+          .fixedSize(horizontal: false, vertical: true)
       }
       Spacer()
       Toggle("", isOn: enabled(rule.id))
         .labelsHidden()
-        .frame(width: 36)
+        .fixedSize()
       if !rule.isPreset {
         Button(t("Remove")) {
           var updated = policy
@@ -1657,7 +1721,7 @@ private struct IntegrationsPane: View {
           }
           .buttonStyle(.plain)
           .foregroundStyle(Color(hex: 0x3498F5))
-          .frame(minHeight: 27)
+          .frame(maxWidth: .infinity, minHeight: 27, alignment: .leading)
           .overlay(alignment: .bottom) {
             Rectangle().fill(Color.white.opacity(0.07)).frame(height: 1)
           }
@@ -2297,7 +2361,7 @@ private struct AgentIntegrationRow: View {
       } else {
         Toggle("", isOn: tool == nil ? .constant(false) : $enabled)
           .labelsHidden()
-          .frame(width: 36)
+          .fixedSize()
           .disabled(tool == nil || tool?.isConfigured != true)
       }
     }
@@ -2563,6 +2627,8 @@ private struct RemotePane: View {
             .frame(width: 72)
           Text(t("restart to apply"))
             .font(.caption).foregroundStyle(.secondary)
+            .lineLimit(1)
+            .layoutPriority(-1)
         }
       }
       .padding(.bottom, -6)
@@ -3058,6 +3124,7 @@ private struct AddRemoteHostSheet: View {
                 Text(t("Connect manually only"))
                 Text(t("Disable automatic connection and reconnection for this host."))
                   .font(.caption).foregroundStyle(.secondary)
+                  .fixedSize(horizontal: false, vertical: true)
               }
             }
             Divider().overlay(Color.white.opacity(0.07))
@@ -3066,6 +3133,7 @@ private struct AddRemoteHostSheet: View {
                 Text(t("Keep remote hooks up to date"))
                 Text(t("Redeploy the hook after an app update when this host reconnects."))
                   .font(.caption).foregroundStyle(.secondary)
+                  .fixedSize(horizontal: false, vertical: true)
               }
             }
           }
@@ -3076,6 +3144,7 @@ private struct AddRemoteHostSheet: View {
                 Text(t("Relay Claude usage"))
                 Text(t("Relay Claude limits from this host's statusline."))
                   .font(.caption).foregroundStyle(.secondary)
+                  .fixedSize(horizontal: false, vertical: true)
               }
             }
             Divider().overlay(Color.white.opacity(0.07))
@@ -3084,6 +3153,7 @@ private struct AddRemoteHostSheet: View {
                 Text(t("Probe Codex usage"))
                 Text(t("Probe this host's Codex account only when Codex activity is seen."))
                   .font(.caption).foregroundStyle(.secondary)
+                  .fixedSize(horizontal: false, vertical: true)
               }
             }
           }
@@ -3200,7 +3270,7 @@ private struct AboutPane: View {
       .padding(.top, 10)
       .padding(.bottom, 4)
 
-      Section("", note: nil, verticalPadding: 0) {
+      Section("", note: nil) {
         if let updates = model?.updates, let item = updates.available {
           HStack {
             Text(t("Version %@ is available", item.version))
@@ -3217,6 +3287,8 @@ private struct AboutPane: View {
             Task { await updates.check() }
           } label: {
             Label(t("Check for Updates"), systemImage: "arrow.triangle.2.circlepath")
+              .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
+              .contentShape(Rectangle())
           }
           .buttonStyle(.plain)
           .disabled(model?.updates.isConfigured != true)
@@ -3228,6 +3300,7 @@ private struct AboutPane: View {
               Text("v\(version)").foregroundStyle(.secondary)
               Image(systemName: "chevron.right").foregroundStyle(.tertiary)
             }
+            .frame(minHeight: 24)
           }
         }
         Divider().overlay(Color.white.opacity(0.07))
@@ -3236,6 +3309,7 @@ private struct AboutPane: View {
             Text(t("Automatically check for updates"))
             Text(t("When disabled, new versions are checked only with Check for Updates."))
               .font(.caption).foregroundStyle(.secondary)
+              .fixedSize(horizontal: false, vertical: true)
           }
         }
         Divider().overlay(Color.white.opacity(0.07))
@@ -3244,6 +3318,7 @@ private struct AboutPane: View {
             Text(t("Install updates automatically"))
             Text(t("When disabled, an update button appears in the panel when a release is ready."))
               .font(.caption).foregroundStyle(.secondary)
+              .fixedSize(horizontal: false, vertical: true)
           }
         }
         if let error = model?.updates.lastError {
@@ -3251,7 +3326,7 @@ private struct AboutPane: View {
         }
       }
 
-      Section("", note: nil, verticalPadding: 8) {
+      Section("", note: nil) {
         AboutLinkRow(
           title: t("Website"), symbol: "globe", trailing: "github.com/dev-toolings/perch",
           destination: URL(string: "https://github.com/dev-toolings/perch")!)
@@ -3541,6 +3616,7 @@ private struct SessionCardSettingsPreview: View {
         isActive: true,
         isCollapsed: false)
     }
+    .frame(maxWidth: .infinity, alignment: .leading)
     .padding(.top, 2)
   }
 }
@@ -3550,13 +3626,23 @@ private struct SettingsValueSlider: View {
   @Binding var value: Double
   let range: ClosedRange<Double>
   let suffix: String
+  var step: Double = 10
+  /// Adjustments read as offsets — "+12 pt", "0 pt", "−8 pt" — sizes as amounts.
+  var signed: Bool = false
+  var bottomPadding: CGFloat = 21
+
+  private var display: String {
+    let amount = Int(value)
+    let sign = signed && amount > 0 ? "+" : ""
+    return "\(sign)\(amount)\(suffix)"
+  }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 5) {
       HStack {
         Text(title)
         Spacer()
-        Text("\(Int(value))\(suffix)")
+        Text(display)
           .font(Theme.mono(10))
           .foregroundStyle(.secondary)
           .padding(.horizontal, 7)
@@ -3565,42 +3651,84 @@ private struct SettingsValueSlider: View {
             RoundedRectangle(cornerRadius: 7)
               .stroke(Color.white.opacity(0.14), lineWidth: 1))
       }
-      Slider(value: $value, in: range, step: 10)
-        .vibeSliderTrack(value: value, in: range)
+      SettingsSlider(value: $value, in: range, step: step)
     }
     // Vibe gives each sizing control a full row, with the extra breathing room below
     // the track. Keeping it on the bottom preserves the measured title/track alignment
     // while matching the 73pt cadence between successive slider labels.
-    .padding(.bottom, 21)
+    .padding(.bottom, bottomPadding)
   }
 }
 
-private struct VibeSliderTrack: ViewModifier {
-  let value: Double
+/// A slider drawn from scratch: a thin track, the travelled part in the accent, a
+/// white thumb. The native macOS control used to sit under a hand-drawn blue capsule
+/// that never quite lined up with its own track — two sliders in one, and neither
+/// clean. Drag anywhere on the track; the value snaps to `step`.
+private struct SettingsSlider: View {
+  @Binding var value: Double
   let range: ClosedRange<Double>
+  let step: Double
 
-  func body(content: Content) -> some View {
-    content
-      .tint(Color(hex: 0x0A84FF))
-      .accentColor(Color(hex: 0x0A84FF))
-      .overlay {
-        GeometryReader { proxy in
-          let raw = (value - range.lowerBound) / (range.upperBound - range.lowerBound)
-          let fraction = min(max(raw, 0), 1)
-          Capsule()
-            .fill(Color(hex: 0x0A84FF))
-            .frame(width: max(0, 8 + (proxy.size.width - 16) * fraction), height: 3)
-            .offset(y: (proxy.size.height - 3) / 2)
-        }
-        .allowsHitTesting(false)
-        .accessibilityHidden(true)
-      }
+  private static let thumb: CGFloat = 16
+  private static let track: CGFloat = 4
+  private static let accent = Color(hex: 0x0A84FF)
+
+  init(value: Binding<Double>, in range: ClosedRange<Double>, step: Double) {
+    _value = value
+    self.range = range
+    self.step = step
   }
-}
 
-private extension View {
-  func vibeSliderTrack(value: Double, in range: ClosedRange<Double>) -> some View {
-    modifier(VibeSliderTrack(value: value, range: range))
+  private var fraction: CGFloat {
+    let span = range.upperBound - range.lowerBound
+    guard span > 0 else { return 0 }
+    return CGFloat(min(max((value - range.lowerBound) / span, 0), 1))
+  }
+
+  var body: some View {
+    GeometryReader { proxy in
+      let travel = max(proxy.size.width - Self.thumb, 0)
+      let x = travel * fraction
+      ZStack(alignment: .leading) {
+        Capsule()
+          .fill(Color.white.opacity(0.14))
+          .frame(height: Self.track)
+        Capsule()
+          .fill(Self.accent)
+          .frame(width: x + Self.thumb / 2, height: Self.track)
+        Circle()
+          .fill(Color.white)
+          .frame(width: Self.thumb, height: Self.thumb)
+          .shadow(color: .black.opacity(0.3), radius: 1.5, y: 1)
+          .offset(x: x)
+      }
+      .frame(height: proxy.size.height)
+      .contentShape(Rectangle())
+      .gesture(
+        DragGesture(minimumDistance: 0)
+          .onChanged { drag in
+            set(at: drag.location.x, travel: travel)
+          })
+    }
+    .frame(height: 22)
+    .accessibilityElement()
+    .accessibilityValue(Text("\(Int(value))"))
+    .accessibilityAdjustableAction { direction in
+      switch direction {
+      case .increment: value = min(value + step, range.upperBound)
+      case .decrement: value = max(value - step, range.lowerBound)
+      @unknown default: break
+      }
+    }
+  }
+
+  private func set(at locationX: CGFloat, travel: CGFloat) {
+    guard travel > 0 else { return }
+    let ratio = min(max((locationX - Self.thumb / 2) / travel, 0), 1)
+    let raw = range.lowerBound + Double(ratio) * (range.upperBound - range.lowerBound)
+    let snapped = step > 0 ? (raw / step).rounded() * step : raw
+    let next = min(max(snapped, range.lowerBound), range.upperBound)
+    if next != value { value = next }
   }
 }
 
@@ -3782,8 +3910,10 @@ private struct Section<Content: View>: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text(title)
-        .font(.system(size: 13, weight: .bold))
+      if !title.isEmpty {
+        Text(title)
+          .font(.system(size: 13, weight: .bold))
+      }
       VStack(alignment: .leading, spacing: 10) {
         content
       }
