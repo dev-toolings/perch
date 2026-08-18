@@ -417,11 +417,23 @@ struct IdleReading: Equatable {
   }
 }
 
-/// Vibe Island's status sprite, in the strip and in the header, as vibeisland.app draws
-/// it in the island on its front page: an inline SVG on a 13 x 8 grid at 2 px a cell —
-/// two bright antennae, a six-wide body with two black eyes, four feet — with a
-/// `drop-shadow(0 0 3px)` glow in the same colour. One pet, no companion; the state is
-/// the colour, and the site's palette is read off its `:root`.
+/// Vibe Island's status sprite, in the strip and in the header, as the app itself draws
+/// it — read off the arm64 slice of Vibe Island 1.0.44 (`PixelStatusIcon` and its
+/// `Canvas` closure at 0x1007ddbb0, the appearance switch at 0x1007e0434 and the five
+/// per-status helpers at 0x1007e0d10–0x1007e1c1c), not off a screenshot.
+///
+/// The contract, cell for cell:
+/// - a 13 x 8 grid, `p = min(width / 13, height / 8)`, centred; every cell is drawn as a
+///   rect inset by 0.15 pt so the pixels keep a hairline of air between them;
+/// - the pet on columns 1–6: antennae (2,2) (5,2), a six-wide row 3 and row 4, black eyes
+///   on row 3, four feet on row 5;
+/// - a `Timer.publish(every: 0.15)` drives an integer `phase`, and the status decides what
+///   the phase moves: the feet walk (four frames), the eyes glance, and — on columns 9–12 —
+///   idle blinks a 2 x 4 cursor five ticks in eight, working spins an eight-cell ring with a
+///   fading tail (opacity 1 − 0.12·i) around a 2 x 2 block, a request shows a `?` whose dot
+///   blinks, and a failure an X;
+/// - the palette is the app's `Color(red:green:blue:)` statics: idle #22C55E/#4ADE80,
+///   working #3B82F6/#60A5FA, alert #F97316/#FB923C, ended #737373/#999999.
 ///
 /// This is what the strip shows in place of the resting creature as soon as anything is
 /// running: the creature says "nothing here", and an animated one next to a live count
@@ -429,100 +441,142 @@ struct IdleReading: Equatable {
 struct CompactStatusSprites: View {
   let status: SessionStatus?
 
-  private var isWorking: Bool { VibePet.isWorking(status) }
-
-  /// The pet steps in place while a harness runs — the app's own `PixelStatusIcon`
-  /// carries a phase and a timer for exactly this. Half a second a step, on the shared
-  /// clock rather than an implicit animation, so the strip and the header — which draw
-  /// the same pet — stay in step with each other.
-  static let stepInterval: TimeInterval = 0.55
-
   var body: some View {
-    Group {
-      if isWorking {
-        TimelineView(.periodic(from: .now, by: Self.stepInterval)) { context in
-          let step =
-            Int((context.date.timeIntervalSinceReferenceDate / Self.stepInterval).rounded(.down))
-          pet(lifted: step % 2 == 0)
-        }
-      } else {
-        pet(lifted: false)
-      }
+    TimelineView(.periodic(from: .now, by: VibePet.tick)) { context in
+      VibePet(
+        status: status,
+        phase: Int((context.date.timeIntervalSinceReferenceDate / VibePet.tick).rounded(.down)))
     }
     .accessibilityHidden(true)
   }
-
-  private func pet(lifted: Bool) -> some View {
-    VibePet(status: status)
-      .offset(y: lifted ? -1 : 0)
-      .animation(.easeInOut(duration: Self.stepInterval * 0.6), value: lifted)
-  }
 }
 
-/// The pet itself. Rows and colours are the site's, cell for cell.
+/// The pet itself, one frame of it. See `CompactStatusSprites` for where the rows come
+/// from; this only draws.
 struct VibePet: View {
   let status: SessionStatus?
-  /// 2 pt a cell, the site's own `width=26 height=16` for its 13 x 8 viewBox.
+  /// The tick counter the app keeps in `@State`; here it comes off the shared clock so
+  /// two copies of the pet — strip and header — step together.
+  var phase: Int = 0
+  /// 2 pt a cell, which is the site's own `width=26 height=16` for the 13 x 8 viewBox
+  /// and what the app renders in a 30 pt pill.
   var pixel: CGFloat = 2
 
-  /// `o` is the bright tone (antennae), `x` the body, `#` an eye — black on the site,
-  /// and black here: on the panel it reads as a hole either way, and where the pet
-  /// ever meets a lighter ground the eye still stays an eye.
-  static let rows = [
-    "..o..o..",
-    ".x#xx#x.",
-    ".xxxxxx.",
-    "..xx.xx.",
-  ]
+  /// The app's timer: `Timer.publish(every: 0.15, on: .main, in: .common)`.
+  static let tick: TimeInterval = 0.15
 
-  static func isWorking(_ status: SessionStatus?) -> Bool {
-    status == .working || status == .runningTool || status == .compacting
-      || status == .background
+  enum Mood { case idle, working, attention, ended }
+
+  static func mood(for status: SessionStatus?) -> Mood {
+    switch status {
+    case .working, .runningTool, .compacting, .background: return .working
+    case .needsApproval, .waitingForAnswer: return .attention
+    case .failed: return .ended
+    case .idle, .none: return .idle
+    }
   }
 
-  /// `--vi-idle`, `--vi-work`, `--vi-alert`, `--vi-question` and their `-bright` pairs.
-  static func palette(for status: SessionStatus?) -> (body: Color, bright: Color) {
-    switch status {
-    case .needsApproval, .failed:
-      return (Color(hex: 0xF97316), Color(hex: 0xFB923C))
-    case .waitingForAnswer:
-      return (Color(hex: 0x06B6D4), Color(hex: 0x22D3EE))
-    case .working, .runningTool, .compacting, .background:
-      return (Color(hex: 0x3B82F6), Color(hex: 0x60A5FA))
-    case .idle, .none:
-      return (Color(hex: 0x22C55E), Color(hex: 0x4ADE80))
+  /// `(base, bright)` per mood, the app's own RGB literals.
+  static func palette(for mood: Mood) -> (base: Color, bright: Color) {
+    switch mood {
+    case .idle: return (Color(hex: 0x22C55E), Color(hex: 0x4ADE80))
+    case .working: return (Color(hex: 0x3B82F6), Color(hex: 0x60A5FA))
+    case .attention: return (Color(hex: 0xF97316), Color(hex: 0xFB923C))
+    case .ended: return (Color(hex: 0x737373), Color(hex: 0x999999))
+    }
+  }
+
+  /// The eight cells around the working block, in the order the ring turns:
+  /// `[(10,2),(11,2),(12,3),(12,4),(11,5),(10,5),(9,4),(9,3)]` at 0x100f06e68.
+  static let ring: [(x: Int, y: Int)] = [
+    (10, 2), (11, 2), (12, 3), (12, 4), (11, 5), (10, 5), (9, 4), (9, 3),
+  ]
+
+  /// Feet on row 5. Frame 0 is the resting stance; walking is 0, 1, 0, 3.
+  static func feet(frame: Int) -> [Int] {
+    switch frame {
+    case 1: return [1, 3, 5, 6]
+    case 3: return [2, 3, 4, 6]
+    default: return [2, 3, 5, 6]
     }
   }
 
   var body: some View {
-    let palette = Self.palette(for: status)
-    VStack(spacing: 0) {
-      ForEach(Array(Self.rows.enumerated()), id: \.offset) { _, row in
-        HStack(spacing: 0) {
-          ForEach(Array(row.enumerated()), id: \.offset) { _, cell in
-            Rectangle()
-              .fill(colour(cell, palette: palette))
-              .frame(width: pixel, height: pixel)
+    let mood = Self.mood(for: status)
+    let palette = Self.palette(for: mood)
+    Canvas(opaque: false, rendersAsynchronously: false) { context, size in
+      let p = min(size.width / 13, size.height / 8)
+      let inset: CGFloat = 0.15
+      let origin = CGPoint(x: (size.width - 13 * p) / 2, y: (size.height - 8 * p) / 2)
+      func cell(_ x: Int, _ y: Int, _ colour: Color) {
+        let rect = CGRect(
+          x: origin.x + CGFloat(x) * p + inset, y: origin.y + CGFloat(y) * p + inset,
+          width: p - 2 * inset, height: p - 2 * inset)
+        context.fill(Path(rect), with: .color(colour))
+      }
+      let step = ((phase % 8) + 8) % 8
+
+      // Alert: the body flashes between its two tones, four ticks each way.
+      let flashes = mood == .attention && step <= 3
+      let body = flashes ? palette.bright : palette.base
+      let crown = flashes ? palette.base : palette.bright
+
+      // Antennae, then the two body rows.
+      cell(2, 2, crown)
+      cell(5, 2, crown)
+      for x in 1...6 { cell(x, 3, body) }
+      for x in 1...6 { cell(x, 4, body) }
+      // Eyes. At work they glance aside every four ticks; otherwise they look ahead.
+      let glances = mood == .working && (phase & 4) != 0
+      cell(glances ? 3 : 2, 3, .black)
+      cell(glances ? 6 : 5, 3, .black)
+      // Feet: a four-frame walk at work, a resting stance otherwise.
+      let frame: Int
+      switch mood {
+      case .working: frame = ((phase % 4) + 4) % 4
+      case .attention: frame = ((phase % 3) + 3) % 3 == 1 ? 1 : 0
+      default: frame = 0
+      }
+      for x in Self.feet(frame: frame) { cell(x, 5, body) }
+
+      // Columns 9–12: what the status says next to the pet.
+      switch mood {
+      case .idle:
+        // A cursor, five ticks on and three off.
+        if step < 5 {
+          for y in 2..<6 {
+            cell(10, y, body)
+            cell(11, y, body)
           }
         }
+      case .working:
+        // The ring turns one cell a tick, its tail fading behind the head.
+        for i in 0..<8 {
+          let index = ((phase + i) % 8 + 8) % 8
+          let spot = Self.ring[index]
+          cell(spot.x, spot.y, body.opacity(1 - 0.12 * Double(i)))
+        }
+        for x in 10...11 { for y in 3...4 { cell(x, y, body) } }
+      case .attention:
+        // A question mark; its dot blinks with the body.
+        cell(10, 1, body); cell(11, 1, body)
+        cell(9, 2, body); cell(12, 2, body)
+        cell(12, 3, body)
+        cell(11, 4, body)
+        if step <= 3 { cell(10, 6, body); cell(11, 6, body) }
+      case .ended:
+        // An X.
+        cell(9, 2, body); cell(12, 2, body)
+        cell(10, 3, body); cell(11, 3, body)
+        cell(10, 4, body); cell(11, 4, body)
+        cell(9, 5, body); cell(12, 5, body)
       }
     }
     // The site's `drop-shadow(0 0 3px)`: a soft halo in the body colour, which is what
     // makes a 12 pt sprite read from across the room.
-    .shadow(color: palette.body.opacity(0.9), radius: 3)
-    // The site's box is 8 rows tall for 4 rows of pet: it sits with two rows of air
-    // above and below, so the frame keeps that and the strip's centring stays put.
-    .frame(height: pixel * 8)
+    .shadow(color: palette.base.opacity(0.9), radius: 3)
+    .frame(width: pixel * 13, height: pixel * 8)
     .accessibilityHidden(true)
-  }
-
-  private func colour(_ cell: Character, palette: (body: Color, bright: Color)) -> Color {
-    switch cell {
-    case "x": return palette.body
-    case "o": return palette.bright
-    case "#": return .black
-    default: return .clear
-    }
   }
 }
 

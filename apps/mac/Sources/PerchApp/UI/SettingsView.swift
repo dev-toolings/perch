@@ -3463,8 +3463,7 @@ private struct NotchSettingsPreview: View {
           .clipped()
 
         HStack(spacing: 4) {
-          VibePet(status: .idle)
-            .frame(width: 24, height: 12)
+          VibePet(status: .idle, phase: 0, pixel: 1.5)
           Text("Recopier la vibe Island dans Perch")
             .foregroundStyle(.white)
             .lineLimit(1)
