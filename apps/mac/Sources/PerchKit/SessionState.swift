@@ -87,15 +87,51 @@ public struct SubagentRun: Sendable, Equatable, Identifiable {
     /// Kept until the next user turn so the panel can show what just finished instead of
     /// making the row disappear at the exact moment it becomes useful context.
     public var completedAt: Date?
+    /// What the agent was asked to do — the `description` of the `Task` call that spawned
+    /// it, paired with the `SubagentStart` that followed. Vibe prints it in brackets
+    /// after the agent's name; a row that only says `obiwan` says who, not what.
+    public var task: String?
+    /// What the agent is doing right now: its last tool call, in the strip's `Tool: args`
+    /// form. Its tool events arrive under the parent's session with the agent's own id,
+    /// and used to be dropped on the floor once they had bumped `lastEvent`.
+    public var detail: String = ""
 
-    public init(id: String? = nil, label: String, startedAt: Date, completedAt: Date? = nil) {
+    public init(
+        id: String? = nil, label: String, startedAt: Date, completedAt: Date? = nil,
+        task: String? = nil
+    ) {
         self.id = id ?? UUID().uuidString
         self.label = label
         self.startedAt = startedAt
         self.completedAt = completedAt
+        self.task = task
     }
 
     public var isCompleted: Bool { completedAt != nil }
+
+    /// An Agent Team member carries `name@session-xxxxxxxx` for an id; a fan-out
+    /// subagent a bare hex id. Vibe lists the two apart — "Team · session-xxxxxxxx" over
+    /// "Subagents" — and so does the card.
+    public var teamName: String? {
+        guard let at = id.firstIndex(of: "@") else { return nil }
+        let team = String(id[id.index(after: at)...])
+        return team.isEmpty ? nil : team
+    }
+
+    /// `@yoda` for a team member — the name it was spawned with — and nothing for a
+    /// fan-out subagent, which has no name of its own beyond its type.
+    public var memberName: String? {
+        guard let at = id.firstIndex(of: "@") else { return nil }
+        let name = String(id[..<at])
+        return name.isEmpty ? nil : name
+    }
+}
+
+/// A `Task` call the main loop has made, waiting for the `SubagentStart` that carries
+/// the agent's id. See `SessionSnapshot.pendingSpawns`.
+struct PendingSpawn: Sendable, Equatable {
+    var type: String?
+    var task: String
 }
 
 public struct SessionSnapshot: Sendable, Equatable {
@@ -126,6 +162,10 @@ public struct SessionSnapshot: Sendable, Equatable {
     /// the arguments, which is what the card wants; the compact strip wants both, the way
     /// Vibe's pill says `Bash: sed -n 206,…`.
     public var lastTool: String?
+    /// `Task` calls the main loop has made whose `SubagentStart` has not arrived yet:
+    /// `(type, description)`. The description lives on the tool call and the id on the
+    /// start event; this is how the two meet.
+    var pendingSpawns: [PendingSpawn] = []
     public var status: SessionStatus
     /// Subagents observed during the current turn — fan-out `Task` calls and Agent Team
     /// members both report through `SubagentStart` / `SubagentStop`.
@@ -479,6 +519,9 @@ public struct SessionTracker: Sendable {
         /// What a subagent is, when the payload says. Fan-out `Task` calls carry the type
         /// they were asked for.
         subagentLabel: String? = nil,
+        /// On the `Task` call itself: the `subagent_type` it asks for, so the description
+        /// can be paired with the right start when several are spawned at once.
+        spawnType: String? = nil,
         /// Which subagent the event is about, when it is not the main loop's.
         agentId: String? = nil,
         /// What is still running, as `Stop` reports it. `nil` means the event does not
@@ -542,6 +585,7 @@ public struct SessionTracker: Sendable {
         // explain the result, then the next prompt starts with a clean delegation list.
         if kind == "UserPromptSubmit" {
             session.children.removeAll(where: \.isCompleted)
+            session.pendingSpawns.removeAll()
         }
 
         switch kind {
@@ -555,13 +599,30 @@ public struct SessionTracker: Sendable {
                 session.children.append(
                     SubagentRun(id: agentId, label: Self.subagentName(nil), startedAt: date))
             }
+            // And what it is doing, for the row: the last tool it called, the way the
+            // strip would say it. Only calls; a `PostToolUse` says nothing new.
+            if let agentId, kind == "PreToolUse",
+                let index = session.children.firstIndex(where: { $0.id == agentId }),
+                let line = CompactActivityLabel.line(tool: tool, detail: detail)
+            {
+                session.children[index].detail = line
+            }
         case "SubagentStart":
             // Keyed by the agent's own id, so a start seen twice — a reconnect, a replayed
             // event — does not put the same agent on the card twice.
             if agentId == nil || !session.children.contains(where: { $0.id == agentId }) {
+                // The `Task` call that asked for this agent said what for; the start
+                // event says which id it got. Pair by type when the type is known —
+                // several agents of one type spawned together pair in order — and by
+                // order alone otherwise.
+                let spawnIndex =
+                    session.pendingSpawns.firstIndex { $0.type == nil || $0.type == subagentLabel }
+                    ?? (session.pendingSpawns.isEmpty ? nil : 0)
+                let task = spawnIndex.map { session.pendingSpawns.remove(at: $0).task }
                 session.children.append(
                     SubagentRun(
-                        id: agentId, label: Self.subagentName(subagentLabel), startedAt: date))
+                        id: agentId, label: Self.subagentName(subagentLabel), startedAt: date,
+                        task: task))
             }
             session.status = .working
         case "SubagentStop":
@@ -613,6 +674,10 @@ public struct SessionTracker: Sendable {
                 stalled ? (session.background.isEmpty ? .idle : .background) : session.status
         case "PreToolUse":
             session.status = .runningTool
+            // A fan-out call: remember what it asked for until its agent announces itself.
+            if let tool, Self.spawnTools.contains(tool), !detail.isEmpty {
+                session.pendingSpawns.append(PendingSpawn(type: spawnType, task: detail))
+            }
         case "PostToolUse", "PostToolUseFailure", "PermissionDenied":
             // The tool is done; the model has the turn again. Not `idle` — nothing has
             // been handed back yet.
@@ -661,6 +726,9 @@ public struct SessionTracker: Sendable {
     /// The events that are *about* a subagent rather than *from* one. Both carry an
     /// `agent_id`, and only these two are the session's business to act on.
     static let subagentLifecycle: Set<String> = ["SubagentStart", "SubagentStop"]
+
+    /// The tools that spawn an agent. `Task` is Claude Code's name; `Agent` its newer one.
+    static let spawnTools: Set<String> = ["Task", "Agent"]
 
     /// Brings the child rows in line with what `Stop` says is actually running.
     ///

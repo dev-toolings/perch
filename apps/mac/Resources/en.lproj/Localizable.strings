@@ -575,3 +575,5 @@
 "%lld project hook files duplicate the global installation." = "%lld project hook files duplicate the global installation.";
 "Unread completion" = "Unread completion";
 "+%lld more sessions" = "+%lld more sessions";
+
+"Team · %@ (%lld)" = "Team · %@ (%lld)";

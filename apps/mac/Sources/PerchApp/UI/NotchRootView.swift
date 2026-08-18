@@ -970,14 +970,24 @@ private struct ExpandedView: View {
     let visible = model.activity.visibleSessions
     let featured = SessionDisplaySelection.featured(
       in: visible, focusedSessionId: focusedSessionId)
-    // The featured card starts open while there is something to watch — a harness at
-    // work, a request waiting — and when the panel opened itself to show a turn that
-    // just finished. A finished turn you hover back to later stays folded behind its
-    // "Done": the answer was shown when it arrived, and a panel that re-opens the same
-    // transcript on every hover is a panel that never lets a thing be finished.
-    let opensFeatured =
-      featured.map { $0.isWorking || $0.status.needsYou || revealsCompletion } ?? false
-    _openedSessionId = State(initialValue: opensFeatured ? featured?.id : nil)
+    // The card that starts open is the one with something to watch: the featured
+    // session while it works or waits on you, else the harness that is at work — with
+    // one session running, that is what you opened the panel to see — and, when the
+    // panel opened itself for a turn that just finished, that turn. A finished session
+    // you hover back to later stays folded behind its "Done": the answer was shown when
+    // it arrived, and a panel that re-opens the same transcript on every hover is a
+    // panel that never lets a thing be finished.
+    let opened: String?
+    if let featured, featured.isWorking || featured.status.needsYou {
+      opened = featured.id
+    } else if let working = visible.first(where: \.isWorking) {
+      opened = working.id
+    } else if revealsCompletion {
+      opened = featured?.id
+    } else {
+      opened = nil
+    }
+    _openedSessionId = State(initialValue: opened)
   }
 
   private var selectedSessionId: String? { openedSessionId ?? focusedSessionId }
@@ -1018,7 +1028,26 @@ private struct ExpandedView: View {
           || !model.preferences.showsTasks
           ? 0
           : 34 + CGFloat(visibleTaskRows) * 22
+      // The agent groups, when the card is open: a header and up to three two-line
+      // rows per group, plus the overflow line. Estimated, like the rest of this: the
+      // panel measures itself once it is on screen, this only keeps the first frame
+      // from being a clipped one.
+      let agentsHeight: CGFloat
+      if isOpen, model.preferences.layout.showsTasks, model.preferences.showsSubagents,
+        !session.children.isEmpty
+      {
+        let groups = [
+          session.children.filter { $0.teamName != nil },
+          session.children.filter { $0.teamName == nil },
+        ].filter { !$0.isEmpty }
+        agentsHeight = groups.reduce(0) { sum, group in
+          sum + 26 + CGFloat(min(group.count, 3)) * 44 + (group.count > 3 ? 22 : 0) + 6
+        }
+      } else {
+        agentsHeight = 0
+      }
       return total + 34 + summarySpacing + (revealsConversation ? 166 : 0) + taskHeight
+        + agentsHeight
     }
     let footerHeight: CGFloat = additionalSessionCount > 0 ? 24 : 0
     return notch.height + NotchState.bodyInset + 36 + Self.tabStripHeight

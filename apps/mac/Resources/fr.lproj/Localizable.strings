@@ -32,6 +32,7 @@
 "Ended on a failure" = "Terminé en échec";
 "%lld agents" = "%lld agents";
 "Subagents (%lld)" = "Sous-agents (%lld)";
+"Team · %@ (%lld)" = "Équipe · %@ (%lld)";
 "%lld running" = "%lld en cours";
 "%lld done" = "%lld terminé(s)";
 "%lld Codex roots" = "%lld racines Codex";

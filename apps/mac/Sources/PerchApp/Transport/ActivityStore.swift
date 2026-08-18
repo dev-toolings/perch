@@ -222,6 +222,7 @@ final class ActivityStore {
                 tool: request.payload.toolName,
                 message: request.payload.message,
                 subagentLabel: request.subagentLabel,
+                spawnType: request.payload.toolInput?["subagent_type"]?.stringValue,
                 // Which agent the event is about — and, on a `Stop`, everything the turn
                 // leaves running behind it.
                 agentId: request.payload.agentId,

@@ -400,26 +400,52 @@ struct SessionCardView: View {
 
 /// Vibe's compact child-agent group: one contained surface, live state at a glance, and
 /// completed rows kept long enough to explain what happened in the current turn.
+///
+/// Two groups, as Vibe lists them: the Agent Team — members spawned with a name, whose ids
+/// read `name@session-xxxxxxxx` — under "Team · session-xxxxxxxx", and the fan-out
+/// subagents under "Subagents". Each row says who, what it was asked, how long, and — on
+/// its second line — the command it is running right now.
 struct ChildAgentsSection: View {
   let children: [SubagentRun]
   var fontSize: Double = 11
 
   private let visibleLimit = 3
-  private var visibleChildren: ArraySlice<SubagentRun> { children.prefix(visibleLimit) }
-  private var hiddenChildren: ArraySlice<SubagentRun> { children.dropFirst(visibleLimit) }
+
+  private var team: [SubagentRun] { children.filter { $0.teamName != nil } }
+  private var subagents: [SubagentRun] { children.filter { $0.teamName == nil } }
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 0) {
+    VStack(alignment: .leading, spacing: 6) {
+      if !team.isEmpty {
+        group(
+          title: t("Team · %@ (%lld)", team.first?.teamName ?? "", team.count),
+          symbol: "person.2", rows: team, identifier: "session.team")
+      }
+      if !subagents.isEmpty {
+        group(
+          title: t("Subagents (%lld)", subagents.count),
+          symbol: "point.3.connected.trianglepath.dotted", rows: subagents,
+          identifier: "session.subagents")
+      }
+    }
+  }
+
+  private func group(title: String, symbol: String, rows: [SubagentRun], identifier: String)
+    -> some View
+  {
+    let visible = rows.prefix(visibleLimit)
+    let hidden = rows.dropFirst(visibleLimit)
+    return VStack(alignment: .leading, spacing: 0) {
       HStack(spacing: 5) {
-        Image(systemName: "point.3.connected.trianglepath.dotted")
+        Image(systemName: symbol)
           .font(.system(size: 9, weight: .semibold))
           .foregroundStyle(Theme.info)
-        Text(t("Subagents (%lld)", children.count))
+        Text(title)
           .font(Theme.label(fontSize - 1, .semibold))
           .foregroundStyle(Theme.primary)
         Spacer(minLength: 8)
-        if children.contains(where: { !$0.isCompleted }) {
-          Text(t("%lld running", children.count(where: { !$0.isCompleted })))
+        if rows.contains(where: { !$0.isCompleted }) {
+          Text(t("%lld running", rows.count(where: { !$0.isCompleted })))
             .font(Theme.mono(fontSize - 3))
             .foregroundStyle(Theme.info)
         }
@@ -429,17 +455,17 @@ struct ChildAgentsSection: View {
 
       Rectangle().fill(Theme.hairline).frame(height: 1)
 
-      ForEach(visibleChildren) { child in
+      ForEach(visible) { child in
         ChildAgentRow(child: child, fontSize: fontSize)
-        if child.id != visibleChildren.last?.id {
+        if child.id != visible.last?.id {
           Rectangle().fill(Theme.hairline).frame(height: 1).padding(.leading, 24)
         }
       }
 
-      if !hiddenChildren.isEmpty {
+      if !hidden.isEmpty {
         Rectangle().fill(Theme.hairline).frame(height: 1)
-        let running = hiddenChildren.count(where: { !$0.isCompleted })
-        let done = hiddenChildren.count(where: \.isCompleted)
+        let running = hidden.count(where: { !$0.isCompleted })
+        let done = hidden.count(where: \.isCompleted)
         HStack(spacing: 6) {
           Image(systemName: "ellipsis")
           if running > 0 { Text(t("%lld running", running)) }
@@ -458,7 +484,7 @@ struct ChildAgentsSection: View {
     .overlay(RoundedRectangle(cornerRadius: 7).stroke(Theme.hairline, lineWidth: 1))
     .clipShape(RoundedRectangle(cornerRadius: 7))
     .accessibilityElement(children: .contain)
-    .accessibilityIdentifier("session.subagents")
+    .accessibilityIdentifier(identifier)
   }
 }
 
@@ -468,32 +494,64 @@ struct ChildAgentRow: View {
 
   private var tint: Color { child.isCompleted ? Theme.active : Theme.info }
 
+  /// `@yoda (yoda)` for a team member, `obiwan (Fix the deadline)` for a subagent: the
+  /// name first, and in brackets what tells this row from the next one of the same kind.
+  private var heading: (name: String, aside: String?) {
+    if let member = child.memberName {
+      return ("@" + member, child.label == member ? nil : child.label)
+    }
+    return (child.label, child.task)
+  }
+
   var body: some View {
     TimelineView(.periodic(from: child.startedAt, by: 1)) { context in
-      HStack(spacing: 7) {
-        Circle()
-          .fill(tint)
-          .frame(width: 6, height: 6)
-          .overlay(Circle().stroke(tint.opacity(0.35), lineWidth: 3))
-        Text(child.label)
-          .font(Theme.mono(fontSize - 1, .medium))
-          .foregroundStyle(Theme.primary)
-          .lineLimit(1)
-          .truncationMode(.tail)
-        Spacer(minLength: 6)
-        Text(child.isCompleted ? t("Done") : t("Running"))
-          .font(Theme.mono(fontSize - 3))
-          .foregroundStyle(tint)
-        Text(Self.elapsed(child: child, now: context.date))
-          .font(Theme.mono(fontSize - 3))
-          .foregroundStyle(Theme.tertiary)
-          .monospacedDigit()
+      VStack(alignment: .leading, spacing: 3) {
+        HStack(spacing: 7) {
+          Circle()
+            .fill(tint)
+            .frame(width: 6, height: 6)
+            .overlay(Circle().stroke(tint.opacity(0.35), lineWidth: 3))
+          Text(heading.name)
+            .font(Theme.mono(fontSize - 1, .medium))
+            .foregroundStyle(Theme.primary)
+            .lineLimit(1)
+          if let aside = heading.aside, !aside.isEmpty {
+            Text(aside)
+              .font(Theme.label(fontSize - 1))
+              .foregroundStyle(Theme.secondary)
+              .lineLimit(1)
+              .truncationMode(.tail)
+          }
+          Spacer(minLength: 6)
+          Text(child.isCompleted ? t("Done") : t("Running"))
+            .font(Theme.mono(fontSize - 3))
+            .foregroundStyle(tint)
+          Text(Self.elapsed(child: child, now: context.date))
+            .font(Theme.mono(fontSize - 3))
+            .foregroundStyle(Theme.tertiary)
+            .monospacedDigit()
+        }
+        // What it is running, when we have seen it run anything: the last tool call,
+        // as the strip would say it. A finished agent keeps its last line — it is what
+        // it was doing when it came back.
+        if !child.detail.isEmpty {
+          HStack(spacing: 5) {
+            Text("└")
+              .foregroundStyle(Theme.tertiary)
+            Text("$ " + child.detail)
+              .foregroundStyle(Theme.secondary)
+              .lineLimit(1)
+              .truncationMode(.tail)
+          }
+          .font(Theme.mono(fontSize - 2))
+          .padding(.leading, 13)
+        }
       }
       .padding(.horizontal, 8)
       .padding(.vertical, 7)
     }
     .accessibilityElement(children: .combine)
-    .accessibilityLabel(child.label)
+    .accessibilityLabel(heading.name)
     .accessibilityValue(child.isCompleted ? t("Done") : t("Running"))
   }
 

@@ -576,6 +576,50 @@ struct AnsweredTests {
     #expect(tracker.sessions["s1"]?.children.map(\.id) == ["a1"])
 }
 
+/// Vibe's agent rows say who, what it was asked, and what it is running. The "what it was
+/// asked" lives on the `Task` call and the id on the `SubagentStart` that follows; the
+/// "what it is running" arrives as the agent's own tool calls under the parent's session.
+@Test func aSubagentRowKnowsItsTaskAndItsCurrentCommand() throws {
+    var tracker = SessionTracker()
+    tracker.record(
+        id: "s1", kind: "PreToolUse", detail: "Fix e2e profile provisioning deadline",
+        tool: "Task", spawnType: "obiwan", at: epoch)
+    tracker.record(
+        id: "s1", kind: "SubagentStart", subagentLabel: "obiwan", agentId: "a1",
+        at: epoch.addingTimeInterval(1))
+    tracker.record(
+        id: "s1", kind: "PreToolUse", detail: "python3 - <<'PY'", tool: "Bash", agentId: "a1",
+        at: epoch.addingTimeInterval(2))
+
+    let row = try #require(tracker.sessions["s1"]?.children.first)
+    #expect(row.label == "obiwan")
+    #expect(row.task == "Fix e2e profile provisioning deadline")
+    #expect(row.detail == "Bash: python3 - <<'PY'")
+    #expect(row.teamName == nil)
+    // The agent's command did not become the parent's activity line.
+    #expect(tracker.sessions["s1"]?.lastDetail == "Fix e2e profile provisioning deadline")
+}
+
+@Test func twoSpawnsPairWithTheirStartsByType() throws {
+    var tracker = SessionTracker()
+    tracker.record(id: "s1", kind: "PreToolUse", detail: "Review the diff", tool: "Agent", spawnType: "vador", at: epoch)
+    tracker.record(id: "s1", kind: "PreToolUse", detail: "Write the tests", tool: "Agent", spawnType: "obiwan", at: epoch)
+    tracker.record(id: "s1", kind: "SubagentStart", subagentLabel: "obiwan", agentId: "b", at: epoch)
+    tracker.record(id: "s1", kind: "SubagentStart", subagentLabel: "vador", agentId: "a", at: epoch)
+
+    let rows = try #require(tracker.sessions["s1"]?.children)
+    #expect(rows.map(\.task) == ["Write the tests", "Review the diff"])
+}
+
+@Test func aTeamMemberIsToldFromAFanOutSubagentByItsId() {
+    let member = SubagentRun(id: "yoda@session-c0dd8fac", label: "yoda", startedAt: epoch)
+    #expect(member.teamName == "session-c0dd8fac")
+    #expect(member.memberName == "yoda")
+    let fanOut = SubagentRun(id: "a0bb311ba52085bef", label: "obiwan", startedAt: epoch)
+    #expect(fanOut.teamName == nil)
+    #expect(fanOut.memberName == nil)
+}
+
 /// A CLI that reports no such list — Codex — must not have its subagents wiped by a `Stop`
 /// that says nothing about them.
 @Test func aStopWithNoBackgroundListLeavesWhatIsKnownAlone() {
