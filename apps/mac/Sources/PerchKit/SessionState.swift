@@ -648,7 +648,14 @@ public struct SessionTracker: Sendable {
                 session.background = Self.credible(
                     backgroundTasks.filter(\.isRunning), children: session.children, session: id)
                 session.children = Self.reconcile(session.children, with: session.background, at: date)
-                session.status = session.background.isEmpty ? .idle : .background
+                // An agent still out is the turn not being over: it will come back with
+                // work, and the card is the only place that says so. A shell left in the
+                // background is not: a `Monitor` waits an hour for a log line, a build
+                // grinds on, and the terminal is at its prompt the whole time — five of
+                // them kept a finished session "working", green dot and all, while the
+                // person could see nothing running. Shells are kept (they hold the row
+                // and are listed) but they do not make the turn a working one.
+                session.status = session.background.contains(where: \.isSubagent) ? .background : .idle
             } else {
                 // A CLI that reports no such list — Codex — leaves only what the subagent
                 // events already said.

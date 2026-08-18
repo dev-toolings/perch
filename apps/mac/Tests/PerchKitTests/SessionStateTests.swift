@@ -555,11 +555,31 @@ struct AnsweredTests {
     #expect(tracker.sessions["s1"]?.children.isEmpty == true)
     #expect(tracker.sessions["s1"]?.hasLiveWork == false)
 
-    // A shell in the same list is still believed: nothing else ever mentions it.
+    // A shell in the same list is still believed and kept: nothing else ever mentions
+    // it. It does not make the turn a working one, though — see the next test.
     let shell = BackgroundTask(id: "b1", kind: "shell", status: "running", command: "gh run watch")
     tracker.record(id: "s1", kind: "Stop", backgroundTasks: [ghost, shell], at: epoch)
-    #expect(tracker.sessions["s1"]?.status == .background)
+    #expect(tracker.sessions["s1"]?.status == .idle)
     #expect(tracker.sessions["s1"]?.background.map(\.id) == ["b1"])
+}
+
+/// A `Monitor` waits an hour for a log line and a background build grinds on while the
+/// terminal sits at its prompt: the turn is over. Five of them kept a finished session
+/// "working" — green dot, "Writing…", counted on the strip — with nothing running that
+/// anyone could see. Only an agent still out keeps the turn open.
+@Test func backgroundShellsAloneDoNotKeepATurnWorking() {
+    var tracker = SessionTracker()
+    let monitors = (1...5).map {
+        BackgroundTask(id: "m\($0)", kind: "shell", status: "running", label: "Monitor \($0)")
+    }
+    tracker.record(id: "s1", kind: "UserPromptSubmit", prompt: "run the battery", at: epoch)
+    tracker.record(id: "s1", kind: "Stop", backgroundTasks: monitors, at: epoch)
+
+    #expect(tracker.sessions["s1"]?.status == .idle)
+    #expect(tracker.sessions["s1"]?.isWorking == false)
+    // Still listed, still holding the row: they are real, they are just not the turn.
+    #expect(tracker.sessions["s1"]?.background.count == 5)
+    #expect(tracker.sessions["s1"]?.hasLiveWork == true)
 }
 
 /// An agent older than the app, or started while it was not listening, is not a ghost
