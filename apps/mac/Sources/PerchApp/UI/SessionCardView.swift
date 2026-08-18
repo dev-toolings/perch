@@ -313,18 +313,33 @@ struct SessionCardView: View {
         .lineLimit(1)
         .truncationMode(.tail)
     }
-    if let reply = displayableConversation(turn.reply) {
+    // Vibe gives the reply two lines under the title — its opening prose, run together
+    // — which is what tells you where the work stands without opening the card. One
+    // line said "Je passe le relais à yoda…" and stopped where it got interesting.
+    if let reply = displayableConversation(turn.reply, limit: 240, wholeText: true) {
       Text(reply)
         .font(Theme.prose(contentFontSize + 1))
         .foregroundStyle(Theme.secondary)
-        .lineLimit(1)
+        .lineLimit(2)
         .truncationMode(.tail)
     }
   }
 
-  private func displayableConversation(_ text: String?) -> String? {
+  private func displayableConversation(
+    _ text: String?, limit: Int = 72, wholeText: Bool = false
+  ) -> String? {
     guard let text else { return nil }
-    let cleaned = SessionTracker.condense(text)
+    // Whole text: paragraphs run together, so an excerpt reads on across the line
+    // break its author put there. Markdown headings lose their hashes on the way.
+    let source =
+      wholeText
+      ? text.split(whereSeparator: \.isNewline)
+        .map { $0.trimmingCharacters(in: .whitespaces) }
+        .filter { !$0.isEmpty }
+        .map { $0.hasPrefix("#") ? $0.drop(while: { $0 == "#" || $0 == " " }) : Substring($0) }
+        .joined(separator: " ")
+      : text
+    let cleaned = SessionTracker.condense(source, limit: limit)
     guard !cleaned.isEmpty else { return nil }
     let lowercased = cleaned.lowercased()
     if lowercased.hasPrefix("code=")

@@ -1018,8 +1018,10 @@ private struct ExpandedView: View {
       let hasConversation = session.turn?.isEmpty == false || session.prompt?.isEmpty == false
       let revealsConversation =
         isOpen && model.preferences.layout.showsPrompt && hasConversation
+      // The reply excerpt runs to two lines now, where it ran to one.
       let summarySpacing: CGFloat =
-        model.preferences.layout.showsPrompt && hasConversation ? 3 : 0
+        model.preferences.layout.showsPrompt && hasConversation
+        ? (session.turn?.reply.isEmpty == false ? 17 : 3) : 0
       let board = model.tasks.board(for: session.id)
       let visibleTaskRows =
         min(board.tasks.count, 3) + (board.tasks.count > 3 ? 1 : 0)
